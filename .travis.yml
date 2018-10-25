@@ -39,6 +39,3 @@ notifications:
       - Ragha.Vema@capitalone.com
     on_success: always
     on_failure: always
-
-before_install:
-  - openssl aes-256-cbc -K $encrypted_b1566fc596de_key -iv $encrypted_b1566fc596de_iv -in travis-utilities/keys.gpg.enc -out keys.gpg -d
