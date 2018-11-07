@@ -57,7 +57,7 @@ public class MarkdownTest {
     }
 
     private File getProjectRoot() {
-        return new File(".").getAbsoluteFile().getParentFile();
+        return new File(".").getAbsoluteFile().getParentFile().getParentFile();
     }
 
     private CharSequence fromFile(String filename) throws IOException {
