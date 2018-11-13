@@ -22,6 +22,9 @@ public class SCM {
     protected long numberOfChanges;
     protected CommitType type;
     protected String pullNumber;
+    protected List<String> filesAdded;
+    protected List<String> filesRemoved;
+    protected List<String> filesModified;
 
     public SCM(){
 
@@ -38,6 +41,9 @@ public class SCM {
         this.scmCommitTimestamp = scm.scmCommitTimestamp;
         this.numberOfChanges = scm.numberOfChanges;
         this.type = scm.type;
+        this.filesAdded = scm.filesAdded;
+        this.filesRemoved = scm.filesRemoved;
+        this.filesModified = scm.filesModified;
     }
 
     @SuppressWarnings({"PMD.ExcessiveParameterList"})
@@ -52,6 +58,7 @@ public class SCM {
         this.scmCommitTimestamp = scmCommitTimestamp;
         this.numberOfChanges = numberOfChanges;
         this.type = type;
+
     }
 
     public String getScmUrl() { return scmUrl; }
@@ -112,6 +119,31 @@ public class SCM {
     public String getScmCommitterLogin() { return scmCommitterLogin; }
 
     public void setScmCommitterLogin(String scmCommitterLogin) { this.scmCommitterLogin = scmCommitterLogin; }
+
+    public List<String> getFilesAdded() {
+        return filesAdded;
+    }
+
+    public void setFilesAdded(List<String> filesAdded) {
+        this.filesAdded = filesAdded;
+    }
+
+    public List<String> getFilesRemoved() {
+        return filesRemoved;
+    }
+
+    public void setFilesRemoved(List<String> filesRemoved) {
+        this.filesRemoved = filesRemoved;
+    }
+
+    public List<String> getFilesModified() {
+        return filesModified;
+    }
+
+    public void setFilesModified(List<String> filesModified) {
+        this.filesModified = filesModified;
+    }
+
 
     @Override
     public boolean equals(Object o) {
