@@ -211,8 +211,6 @@ public class TestResult extends BaseModel {
         return testCapabilities;
     }
 
-    public void setTestCapabilities(Collection<TestCapability> testCapabilities) { this.testCapabilities = testCapabilities; }
-
     public ObjectId getBuildId() {
         return buildId;
     }
@@ -253,5 +251,6 @@ public class TestResult extends BaseModel {
     public void setResultStatus(String resultStatus) {
         this.resultStatus = resultStatus;
     }
+
 
 }

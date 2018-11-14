@@ -53,7 +53,4 @@ public interface FeatureRepository extends CrudRepository<Feature, ObjectId>,
 
 	@Query(value = " {'sTeamID' : ?0 }")
 	List<Feature> getStoryByTeamID(String sTeamID);
-
-	@Query(value = " {'sTypeName' : ?0 }")
-	List<Feature> getStoryByType(String sTypeName);
 }

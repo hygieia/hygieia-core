@@ -13,7 +13,6 @@ public enum CollectorType {
     AgileTool,
     @Deprecated
     Feature,
-    TestResult,
     @Deprecated
     ScopeOwner,
     @Deprecated
