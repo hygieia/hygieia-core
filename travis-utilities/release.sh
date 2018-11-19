@@ -8,4 +8,4 @@ gpg --fast-import keys.gpg
 
 shred keys.gpg
 
-mvn deploy -q -P release:prepare release:confirm
+mvn deploy -q -P release:prepare release:perform
