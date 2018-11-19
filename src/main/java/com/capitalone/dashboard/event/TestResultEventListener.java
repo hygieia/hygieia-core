@@ -222,10 +222,10 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isResponseTimeGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_RESP_TIME)){
-                    targetRespTime = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    targetRespTime = Double.valueOf(testCaseStep.getDescription());
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_RESP_TIME)){
-                    actualRespTime = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    actualRespTime = Double.valueOf(testCaseStep.getDescription());
                 }
             });
         }
@@ -233,10 +233,10 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isTxnGoodHealth = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_TXN_PER_SEC)) {
-                    targetTxnsPerSec = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    targetTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_TXN_PER_SEC)) {
-                    actualTxnsPerSec = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    actualTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
                 }
             });
         }
@@ -244,10 +244,10 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isErrorRateGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().contains(STR_TARGET_ERROR_RATE)){
-                    targetErrorRate = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    targetErrorRate = Double.valueOf(testCaseStep.getDescription());
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_ERROR_RATE)){
-                    double actualErrorRate = new Double(Double.valueOf(testCaseStep.getDescription()));
+                    double actualErrorRate = Double.valueOf(testCaseStep.getDescription());
                     // Error rate is percentage of actual errors in total calls
                     actualErrorsVal =  (actualErrorRate / 100) * (testCapabilityDurationSecs * actualTxnsPerSec);
                 }
