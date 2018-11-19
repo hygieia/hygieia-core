@@ -8,4 +8,6 @@ gpg --fast-import keys.gpg
 
 shred keys.gpg
 
-mvn deploy -q -P release:prepare release:perform
+sed -i 's|-SNAPSHOT||g' pom.xml
+
+mvn deploy -q -P release
