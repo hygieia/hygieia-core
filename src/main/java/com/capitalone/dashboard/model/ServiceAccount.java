@@ -2,7 +2,7 @@ package com.capitalone.dashboard.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="service-accounts")
+@Document(collection="service_accounts")
 public class ServiceAccount extends BaseModel {
 
     private String serviceAccountName;
