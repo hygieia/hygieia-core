@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class TestResultEventListener extends AbstractMongoEventListener<TestResult> {
