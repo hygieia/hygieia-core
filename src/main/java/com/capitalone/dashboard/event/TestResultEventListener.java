@@ -45,6 +45,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     private static final String STR_CRITICAL = "CRITICAL";
     private static final String STR_OPEN = "OPEN";
     private static final String COLLECTOR_NAME = "PerfTools";
+    private static final String KEY_JOB_NAME = "jobName";
     private static final int SIXTY_SECS = 60;
     private static double HEALTH_GOOD = 1.0;
     // 1.0 is good health, value less than 1.0 considered bad
@@ -97,6 +98,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
 
         // Ignore anything other than performance tests
         if (!TestSuiteType.Performance.equals(testResult.getType())) {
+            LOGGER.info("TestResult save event ignored since its not performance type");
             return;
         }
 
@@ -108,7 +110,6 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
         TestCapability lastExecutedTestCapabiblity = testCapabilities.iterator().next();
         lastExecutedTestCapabiblity.getTestSuites().forEach(testSuite -> testSuite.getTestCases().forEach(testCase ->
                 readPerformanceMetrics(testCase, lastExecutedTestCapabiblity)));
-
         CollectorItem perfCollectorItem = getPerfCollectorItem(testResult);
         createPerformanceDoc(testResult, lastExecutedTestCapabiblity, perfCollectorItem);
         LOGGER.info("New performance document created from test_result successfully");
@@ -135,33 +136,50 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
      * @params testResult
      */
     public CollectorItem getPerfCollectorItem(TestResult testResult) {
-        CollectorItem collectorItem = new CollectorItem();
-        Collector collector = getPerfToolsCollector();
-        collectorItem.setId(ObjectId.get());
-        collectorItem.setCollectorId(collector.getId());
-        collectorItem.setCollector(collector);
-        collectorItem.setLastUpdated(System.currentTimeMillis());
-        collectorItem.setEnabled(true);
-        collectorItem.setPushed(true);
-        collectorItem.setDescription(testResult.getDescription());
-        return collectorItemRepository.save(collectorItem);
+
+        CollectorItem testResultCItem = collectorItemRepository.findOne(testResult.getCollectorItemId());
+        String description = testResultCItem.getDescription();
+        String niceName = testResultCItem.getNiceName();
+        Optional<Map<String, Object>> optOptions = Optional.ofNullable(testResultCItem.getOptions());
+        Optional<Object> optJobName = Optional.ofNullable(optOptions.get().get(KEY_JOB_NAME));
+        String jobName = optJobName.isPresent() ? optJobName.get().toString() : "";
+        LOGGER.info("Posted Test Result Description(niceName : jobName) - " + niceName + " : " + jobName);
+        Collector perfToolsCollector = getPerfToolsCollector();
+        Optional<CollectorItem> optCollectorItem = Optional.ofNullable(collectorItemRepository.findByCollectorIdNiceNameAndJobName(
+                perfToolsCollector.getId(), niceName, jobName));
+        optCollectorItem.ifPresent(collectorItem -> collectorItem.setLastUpdated(System.currentTimeMillis()));
+        optCollectorItem = Optional.ofNullable(optCollectorItem.orElseGet(() -> {
+            CollectorItem collectorItem = new CollectorItem();
+            collectorItem.setId(ObjectId.get());
+            collectorItem.setCollectorId(perfToolsCollector.getId());
+            collectorItem.setCollector(perfToolsCollector);
+            collectorItem.setLastUpdated(System.currentTimeMillis());
+            collectorItem.setEnabled(true);
+            collectorItem.setPushed(true);
+            collectorItem.setNiceName(testResultCItem.getNiceName());
+            collectorItem.setOptions(testResultCItem.getOptions());
+            collectorItem.setDescription(description);
+            return collectorItem;
+        }));
+        return collectorItemRepository.save(optCollectorItem.get());
     }
 
     /**
      * Creates collector if not exists already
      */
     public Collector getPerfToolsCollector() {
-        Collector collector = collectorRepository.findByName(COLLECTOR_NAME);
-        if (collector != null) {
-            collector.setLastExecuted(System.currentTimeMillis());
-        }else {
-            collector = new Collector(COLLECTOR_NAME, CollectorType.AppPerformance);
+
+        Optional<Collector> optCollector = Optional.ofNullable(collectorRepository.findByName(COLLECTOR_NAME));
+        optCollector.ifPresent(collector -> collector.setLastExecuted(System.currentTimeMillis()));
+        optCollector = Optional.ofNullable(optCollector.orElseGet(() -> {
+            Collector collector = new Collector(COLLECTOR_NAME, CollectorType.AppPerformance);
             collector.setId(ObjectId.get());
             collector.setEnabled(true);
             collector.setOnline(true);
             collector.setLastExecuted(System.currentTimeMillis());
-        }
-        return collectorRepository.save(collector);
+            return collector;
+        }));
+        return collectorRepository.save(optCollector.get());
     }
 
     /**
@@ -202,13 +220,17 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     /**
      * Get performance test violation details
      */
-    public LinkedHashMap<Object, Object> getPerfTestViolation() {
+    public List getPerfTestViolation() {
+        List<LinkedHashMap<Object, Object>> violationObjList = new ArrayList<>();
         LinkedHashMap<Object, Object> violationObjMap = new LinkedHashMap<>();
         if (!(isResponseTimeGood && isTxnGoodHealth && isErrorRateGood)){
             violationObjMap.put(VIOLATION_ATTRIBUTES.severity, STR_CRITICAL);
             violationObjMap.put(VIOLATION_ATTRIBUTES.incidentStatus, STR_OPEN);
         }
-        return violationObjMap;
+        if(!violationObjMap.isEmpty()) {
+            violationObjList.add(violationObjMap);
+        }
+        return violationObjList;
     }
 
     /**

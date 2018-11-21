@@ -67,6 +67,8 @@ public class TestResultEventListenerTest {
         CollectorItem collectorItem = new CollectorItem();
         collectorItem.setId(ObjectId.get());
         collectorItem.setCollector(new Collector("Test Collector", CollectorType.Test));
+        collectorItem.setNiceName("Test Collector");
+        collectorItem.getOptions().put("jobName", "TestResultEventListenerTest");
         return collectorItem;
     }
 
