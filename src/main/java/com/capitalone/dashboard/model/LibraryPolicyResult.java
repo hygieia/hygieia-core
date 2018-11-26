@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.model;
 
+import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
 import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -20,13 +22,14 @@ public class LibraryPolicyResult extends BaseModel {
     private Map<LibraryPolicyType, Set<Threat>> threats = new HashMap<>();
     private String reportUrl;
     private Integer totalComponentCount;
-   	private Integer knownComponentCount;
-   	private List<PolicyScanMetric> policyAlert = new ArrayList<>();
+    private Integer knownComponentCount;
+    private List<PolicyScanMetric> policyAlert = new ArrayList<>();
 
     public static class Threat {
         LibraryPolicyThreatLevel level;
         List<String> components = new ArrayList<>();
         int count;
+        private Map<LibraryPolicyThreatDisposition, Integer> dispositionCounts = new HashMap<>();
 
         public Threat(LibraryPolicyThreatLevel level, int count) {
             this.level = level;
@@ -56,8 +59,20 @@ public class LibraryPolicyResult extends BaseModel {
         public void setComponents(List<String> components) {
             this.components = components;
         }
+
+        public void addDispositionCount(LibraryPolicyThreatDisposition disposition) {
+            dispositionCounts.merge(disposition, 1, (a, b) -> a + b);
+        }
+
+        public Map<LibraryPolicyThreatDisposition, Integer> getDispositionCounts() {
+            return dispositionCounts;
+        }
     }
 
+    public static class ThreatComponent {
+        String name;
+
+    }
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -80,6 +95,7 @@ public class LibraryPolicyResult extends BaseModel {
     }
 
 
+    @Deprecated
     public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, String component) {
         Set<Threat> threatSet = threats.get(type);
 
@@ -114,6 +130,43 @@ public class LibraryPolicyResult extends BaseModel {
         }
     }
 
+    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String component) {
+        Set<Threat> threatSet = threats.get(type);
+
+        if (CollectionUtils.isEmpty(threatSet)) {
+            Threat threat = new Threat(level, 1);
+            threat.getComponents().add(getComponentPlusDisposition(component,disposition));
+            threat.addDispositionCount(disposition);
+            Set<Threat> set = new HashSet<>();
+            set.add(threat);
+            threats.put(type, set);
+        } else {
+            boolean found = false;
+            for (Threat t : threatSet) {
+                if (Objects.equals(t.getLevel(), level)) {
+                    t.setCount(t.getCount() + 1);
+                    t.addDispositionCount(disposition);
+                    if (!t.getComponents().contains(getComponentPlusDisposition(component,disposition))) {
+                        t.getComponents().add(getComponentPlusDisposition(component,disposition));
+                    }
+                    threatSet.add(t);
+                    threats.put(type, threatSet);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                Threat t = new Threat(level, 1);
+                if (!t.getComponents().contains(getComponentPlusDisposition(component,disposition))) {
+                    t.getComponents().add(getComponentPlusDisposition(component,disposition));
+                }
+                t.addDispositionCount(disposition);
+                threatSet.add(t);
+                threats.put(type, threatSet);
+            }
+        }
+
+    }
 
     public void setThreats(Map<LibraryPolicyType, Set<Threat>> threats) {
         this.threats = threats;
@@ -135,28 +188,32 @@ public class LibraryPolicyResult extends BaseModel {
         this.evaluationTimestamp = evaluationTimestamp;
     }
 
-	public Integer getTotalComponentCount() {
-		return totalComponentCount;
-	}
+    public Integer getTotalComponentCount() {
+        return totalComponentCount;
+    }
 
-	public void setTotalComponentCount(Integer totalComponentCount) {
-		this.totalComponentCount = totalComponentCount;
-	}
+    public void setTotalComponentCount(Integer totalComponentCount) {
+        this.totalComponentCount = totalComponentCount;
+    }
 
-	public Integer getKnownComponentCount() {
-		return knownComponentCount;
-	}
+    public Integer getKnownComponentCount() {
+        return knownComponentCount;
+    }
 
-	public void setKnownComponentCount(Integer knownComponentCount) {
-		this.knownComponentCount = knownComponentCount;
-	}
+    public void setKnownComponentCount(Integer knownComponentCount) {
+        this.knownComponentCount = knownComponentCount;
+    }
 
-	public List<PolicyScanMetric> getPolicyAlert() {
-		return policyAlert;
-	}
+    public List<PolicyScanMetric> getPolicyAlert() {
+        return policyAlert;
+    }
 
-	public void setPolicyAlert(List<PolicyScanMetric> policyAlert) {
-		this.policyAlert = policyAlert;
-	}
-	
+    public void setPolicyAlert(List<PolicyScanMetric> policyAlert) {
+        this.policyAlert = policyAlert;
+    }
+
+    private String getComponentPlusDisposition (String component, LibraryPolicyThreatDisposition disposition) {
+        return String.format("%s##%s", component, disposition.toString());
+    }
+
 }
