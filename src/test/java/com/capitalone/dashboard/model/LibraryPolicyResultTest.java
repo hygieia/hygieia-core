@@ -92,7 +92,6 @@ public class LibraryPolicyResultTest {
         assertEquals(result.getThreats().size(), 2);
         assertEquals(result.getThreats().keySet().size(), 2);
         assertEquals(result.getThreats().values().size(), 2);
-        assertEquals(result.getThreats().keySet().iterator().next(), LibraryPolicyType.License);
         threats = result.getThreats().get(LibraryPolicyType.License);
         assertEquals(threats.size(), 2);
         assertEquals(threats.stream().filter(t -> Objects.equals(t.getLevel(), LibraryPolicyThreatLevel.Critical)).count(),1);
