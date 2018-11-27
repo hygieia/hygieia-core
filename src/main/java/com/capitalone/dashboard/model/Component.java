@@ -48,6 +48,10 @@ public class Component extends BaseModel {
         return collectorItems;
     }
 
+    public void setCollectorItems(Map<CollectorType, List<CollectorItem>> collectorItems) {
+        this.collectorItems = collectorItems;
+    }
+
     public List<CollectorItem> getCollectorItems(CollectorType type) {
         return collectorItems.get(type);
     }
