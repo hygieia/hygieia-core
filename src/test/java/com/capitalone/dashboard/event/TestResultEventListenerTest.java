@@ -53,11 +53,11 @@ public class TestResultEventListenerTest {
     @Test
     public void test_testResultListener(){
         TestResult testResult = getTestResult(getTestResultCollectorItem());
-        CollectorItem perfCItem = getNewPerfCollectorItem(getPerfToolsCollector());
+        CollectorItem perfCollItem = getNewPerfCollectorItem(getPerfToolsCollector());
         setupData();
         testResultEventListener.onAfterSave(new AfterSaveEvent<>(testResult, null, ""));
         Performance performance = testResultEventListener.createPerformanceDoc(testResult,
-                getTestCapabilities().iterator().next(), perfCItem);
+                getTestCapabilities().iterator().next(), perfCollItem);
         verify(performanceRepository, never()).save(performance);
         assertThat(performance.getUrl(), is(testResult.getUrl()));
         assertThat(performance.getType(), is(PerformanceType.ApplicationPerformance));
@@ -95,11 +95,11 @@ public class TestResultEventListenerTest {
     }
 
     public CollectorItem getNewPerfCollectorItem(Collector perfToolsCollector) {
-        CollectorItem newPerfCItem = new CollectorItem();
-        newPerfCItem.setId(ObjectId.get());
-        newPerfCItem.setCollector(perfToolsCollector);
-        newPerfCItem.setCollectorId(perfToolsCollector.getId());
-        return newPerfCItem;
+        CollectorItem newPerfCollItem = new CollectorItem();
+        newPerfCollItem.setId(ObjectId.get());
+        newPerfCollItem.setCollector(perfToolsCollector);
+        newPerfCollItem.setCollectorId(perfToolsCollector.getId());
+        return newPerfCollItem;
     }
 
     public Collection<TestCapability> getTestCapabilities() {
@@ -113,50 +113,50 @@ public class TestResultEventListenerTest {
         suite.setType(TestSuiteType.Performance);
 
         List<TestCase> testCases = new ArrayList<>();
-        TestCase testCase1 = new TestCase();
-        testCase1.setDescription("KPI : Avg response times");
-        testCase1.setStatus(TestCaseStatus.Success);
-        List<TestCaseStep> testCaseSteps1 = new ArrayList<>();
-        TestCaseStep testCaseStep1 = new TestCaseStep();
-        TestCaseStep testCaseStep2 = new TestCaseStep();
-        testCaseStep1.setId("Target Response Time");
-        testCaseStep1.setDescription("100.0");
-        testCaseStep2.setId("Actual Response Time");
-        testCaseStep2.setDescription("72.41");
-        testCaseSteps1.add(testCaseStep1);
-        testCaseSteps1.add(testCaseStep2);
-        testCase1.setTestSteps(testCaseSteps1);
-        testCases.add(testCase1);
+        TestCase testCaseAvgRespTime = new TestCase();
+        testCaseAvgRespTime.setDescription("KPI : Avg response times");
+        testCaseAvgRespTime.setStatus(TestCaseStatus.Success);
+        List<TestCaseStep> testCaseStepsAvgRespTime = new ArrayList<>();
+        TestCaseStep testCaseStepTargetRespTime = new TestCaseStep();
+        TestCaseStep testCaseStepActualRespTime = new TestCaseStep();
+        testCaseStepTargetRespTime.setId("Target Response Time");
+        testCaseStepTargetRespTime.setDescription("100.0");
+        testCaseStepActualRespTime.setId("Actual Response Time");
+        testCaseStepActualRespTime.setDescription("72.41");
+        testCaseStepsAvgRespTime.add(testCaseStepTargetRespTime);
+        testCaseStepsAvgRespTime.add(testCaseStepActualRespTime);
+        testCaseAvgRespTime.setTestSteps(testCaseStepsAvgRespTime);
+        testCases.add(testCaseAvgRespTime);
 
-        TestCase testCase2 = new TestCase();
-        testCase2.setDescription("KPI : Transaction Per Second");
-        testCase2.setStatus(TestCaseStatus.Failure);
-        List<TestCaseStep> testCaseSteps2 = new ArrayList<>();
-        TestCaseStep testCaseStep3 = new TestCaseStep();
-        TestCaseStep testCaseStep4 = new TestCaseStep();
-        testCaseStep3.setId("Target Transactions per sec");
-        testCaseStep3.setDescription("33.0");
-        testCaseStep4.setId("Actual Transactions per sec");
-        testCaseStep4.setDescription("4.75");
-        testCaseSteps2.add(testCaseStep3);
-        testCaseSteps2.add(testCaseStep4);
-        testCase2.setTestSteps(testCaseSteps2);
-        testCases.add(testCase2);
+        TestCase testCaseTxnPerSec = new TestCase();
+        testCaseTxnPerSec.setDescription("KPI : Transaction Per Second");
+        testCaseTxnPerSec.setStatus(TestCaseStatus.Failure);
+        List<TestCaseStep> testCaseStepsTxnRespTime = new ArrayList<>();
+        TestCaseStep testCaseStepTargetTxnPerSec = new TestCaseStep();
+        TestCaseStep testCaseStepActualTxnPerSec = new TestCaseStep();
+        testCaseStepTargetTxnPerSec.setId("Target Transactions per sec");
+        testCaseStepTargetTxnPerSec.setDescription("33.0");
+        testCaseStepActualTxnPerSec.setId("Actual Transactions per sec");
+        testCaseStepActualTxnPerSec.setDescription("4.75");
+        testCaseStepsTxnRespTime.add(testCaseStepTargetTxnPerSec);
+        testCaseStepsTxnRespTime.add(testCaseStepActualTxnPerSec);
+        testCaseTxnPerSec.setTestSteps(testCaseStepsTxnRespTime);
+        testCases.add(testCaseTxnPerSec);
 
-        TestCase testCase3 = new TestCase();
-        testCase3.setDescription("KPI : Error Rate Threshold");
-        testCase3.setStatus(TestCaseStatus.Success);
-        List<TestCaseStep> testCaseSteps3 = new ArrayList<>();
-        TestCaseStep testCaseStep5 = new TestCaseStep();
-        TestCaseStep testCaseStep6 = new TestCaseStep();
-        testCaseStep5.setId("Target Error Rate Threshold");
-        testCaseStep5.setDescription("1.0");
-        testCaseStep6.setId("Actual Error Rate");
-        testCaseStep6.setDescription("0.0");
-        testCaseSteps3.add(testCaseStep5);
-        testCaseSteps3.add(testCaseStep6);
-        testCase3.setTestSteps(testCaseSteps3);
-        testCases.add(testCase3);
+        TestCase testCaseErrRate = new TestCase();
+        testCaseErrRate.setDescription("KPI : Error Rate Threshold");
+        testCaseErrRate.setStatus(TestCaseStatus.Success);
+        List<TestCaseStep> testCaseStepsErrRate = new ArrayList<>();
+        TestCaseStep testCaseStepTargetErrRate = new TestCaseStep();
+        TestCaseStep testCaseStepActualErrRate = new TestCaseStep();
+        testCaseStepTargetErrRate.setId("Target Error Rate Threshold");
+        testCaseStepTargetErrRate.setDescription("1.0");
+        testCaseStepActualErrRate.setId("Actual Error Rate");
+        testCaseStepActualErrRate.setDescription("0.0");
+        testCaseStepsErrRate.add(testCaseStepTargetErrRate);
+        testCaseStepsErrRate.add(testCaseStepActualErrRate);
+        testCaseErrRate.setTestSteps(testCaseStepsErrRate);
+        testCases.add(testCaseErrRate);
 
         suite.setTestCases(testCases);
         testCapability.getTestSuites().add(suite);

@@ -106,20 +106,65 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
 
         List<TestCapability> testCapabilities = new ArrayList<>(testResult.getTestCapabilities());
         if (CollectionUtils.isEmpty(testCapabilities)){
+            LOGGER.info("No Test Capabilities found for the test result : " + testResult.getId());
             return;
         }
         testCapabilities.sort(Comparator.comparing(TestCapability::getTimestamp).reversed());
         TestCapability lastExecutedTestCapabiblity = testCapabilities.iterator().next();
         lastExecutedTestCapabiblity.getTestSuites().forEach(testSuite -> testSuite.getTestCases().forEach(testCase ->
-                readPerformanceMetrics(testCase, lastExecutedTestCapabiblity)));
+                extractPerformanceMetrics(testCase, lastExecutedTestCapabiblity)));
         CollectorItem perfCollectorItem = getPerfCollectorItem(testResult);
         createPerformanceDoc(testResult, lastExecutedTestCapabiblity, perfCollectorItem);
         LOGGER.info("New performance document created from test_result successfully");
         }
 
     /**
+     * Extracts the test result threshold values to build performance metrics object
+     * @param testCase, testCapability
+     */
+    private void extractPerformanceMetrics(TestCase testCase, TestCapability testCapability) {
+
+        long testCapabilityDurationSecs = TimeUnit.MILLISECONDS.toSeconds(testCapability.getDuration());
+        if(testCase.getDescription().equalsIgnoreCase(STR_RESP_TIME_THRESHOLD)){
+            isResponseTimeGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
+            testCase.getTestSteps().forEach(testCaseStep -> {
+                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_RESP_TIME)){
+                    targetRespTime = Double.valueOf(testCaseStep.getDescription());
+                }
+                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_RESP_TIME)){
+                    actualRespTime = Double.valueOf(testCaseStep.getDescription());
+                }
+            });
+        }
+        if(testCase.getDescription().equalsIgnoreCase(STR_TXN_PER_SEC_THRESHOLD)){
+            isTxnGoodHealth = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
+            testCase.getTestSteps().forEach(testCaseStep -> {
+                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_TXN_PER_SEC)) {
+                    targetTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
+                }
+                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_TXN_PER_SEC)) {
+                    actualTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
+                }
+            });
+        }
+        if(testCase.getDescription().equalsIgnoreCase(STR_ERROR_RATE_THRESHOLD)){
+            isErrorRateGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
+            testCase.getTestSteps().forEach(testCaseStep -> {
+                if (testCaseStep.getId().contains(STR_TARGET_ERROR_RATE)){
+                    targetErrorRate = Double.valueOf(testCaseStep.getDescription());
+                }
+                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_ERROR_RATE)){
+                    double actualErrorRate = Double.valueOf(testCaseStep.getDescription());
+                    // Error rate is percentage of actual errors in total calls
+                    actualErrorsVal =  (actualErrorRate / 100) * (testCapabilityDurationSecs * actualTxnsPerSec);
+                }
+            });
+        }
+    }
+
+    /**
      * Creates new performance object from test result
-     * @params testResult, testCapability, perfCollectorItem
+     * @param testResult, testCapability, perfCollectorItem
      */
     public Performance createPerformanceDoc(TestResult testResult, TestCapability testCapability, CollectorItem perfCollectorItem) {
         Performance performance = new Performance();
@@ -134,15 +179,15 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
         return performanceRepository.save(performance);
     }
     /**
-     * Creates new performance collector item
-     * @params testResult
+     * Get performance collector item or create new if not exists already
+     * @param testResult
      */
     public CollectorItem getPerfCollectorItem(TestResult testResult) {
 
-        CollectorItem testResultCItem = collectorItemRepository.findOne(testResult.getCollectorItemId());
-        String description = testResultCItem.getDescription();
-        String niceName = testResultCItem.getNiceName();
-        Optional<Map<String, Object>> optOptions = Optional.ofNullable(testResultCItem.getOptions());
+        CollectorItem testResultCollItem = collectorItemRepository.findOne(testResult.getCollectorItemId());
+        String description = testResultCollItem.getDescription();
+        String niceName = testResultCollItem.getNiceName();
+        Optional<Map<String, Object>> optOptions = Optional.ofNullable(testResultCollItem.getOptions());
         Optional<Object> optJobName = Optional.ofNullable(optOptions.get().get(KEY_JOB_NAME));
         String jobName = optJobName.isPresent() ? optJobName.get().toString() : "";
         LOGGER.info("Posted Test Result Description(niceName : jobName) - " + niceName + " : " + jobName);
@@ -158,8 +203,8 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             collectorItem.setLastUpdated(System.currentTimeMillis());
             collectorItem.setEnabled(true);
             collectorItem.setPushed(true);
-            collectorItem.setNiceName(testResultCItem.getNiceName());
-            collectorItem.setOptions(testResultCItem.getOptions());
+            collectorItem.setNiceName(testResultCollItem.getNiceName());
+            collectorItem.setOptions(testResultCollItem.getOptions());
             collectorItem.setDescription(description);
             return collectorItem;
         }));
@@ -186,7 +231,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
 
     /**
      * Get performance test metrics
-     * @params testCapability
+     * @param testCapability
      */
     public LinkedHashMap<String,Object> getPerfMetrics(TestCapability testCapability) {
 
@@ -233,49 +278,5 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             violationObjList.add(violationObjMap);
         }
         return violationObjList;
-    }
-
-    /**
-     * Reads the test result threshold values to build performance metrics object
-     * @params testCase, testCapability
-     */
-    private void readPerformanceMetrics(TestCase testCase, TestCapability testCapability) {
-
-        long testCapabilityDurationSecs = TimeUnit.MILLISECONDS.toSeconds(testCapability.getDuration());
-        if(testCase.getDescription().equalsIgnoreCase(STR_RESP_TIME_THRESHOLD)){
-            isResponseTimeGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
-            testCase.getTestSteps().forEach(testCaseStep -> {
-                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_RESP_TIME)){
-                    targetRespTime = Double.valueOf(testCaseStep.getDescription());
-                }
-                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_RESP_TIME)){
-                    actualRespTime = Double.valueOf(testCaseStep.getDescription());
-                }
-            });
-        }
-        if(testCase.getDescription().equalsIgnoreCase(STR_TXN_PER_SEC_THRESHOLD)){
-            isTxnGoodHealth = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
-            testCase.getTestSteps().forEach(testCaseStep -> {
-                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_TXN_PER_SEC)) {
-                    targetTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
-                }
-                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_TXN_PER_SEC)) {
-                    actualTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
-                }
-            });
-        }
-        if(testCase.getDescription().equalsIgnoreCase(STR_ERROR_RATE_THRESHOLD)){
-            isErrorRateGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
-            testCase.getTestSteps().forEach(testCaseStep -> {
-                if (testCaseStep.getId().contains(STR_TARGET_ERROR_RATE)){
-                    targetErrorRate = Double.valueOf(testCaseStep.getDescription());
-                }
-                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_ERROR_RATE)){
-                    double actualErrorRate = Double.valueOf(testCaseStep.getDescription());
-                    // Error rate is percentage of actual errors in total calls
-                    actualErrorsVal =  (actualErrorRate / 100) * (testCapabilityDurationSecs * actualTxnsPerSec);
-                }
-            });
-        }
     }
 }
