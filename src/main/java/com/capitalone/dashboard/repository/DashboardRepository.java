@@ -28,6 +28,9 @@ public interface DashboardRepository extends PagingAndSortingRepository<Dashboar
 
     List<Dashboard> findByApplicationComponentsIn(Collection<Component> components);
 
+    @Query(value="{'application.components.$id': {$in : ?0 }}")
+    List<Dashboard> findByApplicationComponentIdsIn(Collection<ObjectId> componentIds);
+
 	@Query(value="{'type': {$in : [null, 'Team']}}")
 	List<Dashboard> findTeamDashboards();
 
