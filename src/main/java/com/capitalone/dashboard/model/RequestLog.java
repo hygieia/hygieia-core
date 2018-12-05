@@ -17,6 +17,7 @@ public class RequestLog extends BaseModel {
     private Object responseBody;
     private int responseCode;
     private long timestamp;
+    private long responseTime;
 
     public String getClient() {
         return client;
@@ -114,7 +115,11 @@ public class RequestLog extends BaseModel {
         this.responseContentType = responseContentType;
     }
 
+    public long getResponseTime() { return responseTime; }
+
+    public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
+
     public String toString() {
-        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "]";
+        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }
 }

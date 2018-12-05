@@ -106,7 +106,8 @@ public class SyncDashboard {
         List<ObjectId> collectorItemIds = collectorItems.stream().map(BaseModel::getId).collect(Collectors.toList());
         // Find the components that have these collector items
         List<com.capitalone.dashboard.model.Component> components = componentRepository.findByCollectorTypeAndItemIdIn(collectorType, collectorItemIds);
-        return dashboardRepository.findByApplicationComponentsIn(components);
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
+        return dashboardRepository.findByApplicationComponentIdsIn(componentIds);
     }
 
 
