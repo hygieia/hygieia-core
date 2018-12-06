@@ -1,7 +1,22 @@
 package com.capitalone.dashboard.event;
 
 import com.capitalone.dashboard.event.sync.SyncDashboard;
-import com.capitalone.dashboard.model.*;
+import com.capitalone.dashboard.model.Application;
+import com.capitalone.dashboard.model.AuthType;
+import com.capitalone.dashboard.model.BaseModel;
+import com.capitalone.dashboard.model.Build;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.EnvironmentStage;
+import com.capitalone.dashboard.model.Owner;
+import com.capitalone.dashboard.model.Pipeline;
+import com.capitalone.dashboard.model.PipelineStage;
+import com.capitalone.dashboard.model.ScoreDisplayType;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.CommitRepository;
@@ -21,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.capitalone.dashboard.util.TestUtils.createBuild;
 import static com.capitalone.dashboard.util.TestUtils.createCommit;
@@ -105,10 +121,11 @@ public class BuildEventListenerTest {
     private void setupFindDashboards(Build build, Dashboard dashboard) {
         CollectorItem commitCollectorItem = new CollectorItem();
         List<Component> components = Collections.singletonList(dashboard.getApplication().getComponents().get(0));
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         commitCollectorItem.setId(build.getCollectorItemId());
         when(collectorItemRepository.findOne(build.getCollectorItemId())).thenReturn(commitCollectorItem);
         when(componentRepository.findByBuildCollectorItemId(commitCollectorItem.getId())).thenReturn(components);
-        when(dashboardRepository.findByApplicationComponentsIn(components)).thenReturn(Collections.singletonList(dashboard));
+        when(dashboardRepository.findByApplicationComponentIdsIn(componentIds)).thenReturn(Collections.singletonList(dashboard));
     }
 
     private void setupGetOrCreatePipeline(Dashboard dashboard, Pipeline pipeline) {

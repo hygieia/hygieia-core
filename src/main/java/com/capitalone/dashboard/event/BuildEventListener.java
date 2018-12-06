@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.event;
 
 import com.capitalone.dashboard.event.sync.SyncDashboard;
+import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.BuildStatus;
 import com.capitalone.dashboard.model.Collector;
@@ -24,6 +25,7 @@ import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.capitalone.dashboard.util.PipelineUtils.isMoveCommitToBuild;
 import static com.capitalone.dashboard.util.PipelineUtils.processPreviousFailedBuilds;
@@ -137,7 +139,8 @@ public class BuildEventListener extends HygieiaMongoEventListener<Build> {
             List<Component> components = componentRepository.findByBuildCollectorItemId(buildCollectorItem.getId());
             if (!components.isEmpty()) {
                 //return an empty list if the build is not associated with a Dashboard
-                dashboards = dashboardRepository.findByApplicationComponentsIn(components);
+                List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
+                dashboards = dashboardRepository.findByApplicationComponentIdsIn(componentIds);
             }
         }
         return dashboards;

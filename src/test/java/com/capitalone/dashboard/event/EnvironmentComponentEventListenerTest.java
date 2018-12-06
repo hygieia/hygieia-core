@@ -1,6 +1,22 @@
 package com.capitalone.dashboard.event;
 
-import com.capitalone.dashboard.model.*;
+import com.capitalone.dashboard.model.Application;
+import com.capitalone.dashboard.model.AuthType;
+import com.capitalone.dashboard.model.BaseModel;
+import com.capitalone.dashboard.model.BinaryArtifact;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.EnvironmentComponent;
+import com.capitalone.dashboard.model.EnvironmentStage;
+import com.capitalone.dashboard.model.Owner;
+import com.capitalone.dashboard.model.Pipeline;
+import com.capitalone.dashboard.model.PipelineStage;
+import com.capitalone.dashboard.model.ScoreDisplayType;
 import com.capitalone.dashboard.repository.BinaryArtifactRepository;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
@@ -21,13 +37,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import static com.capitalone.dashboard.util.TestUtils.createBuild;
 import static com.capitalone.dashboard.util.TestUtils.createCommit;
 import static com.capitalone.dashboard.util.TestUtils.createPipelineCommit;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static com.capitalone.dashboard.util.TestUtils.createBuild;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnvironmentComponentEventListenerTest {
@@ -120,10 +137,11 @@ public class EnvironmentComponentEventListenerTest {
     private void setupFindDashboards(EnvironmentComponent environmentComponent, Dashboard dashboard) {
         CollectorItem commitCollectorItem = new CollectorItem();
         List<Component> components = Collections.singletonList(dashboard.getApplication().getComponents().get(0));
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         commitCollectorItem.setId(environmentComponent.getCollectorItemId());
         when(collectorItemRepository.findOne(environmentComponent.getCollectorItemId())).thenReturn(commitCollectorItem);
         when(componentRepository.findByDeployCollectorItemId(commitCollectorItem.getId())).thenReturn(components);
-        when(dashboardRepository.findByApplicationComponentsIn(components)).thenReturn(Collections.singletonList(dashboard));
+        when(dashboardRepository.findByApplicationComponentIdsIn(componentIds)).thenReturn(Collections.singletonList(dashboard));
     }
 
     private void setupGetOrCreatePipeline(Dashboard dashboard, Pipeline pipeline) {
