@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.event;
 
+import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Commit;
@@ -14,11 +15,13 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Component
 public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
@@ -67,7 +70,8 @@ public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
         if (commit.getCollectorItemId() == null) return new ArrayList<>();
         CollectorItem commitCollectorItem = collectorItemRepository.findOne(commit.getCollectorItemId());
         List<Component> components = componentRepository.findBySCMCollectorItemId(commitCollectorItem.getId());
-        return dashboardRepository.findByApplicationComponentsIn(components);
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
+        return dashboardRepository.findByApplicationComponentIdsIn(componentIds);
     }
 
     /**

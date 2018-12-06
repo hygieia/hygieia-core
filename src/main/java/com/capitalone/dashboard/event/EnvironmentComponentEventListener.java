@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.event;
 
+import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.BinaryArtifact;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.Collector;
@@ -37,6 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Component
 public class EnvironmentComponentEventListener extends HygieiaMongoEventListener<EnvironmentComponent> {
@@ -264,11 +266,10 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
      * @return
      */
     private List<Dashboard> findTeamDashboardsForEnvironmentComponent(EnvironmentComponent environmentComponent){
-        List<Dashboard> dashboards;
         CollectorItem deploymentCollectorItem = collectorItemRepository.findOne(environmentComponent.getCollectorItemId());
         List<Component> components = componentRepository.findByDeployCollectorItemId(deploymentCollectorItem.getId());
-        dashboards = dashboardRepository.findByApplicationComponentsIn(components);
-        return dashboards;
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
+        return dashboardRepository.findByApplicationComponentIdsIn(componentIds);
     }
     
     private static class ToCollectorId implements Function<Collector, ObjectId> {
