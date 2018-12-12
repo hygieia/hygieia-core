@@ -70,8 +70,12 @@ public class SyncDashboard {
      * @param collectorType      The collector type of the item
      * @param addWidget          add a corresponding widget or not
      */
-    private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) throws SyncException{
+    private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) {
         if (CollectionUtils.isEmpty(existingDashboards)) return;
+        /**
+         * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
+         */
+        if(CollectorType.SCM.equals(collectorType)) return;
 
         existingDashboards.forEach((Dashboard dashboard) -> {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
@@ -106,7 +110,8 @@ public class SyncDashboard {
         List<ObjectId> collectorItemIds = collectorItems.stream().map(BaseModel::getId).collect(Collectors.toList());
         // Find the components that have these collector items
         List<com.capitalone.dashboard.model.Component> components = componentRepository.findByCollectorTypeAndItemIdIn(collectorType, collectorItemIds);
-        return dashboardRepository.findByApplicationComponentsIn(components);
+        List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
+        return dashboardRepository.findByApplicationComponentIdsIn(componentIds);
     }
 
 
