@@ -44,5 +44,6 @@ public enum CodeReviewAuditStatus {
 
     NO_COMMIT_FOR_DATE_RANGE, //Removew this later when we can remove legacy peer review
     COMMIT_AFTER_PR_MERGE, COLLECTOR_ITEM_ERROR,
-    SCM_AUTHOR_LOGIN_INVALID //passed when SCM AUTHOR is unavailable
-}
+    SCM_AUTHOR_LOGIN_INVALID, //passed when SCM AUTHOR is unavailable
+    SCM_AUTHOR_WHITELISTED_USER
+    }
