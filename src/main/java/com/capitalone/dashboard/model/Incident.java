@@ -26,6 +26,13 @@ public class Incident extends BaseModel {
     private String closureCode;
     private String affectedItem;
     private String incidentDescription;
+    private String incidentSysID;
+    private String affectedItemType;
+    private String affectedItemSysId;
+    private String affectedBusinessServiceItem;
+    private String affectedBusinessServiceItemType;
+    private String affectedBusinessServiceItemSysId;
+    private boolean attachedToBusinessServiceOrEnvironmentOnly;
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZZ");
 
@@ -100,6 +107,42 @@ public class Incident extends BaseModel {
     public String getIncidentDescription() { return incidentDescription; }
 
     public void setIncidentDescription(String incidentDescription) { this.incidentDescription = incidentDescription; }
+
+    public String getIncidentSysID() { return incidentSysID; }
+
+    public void setIncidentSysID(String incidentSysID) { this.incidentSysID = incidentSysID; }
+
+    public String getAffectedItemType() { return affectedItemType; }
+
+    public void setAffectedItemType(String affectedItemType) { this.affectedItemType = affectedItemType; }
+
+    public String getAffectedItemSysId() { return affectedItemSysId; }
+
+    public void setAffectedItemSysId(String affectedItemSysId) { this.affectedItemSysId = affectedItemSysId; }
+
+    public String getAffectedBusinessServiceItem() { return affectedBusinessServiceItem; }
+
+    public void setAffectedBusinessServiceItem(String affectedBusinessServiceItem) {
+        this.affectedBusinessServiceItem = affectedBusinessServiceItem;
+    }
+
+    public String getAffectedBusinessServiceItemType() { return affectedBusinessServiceItemType; }
+
+    public void setAffectedBusinessServiceItemType(String affectedBusinessServiceItemType) {
+        this.affectedBusinessServiceItemType = affectedBusinessServiceItemType;
+    }
+
+    public String getAffectedBusinessServiceItemSysId() { return affectedBusinessServiceItemSysId; }
+
+    public void setAffectedBusinessServiceItemSysId(String affectedBusinessServiceItemSysId) {
+        this.affectedBusinessServiceItemSysId = affectedBusinessServiceItemSysId;
+    }
+
+    public boolean isAttachedToBusinessServiceOrEnvironmentOnly() { return attachedToBusinessServiceOrEnvironmentOnly; }
+
+    public void setAttachedToBusinessServiceOrEnvironmentOnly(boolean attachedToBusinessServiceOrEnvironmentOnly) {
+        this.attachedToBusinessServiceOrEnvironmentOnly = attachedToBusinessServiceOrEnvironmentOnly;
+    }
 
     @Override
     public boolean equals(Object compareTo){
