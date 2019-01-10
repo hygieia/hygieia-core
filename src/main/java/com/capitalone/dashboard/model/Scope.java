@@ -23,6 +23,9 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represents a project in a content management system that aligns features
  * under scope.
@@ -46,6 +49,7 @@ public class Scope extends BaseModel {
 	private String assetState;
 	private String isDeleted;
 	private long lastCollected;
+	private Set<Team> teams = new HashSet<>();
 	
 	@Transient
     private Collector collector;
@@ -137,6 +141,14 @@ public class Scope extends BaseModel {
 
 	public void setLastCollected(long lastCollected) {
 		this.lastCollected = lastCollected;
+	}
+
+	public Set<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(Set<Team> teams) {
+		this.teams = teams;
 	}
 
 	@Override
