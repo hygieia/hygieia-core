@@ -6,6 +6,7 @@ import com.capitalone.dashboard.model.CodeQuality;
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.StandardWidget;
@@ -17,11 +18,11 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component
+@org.springframework.stereotype.Component
 public class SyncDashboard {
     private final DashboardRepository dashboardRepository;
     private final ComponentRepository componentRepository;
@@ -77,23 +78,54 @@ public class SyncDashboard {
          */
         if(CollectorType.SCM.equals(collectorType)) return;
 
-        existingDashboards.forEach((Dashboard dashboard) -> {
+        for(Dashboard dashboard : existingDashboards) {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
             StandardWidget standardWidget = new StandardWidget(collectorType, componentId);
-            com.capitalone.dashboard.model.Component component = componentRepository.findOne(componentId);
-            if (component != null) {
-                component.addCollectorItem(collectorType, collectorItem);
-                componentRepository.save(component);
-                collectorItem.setEnabled(true);
-                collectorItemRepository.save(collectorItem);
+            Component component = componentRepository.findOne(componentId);
+            if (component == null) continue;
 
-                if (addWidget && (getWidget(standardWidget.getName(), dashboard) == null)) {
-                    Widget widget = standardWidget.getWidget();
-                    dashboard.getWidgets().add(widget);
-                    dashboardRepository.save(dashboard);
-                }
+            if(!associateByType(collectorType, component, collectorItem)) continue;
+
+            component.addCollectorItem(collectorType, collectorItem);
+            componentRepository.save(component);
+            collectorItem.setEnabled(true);
+            collectorItemRepository.save(collectorItem);
+
+            if (addWidget && (getWidget(standardWidget.getName(), dashboard) == null)) {
+                Widget widget = standardWidget.getWidget();
+                dashboard.getWidgets().add(widget);
+                dashboardRepository.save(dashboard);
             }
-        });
+
+        }
+    }
+
+    /*
+    * Additional logic for association by Collector Type
+    * */
+    private boolean associateByType(CollectorType collectorType, Component component, CollectorItem collectorItem) {
+        switch (collectorType) {
+            case Build : return associateBuild(component,collectorItem);
+            default : return true;
+        }
+    }
+
+    /*
+    * Association logic for Build Collector Type
+    * */
+    private boolean associateBuild(Component component, CollectorItem collectorItem) {
+        List<CollectorItem> scmCollectorItems = Lists.newArrayList(component.getCollectorItems(CollectorType.SCM));
+        if(CollectionUtils.isEmpty(scmCollectorItems)) return false;
+        Set<RepoBranch> validRepoBranchSet = scmCollectorItems.stream()
+                .map(item -> new RepoBranch(String.valueOf(item.getOptions().get("url")),
+                        String.valueOf(item.getOptions().get("branch")),
+                        RepoBranch.RepoType.GIT)).collect(Collectors.toSet());
+        // get the last build and compare the codeRepos to be subset of validRepoBranchSet if not then do not associate dashboard.
+        Build lastBuild = buildRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
+        if(lastBuild == null) return false;
+
+        Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(lastBuild.getCodeRepos());
+        return (!validRepoBranchSet.containsAll(repoBranchesBuild));
     }
 
     /**

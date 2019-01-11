@@ -53,7 +53,7 @@ public class Component extends BaseModel {
     }
 
     public List<CollectorItem> getCollectorItems(CollectorType type) {
-        return collectorItems.get(type);
+        return collectorItems != null && collectorItems.get(type) != null ? collectorItems.get(type) : new ArrayList<>();
     }
 
     public void addCollectorItem(CollectorType collectorType, CollectorItem collectorItem) {

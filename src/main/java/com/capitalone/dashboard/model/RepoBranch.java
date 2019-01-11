@@ -1,8 +1,10 @@
 package com.capitalone.dashboard.model;
 
 
+import javax.validation.constraints.NotNull;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 public class RepoBranch {
     private String url = "";
@@ -39,15 +41,15 @@ public class RepoBranch {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.url = url.toLowerCase(Locale.US);
     }
 
     public String getBranch() {
-        return branch;
+        return RepoType.GIT.equals(this.type)? getGITNormalizedBranch(branch) : branch;
     }
 
     public void setBranch(String branch) {
-        this.branch = branch;
+        this.branch = RepoType.GIT.equals(this.type)? getGITNormalizedBranch(branch) : branch;
     }
 
     public RepoType getType() {
@@ -84,4 +86,11 @@ public class RepoBranch {
         }
 
     }
+
+
+    private String getGITNormalizedBranch (@NotNull String branch) {
+        String[] tokens = branch.split("/");
+        return tokens[tokens.length-1];
+    }
+
 }
