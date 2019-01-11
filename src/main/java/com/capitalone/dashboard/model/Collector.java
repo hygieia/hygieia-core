@@ -25,6 +25,8 @@ public class Collector extends BaseModel {
     private long lastExecuted;
     private List<String> searchFields = Arrays.asList("description");
 
+    private Map<String, Object> properties = new HashMap<>(); //general purpose name-value properties
+
     public Collector() {
     }
 
@@ -105,4 +107,11 @@ public class Collector extends BaseModel {
         this.searchFields = searchFields;
     }
 
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
+    }
 }

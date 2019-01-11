@@ -49,7 +49,6 @@ public class Scope extends BaseModel {
 	private String assetState;
 	private String isDeleted;
 	private long lastCollected;
-	private Set<Team> teams = new HashSet<>();
 	
 	@Transient
     private Collector collector;
@@ -141,14 +140,6 @@ public class Scope extends BaseModel {
 
 	public void setLastCollected(long lastCollected) {
 		this.lastCollected = lastCollected;
-	}
-
-	public Set<Team> getTeams() {
-		return teams;
-	}
-
-	public void setTeams(Set<Team> teams) {
-		this.teams = teams;
 	}
 
 	@Override
