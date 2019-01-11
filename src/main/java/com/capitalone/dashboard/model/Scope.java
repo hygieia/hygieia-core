@@ -23,9 +23,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Represents a project in a content management system that aligns features
  * under scope.
