@@ -103,6 +103,7 @@ public class Feature extends BaseModel {
 	private String sEpicName;
 	private String sEpicUrl;
 	private String sEpicNumber;
+	@Indexed
 	private String sEpicID;
 
 	/*
