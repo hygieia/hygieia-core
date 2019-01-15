@@ -13,6 +13,7 @@ import com.capitalone.dashboard.model.StandardWidget;
 import com.capitalone.dashboard.model.Widget;
 import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
 import com.capitalone.dashboard.repository.BuildRepository;
+import com.capitalone.dashboard.repository.CodeQualityRepository;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
@@ -24,6 +25,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,18 +40,23 @@ public class SyncDashboard {
     private final CollectorItemRepository collectorItemRepository;
     private final BuildRepository buildRepository;
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
+    private final CodeQualityRepository codeQualityRepository;
 
     private static final String BUILD_REPO_REASON = "Code Repo build";
     private static final String CODEQUALITY_TRIGGERED_REASON = "Code scan triggered by build";
 
     @Autowired
-    public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository, CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository, BuildRepository buildRepository, RelatedCollectorItemRepository relatedCollectorItemRepository) {
+    public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository,
+                         CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository,
+                         BuildRepository buildRepository, RelatedCollectorItemRepository relatedCollectorItemRepository,
+                         CodeQualityRepository codeQualityRepository) {
         this.dashboardRepository = dashboardRepository;
         this.componentRepository = componentRepository;
         this.collectorRepository = collectorRepository;
         this.collectorItemRepository = collectorItemRepository;
         this.buildRepository = buildRepository;
         this.relatedCollectorItemRepository = relatedCollectorItemRepository;
+        this.codeQualityRepository = codeQualityRepository;
     }
 
 
@@ -84,6 +91,7 @@ public class SyncDashboard {
             Component component = componentRepository.findOne(componentId);
             if (component == null) continue;
 
+            // if the additional association logic does not comply do not associate
             if(!associateByType(collectorType, component, collectorItem)) continue;
 
             component.addCollectorItem(collectorType, collectorItem);
@@ -105,8 +113,9 @@ public class SyncDashboard {
     * */
     private boolean associateByType(CollectorType collectorType, Component component, CollectorItem collectorItem) {
         switch (collectorType) {
-            case Build : return associateBuild(component,collectorItem);
-            default : return true;
+            case Build: return associateBuild(component,collectorItem);
+            case CodeQuality: return associateCodeQuality(component,collectorItem);
+            default: return true;
         }
     }
 
@@ -116,16 +125,53 @@ public class SyncDashboard {
     private boolean associateBuild(Component component, CollectorItem collectorItem) {
         List<CollectorItem> scmCollectorItems = Lists.newArrayList(component.getCollectorItems(CollectorType.SCM));
         if(CollectionUtils.isEmpty(scmCollectorItems)) return false;
-        Set<RepoBranch> validRepoBranchSet = scmCollectorItems.stream()
+
+        // get the last build and compare the codeRepos to be subset of validRepoBranchSet if not then do not associate dashboard.
+        Build build = buildRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
+        if(build == null) return false;
+
+        Set<RepoBranch> validRepoBranchSet = buildValidRepoBranches(component, getRepoType(build));
+        Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(build.getCodeRepos());
+
+        return CollectionUtils.isSubCollection(repoBranchesBuild, validRepoBranchSet);
+    }
+
+    /*
+     * Association logic for CodeQuality Collector Type
+     * */
+    private boolean associateCodeQuality (@NotNull Component component,@NotNull CollectorItem collectorItem) {
+        List<CollectorItem> scmCollectorItems = Lists.newArrayList(component.getCollectorItems(CollectorType.SCM));
+        if(CollectionUtils.isEmpty(scmCollectorItems)) return false;
+
+        CodeQuality entity = codeQualityRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
+        if(entity == null || entity.getBuildId() == null) return false;
+
+        Build build = buildRepository.findOne(entity.getBuildId());
+        if(build == null) return false;
+
+        Set<RepoBranch> validRepoBranchSet = buildValidRepoBranches(component, getRepoType(build));
+        Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(build.getCodeRepos());
+
+        return CollectionUtils.isSubCollection(repoBranchesBuild, validRepoBranchSet);
+    }
+
+    /*
+     * Build a unique set of Valid RepoBranches by checking all SCM CollectorItems.
+     * */
+    private Set<RepoBranch> buildValidRepoBranches (@NotNull Component component, @NotNull RepoBranch.RepoType repoType) {
+        List<CollectorItem> scmCollectorItems = Lists.newArrayList(component.getCollectorItems(CollectorType.SCM));
+        return Sets.newConcurrentHashSet(scmCollectorItems.stream()
                 .map(item -> new RepoBranch(String.valueOf(item.getOptions().get("url")),
                         String.valueOf(item.getOptions().get("branch")),
-                        RepoBranch.RepoType.GIT)).collect(Collectors.toSet());
-        // get the last build and compare the codeRepos to be subset of validRepoBranchSet if not then do not associate dashboard.
-        Build lastBuild = buildRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
-        if(lastBuild == null) return false;
+                        repoType)).collect(Collectors.toSet()));
+    }
 
-        Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(lastBuild.getCodeRepos());
-        return (!validRepoBranchSet.containsAll(repoBranchesBuild));
+    /*
+    * Retrieve Repotype from Build.
+    * */
+    private RepoBranch.RepoType getRepoType(@NotNull Build build) {
+        if(CollectionUtils.isEmpty(build.getCodeRepos())) return RepoBranch.RepoType.Unknown;
+        return build.getCodeRepos().get(0).getType();
     }
 
     /**

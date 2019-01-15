@@ -45,11 +45,19 @@ public class RepoBranch {
     }
 
     public String getBranch() {
-        return RepoType.GIT.equals(this.type)? getGITNormalizedBranch(branch) : branch;
+        switch (this.getType()) {
+            case GIT: return getGITNormalizedBranch(branch);
+            case SVN: return branch;
+            default: return branch;
+        }
     }
 
     public void setBranch(String branch) {
-        this.branch = RepoType.GIT.equals(this.type)? getGITNormalizedBranch(branch) : branch;
+        switch (this.getType()) {
+            case GIT: this.branch = getGITNormalizedBranch(branch); break;
+            case SVN: this.branch = branch; break;
+            default: this.branch = branch; break;
+        }
     }
 
     public RepoType getType() {
@@ -67,17 +75,17 @@ public class RepoBranch {
 
         RepoBranch that = (RepoBranch) o;
 
-        return getRepoName().equals(that.getRepoName()) && branch.equals(that.branch);
+        return getRepoName().equals(that.getRepoName()) && getBranch().equals(that.getBranch());
     }
 
     @Override
     public int hashCode() {
         int result = url.hashCode();
-        result = 31 * result + branch.hashCode();
+        result = 31 * result + getBranch().hashCode();
         return result;
     }
 
-    protected String getRepoName() {
+    private String getRepoName() {
         try {
             URL temp = new URL(url);
             return temp.getHost() + temp.getPath();
@@ -86,7 +94,6 @@ public class RepoBranch {
         }
 
     }
-
 
     private String getGITNormalizedBranch (@NotNull String branch) {
         String[] tokens = branch.split("/");
