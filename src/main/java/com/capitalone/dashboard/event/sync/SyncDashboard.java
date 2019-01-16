@@ -128,7 +128,7 @@ public class SyncDashboard {
 
         // get the last build and compare the codeRepos to be subset of validRepoBranchSet if not then do not associate dashboard.
         Build build = buildRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
-        if(build == null) return false;
+        if(build == null || CollectionUtils.isEmpty(build.getCodeRepos())) return false;
 
         Set<RepoBranch> validRepoBranchSet = buildValidRepoBranches(component, getRepoType(build));
         Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(build.getCodeRepos());
@@ -147,7 +147,7 @@ public class SyncDashboard {
         if(entity == null || entity.getBuildId() == null) return false;
 
         Build build = buildRepository.findOne(entity.getBuildId());
-        if(build == null) return false;
+        if(build == null || CollectionUtils.isEmpty(build.getCodeRepos())) return false;
 
         Set<RepoBranch> validRepoBranchSet = buildValidRepoBranches(component, getRepoType(build));
         Set<RepoBranch> repoBranchesBuild = Sets.newConcurrentHashSet(build.getCodeRepos());
