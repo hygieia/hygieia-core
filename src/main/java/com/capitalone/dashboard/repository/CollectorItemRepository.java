@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,10 +55,16 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     }
 
     default Iterable<CollectorItem> findAllByOptionNameValueAndCollectorIdsIn(String optionName, String optionValue, List<ObjectId> collectorIds) {
+        Map<String, Object> inMap = new HashMap<>();
+        inMap.put(optionName, optionValue);
+        return findAllByOptionMapAndCollectorIdsIn(inMap, collectorIds);
+    }
+
+    default Iterable<CollectorItem> findAllByOptionMapAndCollectorIdsIn(Map<String, Object> options, List<ObjectId> collectorIds) {
         PathBuilder<CollectorItem> path = new PathBuilder<>(CollectorItem.class, "collectorItem");
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(path.get("collectorId",  ObjectId.class).in(collectorIds));
-        builder.and(path.get("options", Map.class).get(optionName, String.class).eq(optionValue));
+        builder.and(path.get("collectorId", ObjectId.class).in(collectorIds));
+        options.forEach((key, value) -> builder.and(path.get("options", Map.class).get(key, Object.class).eq(value)));
         return findAll(builder.getValue());
     }
 }
