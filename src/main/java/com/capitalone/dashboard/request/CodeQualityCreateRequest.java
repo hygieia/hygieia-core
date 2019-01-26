@@ -24,6 +24,8 @@ public class CodeQualityCreateRequest {
     @NotNull
     private String projectVersion;
 
+    private String toolName;
+
     private String niceName;
 
     private List<CodeQualityMetric> metrics = new ArrayList<>();
@@ -105,5 +107,13 @@ public class CodeQualityCreateRequest {
 
     public void setNiceName(String niceName) {
         this.niceName = niceName;
+    }
+
+    public String getToolName() {
+        return toolName;
+    }
+
+    public void setToolName(String toolName) {
+        this.toolName = toolName;
     }
 }
