@@ -51,6 +51,10 @@ public class Dashboard extends BaseModel {
 
     private List<String> activeWidgets;
 
+    private long createdAt;
+
+    private long updatedAt;
+
     @Transient
     String errorMessage;
 
@@ -60,11 +64,11 @@ public class Dashboard extends BaseModel {
     Dashboard() {
     }
 
-    public Dashboard(String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
-        this(false, template, title, application, owner, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);
+    public Dashboard(String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay, long createdAt) {
+        this(false, template, title, application, owner, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay, createdAt);
     }
 
-    public Dashboard(boolean remoteCreated, String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+    public Dashboard(boolean remoteCreated, String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay, long createdAt) {
         this.template = template;
         this.title = title;
         this.configurationItemBusServName = configurationItemBusServName;
@@ -75,6 +79,7 @@ public class Dashboard extends BaseModel {
         this.activeWidgets = activeWidgets;
         this.scoreEnabled = scoreEnabled;
         this.scoreDisplay = scoreDisplay;
+        this.createdAt = createdAt;
     }
 
     public String getTemplate() {
@@ -207,5 +212,21 @@ public class Dashboard extends BaseModel {
 
     public void setScoreDisplay(ScoreDisplayType scoreDisplay) {
         this.scoreDisplay = scoreDisplay;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long timeStamp) {
+        this.updatedAt = timeStamp;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long timeStamp) {
+        this.createdAt = timeStamp;
     }
 }
