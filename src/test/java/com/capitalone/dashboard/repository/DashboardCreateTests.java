@@ -43,7 +43,7 @@ public class DashboardCreateTests extends FongoBaseRepositoryTest {
         Application application = new Application("Jay's App", component);
 
         List<String> activeWidgets = new ArrayList<>();
-        Dashboard dashboard = new Dashboard("Topo", "Jays's Dashboard", application, new Owner("amit", AuthType.STANDARD), DashboardType.Team,  configItemApp.getConfigurationItem(), configItemComp.getConfigurationItem(), activeWidgets, false, ScoreDisplayType.HEADER, System.currentTimeMillis());
+        Dashboard dashboard = new Dashboard("Topo", "Jays's Dashboard", application, new Owner("amit", AuthType.STANDARD), DashboardType.Team,  configItemApp.getConfigurationItem(), configItemComp.getConfigurationItem(), activeWidgets, false, ScoreDisplayType.HEADER);
 
         Widget build = new Widget();
         build.setName("build");
