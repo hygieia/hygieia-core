@@ -51,6 +51,10 @@ public class Dashboard extends BaseModel {
 
     private List<ActiveWidget> activeWidgets;
 
+    private long createdAt;
+
+    private long updatedAt;
+
     @Transient
     String errorMessage;
 
@@ -75,6 +79,7 @@ public class Dashboard extends BaseModel {
         this.activeWidgets = activeWidgets;
         this.scoreEnabled = scoreEnabled;
         this.scoreDisplay = scoreDisplay;
+        this.createdAt = System.currentTimeMillis();
     }
 
     public String getTemplate() {
@@ -207,5 +212,21 @@ public class Dashboard extends BaseModel {
 
     public void setScoreDisplay(ScoreDisplayType scoreDisplay) {
         this.scoreDisplay = scoreDisplay;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long timeStamp) {
+        this.updatedAt = timeStamp;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long timeStamp) {
+        this.createdAt = timeStamp;
     }
 }
