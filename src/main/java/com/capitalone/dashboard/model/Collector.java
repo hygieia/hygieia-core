@@ -26,7 +26,6 @@ public class Collector extends BaseModel {
     private List<String> searchFields = Arrays.asList("description");
     private Map<String, Object> properties = new HashMap<>(); //general purpose name-value properties
 
-
     public Collector() {
     }
 
