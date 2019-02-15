@@ -31,7 +31,9 @@ public interface CommitRepository extends CrudRepository<Commit, ObjectId>, Quer
 
     List<Commit> findByScmUrlIgnoreCaseAndScmBranch (String scmUrl, String scmBranch);
 
-    Commit findByScmRevisionNumberAndScmUrlIgnoreCaseAndScmBranchIgnoreCase (String scmRevisionNumber, String scmUrl, String branch);
+    Commit findByScmRevisionNumberAndScmUrlIgnoreCaseAndScmBranchIgnoreCase(String scmRevisionNumber, String scmUrl, String branch);
+
+    List<Commit> findAllByScmRevisionNumberAndScmUrlIgnoreCaseAndScmBranchIgnoreCaseOrderByTimestampAsc (String scmRevisionNumber, String scmUrl, String branch);
 
     @Query(value="{ 'collectorItemId': ?0, 'scmCommitTimestamp': { $gt: ?1 }}")
     List<Commit> findByCollectorItemIdAndScmCommitTimestamp(ObjectId collectorItemid, Long scmCommitTimestampThreshold);
@@ -43,4 +45,6 @@ public interface CommitRepository extends CrudRepository<Commit, ObjectId>, Quer
     List<Commit> findCommitsByCollectorItemIdAndTimestampAfterAndPullNumberIsNull(ObjectId collectorItemId, long beginDate);
 
     Commit findByScmRevisionNumberAndScmAuthorIgnoreCaseAndScmCommitLogAndScmCommitTimestamp(String scmRevisionNumber, String scmAuthor, String scmCommitLog, long scmCommitTimestamp);
+
+    List<Commit> findAllByScmRevisionNumberAndScmAuthorIgnoreCaseAndScmCommitLogAndScmCommitTimestamp(String scmRevisionNumber, String scmAuthor, String scmCommitLog, long scmCommitTimestamp);
 }

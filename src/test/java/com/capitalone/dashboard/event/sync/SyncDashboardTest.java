@@ -1,16 +1,14 @@
 package com.capitalone.dashboard.event.sync;
 
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.Component;
-import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
-import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
-import com.capitalone.dashboard.util.LoadTestData;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.CodeQuality;
+import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.Widget;
+import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
 import com.capitalone.dashboard.repository.BuildRepository;
 import com.capitalone.dashboard.repository.CodeQualityRepository;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
@@ -18,8 +16,10 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
+import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.repository.TestResultRepository;
 import com.capitalone.dashboard.testutil.FongoConfig;
+import com.capitalone.dashboard.util.LoadTestData;
 import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -79,7 +79,7 @@ public class SyncDashboardTest {
 
     @Bean
     private SyncDashboard syncDashboard() {
-        return new SyncDashboard(dashboardRepository, componentRepository, collectorRepository, collectorItemRepository, buildRepository, relatedCollectorItemRepository);
+        return new SyncDashboard(dashboardRepository, componentRepository, collectorRepository, collectorItemRepository, buildRepository, relatedCollectorItemRepository, codeQualityRepository);
     }
 
 
