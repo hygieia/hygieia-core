@@ -64,4 +64,6 @@ public interface FeatureRepository extends CrudRepository<Feature, ObjectId>,
 	List<Feature> findAllByCollectorIdAndSTeamID(ObjectId collectorId, String sTeamID);
 
 	List<Feature> findAllByCollectorIdAndSProjectID(Object collectorId, String sProjectID);
+
+	Feature findByCollectorIdAndSIdAndSTeamID(Object collectorId, String sProjectID, String sTeamID);
 }
