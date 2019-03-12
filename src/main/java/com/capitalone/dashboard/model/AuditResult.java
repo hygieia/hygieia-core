@@ -3,6 +3,8 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 @Document(collection = "audit_results")
 public class AuditResult extends BaseModel {
 
@@ -18,12 +20,13 @@ public class AuditResult extends BaseModel {
     private String auditStatus;
     private String url;
     private String auditDetails;
+    private Map traceability;
     private long timestamp;
 
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public AuditResult(ObjectId dashboardId, String dashboardTitle, String lineOfBusiness, String configItemBusServName,
                        String configItemBusAppName, String configItemBusServOwner, String configItemBusAppOwner, AuditType auditType,
-                       String auditTypeStatus, String auditStatus, String auditDetails, String url, long timestamp) {
+                       String auditTypeStatus, String auditStatus, String auditDetails, String url, Map traceability, long timestamp) {
         this.dashboardId = dashboardId;
         this.dashboardTitle = dashboardTitle;
         this.lineOfBusiness = lineOfBusiness;
@@ -36,6 +39,7 @@ public class AuditResult extends BaseModel {
         this.auditStatus = auditStatus;
         this.url = url;
         this.auditDetails = auditDetails;
+        this.traceability = traceability;
         this.timestamp = timestamp;
     }
 
@@ -134,6 +138,10 @@ public class AuditResult extends BaseModel {
     public void setAuditDetails(String auditDetails) {
         this.auditDetails = auditDetails;
     }
+
+    public Map getTraceability() { return traceability; }
+
+    public void setTraceability(Map traceability) { this.traceability = traceability; }
 
     public long getTimestamp() {
         return timestamp;

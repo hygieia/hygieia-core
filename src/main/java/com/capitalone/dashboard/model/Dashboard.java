@@ -64,18 +64,18 @@ public class Dashboard extends BaseModel {
     Dashboard() {
     }
 
-    public Dashboard(String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
-        this(false, template, title, application, owner, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);
+    public Dashboard(String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+        this(false, template, title, application, owners, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);
     }
 
-    public Dashboard(boolean remoteCreated, String template, String title, Application application, Owner owner, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+    public Dashboard(boolean remoteCreated, String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
         this.template = template;
         this.title = title;
         this.configurationItemBusServName = configurationItemBusServName;
         this.configurationItemBusAppName = configurationItemBusAppName;
         this.application = application;
         this.type = type;
-        this.owners.add(owner);
+        this.owners = owners;
         this.activeWidgets = activeWidgets;
         this.scoreEnabled = scoreEnabled;
         this.scoreDisplay = scoreDisplay;

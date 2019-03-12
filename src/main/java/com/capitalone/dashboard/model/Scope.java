@@ -45,6 +45,7 @@ public class Scope extends BaseModel {
 	private String changeDate;
 	private String assetState;
 	private String isDeleted;
+	private long lastCollected;
 	
 	@Transient
     private Collector collector;
@@ -128,7 +129,16 @@ public class Scope extends BaseModel {
 	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
+
+
+	public long getLastCollected() {
+		return lastCollected;
+	}
+
+	public void setLastCollected(long lastCollected) {
+		this.lastCollected = lastCollected;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

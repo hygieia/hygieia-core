@@ -103,6 +103,7 @@ public class Feature extends BaseModel {
 	private String sEpicName;
 	private String sEpicUrl;
 	private String sEpicNumber;
+	@Indexed
 	private String sEpicID;
 
 	/*
@@ -115,6 +116,7 @@ public class Feature extends BaseModel {
 	private String sProjectEndDate;
 	private String sProjectBeginDate;
 	private String sProjectName;
+	@Indexed
 	private String sProjectID;
 
 

@@ -53,7 +53,9 @@ public class DashboardTest {
             app.addComponent(new Component(compName));
         }
         List<String> activeWidgets = new ArrayList<>();
-        Dashboard dashboard = new Dashboard(template, title, app, new Owner(owner, AuthType.STANDARD), DashboardType.Team,configItemAppName, configItemComponentName, activeWidgets, false, ScoreDisplayType.HEADER);
+        List<Owner> owners = new ArrayList<Owner>();
+        owners.add(new Owner("owner", AuthType.STANDARD));
+        Dashboard dashboard = new Dashboard(template, title, app, owners, DashboardType.Team,configItemAppName, configItemComponentName, activeWidgets, false, ScoreDisplayType.HEADER);
         return dashboard;
     }
 
