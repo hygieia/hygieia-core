@@ -9,6 +9,7 @@ import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,26 +19,27 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-public class GenericCollectorItemProcessor<T extends Collector> {
+public abstract class CollectorTaskWithGenericItem<T extends Collector> extends CollectorTask<T>{
 
     private final CollectorItemRepository collectorItemRepository;
     private final GenericCollectorItemRepository genericCollectorItemRepository;
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
 
     @Autowired
-    public GenericCollectorItemProcessor(CollectorItemRepository collectorItemRepository, GenericCollectorItemRepository genericCollectorItemRepository, RelatedCollectorItemRepository relatedCollectorItemRepository) {
+    public CollectorTaskWithGenericItem(TaskScheduler taskScheduler, String collectorName, CollectorItemRepository collectorItemRepository, GenericCollectorItemRepository genericCollectorItemRepository, RelatedCollectorItemRepository relatedCollectorItemRepository) {
+        super(taskScheduler, collectorName);
         this.collectorItemRepository = collectorItemRepository;
         this.genericCollectorItemRepository = genericCollectorItemRepository;
         this.relatedCollectorItemRepository = relatedCollectorItemRepository;
     }
 
 
-    public Map<ObjectId, Set<ObjectId>> processGenericItems(T collector, List<String> toolServers, Map<String, Object> options) {
-        List<GenericCollectorItem> genericCollectorItems = genericCollectorItemRepository.findAllByToolNameAndProcessTimeEquals(collector.getName(), 0L);
+    public Map<ObjectId, Set<ObjectId>> processGenericItems(List<String> toolServers) {
+        List<GenericCollectorItem> genericCollectorItems = genericCollectorItemRepository.findAllByToolNameAndProcessTimeEquals(getCollector().getName(), 0L);
         Map<ObjectId, Set<ObjectId>> collectorItemBuildIds = new HashMap<>();
         genericCollectorItems.forEach(gci -> {
             toolServers.stream()
-                    .map(server -> Lists.newArrayList(collectorItemRepository.findAllByOptionMapAndCollectorIdsIn(options, Lists.newArrayList(collector.getId()))))
+                    .map(server -> Lists.newArrayList(collectorItemRepository.findAllByOptionMapAndCollectorIdsIn(getGenericCollectorItemOptions(server, gci), Lists.newArrayList(getCollector().getId()))))
                     .forEach(collectorItems -> collectorItems.forEach(item -> {
                         //Save as related item. Related Item event listener will process it.
                         if (!collectorItemBuildIds.containsKey(item.getId())) {
@@ -59,5 +61,7 @@ public class GenericCollectorItemProcessor<T extends Collector> {
         });
         return collectorItemBuildIds;
     }
+
+    public abstract Map<String, Object> getGenericCollectorItemOptions(String serverUrl, GenericCollectorItem genericCollectorItem);
 
 }
