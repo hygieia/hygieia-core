@@ -7,11 +7,13 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.GenericCollectorItemRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,9 @@ public abstract class CollectorTaskWithGenericItem<T extends Collector> extends 
 
     public Map<ObjectId, Set<ObjectId>> processGenericItems(List<String> toolServers) {
         List<GenericCollectorItem> genericCollectorItems = genericCollectorItemRepository.findAllByToolNameAndProcessTimeEquals(getCollector().getName(), 0L);
+        if (CollectionUtils.isEmpty(genericCollectorItems)) {
+            return Collections.emptyMap();
+        }
         Map<ObjectId, Set<ObjectId>> collectorItemBuildIds = new HashMap<>();
         genericCollectorItems.forEach(gci -> {
             toolServers.stream()
