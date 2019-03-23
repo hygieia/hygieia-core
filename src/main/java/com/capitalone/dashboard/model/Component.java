@@ -54,6 +54,10 @@ public class Component extends BaseModel {
         return collectorItems != null && collectorItems.get(type) != null ? collectorItems.get(type) : new ArrayList<>();
     }
 
+    public void setAllCollectorItems(Map<CollectorType, List<CollectorItem>> replacementCollectorItems) {
+        this.collectorItems = replacementCollectorItems;
+    }
+
     public void addCollectorItem(CollectorType collectorType, CollectorItem collectorItem) {
         if (collectorItems.get(collectorType) == null) {
             List<CollectorItem> newList = new ArrayList<>();
@@ -61,8 +65,10 @@ public class Component extends BaseModel {
             collectorItems.put(collectorType,newList);
         } else {
             List<CollectorItem> existing = new ArrayList<> (collectorItems.get(collectorType));
-            existing.add(collectorItem);
-            collectorItems.put(collectorType, existing);
+            if(isNewCollectorItem(existing,collectorItem)) {
+                existing.add(collectorItem);
+                collectorItems.put(collectorType, existing);
+            }
         }
     }
 

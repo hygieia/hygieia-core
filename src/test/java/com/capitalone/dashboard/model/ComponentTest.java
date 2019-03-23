@@ -132,7 +132,7 @@ public class ComponentTest {
     }
 
     @Test
-    public void testDuplicateCollectorItemsAllowed() {
+    public void testDuplicateCollectorItemsNotAllowed() {
         Component component = createComponent(1537473333333L);
         CollectorItem c1 = new CollectorItem();
         ObjectId collectorItemId = ObjectId.get();
@@ -149,7 +149,7 @@ public class ComponentTest {
 
         // make sure we have 2more
         List<CollectorItem> collectorItemsAfter = component.getCollectorItems(CollectorType.SCM);
-        Assert.assertEquals(3, collectorItemsAfter.size());
+        Assert.assertEquals(2, collectorItemsAfter.size());
     }
 
 
