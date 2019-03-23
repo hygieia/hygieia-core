@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains the results of exexuting a testsuite
+ * Contains the results of executing a testsuite
  * <p>
  * <p>Java class for testsuite complex type.
  * <p>

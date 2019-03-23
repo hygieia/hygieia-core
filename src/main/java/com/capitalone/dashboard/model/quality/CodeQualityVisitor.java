@@ -15,4 +15,6 @@ public interface CodeQualityVisitor {
     void visit(PmdReport pmdReport);
 
     void visit(CheckstyleReport checkstyleReport);
+
+    void visit(MochaJsSpecReport mochaJsSpecReport);
 }
