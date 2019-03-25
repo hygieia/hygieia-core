@@ -356,7 +356,7 @@ public class JunitXmlReport implements CodeQualityVisitee {
     }
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 

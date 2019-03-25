@@ -11,7 +11,7 @@ public class CheckstyleReport implements CodeQualityVisitee {
     private List<CheckstyleFile> files;
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 @XmlRootElement(name = "BugCollection")
 public class FindBugsXmlReport implements CodeQualityVisitee {
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 

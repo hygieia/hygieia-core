@@ -11,7 +11,7 @@ public class PmdReport implements CodeQualityVisitee {
     private List<PmdFile> files;
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 
