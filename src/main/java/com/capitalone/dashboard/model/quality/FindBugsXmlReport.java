@@ -5,7 +5,7 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "BugCollection")
-public class FindBugsXmlReport implements CodeQualityVisitee {
+public class FindBugsXmlReport implements QualityVisitee {
     @Override
     public void accept(QualityVisitor visitor) {
         visitor.visit(this);

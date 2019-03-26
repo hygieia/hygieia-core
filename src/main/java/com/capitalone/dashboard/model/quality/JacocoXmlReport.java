@@ -5,7 +5,7 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "report")
-public class JacocoXmlReport implements CodeQualityVisitee{
+public class JacocoXmlReport implements QualityVisitee {
 
     @XmlElement(name="counter")
     private List<Counter> counters;

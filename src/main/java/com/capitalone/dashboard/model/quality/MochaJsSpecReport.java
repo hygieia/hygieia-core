@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Resutls from MochaJSSpec Format
  */
-public class MochaJsSpecReport implements CodeQualityVisitee {
+public class MochaJsSpecReport implements QualityVisitee {
 
     public static class Stats {
         private int suites;

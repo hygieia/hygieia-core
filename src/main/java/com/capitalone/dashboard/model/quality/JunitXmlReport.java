@@ -120,7 +120,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "testsuite")
-public class JunitXmlReport implements CodeQualityVisitee {
+public class JunitXmlReport implements QualityVisitee {
 
     @XmlElement(required = true)
     protected JunitXmlReport.Properties properties;

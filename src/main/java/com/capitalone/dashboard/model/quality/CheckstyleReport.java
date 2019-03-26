@@ -5,7 +5,7 @@ import java.util.List;
 
 @XmlRootElement(name="checkstyle")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CheckstyleReport implements CodeQualityVisitee {
+public class CheckstyleReport implements QualityVisitee {
 
     @XmlElement(name="file")
     private List<CheckstyleFile> files;

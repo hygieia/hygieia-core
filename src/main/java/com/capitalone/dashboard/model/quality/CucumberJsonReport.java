@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by stevegal on 2019-03-24.
  */
-public class CucumberJsonReport implements CodeQualityVisitee{
+public class CucumberJsonReport implements QualityVisitee {
 
     @Override
     public void accept(QualityVisitor visitor) {

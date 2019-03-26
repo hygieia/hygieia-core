@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.model.quality;
 
-public interface CodeQualityVisitee {
+public interface QualityVisitee {
 
     void accept(QualityVisitor visitor);
 }
