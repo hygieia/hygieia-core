@@ -47,11 +47,11 @@ public class BinaryArtifact extends BaseModel {
     private String artifactClassifier;
     private String artifactExtension;
     private String type;
-    private String createdTimeStamp;
+    private long createdTimeStamp;
 
 
     private String createdBy;
-    private String modifiedTimeStamp;
+    private long modifiedTimeStamp;
     private String modifiedBy;
     private String actual_sha1;
     private String actual_md5;
@@ -233,11 +233,11 @@ public class BinaryArtifact extends BaseModel {
         this.type = type;
     }
 
-    public String getCreatedTimeStamp() {
+    public long getCreatedTimeStamp() {
         return createdTimeStamp;
     }
 
-    public void setCreatedTimeStamp(String createdTimeStamp) {
+    public void setCreatedTimeStamp(long createdTimeStamp) {
         this.createdTimeStamp = createdTimeStamp;
     }
 
@@ -249,11 +249,11 @@ public class BinaryArtifact extends BaseModel {
         this.createdBy = createdBy;
     }
 
-    public String getModifiedTimeStamp() {
+    public long getModifiedTimeStamp() {
         return modifiedTimeStamp;
     }
 
-    public void setModifiedTimeStamp(String modifiedTimeStamp) {
+    public void setModifiedTimeStamp(long modifiedTimeStamp) {
         this.modifiedTimeStamp = modifiedTimeStamp;
     }
 
