@@ -25,6 +25,8 @@ public class AuditResult extends BaseModel {
     private long timestamp;
     private Map<String, Object> options = new HashMap<>();
 
+    public AuditResult() { }
+
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public AuditResult(ObjectId dashboardId, String dashboardTitle, String lineOfBusiness, String configItemBusServName,
                        String configItemBusAppName, String configItemBusServOwner, String configItemBusAppOwner, AuditType auditType,
