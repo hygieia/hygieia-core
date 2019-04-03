@@ -3,6 +3,7 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Document(collection = "audit_results")
@@ -22,6 +23,7 @@ public class AuditResult extends BaseModel {
     private String auditDetails;
     private Map traceability;
     private long timestamp;
+    private Map<String, Object> options = new HashMap<>();
 
     @SuppressWarnings("PMD.ExcessiveParameterList")
     public AuditResult(ObjectId dashboardId, String dashboardTitle, String lineOfBusiness, String configItemBusServName,
@@ -40,6 +42,25 @@ public class AuditResult extends BaseModel {
         this.url = url;
         this.auditDetails = auditDetails;
         this.traceability = traceability;
+        this.timestamp = timestamp;
+    }
+
+    @SuppressWarnings("PMD.ExcessiveParameterList")
+    public AuditResult(ObjectId dashboardId, String dashboardTitle, String lineOfBusiness, String configItemBusServName,
+                       String configItemBusAppName, String configItemBusServOwner, String configItemBusAppOwner, AuditType auditType,
+                       String auditTypeStatus, String auditStatus, String auditDetails, String url, long timestamp) {
+        this.dashboardId = dashboardId;
+        this.dashboardTitle = dashboardTitle;
+        this.lineOfBusiness = lineOfBusiness;
+        this.configItemBusServName = configItemBusServName;
+        this.configItemBusAppName = configItemBusAppName;
+        this.configItemBusServOwner = configItemBusServOwner;
+        this.configItemBusAppOwner = configItemBusAppOwner;
+        this.auditType = auditType;
+        this.auditTypeStatus = auditTypeStatus;
+        this.auditStatus = auditStatus;
+        this.url = url;
+        this.auditDetails = auditDetails;
         this.timestamp = timestamp;
     }
 
@@ -149,5 +170,13 @@ public class AuditResult extends BaseModel {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Map<String, Object> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Map<String, Object> options) {
+        this.options = options;
     }
 }
