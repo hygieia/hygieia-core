@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,10 +56,9 @@ public class BinaryArtifact extends BaseModel {
     private String modifiedBy;
     private String actual_sha1;
     private String actual_md5;
-
-
-    
+    private String authorLDAPDN;
     private Build buildInfo;
+      private List<String> virtualRepos;
     
     private Map<String, String> metadata = new HashMap<>();
     
@@ -285,6 +285,24 @@ public class BinaryArtifact extends BaseModel {
     public Map<String, String> getMetadata() {
     	return metadata;
     }
+
+
+    public String getAuthorLDAPDN() {
+        return authorLDAPDN;
+    }
+
+    public void setAuthorLDAPDN(String authorLDAPDN) {
+        this.authorLDAPDN = authorLDAPDN;
+    }
+
+    public void setVirtualRepos(List<String> virtualRepos) {
+        this.virtualRepos = virtualRepos;
+    }
+
+    public List<String> getVirtualRepos() {
+        return virtualRepos;
+    }
+
 
     public static final Comparator<BinaryArtifact> TIMESTAMP_COMPARATOR = new Comparator<BinaryArtifact>() {
         @Override
