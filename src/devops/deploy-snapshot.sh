@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cp travis-utilities/.travis.settings.xml $HOME/.m2/settings.xml
+cp src/devops/.travis.settings.xml $HOME/.m2/settings.xml
 
 mvn deploy -q
