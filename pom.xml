@@ -24,6 +24,11 @@
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/capitalone/Hygieia</url>
 
+    <organization>
+        <name>Capital One</name>
+        <url>http://www.capitalone.com</url>
+    </organization>
+
     <properties>
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
@@ -706,9 +711,9 @@
         <profile>
             <id>setup-checkout</id>
             <activation>
-                <!--                <file>-->
-                <!--                    <missing>site-content</missing>-->
-                <!--                </file>-->
+                    <file>
+                        <missing>site-content</missing>
+                    </file>
             </activation>
             <build>
                 <plugins>
