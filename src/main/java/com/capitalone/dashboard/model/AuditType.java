@@ -9,7 +9,8 @@ public enum AuditType {
     STATIC_SECURITY_ANALYSIS,
     LIBRARY_POLICY,
     TEST_RESULT,
-    PERF_TEST;
+    PERF_TEST,
+    ARTIFACT;
 
 
     public static AuditType fromString(String value) {
