@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QUserInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QUserInfo.java</span></div><h1>QUserInfo.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QUserInfo is a Querydsl query type for UserInfo
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QUserInfo extends EntityPathBase&lt;UserInfo&gt; {
+
+    private static final long serialVersionUID = 1365755131L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QUserInfo userInfo = new QUserInfo(&quot;userInfo&quot;);</span>
+
+<span class="nc" id="L25">    public final CollectionPath&lt;UserRole, EnumPath&lt;UserRole&gt;&gt; authorities = this.&lt;UserRole, EnumPath&lt;UserRole&gt;&gt;createCollection(&quot;authorities&quot;, UserRole.class, EnumPath.class, PathInits.DIRECT2);</span>
+
+<span class="nc" id="L27">    public final EnumPath&lt;AuthType&gt; authType = createEnum(&quot;authType&quot;, AuthType.class);</span>
+
+<span class="nc" id="L29">    public final StringPath displayName = createString(&quot;displayName&quot;);</span>
+
+<span class="nc" id="L31">    public final StringPath emailAddress = createString(&quot;emailAddress&quot;);</span>
+
+<span class="nc" id="L33">    public final StringPath firstName = createString(&quot;firstName&quot;);</span>
+
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L37">    public final StringPath lastName = createString(&quot;lastName&quot;);</span>
+
+<span class="nc" id="L39">    public final StringPath middleName = createString(&quot;middleName&quot;);</span>
+
+<span class="nc" id="L41">    public final StringPath username = createString(&quot;username&quot;);</span>
+
+    public QUserInfo(String variable) {
+<span class="nc" id="L44">        this(UserInfo.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L45">    }</span>
+
+    public QUserInfo(Path&lt;? extends UserInfo&gt; path) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L49">    }</span>
+
+    public QUserInfo(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L53">    }</span>
+
+    public QUserInfo(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L56">        this(UserInfo.class, metadata, inits);</span>
+<span class="nc" id="L57">    }</span>
+
+    public QUserInfo(Class&lt;? extends UserInfo&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L60">        super(type, metadata, inits);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        this.id = inits.isInitialized(&quot;id&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;id&quot;)) : null;</span>
+<span class="nc" id="L62">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

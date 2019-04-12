@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TestRestTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.testutil</a> &gt; <span class="el_source">TestRestTemplate.java</span></div><h1>TestRestTemplate.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.testutil;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TestRestTemplate&lt;T&gt; extends RestTemplate {
+
+    private Map&lt;String, TestResponse&lt;T&gt;&gt; response;
+
+<span class="nc" id="L17">    public TestRestTemplate(Map&lt;String, TestResponse&lt;T&gt;&gt; response) {</span>
+<span class="nc" id="L18">        this.response = response;</span>
+<span class="nc" id="L19">    }</span>
+
+    public Map&lt;String, TestResponse&lt;T&gt;&gt; getResponse() {
+<span class="nc" id="L22">        return response;</span>
+    }
+
+
+    public void addResponse(String key, TestResponse testResponse) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (response == null) {</span>
+<span class="nc" id="L28">            response = new HashMap&lt;&gt;();</span>
+        }
+<span class="nc" id="L30">        this.response.put(key, testResponse);</span>
+<span class="nc" id="L31">    }</span>
+
+    public void addResponse(String key, T body, HttpStatus httpStatus) {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (response == null) {</span>
+<span class="nc" id="L35">            response = new HashMap&lt;&gt;();</span>
+        }
+<span class="nc" id="L37">        this.response.put(key, new TestResponse&lt;&gt;(body, httpStatus));</span>
+<span class="nc" id="L38">    }</span>
+
+    public void clearResponse() {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (response != null) {</span>
+<span class="nc" id="L42">            response.clear();</span>
+        }
+<span class="nc" id="L44">    }</span>
+    @Override
+    public &lt;T&gt; ResponseEntity&lt;T&gt; exchange(String var1, HttpMethod var2, HttpEntity&lt;?&gt; var3, Class&lt;T&gt; var4, Object... var5) throws RestClientException {
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (response.containsKey(var1)) {</span>
+<span class="nc" id="L49">            return new ResponseEntity(response.get(var1).getBody(),response.get(var1).getStatus());</span>
+        } else {
+<span class="nc" id="L51">            return new ResponseEntity&lt;&gt;(HttpStatus.UNPROCESSABLE_ENTITY);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

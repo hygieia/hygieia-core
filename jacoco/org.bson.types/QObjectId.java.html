@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QObjectId.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">org.bson.types</a> &gt; <span class="el_source">QObjectId.java</span></div><h1>QObjectId.java</h1><pre class="source lang-java linenums">package org.bson.types;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+
+
+/**
+ * QObjectId is a Querydsl query type for ObjectId
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QObjectId extends BeanPath&lt;ObjectId&gt; {
+
+    private static final long serialVersionUID = 1931139171L;
+
+<span class="fc" id="L20">    public static final QObjectId objectId = new QObjectId(&quot;objectId&quot;);</span>
+
+<span class="pc" id="L22">    public final NumberPath&lt;Integer&gt; counter = createNumber(&quot;counter&quot;, Integer.class);</span>
+
+<span class="pc" id="L24">    public final DateTimePath&lt;java.util.Date&gt; date = createDateTime(&quot;date&quot;, java.util.Date.class);</span>
+
+<span class="pc" id="L26">    public final NumberPath&lt;Integer&gt; machineIdentifier = createNumber(&quot;machineIdentifier&quot;, Integer.class);</span>
+
+<span class="pc" id="L28">    public final NumberPath&lt;Short&gt; processIdentifier = createNumber(&quot;processIdentifier&quot;, Short.class);</span>
+
+<span class="pc" id="L30">    public final NumberPath&lt;Long&gt; time = createNumber(&quot;time&quot;, Long.class);</span>
+
+<span class="pc" id="L32">    public final NumberPath&lt;Integer&gt; timeSecond = createNumber(&quot;timeSecond&quot;, Integer.class);</span>
+
+<span class="pc" id="L34">    public final NumberPath&lt;Integer&gt; timestamp = createNumber(&quot;timestamp&quot;, Integer.class);</span>
+
+    public QObjectId(String variable) {
+<span class="fc" id="L37">        super(ObjectId.class, forVariable(variable));</span>
+<span class="fc" id="L38">    }</span>
+
+    public QObjectId(Path&lt;ObjectId&gt; path) {
+<span class="nc" id="L41">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L42">    }</span>
+
+    public QObjectId(PathMetadata&lt;?&gt; metadata) {
+<span class="fc" id="L45">        super(ObjectId.class, metadata);</span>
+<span class="fc" id="L46">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

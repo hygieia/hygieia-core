@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MongoConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.config</a> &gt; <span class="el_source">MongoConfig.java</span></div><h1>MongoConfig.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.config;
+
+import com.capitalone.dashboard.repository.RepositoryPackage;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@Component
+@EnableMongoRepositories(basePackageClasses = RepositoryPackage.class)
+<span class="fc" id="L25">public class MongoConfig extends AbstractMongoConfiguration {</span>
+<span class="fc" id="L26">    private static final Logger LOGGER = LoggerFactory.getLogger(MongoConfig.class);</span>
+
+    @Value(&quot;${dbname:dashboard}&quot;)
+    private String databaseName;
+    @Value(&quot;${dbhost:localhost}&quot;)
+    private String host;
+    @Value(&quot;${dbport:27017}&quot;)
+    private int port;
+    @Value(&quot;${dbreplicaset:false}&quot;)
+    private String dbreplicaset;
+    @Value(&quot;#{'${dbhostport:localhost:27017}'.split(',')}&quot;)
+    private List&lt;String&gt; hostport;
+    @Value(&quot;${dbusername:}&quot;)
+    private String userName;
+    @Value(&quot;${dbpassword:}&quot;)
+    private String password;
+
+
+
+    @Override
+    protected String getDatabaseName() {
+<span class="nc" id="L47">        return databaseName;</span>
+    }
+
+    @Override
+    @Bean
+    public MongoClient mongo() throws Exception {
+
+        MongoClient client;
+<span class="nc" id="L55">        LOGGER.info(&quot;ReplicaSet&quot; + dbreplicaset);</span>
+
+<span class="nc" id="L57">        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();</span>
+<span class="nc" id="L58">        builder.maxConnectionIdleTime(60000);</span>
+<span class="nc" id="L59">        MongoClientOptions opts = builder.build();</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (Boolean.parseBoolean(dbreplicaset)) {</span>
+<span class="nc" id="L62">            List&lt;ServerAddress&gt; serverAddressList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">            for (String h : hostport) {</span>
+<span class="nc" id="L64">                String myHost = h.substring(0, h.indexOf(&quot;:&quot;));</span>
+<span class="nc" id="L65">                int myPort = Integer.parseInt(h.substring(h.indexOf(&quot;:&quot;) + 1, h.length()));</span>
+<span class="nc" id="L66">                ServerAddress serverAddress = new ServerAddress(myHost, myPort);</span>
+<span class="nc" id="L67">                serverAddressList.add(serverAddress);</span>
+<span class="nc" id="L68">            }</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            for (ServerAddress s : serverAddressList) {</span>
+<span class="nc" id="L71">                LOGGER.info(&quot;Initializing Mongo Client server ReplicaSet at: {}&quot;, s);</span>
+<span class="nc" id="L72">            }</span>
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (StringUtils.isEmpty(userName)) {</span>
+<span class="nc" id="L75">                client = new MongoClient(serverAddressList);</span>
+            } else {
+<span class="nc" id="L77">                MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(</span>
+<span class="nc" id="L78">                        userName, databaseName, password.toCharArray());</span>
+<span class="nc" id="L79">                client = new MongoClient(serverAddressList, Collections.singletonList(mongoCredential), opts);</span>
+            }
+<span class="nc" id="L81">        } else {</span>
+<span class="nc" id="L82">            ServerAddress serverAddr = new ServerAddress(host, port);</span>
+<span class="nc" id="L83">            LOGGER.info(&quot;Initializing Mongo Client server at: {}&quot;, serverAddr);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            if (StringUtils.isEmpty(userName)) {</span>
+<span class="nc" id="L85">                client = new MongoClient(serverAddr);</span>
+            } else {
+<span class="nc" id="L87">                MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(</span>
+<span class="nc" id="L88">                        userName, databaseName, password.toCharArray());</span>
+<span class="nc" id="L89">                client = new MongoClient(serverAddr, Collections.singletonList(mongoCredential), opts);</span>
+            }
+
+        }
+<span class="nc" id="L93">        LOGGER.info(&quot;Connecting to Mongo: {}&quot;, client);</span>
+<span class="nc" id="L94">        return client;</span>
+    }
+
+    @Override
+    protected String getMappingBasePackage() {
+<span class="fc" id="L99">        return com.capitalone.dashboard.model.Application.class.getPackage().getName();</span>
+    }
+
+    @Bean
+    public MongoTemplate mongoTemplate() throws Exception {
+<span class="fc" id="L104">        return new MongoTemplate(mongo(), getDatabaseName());</span>
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+<span class="fc" id="L109">        return new PropertySourcesPlaceholderConfigurer();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RallyFeature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">RallyFeature.java</span></div><h1>RallyFeature.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * Represents the rally metrics data for a particular iteration with remaining days calculated 
+ * by start date and end date.
+ */
+@Document(collection = &quot;rally_feature&quot;)
+<span class="nc" id="L16">public class RallyFeature extends BaseModel {</span>
+	private long timestamp;
+	private Object endDate;
+	private int remainingDays;
+	private Object startDate;
+	private long lastUpdated;
+
+	private ObjectId collectorItemId;
+	private String plannedVelocity;
+	private String state;
+	private String taskActualTotal;
+	private String taskEstimateTotal;
+	private String taskRemainingTotal;
+	private String projectId;
+	private String projectName;
+	private String planEstimate;
+	private static final String INSTANCE_URL = &quot;instanceUrl&quot;;
+	private static final String ITERATION_NAME = &quot;iterationName&quot;;
+	private static final String ITERATION_ID = &quot;iterationId&quot;;
+	private String userListCount;
+	private String lastExecuted;
+<span class="nc" id="L37">	private Map&lt;String, Object&gt; options = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L39">	private Set&lt;RallyStoryStages&gt; storyStages = new HashSet&lt;&gt;();</span>
+	
+	public Object getStartDate() {
+<span class="nc" id="L42">		return startDate;</span>
+	}
+
+	public void setStartDate(Object startDate) {
+<span class="nc" id="L46">		this.startDate = startDate;</span>
+<span class="nc" id="L47">	}</span>
+
+	public int getRemainingDays() {
+<span class="nc" id="L50">		return remainingDays;</span>
+	}
+
+	public void setRemainingDays(int remainingDays) {
+<span class="nc" id="L54">		this.remainingDays = remainingDays;</span>
+<span class="nc" id="L55">	}</span>
+
+	public String getLastExecuted() {
+<span class="nc" id="L58">		return lastExecuted;</span>
+	}
+
+	public void setLastExecuted(String lastExecuted) {
+<span class="nc" id="L62">		this.lastExecuted = lastExecuted;</span>
+<span class="nc" id="L63">	}</span>
+
+	public String getUserListCount() {
+<span class="nc" id="L66">		return userListCount;</span>
+	}
+
+	public void setUserListCount(String userListCount) {
+<span class="nc" id="L70">		this.userListCount = userListCount;</span>
+<span class="nc" id="L71">	}</span>
+
+	public Map&lt;String, Object&gt; getOptions() {
+<span class="nc" id="L74">		return options;</span>
+	}
+
+	public String getPlanEstimate() {
+<span class="nc" id="L78">		return planEstimate;</span>
+	}
+
+	public void setPlanEstimate(String planEstimate) {
+<span class="nc" id="L82">		this.planEstimate = planEstimate;</span>
+<span class="nc" id="L83">	}</span>
+
+	public String getPlannedVelocity() {
+<span class="nc" id="L86">		return plannedVelocity;</span>
+	}
+
+	public void setPlannedVelocity(String plannedVelocity) {
+<span class="nc" id="L90">		this.plannedVelocity = plannedVelocity;</span>
+<span class="nc" id="L91">	}</span>
+
+	public String getState() {
+<span class="nc" id="L94">		return state;</span>
+	}
+
+	public void setState(String state) {
+<span class="nc" id="L98">		this.state = state;</span>
+<span class="nc" id="L99">	}</span>
+
+	public String getTaskActualTotal() {
+<span class="nc" id="L102">		return taskActualTotal;</span>
+	}
+
+	public void setTaskActualTotal(String taskActualTotal) {
+<span class="nc" id="L106">		this.taskActualTotal = taskActualTotal;</span>
+<span class="nc" id="L107">	}</span>
+
+	public String getTaskEstimateTotal() {
+<span class="nc" id="L110">		return taskEstimateTotal;</span>
+	}
+
+	public void setTaskEstimateTotal(String taskEstimateTotal) {
+<span class="nc" id="L114">		this.taskEstimateTotal = taskEstimateTotal;</span>
+<span class="nc" id="L115">	}</span>
+
+	public String getTaskRemainingTotal() {
+<span class="nc" id="L118">		return taskRemainingTotal;</span>
+	}
+
+	public void setTaskRemainingTotal(String taskRemainingTotal) {
+<span class="nc" id="L122">		this.taskRemainingTotal = taskRemainingTotal;</span>
+<span class="nc" id="L123">	}</span>
+
+	public String getProjectId() {
+<span class="nc" id="L126">		return projectId;</span>
+	}
+
+	public void setProjectId(String projectId) {
+<span class="nc" id="L130">		this.projectId = projectId;</span>
+<span class="nc" id="L131">	}</span>
+
+	public String getProjectName() {
+<span class="nc" id="L134">		return projectName;</span>
+	}
+
+	public void setProjectName(String projectName) {
+<span class="nc" id="L138">		this.projectName = projectName;</span>
+<span class="nc" id="L139">	}</span>
+
+	public ObjectId getCollectorItemId() {
+<span class="nc" id="L142">		return collectorItemId;</span>
+	}
+
+	public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L146">		this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L147">	}</span>
+
+	public String getInstanceUrl() {
+<span class="nc" id="L150">		return (String) getOptions().get(INSTANCE_URL);</span>
+	}
+
+	public void setInstanceUrl(String instanceUrl) {
+<span class="nc" id="L154">		getOptions().put(INSTANCE_URL, instanceUrl);</span>
+<span class="nc" id="L155">	}</span>
+
+	public String getIterationId() {
+<span class="nc" id="L158">		return (String) getOptions().get(ITERATION_ID);</span>
+	}
+
+	public void setIterationId(String id) {
+<span class="nc" id="L162">		getOptions().put(ITERATION_ID, id);</span>
+<span class="nc" id="L163">	}</span>
+
+	public String getIterationName() {
+<span class="nc" id="L166">		return (String) getOptions().get(ITERATION_NAME);</span>
+	}
+
+	public void setIterationName(String name) {
+<span class="nc" id="L170">		getOptions().put(ITERATION_NAME, name);</span>
+<span class="nc" id="L171">	}</span>
+
+	public long getTimestamp() {
+<span class="nc" id="L174">		return timestamp;</span>
+	}
+
+	public void setTimestamp(long timestamp) {
+<span class="nc" id="L178">		this.timestamp = timestamp;</span>
+<span class="nc" id="L179">	}</span>
+
+	public Object getEndDate() {
+<span class="nc" id="L182">		return endDate;</span>
+	}
+
+	public void setEndDate(Object endDate) {
+<span class="nc" id="L186">		this.endDate = endDate;</span>
+<span class="nc" id="L187">	}</span>
+
+	public long getLastUpdated() {
+<span class="nc" id="L190">		return lastUpdated;</span>
+	}
+
+	public void setLastUpdated(long lastUpdated) {
+<span class="nc" id="L194">		this.lastUpdated = lastUpdated;</span>
+<span class="nc" id="L195">	}</span>
+
+	public Set&lt;RallyStoryStages&gt; getStoryStages() {
+<span class="nc" id="L198">		return storyStages;</span>
+	}
+
+	public void setStoryStages(Set&lt;RallyStoryStages&gt; storyStages) {
+<span class="nc" id="L202">		this.storyStages = storyStages;</span>
+<span class="nc" id="L203">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

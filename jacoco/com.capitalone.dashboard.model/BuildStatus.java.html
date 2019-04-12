@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuildStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">BuildStatus.java</span></div><h1>BuildStatus.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+/**
+ * Enumeration of valid build statuses.
+ */
+<span class="fc" id="L6">public enum BuildStatus {</span>
+<span class="fc" id="L7">    Success,</span>
+<span class="fc" id="L8">    Failure,</span>
+<span class="fc" id="L9">    Unstable,</span>
+<span class="fc" id="L10">    Aborted,</span>
+<span class="fc" id="L11">    InProgress,</span>
+<span class="fc" id="L12">    Unknown;</span>
+
+    public static BuildStatus fromString(String value) {
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        for (BuildStatus buildStatus : values()) {</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">            if (buildStatus.toString().equalsIgnoreCase(value)) {</span>
+<span class="nc" id="L17">                return buildStatus;</span>
+            }
+        }
+<span class="nc" id="L20">        throw new IllegalArgumentException(value + &quot; is not a valid BuildStatus.&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

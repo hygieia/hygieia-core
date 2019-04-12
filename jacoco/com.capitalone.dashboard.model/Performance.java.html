@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Performance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Performance.java</span></div><h1>Performance.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Document(collection=&quot;performance&quot;)
+<span class="fc" id="L10">public class Performance extends BaseModel{</span>
+
+    private ObjectId collectorItemId;
+    private long timestamp;
+    private String url;
+    private PerformanceType type;
+    private String version;
+    private  ObjectId executionId;
+    private String targetAppName;
+    private String targetEnvName;
+<span class="fc" id="L20">    private Map&lt;String,Object&gt; metrics = new HashMap&lt;&gt;();</span>
+
+    public Map&lt;String,Object&gt; getMetrics() {
+<span class="nc" id="L23">        return metrics;</span>
+    }
+
+    public void setMetrics(Map&lt;String,Object&gt; metrics) {
+<span class="fc" id="L27">        this.metrics = metrics;</span>
+<span class="fc" id="L28">    }</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="nc" id="L31">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="fc" id="L35">        this.collectorItemId = collectorItemId;</span>
+<span class="fc" id="L36">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L39">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="fc" id="L43">        this.timestamp = timestamp;</span>
+<span class="fc" id="L44">    }</span>
+
+    public String getUrl() {
+<span class="fc" id="L47">        return url;</span>
+    }
+
+    public void setUrl(String url) {
+<span class="fc" id="L51">        this.url = url;</span>
+<span class="fc" id="L52">    }</span>
+
+    public PerformanceType getType() {
+<span class="fc" id="L55">        return type;</span>
+    }
+
+    public void setType(PerformanceType type) {
+<span class="fc" id="L59">        this.type = type;</span>
+<span class="fc" id="L60">    }</span>
+
+    public String getVersion() {
+<span class="nc" id="L63">        return version;</span>
+    }
+
+    public void setVersion(String version) {
+<span class="nc" id="L67">        this.version = version;</span>
+<span class="nc" id="L68">    }</span>
+
+    public ObjectId getExecutionId() {
+<span class="nc" id="L71">        return executionId;</span>
+    }
+
+    public void setExecutionId(ObjectId executionId) {
+<span class="nc" id="L75">        this.executionId = executionId;</span>
+<span class="nc" id="L76">    }</span>
+
+    public String getTargetAppName() {
+<span class="nc" id="L79">        return targetAppName;</span>
+    }
+
+    public void setTargetAppName(String targetAppName) {
+<span class="fc" id="L83">        this.targetAppName = targetAppName;</span>
+<span class="fc" id="L84">    }</span>
+
+    public String getTargetEnvName() {
+<span class="nc" id="L87">        return targetEnvName;</span>
+    }
+
+    public void setTargetEnvName(String targetEnvName) {
+<span class="fc" id="L91">        this.targetEnvName = targetEnvName;</span>
+<span class="fc" id="L92">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

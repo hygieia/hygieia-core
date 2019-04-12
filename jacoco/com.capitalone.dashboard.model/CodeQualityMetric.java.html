@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeQualityMetric.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">CodeQualityMetric.java</span></div><h1>CodeQualityMetric.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+/**
+ * Represents a {@link CodeQuality} metric. Each metric should have a unique name property.
+ */
+public class CodeQualityMetric {
+    private String name;
+    private String value;
+    private String formattedValue;
+    private CodeQualityMetricStatus status;
+    private String statusMessage;
+
+<span class="nc" id="L13">    public CodeQualityMetric(String name) {</span>
+<span class="nc" id="L14">        this.name = name;</span>
+<span class="nc" id="L15">    }</span>
+
+<span class="fc" id="L17">    public CodeQualityMetric() {}</span>
+
+    public void setName(String name) {
+<span class="nc" id="L20">        this.name = name;</span>
+<span class="nc" id="L21">    }</span>
+
+    public String getName() {
+<span class="nc" id="L24">        return name;</span>
+    }
+
+<span class="nc" id="L27">    public String getValue() { return value; }</span>
+
+<span class="nc" id="L29">    public void setValue(String value) { this.value = value; }</span>
+
+    public String getFormattedValue() {
+<span class="nc" id="L32">        return formattedValue;</span>
+    }
+
+    public void setFormattedValue(String formattedValue) {
+<span class="nc" id="L36">        this.formattedValue = formattedValue;</span>
+<span class="nc" id="L37">    }</span>
+
+    public CodeQualityMetricStatus getStatus() {
+<span class="nc" id="L40">        return status;</span>
+    }
+
+    public void setStatus(CodeQualityMetricStatus status) {
+<span class="nc" id="L44">        this.status = status;</span>
+<span class="nc" id="L45">    }</span>
+
+    public String getStatusMessage() {
+<span class="nc" id="L48">        return statusMessage;</span>
+    }
+
+    public void setStatusMessage(String statusMessage) {
+<span class="nc" id="L52">        this.statusMessage = statusMessage;</span>
+<span class="nc" id="L53">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L58" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L60">        return name.equals(((CodeQualityMetric) o).name);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L65">        return name.hashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

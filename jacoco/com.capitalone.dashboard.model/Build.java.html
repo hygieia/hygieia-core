@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Build.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Build.java</span></div><h1>Build.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The result of a Continuous Integration build execution. Typically produces binary artifacts.
+ * Often triggered by one or more SCM commits.
+ *
+ * Possible collectors:
+ *  Hudson (in scope)
+ *  Team City
+ *  TFS
+ *  Go
+ *  Bamboo
+ *  TravisCI
+ *
+ */
+@Document(collection=&quot;builds&quot;)
+<span class="fc" id="L23">public class Build extends BaseModel {</span>
+    private ObjectId collectorItemId;
+    private long timestamp;
+
+    private String number;
+    private String buildUrl;
+    private long startTime;
+    private long endTime;
+    private long duration;
+    private BuildStatus buildStatus;
+    private String startedBy;
+    private String log;
+<span class="fc" id="L35">    private List&lt;RepoBranch&gt; codeRepos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">    private List&lt;SCM&gt; sourceChangeSet = new ArrayList&lt;&gt;();</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="fc" id="L39">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="fc" id="L43">        this.collectorItemId = collectorItemId;</span>
+<span class="fc" id="L44">    }</span>
+
+    public void setSourceChangeSet(List&lt;SCM&gt; sourceChangeSet) {
+<span class="fc" id="L47">        this.sourceChangeSet = sourceChangeSet;</span>
+<span class="fc" id="L48">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L51">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L55">        this.timestamp = timestamp;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getNumber() {
+<span class="nc" id="L59">        return number;</span>
+    }
+
+    public void setNumber(String number) {
+<span class="fc" id="L63">        this.number = number;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getBuildUrl() {
+<span class="nc" id="L67">        return buildUrl;</span>
+    }
+
+    public void setBuildUrl(String buildUrl) {
+<span class="nc" id="L71">        this.buildUrl = buildUrl;</span>
+<span class="nc" id="L72">    }</span>
+
+    public long getStartTime() {
+<span class="fc" id="L75">        return startTime;</span>
+    }
+
+    public void setStartTime(long startTime) {
+<span class="fc" id="L79">        this.startTime = startTime;</span>
+<span class="fc" id="L80">    }</span>
+
+    public long getEndTime() {
+<span class="nc" id="L83">        return endTime;</span>
+    }
+
+    public void setEndTime(long endTime) {
+<span class="nc" id="L87">        this.endTime = endTime;</span>
+<span class="nc" id="L88">    }</span>
+
+    public long getDuration() {
+<span class="nc" id="L91">        return duration;</span>
+    }
+
+    public void setDuration(long duration) {
+<span class="nc" id="L95">        this.duration = duration;</span>
+<span class="nc" id="L96">    }</span>
+
+    public BuildStatus getBuildStatus() {
+<span class="fc" id="L99">        return buildStatus;</span>
+    }
+
+    public void setBuildStatus(BuildStatus buildStatus) {
+<span class="fc" id="L103">        this.buildStatus = buildStatus;</span>
+<span class="fc" id="L104">    }</span>
+
+    public String getStartedBy() {
+<span class="nc" id="L107">        return startedBy;</span>
+    }
+
+    public void setStartedBy(String startedBy) {
+<span class="nc" id="L111">        this.startedBy = startedBy;</span>
+<span class="nc" id="L112">    }</span>
+
+    public String getLog() {
+<span class="nc" id="L115">        return log;</span>
+    }
+
+    public void setLog(String log) {
+<span class="nc" id="L119">        this.log = log;</span>
+<span class="nc" id="L120">    }</span>
+
+    public List&lt;SCM&gt; getSourceChangeSet() {
+<span class="fc" id="L123">        return sourceChangeSet;</span>
+    }
+
+    public void addSourceChangeSet(SCM scm) {
+<span class="nc" id="L127">        getSourceChangeSet().add(scm);</span>
+<span class="nc" id="L128">    }</span>
+
+    public List&lt;RepoBranch&gt; getCodeRepos() {
+<span class="fc" id="L131">        return codeRepos;</span>
+    }
+
+    public void setCodeRepos(List&lt;RepoBranch&gt; codeRepos) {
+<span class="fc" id="L135">        this.codeRepos = codeRepos;</span>
+<span class="fc" id="L136">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

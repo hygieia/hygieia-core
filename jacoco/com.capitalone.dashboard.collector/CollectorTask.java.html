@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CollectorTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.collector</a> &gt; <span class="el_source">CollectorTask.java</span></div><h1>CollectorTask.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.collector;
+
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.repository.BaseCollectorRepository;
+import com.google.common.base.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+/**
+ * Base class for Collector task implementation which provides subclasses with
+ * the following:
+ * &lt;p&gt;
+ * &lt;ol&gt;
+ * &lt;li&gt;Creates a Collector instance the first time the collector runs.&lt;/li&gt;
+ * &lt;li&gt;Uses TaskScheduler to schedule the job based on the provided cron when the process starts.&lt;/li&gt;
+ * &lt;li&gt;Saves the last execution time on the collector when the collection run finishes.&lt;/li&gt;
+ * &lt;li&gt;Sets the collector online/offline when the collector process starts/stops&lt;/li&gt;
+ * &lt;/ol&gt;
+ *
+ * @param &lt;T&gt; Class that extends Collector
+ */
+@Component
+public abstract class CollectorTask&lt;T extends Collector&gt; implements Runnable {
+<span class="fc" id="L31">    private static final Logger LOGGER = LoggerFactory.getLogger(CollectorTask.class);</span>
+
+    private final TaskScheduler taskScheduler;
+    private final String collectorName;
+
+    @Autowired
+<span class="fc" id="L37">    protected CollectorTask(TaskScheduler taskScheduler, String collectorName) {</span>
+<span class="fc" id="L38">        this.taskScheduler = taskScheduler;</span>
+<span class="fc" id="L39">        this.collectorName = collectorName;</span>
+<span class="fc" id="L40">    }</span>
+
+    @Override
+    public final void run() {
+<span class="fc" id="L44">        LOGGER.info(&quot;Running Collector: {}&quot;, collectorName);</span>
+<span class="fc" id="L45">        T collector = getCollectorRepository().findByName(collectorName);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (collector == null) {</span>
+            // Register new collector
+<span class="fc" id="L48">            collector = getCollectorRepository().save(getCollector());</span>
+        } else {
+            // In case the collector options changed via collectors properties setup.
+            // We want to keep the existing collectors ID same as it ties to collector items.
+<span class="fc" id="L52">            T newCollector = getCollector();</span>
+<span class="fc" id="L53">            newCollector.setId(collector.getId());</span>
+<span class="fc" id="L54">            newCollector.setEnabled(collector.isEnabled());</span>
+<span class="fc" id="L55">            newCollector.setCollectorType(collector.getCollectorType());</span>
+<span class="fc" id="L56">            newCollector.setLastExecuted(collector.getLastExecuted());</span>
+<span class="fc" id="L57">            newCollector.setName(collector.getName());</span>
+<span class="fc" id="L58">            collector = getCollectorRepository().save(newCollector);</span>
+        }
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (collector.isEnabled()) {</span>
+            // Do collection run
+<span class="fc" id="L63">            collect(collector);</span>
+
+            // Update lastUpdate timestamp in Collector
+<span class="fc" id="L66">            collector.setLastExecuted(System.currentTimeMillis());</span>
+<span class="fc" id="L67">            getCollectorRepository().save(collector);</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    @PostConstruct
+    public void onStartup() {
+<span class="fc" id="L73">        taskScheduler.schedule(this, new CronTrigger(getCron()));</span>
+<span class="fc" id="L74">        setOnline(true);</span>
+<span class="fc" id="L75">    }</span>
+
+    @PreDestroy
+    public void onShutdown() {
+<span class="fc" id="L79">        setOnline(false);</span>
+<span class="fc" id="L80">    }</span>
+
+    public abstract T getCollector();
+
+    public abstract BaseCollectorRepository&lt;T&gt; getCollectorRepository();
+
+    public abstract String getCron();
+
+    public abstract void collect(T collector);
+
+    private void setOnline(boolean online) {
+<span class="fc" id="L91">        T collector = getCollectorRepository().findByName(collectorName);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (collector != null) {</span>
+<span class="fc" id="L93">            collector.setOnline(online);</span>
+<span class="fc" id="L94">            getCollectorRepository().save(collector);</span>
+        }
+<span class="fc" id="L96">    }</span>
+
+    protected boolean throttleRequests (long startTime, int requestCount,
+                                        long waitTime, int requestRateLimit,
+                                        long requestRateLimitTimeWindow) {
+<span class="fc" id="L101">        boolean result = false;</span>
+        // Record Current Time
+<span class="fc" id="L103">        long currentTime = System.currentTimeMillis();</span>
+        // Time Elapsed
+<span class="fc" id="L105">        long timeElapsed = currentTime - startTime;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (requestCount &gt;= requestRateLimit) {</span>
+<span class="fc" id="L107">            result = true;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (timeElapsed &lt;= requestRateLimitTimeWindow) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                long timeToWait = (timeElapsed &lt; requestRateLimitTimeWindow)? ((requestRateLimitTimeWindow - timeElapsed) + waitTime) : waitTime;</span>
+
+<span class="fc" id="L111">                LOGGER.debug(&quot;Rates limit exceeded: timeElapsed = &quot; +timeElapsed+ &quot;; Rate Count = &quot;+requestCount+ &quot;; waiting for &quot; + timeToWait + &quot; milliseconds&quot;);</span>
+<span class="fc" id="L112">                sleep (timeToWait);</span>
+            }
+        }
+<span class="fc" id="L115">        return result;</span>
+    }
+
+    protected void sleep (long timeToWait) {
+        try {
+<span class="fc" id="L120">            Thread.sleep(timeToWait);</span>
+<span class="nc" id="L121">        } catch (InterruptedException ie) {</span>
+<span class="nc" id="L122">            LOGGER.error(&quot;Thread Interrupted &quot;, ie);</span>
+<span class="fc" id="L123">        }</span>
+<span class="fc" id="L124">    }</span>
+
+    protected void log(String marker, long start) {
+<span class="nc" id="L127">        log(marker, start, null);</span>
+<span class="nc" id="L128">    }</span>
+
+    protected void log(String text, long start, Integer count) {
+<span class="nc" id="L131">        long end = System.currentTimeMillis();</span>
+<span class="nc" id="L132">        String elapsed = ((end - start) / 1000) + &quot;s&quot;;</span>
+<span class="nc" id="L133">        String token2 = &quot;&quot;;</span>
+        String token3;
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (count == null) {</span>
+<span class="nc" id="L136">            token3 = Strings.padStart(&quot; &quot; + elapsed, 35 - text.length(), ' ');</span>
+        } else {
+<span class="nc" id="L138">            token2 = Strings.padStart(&quot; &quot; + count.toString(), 25 - text.length(), ' ');</span>
+<span class="nc" id="L139">            token3 = Strings.padStart(&quot; &quot; + elapsed, 10, ' ');</span>
+        }
+<span class="nc" id="L141">        LOGGER.info(text + token2 + token3);</span>
+<span class="nc" id="L142">    }</span>
+    protected void log(String message) {
+<span class="nc" id="L144">        LOGGER.info(message);</span>
+<span class="nc" id="L145">    }</span>
+
+    protected void logBanner(String instanceUrl) {
+<span class="nc" id="L148">        LOGGER.info(&quot;-----------------------------------&quot;);</span>
+<span class="nc" id="L149">        LOGGER.info(instanceUrl);</span>
+<span class="nc" id="L150">        LOGGER.info(&quot;-----------------------------------&quot;);</span>
+<span class="nc" id="L151">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

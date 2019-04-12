@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QFeature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QFeature.java</span></div><h1>QFeature.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QFeature is a Querydsl query type for Feature
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QFeature extends EntityPathBase&lt;Feature&gt; {
+
+    private static final long serialVersionUID = 1844402388L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QFeature feature = new QFeature(&quot;feature&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="fc" id="L27">    public final StringPath changeDate = createString(&quot;changeDate&quot;);</span>
+
+    public final org.bson.types.QObjectId collectorId;
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L34">    public final StringPath isDeleted = createString(&quot;isDeleted&quot;);</span>
+
+<span class="fc" id="L36">    public final CollectionPath&lt;FeatureIssueLink, QFeatureIssueLink&gt; issueLinks = this.&lt;FeatureIssueLink, QFeatureIssueLink&gt;createCollection(&quot;issueLinks&quot;, FeatureIssueLink.class, QFeatureIssueLink.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L38">    public final StringPath sEpicAssetState = createString(&quot;sEpicAssetState&quot;);</span>
+
+<span class="fc" id="L40">    public final StringPath sEpicBeginDate = createString(&quot;sEpicBeginDate&quot;);</span>
+
+<span class="fc" id="L42">    public final StringPath sEpicChangeDate = createString(&quot;sEpicChangeDate&quot;);</span>
+
+<span class="fc" id="L44">    public final StringPath sEpicEndDate = createString(&quot;sEpicEndDate&quot;);</span>
+
+<span class="fc" id="L46">    public final StringPath sEpicID = createString(&quot;sEpicID&quot;);</span>
+
+<span class="fc" id="L48">    public final StringPath sEpicIsDeleted = createString(&quot;sEpicIsDeleted&quot;);</span>
+
+<span class="fc" id="L50">    public final StringPath sEpicName = createString(&quot;sEpicName&quot;);</span>
+
+<span class="fc" id="L52">    public final StringPath sEpicNumber = createString(&quot;sEpicNumber&quot;);</span>
+
+<span class="fc" id="L54">    public final StringPath sEpicType = createString(&quot;sEpicType&quot;);</span>
+
+<span class="fc" id="L56">    public final StringPath sEpicUrl = createString(&quot;sEpicUrl&quot;);</span>
+
+<span class="fc" id="L58">    public final StringPath sEstimate = createString(&quot;sEstimate&quot;);</span>
+
+<span class="fc" id="L60">    public final NumberPath&lt;Integer&gt; sEstimateTime = createNumber(&quot;sEstimateTime&quot;, Integer.class);</span>
+
+<span class="fc" id="L62">    public final StringPath sId = createString(&quot;sId&quot;);</span>
+
+<span class="fc" id="L64">    public final StringPath sName = createString(&quot;sName&quot;);</span>
+
+<span class="fc" id="L66">    public final StringPath sNumber = createString(&quot;sNumber&quot;);</span>
+
+<span class="fc" id="L68">    public final ListPath&lt;String, StringPath&gt; sOwnersChangeDate = this.&lt;String, StringPath&gt;createList(&quot;sOwnersChangeDate&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L70">    public final ListPath&lt;String, StringPath&gt; sOwnersFullName = this.&lt;String, StringPath&gt;createList(&quot;sOwnersFullName&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L72">    public final ListPath&lt;String, StringPath&gt; sOwnersID = this.&lt;String, StringPath&gt;createList(&quot;sOwnersID&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L74">    public final ListPath&lt;String, StringPath&gt; sOwnersIsDeleted = this.&lt;String, StringPath&gt;createList(&quot;sOwnersIsDeleted&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L76">    public final ListPath&lt;String, StringPath&gt; sOwnersShortName = this.&lt;String, StringPath&gt;createList(&quot;sOwnersShortName&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L78">    public final ListPath&lt;String, StringPath&gt; sOwnersState = this.&lt;String, StringPath&gt;createList(&quot;sOwnersState&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L80">    public final ListPath&lt;String, StringPath&gt; sOwnersUsername = this.&lt;String, StringPath&gt;createList(&quot;sOwnersUsername&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L82">    public final StringPath sProjectBeginDate = createString(&quot;sProjectBeginDate&quot;);</span>
+
+<span class="fc" id="L84">    public final StringPath sProjectChangeDate = createString(&quot;sProjectChangeDate&quot;);</span>
+
+<span class="fc" id="L86">    public final StringPath sProjectEndDate = createString(&quot;sProjectEndDate&quot;);</span>
+
+<span class="fc" id="L88">    public final StringPath sProjectID = createString(&quot;sProjectID&quot;);</span>
+
+<span class="fc" id="L90">    public final StringPath sProjectIsDeleted = createString(&quot;sProjectIsDeleted&quot;);</span>
+
+<span class="fc" id="L92">    public final StringPath sProjectName = createString(&quot;sProjectName&quot;);</span>
+
+<span class="fc" id="L94">    public final StringPath sProjectPath = createString(&quot;sProjectPath&quot;);</span>
+
+<span class="fc" id="L96">    public final StringPath sProjectState = createString(&quot;sProjectState&quot;);</span>
+
+<span class="fc" id="L98">    public final StringPath sSprintAssetState = createString(&quot;sSprintAssetState&quot;);</span>
+
+<span class="fc" id="L100">    public final StringPath sSprintBeginDate = createString(&quot;sSprintBeginDate&quot;);</span>
+
+<span class="fc" id="L102">    public final StringPath sSprintChangeDate = createString(&quot;sSprintChangeDate&quot;);</span>
+
+<span class="fc" id="L104">    public final StringPath sSprintEndDate = createString(&quot;sSprintEndDate&quot;);</span>
+
+<span class="fc" id="L106">    public final StringPath sSprintID = createString(&quot;sSprintID&quot;);</span>
+
+<span class="fc" id="L108">    public final StringPath sSprintIsDeleted = createString(&quot;sSprintIsDeleted&quot;);</span>
+
+<span class="fc" id="L110">    public final StringPath sSprintName = createString(&quot;sSprintName&quot;);</span>
+
+<span class="fc" id="L112">    public final StringPath sSprintUrl = createString(&quot;sSprintUrl&quot;);</span>
+
+<span class="fc" id="L114">    public final StringPath sState = createString(&quot;sState&quot;);</span>
+
+<span class="fc" id="L116">    public final StringPath sStatus = createString(&quot;sStatus&quot;);</span>
+
+<span class="fc" id="L118">    public final StringPath sTeamAssetState = createString(&quot;sTeamAssetState&quot;);</span>
+
+<span class="fc" id="L120">    public final StringPath sTeamChangeDate = createString(&quot;sTeamChangeDate&quot;);</span>
+
+<span class="fc" id="L122">    public final StringPath sTeamID = createString(&quot;sTeamID&quot;);</span>
+
+<span class="fc" id="L124">    public final StringPath sTeamIsDeleted = createString(&quot;sTeamIsDeleted&quot;);</span>
+
+<span class="fc" id="L126">    public final StringPath sTeamName = createString(&quot;sTeamName&quot;);</span>
+
+<span class="fc" id="L128">    public final StringPath sTypeId = createString(&quot;sTypeId&quot;);</span>
+
+<span class="fc" id="L130">    public final StringPath sTypeName = createString(&quot;sTypeName&quot;);</span>
+
+<span class="fc" id="L132">    public final StringPath sUrl = createString(&quot;sUrl&quot;);</span>
+
+    public QFeature(String variable) {
+<span class="fc" id="L135">        this(Feature.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L136">    }</span>
+
+    public QFeature(Path&lt;? extends Feature&gt; path) {
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L140">    }</span>
+
+    public QFeature(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L144">    }</span>
+
+    public QFeature(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L147">        this(Feature.class, metadata, inits);</span>
+<span class="nc" id="L148">    }</span>
+
+    public QFeature(Class&lt;? extends Feature&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L151">        super(type, metadata, inits);</span>
+<span class="fc" id="L152">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        this.collectorId = inits.isInitialized(&quot;collectorId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;collectorId&quot;)) : null;</span>
+<span class="fc" id="L154">        this.id = _super.id;</span>
+<span class="fc" id="L155">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

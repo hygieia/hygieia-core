@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeQuality.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">CodeQuality.java</span></div><h1>CodeQuality.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Represents code quality at a specific point in time. This could include
+ * a unit test run, a security scan, static analysis, functional tests,
+ * manual acceptance tests or bug reports.
+ *
+ * Possible Collectors:
+ *  Sonar (in scope)
+ *  Fortify
+ *  ALM
+ *  Various build system test results
+ *
+ */
+@Document(collection=&quot;code_quality&quot;)
+<span class="fc" id="L22">public class CodeQuality extends BaseModel {</span>
+    private ObjectId collectorItemId;
+    private long timestamp;
+
+    private String name;
+    private String url;
+    private CodeQualityType type;
+    private String version;
+    private  ObjectId buildId;
+
+<span class="fc" id="L32">    private Set&lt;CodeQualityMetric&gt; metrics = new HashSet&lt;&gt;();</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="fc" id="L35">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L39">        this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L40">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L43">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L47">        this.timestamp = timestamp;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getName() {
+<span class="nc" id="L51">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L55">        this.name = name;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getUrl() {
+<span class="nc" id="L59">        return url;</span>
+    }
+
+    public void setUrl(String url) {
+<span class="nc" id="L63">        this.url = url;</span>
+<span class="nc" id="L64">    }</span>
+
+    public CodeQualityType getType() {
+<span class="nc" id="L67">        return type;</span>
+    }
+
+    public void setType(CodeQualityType type) {
+<span class="nc" id="L71">        this.type = type;</span>
+<span class="nc" id="L72">    }</span>
+
+    public String getVersion() {
+<span class="nc" id="L75">        return version;</span>
+    }
+
+    public void setVersion(String version) {
+<span class="nc" id="L79">        this.version = version;</span>
+<span class="nc" id="L80">    }</span>
+
+    public ObjectId getBuildId() {
+<span class="fc" id="L83">        return buildId;</span>
+    }
+
+    public void setBuildId(ObjectId buildId) {
+<span class="nc" id="L87">        this.buildId = buildId;</span>
+<span class="nc" id="L88">    }</span>
+
+    public Set&lt;CodeQualityMetric&gt; getMetrics() {
+<span class="nc" id="L91">        return metrics;</span>
+    }
+
+    public void addMetric(CodeQualityMetric metric) {
+<span class="nc" id="L95">        this.metrics.add(metric);</span>
+<span class="nc" id="L96">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RelatedCollectorItemRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.repository</a> &gt; <span class="el_source">RelatedCollectorItemRepository.java</span></div><h1>RelatedCollectorItemRepository.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.repository;
+
+import com.capitalone.dashboard.model.Build;
+import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
+import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+/**
+ * Repository for {@link Build} data.
+ */
+public interface RelatedCollectorItemRepository extends CrudRepository&lt;RelatedCollectorItem, ObjectId&gt;, QueryDslPredicateExecutor&lt;RelatedCollectorItem&gt; {
+    List&lt;RelatedCollectorItem&gt; findRelatedCollectorItemByLeft(ObjectId left);
+    List&lt;RelatedCollectorItem&gt; findRelatedCollectorItemByRight(ObjectId right);
+    List&lt;RelatedCollectorItem&gt; findAllByLeftAndRight(ObjectId left, ObjectId right);
+
+    default RelatedCollectorItem saveRelatedItems(ObjectId left, ObjectId right, String source, String reason) {
+<span class="fc" id="L21">        List&lt;RelatedCollectorItem&gt; items = findAllByLeftAndRight(left, right);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (!CollectionUtils.isEmpty(items)) {</span>
+<span class="fc" id="L23">            this.delete(items);</span>
+        }
+<span class="fc" id="L25">        RelatedCollectorItem related = new RelatedCollectorItem();</span>
+<span class="fc" id="L26">        related.setLeft(left);</span>
+<span class="fc" id="L27">        related.setRight(right);</span>
+<span class="fc" id="L28">        related.setCreationTime(System.currentTimeMillis());</span>
+<span class="fc" id="L29">        related.setSource(source);</span>
+<span class="fc" id="L30">        related.setReason(reason);</span>
+<span class="fc" id="L31">        return save(related);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

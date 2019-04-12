@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Incident.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Incident.java</span></div><h1>Incident.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Objects;
+
+@Document(collection=&quot;incident&quot;)
+<span class="nc" id="L11">public class Incident extends BaseModel {</span>
+
+    private ObjectId collectorItemId;
+    private Long timestamp;
+    private String incidentItem;
+    private String incidentID;
+    private String category;
+    private Long openTime;
+    private String openedBy;
+    private String severity;
+    private Long updatedTime;
+    private String primaryAssignmentGroup;
+    private String status;
+    private Long closedTime;
+    private String closedBy;
+    private String closureCode;
+    private String affectedItem;
+    private String incidentDescription;
+    private String incidentSysID;
+    private String affectedItemType;
+    private String affectedItemSysId;
+    private String affectedBusinessServiceItem;
+    private String affectedBusinessServiceItemType;
+    private String affectedBusinessServiceItemSysId;
+    private boolean attachedToBusinessServiceOrEnvironmentOnly;
+
+<span class="nc" id="L37">    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern(&quot;yyyy-MM-dd'T'HH:mm:ssZZ&quot;);</span>
+
+<span class="nc" id="L39">    public ObjectId getCollectorItemId() { return collectorItemId; }</span>
+
+<span class="nc" id="L41">    public void setCollectorItemId(ObjectId collectorItemId) { this.collectorItemId = collectorItemId; }</span>
+
+<span class="nc" id="L43">    public long getTimestamp() { return timestamp; }</span>
+
+<span class="nc" id="L45">    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }</span>
+
+<span class="nc" id="L47">    public void setTimestamp(String timestamp) { this.timestamp = DATE_FORMATTER.parseMillis(timestamp); }</span>
+
+<span class="nc" id="L49">    public String getIncidentItem() { return incidentItem; }</span>
+
+<span class="nc" id="L51">    public void setIncidentItem(String incidentItem) { this.incidentItem = incidentItem; }</span>
+
+<span class="nc" id="L53">    public String getIncidentID() { return incidentID; }</span>
+
+<span class="nc" id="L55">    public void setIncidentID(String incidentID) { this.incidentID = incidentID; }</span>
+
+<span class="nc" id="L57">    public String getCategory() { return category; }</span>
+
+<span class="nc" id="L59">    public void setCategory(String category) { this.category = category; }</span>
+
+<span class="nc" id="L61">    public Long getOpenTime() { return openTime; }</span>
+
+<span class="nc" id="L63">    public void setOpenTime(Long openTime) { this.openTime = openTime; }</span>
+
+<span class="nc" id="L65">    public void setOpenTime(String openTime) { this.setOpenTime(DATE_FORMATTER.parseMillis(openTime)); }</span>
+
+<span class="nc" id="L67">    public String getOpenedBy() { return openedBy; }</span>
+
+<span class="nc" id="L69">    public void setOpenedBy(String openedBy) { this.openedBy = openedBy; }</span>
+
+<span class="nc" id="L71">    public String getSeverity() { return severity; }</span>
+
+<span class="nc" id="L73">    public void setSeverity(String severity) { this.severity = severity; }</span>
+
+<span class="nc" id="L75">    public long getUpdatedTime() { return updatedTime; }</span>
+
+<span class="nc" id="L77">    public void setUpdatedTime(long updatedTime) { this.updatedTime = updatedTime; }</span>
+
+<span class="nc" id="L79">    public void setUpdatedTime(String updatedTime) { this.updatedTime = DATE_FORMATTER.parseMillis(updatedTime); }</span>
+
+<span class="nc" id="L81">    public String getPrimaryAssignmentGroup() { return primaryAssignmentGroup; }</span>
+
+<span class="nc" id="L83">    public void setPrimaryAssignmentGroup(String primaryAssignmentGroup) { this.primaryAssignmentGroup = primaryAssignmentGroup; }</span>
+
+<span class="nc" id="L85">    public String getStatus() { return status; }</span>
+
+<span class="nc" id="L87">    public void setStatus(String status) { this.status = status; }</span>
+
+<span class="nc" id="L89">    public Long getClosedTime() { return closedTime; }</span>
+
+<span class="nc" id="L91">    public void setClosedTime(Long closedTime) { this.closedTime = closedTime; }</span>
+
+<span class="nc" id="L93">    public void setClosedTime(String closedTime) { this.setClosedTime(DATE_FORMATTER.parseMillis(closedTime)); }</span>
+
+<span class="nc" id="L95">    public String getClosedBy() { return closedBy; }</span>
+
+<span class="nc" id="L97">    public void setClosedBy(String closedBy) { this.closedBy = closedBy; }</span>
+
+<span class="nc" id="L99">    public String getClosureCode() { return closureCode; }</span>
+
+<span class="nc" id="L101">    public void setClosureCode(String closureCode) { this.closureCode = closureCode; }</span>
+
+<span class="nc" id="L103">    public String getAffectedItem() { return affectedItem; }</span>
+
+<span class="nc" id="L105">    public void setAffectedItem(String affectedItem) { this.affectedItem = affectedItem; }</span>
+
+<span class="nc" id="L107">    public String getIncidentDescription() { return incidentDescription; }</span>
+
+<span class="nc" id="L109">    public void setIncidentDescription(String incidentDescription) { this.incidentDescription = incidentDescription; }</span>
+
+<span class="nc" id="L111">    public String getIncidentSysID() { return incidentSysID; }</span>
+
+<span class="nc" id="L113">    public void setIncidentSysID(String incidentSysID) { this.incidentSysID = incidentSysID; }</span>
+
+<span class="nc" id="L115">    public String getAffectedItemType() { return affectedItemType; }</span>
+
+<span class="nc" id="L117">    public void setAffectedItemType(String affectedItemType) { this.affectedItemType = affectedItemType; }</span>
+
+<span class="nc" id="L119">    public String getAffectedItemSysId() { return affectedItemSysId; }</span>
+
+<span class="nc" id="L121">    public void setAffectedItemSysId(String affectedItemSysId) { this.affectedItemSysId = affectedItemSysId; }</span>
+
+<span class="nc" id="L123">    public String getAffectedBusinessServiceItem() { return affectedBusinessServiceItem; }</span>
+
+    public void setAffectedBusinessServiceItem(String affectedBusinessServiceItem) {
+<span class="nc" id="L126">        this.affectedBusinessServiceItem = affectedBusinessServiceItem;</span>
+<span class="nc" id="L127">    }</span>
+
+<span class="nc" id="L129">    public String getAffectedBusinessServiceItemType() { return affectedBusinessServiceItemType; }</span>
+
+    public void setAffectedBusinessServiceItemType(String affectedBusinessServiceItemType) {
+<span class="nc" id="L132">        this.affectedBusinessServiceItemType = affectedBusinessServiceItemType;</span>
+<span class="nc" id="L133">    }</span>
+
+<span class="nc" id="L135">    public String getAffectedBusinessServiceItemSysId() { return affectedBusinessServiceItemSysId; }</span>
+
+    public void setAffectedBusinessServiceItemSysId(String affectedBusinessServiceItemSysId) {
+<span class="nc" id="L138">        this.affectedBusinessServiceItemSysId = affectedBusinessServiceItemSysId;</span>
+<span class="nc" id="L139">    }</span>
+
+<span class="nc" id="L141">    public boolean isAttachedToBusinessServiceOrEnvironmentOnly() { return attachedToBusinessServiceOrEnvironmentOnly; }</span>
+
+    public void setAttachedToBusinessServiceOrEnvironmentOnly(boolean attachedToBusinessServiceOrEnvironmentOnly) {
+<span class="nc" id="L144">        this.attachedToBusinessServiceOrEnvironmentOnly = attachedToBusinessServiceOrEnvironmentOnly;</span>
+<span class="nc" id="L145">    }</span>
+
+    @Override
+    public boolean equals(Object compareTo){
+<span class="nc" id="L149">        boolean doesEqual = true;</span>
+
+<span class="nc bnc" id="L151" title="All 4 branches missed.">        if(compareTo == null || !compareTo.getClass().isAssignableFrom(Incident.class)){</span>
+<span class="nc" id="L152">            doesEqual = false;</span>
+        }else {
+<span class="nc" id="L154">            Incident newIncident = (Incident) compareTo;</span>
+
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if(!newIncident.toString().equals(toString())){</span>
+<span class="nc" id="L157">                doesEqual = false;</span>
+            }
+        }
+
+<span class="nc" id="L161">        return doesEqual;</span>
+    }
+
+    /**
+     *  Returns human readable string of the Incident Object.
+     *  * equals(Object object) depends on this method. Changing this method could alter the return of the equals method.
+     * @return object to string
+     */
+    @Override
+    public String toString() {
+
+<span class="nc" id="L172">        StringBuffer buf = new StringBuffer(210);</span>
+<span class="nc" id="L173">        buf.append(&quot;incidentID: &quot;)</span>
+<span class="nc" id="L174">                .append(incidentID);</span>
+
+<span class="nc" id="L176">        return buf.toString();</span>
+    }
+
+    @Override
+    public int hashCode(){
+<span class="nc" id="L181">        return Objects.hash(incidentID);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

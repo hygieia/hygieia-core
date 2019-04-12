@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckstyleReport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.quality</a> &gt; <span class="el_source">CheckstyleReport.java</span></div><h1>CheckstyleReport.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.quality;
+
+import javax.xml.bind.annotation.*;
+import java.util.List;
+
+@XmlRootElement(name=&quot;checkstyle&quot;)
+@XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L8">public class CheckstyleReport implements CodeQualityVisitee {</span>
+
+    @XmlElement(name=&quot;file&quot;)
+    private List&lt;CheckstyleFile&gt; files;
+
+    @Override
+    public void accept(CodeQualityVisitor visitor) {
+<span class="nc" id="L15">        visitor.visit(this);</span>
+<span class="nc" id="L16">    }</span>
+
+    public List&lt;CheckstyleFile&gt; getFiles() {
+<span class="nc" id="L19">        return files;</span>
+    }
+
+    public void setFiles(List&lt;CheckstyleFile&gt; files) {
+<span class="nc" id="L23">        this.files = files;</span>
+<span class="nc" id="L24">    }</span>
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L27">    public static class CheckstyleFile {</span>
+
+        @XmlElement(name=&quot;error&quot;)
+        private List&lt;CheckstyleError&gt; errors;
+
+        public List&lt;CheckstyleError&gt; getErrors() {
+<span class="nc" id="L33">            return errors;</span>
+        }
+
+        public void setErrors(List&lt;CheckstyleError&gt; errors) {
+<span class="nc" id="L37">            this.errors = errors;</span>
+<span class="nc" id="L38">        }</span>
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L42">    public static class CheckstyleError {</span>
+
+        @XmlAttribute(name=&quot;severity&quot;)
+        private CheckstyleSeverity severity;
+
+
+        public CheckstyleSeverity getSeverity() {
+<span class="nc" id="L49">            return severity;</span>
+        }
+
+        public void setSeverity(CheckstyleSeverity severity) {
+<span class="nc" id="L53">            this.severity = severity;</span>
+<span class="nc" id="L54">        }</span>
+    }
+
+<span class="nc" id="L57">    public enum CheckstyleSeverity {</span>
+<span class="nc" id="L58">        error,warning,info,ignore</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

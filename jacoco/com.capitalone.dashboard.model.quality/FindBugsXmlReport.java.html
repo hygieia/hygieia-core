@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FindBugsXmlReport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.quality</a> &gt; <span class="el_source">FindBugsXmlReport.java</span></div><h1>FindBugsXmlReport.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.quality;
+
+import javax.xml.bind.annotation.*;
+import java.util.List;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = &quot;BugCollection&quot;)
+<span class="nc" id="L8">public class FindBugsXmlReport implements CodeQualityVisitee {</span>
+    @Override
+    public void accept(CodeQualityVisitor visitor) {
+<span class="nc" id="L11">        visitor.visit(this);</span>
+<span class="nc" id="L12">    }</span>
+
+    @XmlElement(name = &quot;file&quot;)
+    private List&lt;BugFile&gt; files;
+
+    public List&lt;BugFile&gt; getFiles() {
+<span class="nc" id="L18">        return files;</span>
+    }
+
+    public void setFiles(List&lt;BugFile&gt; files) {
+<span class="nc" id="L22">        this.files = files;</span>
+<span class="nc" id="L23">    }</span>
+
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L27">    public static class BugFile {</span>
+        @XmlElement(name = &quot;BugInstance&quot;)
+        private List&lt;BugInstance&gt; bugCollection;
+
+        public List&lt;BugInstance&gt; getBugCollection() {
+<span class="nc" id="L32">            return bugCollection;</span>
+        }
+
+        public void setBugCollection(List&lt;BugInstance&gt; bugCollection) {
+<span class="nc" id="L36">            this.bugCollection = bugCollection;</span>
+<span class="nc" id="L37">        }</span>
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L41">    public static class BugInstance {</span>
+
+        @XmlAttribute
+        private String type;
+
+        @XmlAttribute
+        private BugPriority priority;
+
+        @XmlAttribute
+        private BugCategory category;
+
+        @XmlAttribute
+        private String message;
+
+        @XmlAttribute
+        private int lineNumber;
+
+        public String getType() {
+<span class="nc" id="L59">            return type;</span>
+        }
+
+        public void setType(String type) {
+<span class="nc" id="L63">            this.type = type;</span>
+<span class="nc" id="L64">        }</span>
+
+        public BugPriority getPriority() {
+<span class="nc" id="L67">            return priority;</span>
+        }
+
+        public void setPriority(BugPriority priority) {
+<span class="nc" id="L71">            this.priority = priority;</span>
+<span class="nc" id="L72">        }</span>
+
+        public BugCategory getCategory() {
+<span class="nc" id="L75">            return category;</span>
+        }
+
+        public void setCategory(BugCategory category) {
+<span class="nc" id="L79">            this.category = category;</span>
+<span class="nc" id="L80">        }</span>
+
+        public String getMessage() {
+<span class="nc" id="L83">            return message;</span>
+        }
+
+        public void setMessage(String message) {
+<span class="nc" id="L87">            this.message = message;</span>
+<span class="nc" id="L88">        }</span>
+
+        public int getLineNumber() {
+<span class="nc" id="L91">            return lineNumber;</span>
+        }
+
+        public void setLineNumber(int lineNumber) {
+<span class="nc" id="L95">            this.lineNumber = lineNumber;</span>
+<span class="nc" id="L96">        }</span>
+    }
+
+
+<span class="nc" id="L100">    public enum BugPriority {</span>
+<span class="nc" id="L101">        Blocker, Low, Critical, Normal</span>
+    }
+
+<span class="nc" id="L104">    public enum BugCategory {</span>
+<span class="nc" id="L105">        PERFORMANCE, BAD_PRACTICE</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

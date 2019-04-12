@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DashboardUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.util</a> &gt; <span class="el_source">DashboardUtils.java</span></div><h1>DashboardUtils.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.util;
+
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.repository.ComponentRepository;
+import org.bson.types.ObjectId;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+<span class="nc" id="L12">public final class DashboardUtils {</span>
+
+
+    /**
+     * Gets a unique set of collector item ids for a given collector from all components in the Hygieia instance.
+     * @param componentRepository component repo
+     * @param collector collector
+     * @return unique set of collector item ids
+     */
+    public static Set&lt;ObjectId&gt; getUniqueCollectorItemIDsFromAllComponents(ComponentRepository componentRepository, Collector collector) {
+<span class="fc" id="L22">        Set&lt;ObjectId&gt; uniqueIDs = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        for (com.capitalone.dashboard.model.Component comp : componentRepository.findAll()) {</span>
+<span class="pc bpc" id="L24" title="2 of 4 branches missed.">            if (comp.getCollectorItems() == null || comp.getCollectorItems().isEmpty()) continue;</span>
+<span class="fc" id="L25">            List&lt;CollectorItem&gt; itemList = comp.getCollectorItems().get(collector.getCollectorType());</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            if (itemList == null) continue;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            for (CollectorItem ci : itemList) {</span>
+<span class="pc bpc" id="L28" title="2 of 4 branches missed.">                if (ci != null &amp;&amp; ci.getCollectorId().equals(collector.getId())) {</span>
+<span class="fc" id="L29">                    uniqueIDs.add(ci.getId());</span>
+                }
+<span class="fc" id="L31">            }</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        return uniqueIDs;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QCmdb.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QCmdb.java</span></div><h1>QCmdb.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QCmdb is a Querydsl query type for Cmdb
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QCmdb extends EntityPathBase&lt;Cmdb&gt; {
+
+    private static final long serialVersionUID = 1154205002L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QCmdb cmdb = new QCmdb(&quot;cmdb&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="nc" id="L27">    public final StringPath appServiceOwner = createString(&quot;appServiceOwner&quot;);</span>
+
+<span class="nc" id="L29">    public final StringPath appServiceOwnerUserName = createString(&quot;appServiceOwnerUserName&quot;);</span>
+
+<span class="nc" id="L31">    public final StringPath assignmentGroup = createString(&quot;assignmentGroup&quot;);</span>
+
+<span class="nc" id="L33">    public final StringPath businessOwner = createString(&quot;businessOwner&quot;);</span>
+
+<span class="nc" id="L35">    public final StringPath businessOwnerUserName = createString(&quot;businessOwnerUserName&quot;);</span>
+
+    public final org.bson.types.QObjectId collectorItemId;
+
+<span class="nc" id="L39">    public final StringPath commonName = createString(&quot;commonName&quot;);</span>
+
+<span class="nc" id="L41">    public final ListPath&lt;String, StringPath&gt; components = this.&lt;String, StringPath&gt;createList(&quot;components&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="nc" id="L43">    public final StringPath configurationItem = createString(&quot;configurationItem&quot;);</span>
+
+<span class="nc" id="L45">    public final StringPath configurationItemSubType = createString(&quot;configurationItemSubType&quot;);</span>
+
+<span class="nc" id="L47">    public final StringPath configurationItemType = createString(&quot;configurationItemType&quot;);</span>
+
+<span class="nc" id="L49">    public final StringPath developmentOwner = createString(&quot;developmentOwner&quot;);</span>
+
+<span class="nc" id="L51">    public final StringPath developmentOwnerUserName = createString(&quot;developmentOwnerUserName&quot;);</span>
+
+<span class="nc" id="L53">    public final ListPath&lt;String, StringPath&gt; environments = this.&lt;String, StringPath&gt;createList(&quot;environments&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L58">    public final StringPath itemType = createString(&quot;itemType&quot;);</span>
+
+<span class="nc" id="L60">    public final StringPath ownerDept = createString(&quot;ownerDept&quot;);</span>
+
+<span class="nc" id="L62">    public final StringPath ownerSubDept = createString(&quot;ownerSubDept&quot;);</span>
+
+<span class="nc" id="L64">    public final StringPath supportOwner = createString(&quot;supportOwner&quot;);</span>
+
+<span class="nc" id="L66">    public final StringPath supportOwnerUserName = createString(&quot;supportOwnerUserName&quot;);</span>
+
+<span class="nc" id="L68">    public final NumberPath&lt;Long&gt; timestamp = createNumber(&quot;timestamp&quot;, Long.class);</span>
+
+<span class="nc" id="L70">    public final BooleanPath validConfigItem = createBoolean(&quot;validConfigItem&quot;);</span>
+
+    public QCmdb(String variable) {
+<span class="nc" id="L73">        this(Cmdb.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L74">    }</span>
+
+    public QCmdb(Path&lt;? extends Cmdb&gt; path) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L78">    }</span>
+
+    public QCmdb(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L82">    }</span>
+
+    public QCmdb(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L85">        this(Cmdb.class, metadata, inits);</span>
+<span class="nc" id="L86">    }</span>
+
+    public QCmdb(Class&lt;? extends Cmdb&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L89">        super(type, metadata, inits);</span>
+<span class="nc" id="L90">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        this.collectorItemId = inits.isInitialized(&quot;collectorItemId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;collectorItemId&quot;)) : null;</span>
+<span class="nc" id="L92">        this.id = _super.id;</span>
+<span class="nc" id="L93">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

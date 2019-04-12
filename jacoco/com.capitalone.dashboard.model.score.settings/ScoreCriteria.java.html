@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreCriteria.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">ScoreCriteria.java</span></div><h1>ScoreCriteria.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+import org.apache.commons.collections.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Score Criteria
+ * Criteria Conditions
+ * - No Widget Found
+ * - No Data Found in Widget
+ * Threshold Settings for data
+ */
+<span class="nc" id="L15">public class ScoreCriteria {</span>
+
+  //Score when no widget is found
+  private ScoreTypeValue noWidgetFound;
+
+  //Score when no data is found in widget
+  private ScoreTypeValue noDataFound;
+
+  //List of threshold conditions
+  private List&lt;ScoreThresholdSettings&gt; dataRangeThresholds;
+
+  public static ScoreCriteria cloneScoreCriteria(ScoreCriteria scoreCriteria) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">    if (null == scoreCriteria) {</span>
+<span class="nc" id="L28">      return null;</span>
+    }
+
+<span class="nc" id="L31">    ScoreCriteria scoreCriteriaClone = new ScoreCriteria();</span>
+
+<span class="nc" id="L33">    scoreCriteriaClone.setNoDataFound(</span>
+<span class="nc" id="L34">      ScoreTypeValue.cloneScoreTypeValue(scoreCriteria.getNoDataFound())</span>
+    );
+<span class="nc" id="L36">    scoreCriteriaClone.setNoWidgetFound(</span>
+<span class="nc" id="L37">      ScoreTypeValue.cloneScoreTypeValue(scoreCriteria.getNoWidgetFound())</span>
+    );
+
+<span class="nc" id="L40">    List&lt;ScoreThresholdSettings&gt; dataRangeThresholds = scoreCriteria.getDataRangeThresholds();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">    if (CollectionUtils.isEmpty(dataRangeThresholds)) {</span>
+<span class="nc" id="L42">      return scoreCriteriaClone;</span>
+    }
+
+<span class="nc" id="L45">    List&lt;ScoreThresholdSettings&gt; dataRangeThresholdsClone = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">    for (ScoreThresholdSettings dataRangeThreshold : dataRangeThresholds) {</span>
+<span class="nc" id="L47">      dataRangeThresholdsClone.add(</span>
+<span class="nc" id="L48">        ScoreThresholdSettings.cloneScoreThresholdSettings(dataRangeThreshold)</span>
+      );
+<span class="nc" id="L50">    }</span>
+<span class="nc" id="L51">    scoreCriteriaClone.setDataRangeThresholds(dataRangeThresholdsClone);</span>
+<span class="nc" id="L52">    return scoreCriteriaClone;</span>
+  }
+
+  public List&lt;ScoreThresholdSettings&gt; getDataRangeThresholds() {
+<span class="nc" id="L56">    return dataRangeThresholds;</span>
+  }
+
+  public void setDataRangeThresholds(List&lt;ScoreThresholdSettings&gt; dataRangeThresholds) {
+<span class="nc" id="L60">    this.dataRangeThresholds = dataRangeThresholds;</span>
+<span class="nc" id="L61">  }</span>
+
+  public ScoreTypeValue getNoWidgetFound() {
+<span class="nc" id="L64">    return noWidgetFound;</span>
+  }
+
+  public void setNoWidgetFound(ScoreTypeValue noWidgetFound) {
+<span class="nc" id="L68">    this.noWidgetFound = noWidgetFound;</span>
+<span class="nc" id="L69">  }</span>
+
+  public ScoreTypeValue getNoDataFound() {
+<span class="nc" id="L72">    return noDataFound;</span>
+  }
+
+  public void setNoDataFound(ScoreTypeValue noDataFound) {
+<span class="nc" id="L76">    this.noDataFound = noDataFound;</span>
+<span class="nc" id="L77">  }</span>
+
+  @Override
+  public String toString() {
+<span class="nc" id="L81">    return &quot;ScoreCriteria{&quot; +</span>
+      &quot;noWidgetFound=&quot; + noWidgetFound +
+      &quot;, noDataFound=&quot; + noDataFound +
+      &quot;, dataRangeThresholds=&quot; + dataRangeThresholds +
+      '}';
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

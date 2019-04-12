@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QTestResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QTestResult.java</span></div><h1>QTestResult.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QTestResult is a Querydsl query type for TestResult
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QTestResult extends EntityPathBase&lt;TestResult&gt; {
+
+    private static final long serialVersionUID = -1383944015L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QTestResult testResult = new QTestResult(&quot;testResult&quot;);</span>
+
+    public final QBaseModel _super;
+
+    public final org.bson.types.QObjectId buildId;
+
+    public final org.bson.types.QObjectId collectorItemId;
+
+<span class="fc" id="L31">    public final StringPath description = createString(&quot;description&quot;);</span>
+
+<span class="fc" id="L33">    public final NumberPath&lt;Long&gt; duration = createNumber(&quot;duration&quot;, Long.class);</span>
+
+<span class="fc" id="L35">    public final NumberPath&lt;Long&gt; endTime = createNumber(&quot;endTime&quot;, Long.class);</span>
+
+<span class="fc" id="L37">    public final StringPath executionId = createString(&quot;executionId&quot;);</span>
+
+<span class="fc" id="L39">    public final NumberPath&lt;Integer&gt; failureCount = createNumber(&quot;failureCount&quot;, Integer.class);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L44">    public final StringPath resultStatus = createString(&quot;resultStatus&quot;);</span>
+
+<span class="fc" id="L46">    public final NumberPath&lt;Integer&gt; skippedCount = createNumber(&quot;skippedCount&quot;, Integer.class);</span>
+
+<span class="fc" id="L48">    public final NumberPath&lt;Long&gt; startTime = createNumber(&quot;startTime&quot;, Long.class);</span>
+
+<span class="fc" id="L50">    public final NumberPath&lt;Integer&gt; successCount = createNumber(&quot;successCount&quot;, Integer.class);</span>
+
+<span class="fc" id="L52">    public final StringPath targetAppName = createString(&quot;targetAppName&quot;);</span>
+
+<span class="fc" id="L54">    public final StringPath targetEnvName = createString(&quot;targetEnvName&quot;);</span>
+
+<span class="fc" id="L56">    public final CollectionPath&lt;TestCapability, QTestCapability&gt; testCapabilities = this.&lt;TestCapability, QTestCapability&gt;createCollection(&quot;testCapabilities&quot;, TestCapability.class, QTestCapability.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L58">    public final NumberPath&lt;Long&gt; timestamp = createNumber(&quot;timestamp&quot;, Long.class);</span>
+
+<span class="fc" id="L60">    public final NumberPath&lt;Integer&gt; totalCount = createNumber(&quot;totalCount&quot;, Integer.class);</span>
+
+<span class="fc" id="L62">    public final EnumPath&lt;TestSuiteType&gt; type = createEnum(&quot;type&quot;, TestSuiteType.class);</span>
+
+<span class="fc" id="L64">    public final NumberPath&lt;Integer&gt; unknownStatusCount = createNumber(&quot;unknownStatusCount&quot;, Integer.class);</span>
+
+<span class="fc" id="L66">    public final StringPath url = createString(&quot;url&quot;);</span>
+
+    public QTestResult(String variable) {
+<span class="fc" id="L69">        this(TestResult.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L70">    }</span>
+
+    public QTestResult(Path&lt;? extends TestResult&gt; path) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L74">    }</span>
+
+    public QTestResult(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L78">    }</span>
+
+    public QTestResult(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L81">        this(TestResult.class, metadata, inits);</span>
+<span class="nc" id="L82">    }</span>
+
+    public QTestResult(Class&lt;? extends TestResult&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L85">        super(type, metadata, inits);</span>
+<span class="fc" id="L86">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        this.buildId = inits.isInitialized(&quot;buildId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;buildId&quot;)) : null;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        this.collectorItemId = inits.isInitialized(&quot;collectorItemId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;collectorItemId&quot;)) : null;</span>
+<span class="fc" id="L89">        this.id = _super.id;</span>
+<span class="fc" id="L90">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

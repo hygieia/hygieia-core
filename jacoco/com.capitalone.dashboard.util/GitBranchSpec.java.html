@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitBranchSpec.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.util</a> &gt; <span class="el_source">GitBranchSpec.java</span></div><h1>GitBranchSpec.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.util;
+
+
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
+
+
+public class GitBranchSpec {
+    private String name;
+
+    public String getName() {
+<span class="fc" id="L12">        return name;</span>
+    }
+
+    private void setName(String name) {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (name == null) {</span>
+<span class="fc" id="L17">            throw new IllegalArgumentException();</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        } else if (name.length() == 0) {</span>
+<span class="fc" id="L19">            this.name = &quot;**&quot;;</span>
+        } else {
+<span class="fc" id="L21">            this.name = name.trim();</span>
+        }
+<span class="fc" id="L23">    }</span>
+
+
+<span class="fc" id="L26">    public GitBranchSpec(String name) {</span>
+<span class="fc" id="L27">        setName(name);</span>
+<span class="fc" id="L28">    }</span>
+
+    public String toString() {
+<span class="nc" id="L31">        return name;</span>
+    }
+
+    public boolean matches(String item) {
+<span class="fc" id="L35">        return getPattern().matcher(item).matches();</span>
+    }
+
+
+    private Pattern getPattern() {
+<span class="fc" id="L40">        String expandedName = name;</span>
+        // use regex syntax directly if name starts with colon
+<span class="pc bpc" id="L42" title="1 of 4 branches missed.">        if ((expandedName.charAt(0) == ':') &amp;&amp; (expandedName.length() &gt; 1)) {</span>
+<span class="fc" id="L43">            String regexSubstring = expandedName.substring(1, expandedName.length());</span>
+<span class="fc" id="L44">            return Pattern.compile(regexSubstring);</span>
+        }
+        // build a pattern into this builder
+<span class="fc" id="L47">        StringBuilder builder = new StringBuilder(100);</span>
+
+        // for legacy reasons (sic) we do support various branch spec format to declare remotes / branches
+<span class="fc" id="L50">        builder.append(&quot;(refs/heads/&quot;);</span>
+
+
+        // if an unqualified branch was given, consider all remotes (with various possible syntaxes)
+        // so it will match branches from  any remote repositories as the user probably intended
+<span class="fc bfc" id="L55" title="All 4 branches covered.">        if (!expandedName.contains(&quot;**&quot;) &amp;&amp; !expandedName.contains(&quot;/&quot;)) {</span>
+<span class="fc" id="L56">            builder.append(&quot;|refs/remotes/[^/]+/|remotes/[^/]+/|[^/]+/&quot;);</span>
+        } else {
+<span class="fc" id="L58">            builder.append(&quot;|refs/remotes/|remotes/&quot;);</span>
+        }
+<span class="fc" id="L60">        builder.append(&quot;)?&quot;);</span>
+
+        // was the last token a wildcard?
+<span class="fc" id="L63">        boolean foundWildcard = false;</span>
+
+        // split the string at the wildcards
+<span class="fc" id="L66">        StringTokenizer tokenizer = new StringTokenizer(expandedName, &quot;*&quot;, true);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L68">            String token = tokenizer.nextToken();</span>
+
+            // is this token is a wildcard?
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (token.equals(&quot;*&quot;)) {</span>
+                // yes, was the previous token a wildcard?
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                if (foundWildcard) {</span>
+                    // yes, we found &quot;**&quot;
+                    // match over any number of characters
+<span class="fc" id="L76">                    builder.append(&quot;.*&quot;);</span>
+<span class="fc" id="L77">                    foundWildcard = false;</span>
+                } else {
+                    // no, set foundWildcard to true and go on
+<span class="fc" id="L80">                    foundWildcard = true;</span>
+                }
+            } else {
+                // no, was the previous token a wildcard?
+<span class="fc bfc" id="L84" title="All 2 branches covered.">                if (foundWildcard) {</span>
+                    // yes, we found &quot;*&quot; followed by a non-wildcard
+                    // match any number of characters other than a &quot;/&quot;
+<span class="fc" id="L87">                    builder.append(&quot;[^/]*&quot;);</span>
+<span class="fc" id="L88">                    foundWildcard = false;</span>
+                }
+                // quote the non-wildcard token before adding it to the phrase
+<span class="fc" id="L91">                builder.append(Pattern.quote(token));</span>
+            }
+<span class="fc" id="L93">        }</span>
+
+        // if the string ended with a wildcard add it now
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (foundWildcard) {</span>
+<span class="fc" id="L97">            builder.append(&quot;[^/]*&quot;);</span>
+        }
+
+<span class="fc" id="L100">        return Pattern.compile(builder.toString());</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QCodeQualityMetric.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QCodeQualityMetric.java</span></div><h1>QCodeQualityMetric.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+
+
+/**
+ * QCodeQualityMetric is a Querydsl query type for CodeQualityMetric
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QCodeQualityMetric extends BeanPath&lt;CodeQualityMetric&gt; {
+
+    private static final long serialVersionUID = 1567986432L;
+
+<span class="nc" id="L20">    public static final QCodeQualityMetric codeQualityMetric = new QCodeQualityMetric(&quot;codeQualityMetric&quot;);</span>
+
+<span class="nc" id="L22">    public final StringPath formattedValue = createString(&quot;formattedValue&quot;);</span>
+
+<span class="nc" id="L24">    public final StringPath name = createString(&quot;name&quot;);</span>
+
+<span class="nc" id="L26">    public final EnumPath&lt;CodeQualityMetricStatus&gt; status = createEnum(&quot;status&quot;, CodeQualityMetricStatus.class);</span>
+
+<span class="nc" id="L28">    public final StringPath statusMessage = createString(&quot;statusMessage&quot;);</span>
+
+<span class="nc" id="L30">    public final StringPath value = createString(&quot;value&quot;);</span>
+
+    public QCodeQualityMetric(String variable) {
+<span class="nc" id="L33">        super(CodeQualityMetric.class, forVariable(variable));</span>
+<span class="nc" id="L34">    }</span>
+
+    public QCodeQualityMetric(Path&lt;? extends CodeQualityMetric&gt; path) {
+<span class="nc" id="L37">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L38">    }</span>
+
+    public QCodeQualityMetric(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L41">        super(CodeQualityMetric.class, metadata);</span>
+<span class="nc" id="L42">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

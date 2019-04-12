@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dashboard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Dashboard.java</span></div><h1>Dashboard.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * A collection of widgets, collectors and application components that represent a software
+ * project under development and/or in production use.
+ *
+ */
+@Document(collection=&quot;dashboards&quot;)
+public class Dashboard extends BaseModel {
+
+    private String template;
+
+    //NOTE Mongodb treats strings as different if they have different case
+    @Indexed(unique=true)
+    private String title;
+
+<span class="fc" id="L24">    private List&lt;Widget&gt; widgets = new ArrayList&lt;&gt;();</span>
+
+    // multiple owner references for backwards compatibility
+    // TODO: remove once impacts of breaking change are assessed
+    private String owner;
+<span class="fc" id="L29">    private List&lt;Owner&gt; owners = new ArrayList&lt;Owner&gt;();</span>
+    
+    private DashboardType type;
+
+    private Application application;
+
+    private String configurationItemBusServName;
+
+    private String configurationItemBusAppName;
+
+    private boolean validServiceName;
+
+    private boolean validAppName;
+
+    private boolean remoteCreated;
+
+    //Enable/Disable scoring for the dashboard
+    private boolean scoreEnabled;
+
+    //Display position for score.
+    //Default to HEADER
+<span class="fc" id="L50">    private ScoreDisplayType scoreDisplay = ScoreDisplayType.HEADER;</span>
+
+    private List&lt;String&gt; activeWidgets;
+
+    private long createdAt;
+
+    private long updatedAt;
+
+    @Transient
+    String errorMessage;
+
+    @Transient
+    int errorCode;
+
+<span class="fc" id="L64">    Dashboard() {</span>
+<span class="fc" id="L65">    }</span>
+
+    public Dashboard(String template, String title, Application application, List&lt;Owner&gt; owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List&lt;String&gt; activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+<span class="fc" id="L68">        this(false, template, title, application, owners, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);</span>
+<span class="fc" id="L69">    }</span>
+
+<span class="fc" id="L71">    public Dashboard(boolean remoteCreated, String template, String title, Application application, List&lt;Owner&gt; owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List&lt;String&gt; activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {</span>
+<span class="fc" id="L72">        this.template = template;</span>
+<span class="fc" id="L73">        this.title = title;</span>
+<span class="fc" id="L74">        this.configurationItemBusServName = configurationItemBusServName;</span>
+<span class="fc" id="L75">        this.configurationItemBusAppName = configurationItemBusAppName;</span>
+<span class="fc" id="L76">        this.application = application;</span>
+<span class="fc" id="L77">        this.type = type;</span>
+<span class="fc" id="L78">        this.owners = owners;</span>
+<span class="fc" id="L79">        this.activeWidgets = activeWidgets;</span>
+<span class="fc" id="L80">        this.scoreEnabled = scoreEnabled;</span>
+<span class="fc" id="L81">        this.scoreDisplay = scoreDisplay;</span>
+<span class="fc" id="L82">        this.createdAt = System.currentTimeMillis();</span>
+<span class="fc" id="L83">    }</span>
+
+    public String getTemplate() {
+<span class="nc" id="L86">        return template;</span>
+    }
+
+    public void setTemplate(String template) {
+<span class="nc" id="L90">        this.template = template;</span>
+<span class="nc" id="L91">    }</span>
+
+    public String getTitle() {
+<span class="fc" id="L94">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="nc" id="L98">        this.title = title;</span>
+<span class="nc" id="L99">    }</span>
+
+    public Application getApplication() {
+<span class="fc" id="L102">        return application;</span>
+    }
+
+    public void setApplication(Application application) {
+<span class="nc" id="L106">        this.application = application;</span>
+<span class="nc" id="L107">    }</span>
+
+    public List&lt;Widget&gt; getWidgets() {
+<span class="fc" id="L110">        return widgets;</span>
+    }
+
+    public void setWidgets(List&lt;Widget&gt; widgets) {
+<span class="nc" id="L114">        this.widgets = widgets;</span>
+<span class="nc" id="L115">    }</span>
+
+    public String getOwner() {
+<span class="nc" id="L118">		return owner;</span>
+	}
+
+	public void setOwner(String owner) {
+<span class="nc" id="L122">		this.owner = owner;</span>
+<span class="nc" id="L123">	}</span>
+	
+	public List&lt;Owner&gt; getOwners() {
+<span class="nc" id="L126">		return owners;</span>
+	}
+
+	public void setOwners(List&lt;Owner&gt; owners) {
+<span class="nc" id="L130">		this.owners = owners;</span>
+<span class="nc" id="L131">	}</span>
+
+<span class="nc" id="L133">    public DashboardType getType(){ return this.type; }</span>
+
+<span class="nc" id="L135">    public void setType(DashboardType type) { this.type = type; }</span>
+
+    public String getConfigurationItemBusServName() {
+<span class="nc" id="L138">        return configurationItemBusServName;</span>
+    }
+
+    public void setConfigurationItemBusServName(String configurationItemBusServName) {
+<span class="nc" id="L142">        this.configurationItemBusServName = configurationItemBusServName;</span>
+<span class="nc" id="L143">    }</span>
+
+    public String getConfigurationItemBusAppName() {
+<span class="nc" id="L146">        return configurationItemBusAppName;</span>
+    }
+
+    public void setConfigurationItemBusAppName(String configurationItemBusAppName) {
+<span class="nc" id="L150">        this.configurationItemBusAppName = configurationItemBusAppName;</span>
+<span class="nc" id="L151">    }</span>
+
+    public boolean isValidServiceName() {
+<span class="nc" id="L154">        return validServiceName;</span>
+    }
+
+    public void setValidServiceName(boolean validServiceName) {
+<span class="nc" id="L158">        this.validServiceName = validServiceName;</span>
+<span class="nc" id="L159">    }</span>
+
+    public boolean isValidAppName() {
+<span class="nc" id="L162">        return validAppName;</span>
+    }
+
+    public void setValidAppName(boolean validAppName) {
+<span class="nc" id="L166">        this.validAppName = validAppName;</span>
+<span class="nc" id="L167">    }</span>
+
+    public String getErrorMessage() {
+<span class="nc" id="L170">        return errorMessage;</span>
+    }
+
+    public void setErrorMessage(String errorMessage) {
+<span class="nc" id="L174">        this.errorMessage = errorMessage;</span>
+<span class="nc" id="L175">    }</span>
+
+    public int getErrorCode() {
+<span class="nc" id="L178">        return errorCode;</span>
+    }
+
+    public void setErrorCode(int errorCode) {
+<span class="nc" id="L182">        this.errorCode = errorCode;</span>
+<span class="nc" id="L183">    }</span>
+
+    public boolean isRemoteCreated() {
+<span class="nc" id="L186">        return remoteCreated;</span>
+    }
+
+    public void setRemoteCreated(boolean remoteCreated) {
+<span class="nc" id="L190">        this.remoteCreated = remoteCreated;</span>
+<span class="nc" id="L191">    }</span>
+
+    public List&lt;String&gt; getActiveWidgets() {
+<span class="nc" id="L194">        return activeWidgets;</span>
+    }
+
+    public void setActiveWidgets(List&lt;String&gt; activeWidgets) {
+<span class="nc" id="L198">        this.activeWidgets = activeWidgets;</span>
+<span class="nc" id="L199">    }</span>
+
+    public boolean isScoreEnabled() {
+<span class="nc" id="L202">        return scoreEnabled;</span>
+    }
+
+    public void setScoreEnabled(boolean scoreEnabled) {
+<span class="nc" id="L206">        this.scoreEnabled = scoreEnabled;</span>
+<span class="nc" id="L207">    }</span>
+
+    public ScoreDisplayType getScoreDisplay() {
+<span class="nc" id="L210">        return scoreDisplay;</span>
+    }
+
+    public void setScoreDisplay(ScoreDisplayType scoreDisplay) {
+<span class="nc" id="L214">        this.scoreDisplay = scoreDisplay;</span>
+<span class="nc" id="L215">    }</span>
+
+    public long getUpdatedAt() {
+<span class="nc" id="L218">        return updatedAt;</span>
+    }
+
+    public void setUpdatedAt(long timeStamp) {
+<span class="nc" id="L222">        this.updatedAt = timeStamp;</span>
+<span class="nc" id="L223">    }</span>
+
+    public long getCreatedAt() {
+<span class="nc" id="L226">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(long timeStamp) {
+<span class="nc" id="L230">        this.createdAt = timeStamp;</span>
+<span class="nc" id="L231">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

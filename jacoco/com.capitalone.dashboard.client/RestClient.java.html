@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.client</a> &gt; <span class="el_source">RestClient.java</span></div><h1>RestClient.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.client;
+
+import com.capitalone.dashboard.util.Encryption;
+import com.capitalone.dashboard.util.EncryptionException;
+import com.capitalone.dashboard.util.Supplier;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestOperations;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
+@Component
+public class RestClient {
+<span class="nc" id="L28">    private static final Log LOG = LogFactory.getLog(RestClient.class);</span>
+    private final RestOperations restOperations;
+
+    @Autowired
+<span class="nc" id="L32">    public RestClient(Supplier&lt;RestOperations&gt; restOperationsSupplier) {</span>
+<span class="nc" id="L33">        this.restOperations = restOperationsSupplier.get();</span>
+<span class="nc" id="L34">    }</span>
+
+    public ResponseEntity&lt;String&gt; makeRestCallPost(String url, JSONObject body) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc" id="L39">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L41">        ResponseEntity&lt;String&gt; response</span>
+<span class="nc" id="L42">                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity&lt;Object&gt;(body, null), String.class);</span>
+
+<span class="nc" id="L44">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L46">        LOG.info(&quot;Time taken to make a post call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L48">        return response;</span>
+    }
+
+    public ResponseEntity&lt;String&gt; makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {</span>
+<span class="nc" id="L55">            return makeRestCallPost(url, body);</span>
+        }
+
+<span class="nc" id="L58">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L60">        ResponseEntity&lt;String&gt; response</span>
+<span class="nc" id="L61">                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity&lt;Object&gt;(body, createHeaders(headerKey, token)), String.class);</span>
+
+<span class="nc" id="L63">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L65">        LOG.info(&quot;Time taken to make a post call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L67">        return response;</span>
+    }
+
+    public ResponseEntity&lt;String&gt; makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if ((userInfo == null)) {</span>
+<span class="nc" id="L74">            return makeRestCallPost(url, body);</span>
+        }
+
+<span class="nc" id="L77">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L79">        ResponseEntity&lt;String&gt; response</span>
+<span class="nc" id="L80">                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity&lt;Object&gt;(body, createHeaders(userInfo.getFormattedString())), String.class);</span>
+
+<span class="nc" id="L82">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L84">        LOG.info(&quot;Time taken to make a post call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L86">        return response;</span>
+    }
+
+    public ResponseEntity&lt;String&gt; makeRestCallGet(String url) throws RestClientException {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc" id="L92">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L94">        ResponseEntity&lt;String&gt; response = restOperations.exchange(url, HttpMethod.GET, null, String.class);</span>
+
+<span class="nc" id="L96">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L98">        LOG.info(&quot;Time taken to make a get call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L100">        return response;</span>
+    }
+
+    public ResponseEntity&lt;String&gt; makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc bnc" id="L106" title="All 4 branches missed.">        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {</span>
+<span class="nc" id="L107">            return makeRestCallGet(url);</span>
+        }
+
+<span class="nc" id="L110">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L112">        ResponseEntity&lt;String&gt; response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity&lt;&gt;(createHeaders(headerKey, token)), String.class);</span>
+
+<span class="nc" id="L114">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L116">        LOG.info(&quot;Time taken to make a get call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L118">        return response;</span>
+    }
+
+    public ResponseEntity&lt;String&gt; makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        if (restOperations == null) { return null; }</span>
+
+<span class="nc bnc" id="L124" title="All 4 branches missed.">        if ((userInfo == null) || StringUtils.isEmpty(userInfo.getFormattedString())) {</span>
+<span class="nc" id="L125">            return makeRestCallGet(url);</span>
+        }
+
+<span class="nc" id="L128">        long start = System.currentTimeMillis();</span>
+
+<span class="nc" id="L130">        ResponseEntity&lt;String&gt; response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity&lt;&gt;(createHeaders(userInfo.getFormattedString())), String.class);</span>
+
+<span class="nc" id="L132">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L134">        LOG.info(&quot;Time taken to make a get call to &quot;+url+&quot; = &quot;+(end-start));</span>
+
+<span class="nc" id="L136">        return response;</span>
+    }
+
+    protected HttpHeaders createHeaders(RestUserInfo restUserInfo) {
+<span class="nc" id="L140">        return createHeaders(restUserInfo.getFormattedString());</span>
+    }
+
+    protected HttpHeaders createHeaders(String user) {
+<span class="nc" id="L144">        byte[] encodedAuth = Base64.encodeBase64(user.getBytes(StandardCharsets.US_ASCII));</span>
+<span class="nc" id="L145">        String authHeader = &quot;Basic &quot; + new String(encodedAuth);</span>
+<span class="nc" id="L146">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L147">        headers.set(&quot;Authorization&quot;, authHeader);</span>
+<span class="nc" id="L148">        return headers;</span>
+    }
+
+    protected HttpHeaders createHeaders(String key, String token) {
+<span class="nc" id="L152">        String authHeader = key.trim() + &quot; &quot; + token.trim();</span>
+<span class="nc" id="L153">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L154">        headers.set(&quot;Authorization&quot;, authHeader);</span>
+<span class="nc" id="L155">        return headers;</span>
+    }
+
+    public JSONObject parseAsObject(ResponseEntity&lt;String&gt; response) throws ParseException {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (response == null) { return new JSONObject(); }</span>
+
+<span class="nc" id="L161">        return (JSONObject) new JSONParser().parse(response.getBody());</span>
+    }
+
+    public JSONArray parseAsArray(ResponseEntity&lt;String&gt; response) throws ParseException {
+<span class="nc" id="L165">        return (JSONArray) new JSONParser().parse(response.getBody());</span>
+    }
+
+    public JSONArray getArray(JSONObject json, String key) {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (json == null) return new JSONArray();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (json.get(key) == null) return new JSONArray();</span>
+<span class="nc" id="L171">        return (JSONArray) json.get(key);</span>
+    }
+
+    public String getString(Object obj, String key) {
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (obj == null) return &quot;&quot;;</span>
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (obj instanceof Map) {</span>
+<span class="nc" id="L178">            Map map = (Map) obj;</span>
+<span class="nc" id="L179">            Object value = map.get(key);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            return (value == null) ? &quot;&quot; : value.toString();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        } else if (obj instanceof JSONObject) {</span>
+<span class="nc" id="L182">            JSONObject json = (JSONObject) obj;</span>
+<span class="nc" id="L183">            Object value = json.get(key);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            return (value == null) ? &quot;&quot; : value.toString();</span>
+        }
+<span class="nc" id="L186">        return &quot;&quot;;</span>
+    }
+
+    public Integer getInteger(Object obj, String key) throws NumberFormatException{
+<span class="nc" id="L190">        return NumberUtils.toInt(getString(obj, key));</span>
+    }
+
+    public Object getAsObject(Object obj, String key) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        if (obj == null) return null;</span>
+
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (obj instanceof Map) {</span>
+<span class="nc" id="L197">            Map map = (Map) obj;</span>
+<span class="nc" id="L198">            return map.get(key);</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        } else if (obj instanceof JSONObject) {</span>
+<span class="nc" id="L200">            JSONObject json = (JSONObject) obj;</span>
+<span class="nc" id="L201">            return json.get(key);</span>
+        }
+
+<span class="nc" id="L204">        return null;</span>
+    }
+
+    public boolean getBoolean(Object obj, String key) {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        if (obj == null) return false;</span>
+
+<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (obj instanceof Map) {</span>
+<span class="nc" id="L211">            Map map = (Map) obj;</span>
+<span class="nc" id="L212">            return (Boolean) map.get(key);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        } else if (obj instanceof JSONObject) {</span>
+<span class="nc" id="L214">            JSONObject json = (JSONObject) obj;</span>
+<span class="nc" id="L215">            return (Boolean) json.get(key);</span>
+        }
+
+<span class="nc" id="L218">        return false;</span>
+    }
+
+    public Long getLong(Object obj, String key) throws NumberFormatException{
+<span class="nc" id="L222">        return NumberUtils.toLong(getString(obj, key));</span>
+    }
+
+    /**
+     * Decrypt string
+     *
+     * @param string
+     * @param key
+     * @return String
+     */
+    public static String decryptString(String string, String key) {
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (StringUtils.isEmpty(string)) { return &quot;&quot;; }</span>
+
+<span class="nc" id="L235">        String result = &quot;&quot;;</span>
+        try {
+<span class="nc" id="L237">            result = Encryption.decryptString(string, key);</span>
+<span class="nc" id="L238">        } catch (EncryptionException e) {</span>
+<span class="nc" id="L239">            LOG.error(e.getMessage());</span>
+<span class="nc" id="L240">        }</span>
+<span class="nc" id="L241">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

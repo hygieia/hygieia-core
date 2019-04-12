@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuildDataCreateResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.response</a> &gt; <span class="el_source">BuildDataCreateResponse.java</span></div><h1>BuildDataCreateResponse.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.response;
+
+import com.capitalone.dashboard.model.BuildStatus;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bson.types.ObjectId;
+
+<span class="nc" id="L9">public class BuildDataCreateResponse {</span>
+    private ObjectId id;
+    private ObjectId collectorItemId;
+    private ObjectId dashboardId;
+    private long timestamp;
+    private String number;
+    private String buildUrl;
+    private long startTime;
+    private long endTime;
+    private long duration;
+    private BuildStatus buildStatus;
+    private String startedBy;
+    private String log;
+
+    public ObjectId getId() {
+<span class="nc" id="L24">        return id;</span>
+    }
+
+    public void setId(ObjectId id) {
+<span class="nc" id="L28">        this.id = id;</span>
+<span class="nc" id="L29">    }</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="nc" id="L32">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L36">        this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L37">    }</span>
+
+    public ObjectId getDashboardId() {
+<span class="nc" id="L40">        return dashboardId;</span>
+    }
+
+    public void setDashboardId(ObjectId dashboardId) {
+<span class="nc" id="L44">        this.dashboardId = dashboardId;</span>
+<span class="nc" id="L45">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L48">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L52">        this.timestamp = timestamp;</span>
+<span class="nc" id="L53">    }</span>
+
+    public String getNumber() {
+<span class="nc" id="L56">        return number;</span>
+    }
+
+    public void setNumber(String number) {
+<span class="nc" id="L60">        this.number = number;</span>
+<span class="nc" id="L61">    }</span>
+
+    public String getBuildUrl() {
+<span class="nc" id="L64">        return buildUrl;</span>
+    }
+
+    public void setBuildUrl(String buildUrl) {
+<span class="nc" id="L68">        this.buildUrl = buildUrl;</span>
+<span class="nc" id="L69">    }</span>
+
+    public long getStartTime() {
+<span class="nc" id="L72">        return startTime;</span>
+    }
+
+    public void setStartTime(long startTime) {
+<span class="nc" id="L76">        this.startTime = startTime;</span>
+<span class="nc" id="L77">    }</span>
+
+    public long getEndTime() {
+<span class="nc" id="L80">        return endTime;</span>
+    }
+
+    public void setEndTime(long endTime) {
+<span class="nc" id="L84">        this.endTime = endTime;</span>
+<span class="nc" id="L85">    }</span>
+
+    public long getDuration() {
+<span class="nc" id="L88">        return duration;</span>
+    }
+
+    public void setDuration(long duration) {
+<span class="nc" id="L92">        this.duration = duration;</span>
+<span class="nc" id="L93">    }</span>
+
+    public BuildStatus getBuildStatus() {
+<span class="nc" id="L96">        return buildStatus;</span>
+    }
+
+    public void setBuildStatus(BuildStatus buildStatus) {
+<span class="nc" id="L100">        this.buildStatus = buildStatus;</span>
+<span class="nc" id="L101">    }</span>
+
+    public String getStartedBy() {
+<span class="nc" id="L104">        return startedBy;</span>
+    }
+
+    public void setStartedBy(String startedBy) {
+<span class="nc" id="L108">        this.startedBy = startedBy;</span>
+<span class="nc" id="L109">    }</span>
+
+    public String getLog() {
+<span class="nc" id="L112">        return log;</span>
+    }
+
+    public void setLog(String log) {
+<span class="nc" id="L116">        this.log = log;</span>
+<span class="nc" id="L117">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (this == o) return true;</span>
+
+<span class="nc bnc" id="L123" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L125">        BuildDataCreateResponse that = (BuildDataCreateResponse) o;</span>
+
+<span class="nc" id="L127">        return new EqualsBuilder()</span>
+<span class="nc" id="L128">                .append(timestamp, that.timestamp)</span>
+<span class="nc" id="L129">                .append(id, that.id)</span>
+<span class="nc" id="L130">                .append(collectorItemId, that.collectorItemId)</span>
+<span class="nc" id="L131">                .append(dashboardId, that.dashboardId)</span>
+<span class="nc" id="L132">                .append(number, that.number)</span>
+<span class="nc" id="L133">                .append(buildUrl, that.buildUrl)</span>
+<span class="nc" id="L134">                .append(buildStatus, that.buildStatus)</span>
+<span class="nc" id="L135">                .isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L140">        return new HashCodeBuilder(17, 37)</span>
+<span class="nc" id="L141">                .append(id)</span>
+<span class="nc" id="L142">                .append(collectorItemId)</span>
+<span class="nc" id="L143">                .append(dashboardId)</span>
+<span class="nc" id="L144">                .append(timestamp)</span>
+<span class="nc" id="L145">                .append(number)</span>
+<span class="nc" id="L146">                .append(buildUrl)</span>
+<span class="nc" id="L147">                .append(buildStatus)</span>
+<span class="nc" id="L148">                .toHashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L153">        return new ToStringBuilder(this)</span>
+<span class="nc" id="L154">                .append(&quot;id&quot;, id)</span>
+<span class="nc" id="L155">                .append(&quot;collectorItemId&quot;, collectorItemId)</span>
+<span class="nc" id="L156">                .append(&quot;dashboardId&quot;, dashboardId)</span>
+<span class="nc" id="L157">                .append(&quot;timestamp&quot;, timestamp)</span>
+<span class="nc" id="L158">                .append(&quot;number&quot;, number)</span>
+<span class="nc" id="L159">                .append(&quot;buildUrl&quot;, buildUrl)</span>
+<span class="nc" id="L160">                .append(&quot;startTime&quot;, startTime)</span>
+<span class="nc" id="L161">                .append(&quot;endTime&quot;, endTime)</span>
+<span class="nc" id="L162">                .append(&quot;duration&quot;, duration)</span>
+<span class="nc" id="L163">                .append(&quot;buildStatus&quot;, buildStatus)</span>
+<span class="nc" id="L164">                .append(&quot;startedBy&quot;, startedBy)</span>
+<span class="nc" id="L165">                .append(&quot;log&quot;, log)</span>
+<span class="nc" id="L166">                .toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

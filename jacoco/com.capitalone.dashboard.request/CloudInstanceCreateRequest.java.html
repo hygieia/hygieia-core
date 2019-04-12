@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CloudInstanceCreateRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.request</a> &gt; <span class="el_source">CloudInstanceCreateRequest.java</span></div><h1>CloudInstanceCreateRequest.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.request;
+
+
+import com.capitalone.dashboard.model.NameValue;
+
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L10">public class CloudInstanceCreateRequest {</span>
+    @NotNull
+    private String instanceId;
+    @NotNull
+    private String accountNumber;
+    private String instanceType;
+    private String imageId;
+    private String imageExpirationDate;
+    private String imageApproved;
+    private String instanceOwner;
+    private String isMonitored;
+    private String privateDns;
+    private String privateIp;
+    private String publicDns;
+    private String publicIp;
+    private String subnetId;
+    private String virtualNetworkId;
+    private String age;
+    private String isEncrypted;
+    private String status;
+    private String isStopped;
+    private String isTagged;
+    private String cpuUtilization;
+    private String lastUpdatedDate;
+<span class="nc" id="L34">    private List&lt;String&gt; securityGroups = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">    private List&lt;NameValue&gt; tags = new ArrayList&lt;&gt;();</span>
+    private String networkIn;
+    private String networkOut;
+    private String diskRead;
+    private String diskWrite;
+    private String rootDeviceName;
+    private String lastAction;
+    private String autoScaleName;
+
+
+    public String getInstanceId() {
+<span class="nc" id="L46">        return instanceId;</span>
+    }
+
+    public void setInstanceId(String instanceId) {
+<span class="nc" id="L50">        this.instanceId = instanceId;</span>
+<span class="nc" id="L51">    }</span>
+
+    public String getAccountNumber() {
+<span class="nc" id="L54">        return accountNumber;</span>
+    }
+
+    public void setAccountNumber(String accountNumber) {
+<span class="nc" id="L58">        this.accountNumber = accountNumber;</span>
+<span class="nc" id="L59">    }</span>
+
+    public String getInstanceType() {
+<span class="nc" id="L62">        return instanceType;</span>
+    }
+
+    public void setInstanceType(String instanceType) {
+<span class="nc" id="L66">        this.instanceType = instanceType;</span>
+<span class="nc" id="L67">    }</span>
+
+    public String getImageId() {
+<span class="nc" id="L70">        return imageId;</span>
+    }
+
+    public void setImageId(String imageId) {
+<span class="nc" id="L74">        this.imageId = imageId;</span>
+<span class="nc" id="L75">    }</span>
+
+    public String getImageExpirationDate() {
+<span class="nc" id="L78">        return imageExpirationDate;</span>
+    }
+
+    public void setImageExpirationDate(String imageExpirationDate) {
+<span class="nc" id="L82">        this.imageExpirationDate = imageExpirationDate;</span>
+<span class="nc" id="L83">    }</span>
+
+    public String getImageApproved() {
+<span class="nc" id="L86">        return imageApproved;</span>
+    }
+
+    public void setImageApproved(String imageApproved) {
+<span class="nc" id="L90">        this.imageApproved = imageApproved;</span>
+<span class="nc" id="L91">    }</span>
+
+    public String getInstanceOwner() {
+<span class="nc" id="L94">        return instanceOwner;</span>
+    }
+
+    public void setInstanceOwner(String instanceOwner) {
+<span class="nc" id="L98">        this.instanceOwner = instanceOwner;</span>
+<span class="nc" id="L99">    }</span>
+
+    public String getIsMonitored() {
+<span class="nc" id="L102">        return isMonitored;</span>
+    }
+
+    public void setIsMonitored(String isMonitored) {
+<span class="nc" id="L106">        this.isMonitored = isMonitored;</span>
+<span class="nc" id="L107">    }</span>
+
+    public String getPrivateDns() {
+<span class="nc" id="L110">        return privateDns;</span>
+    }
+
+    public void setPrivateDns(String privateDns) {
+<span class="nc" id="L114">        this.privateDns = privateDns;</span>
+<span class="nc" id="L115">    }</span>
+
+    public String getPrivateIp() {
+<span class="nc" id="L118">        return privateIp;</span>
+    }
+
+    public void setPrivateIp(String privateIp) {
+<span class="nc" id="L122">        this.privateIp = privateIp;</span>
+<span class="nc" id="L123">    }</span>
+
+    public String getPublicDns() {
+<span class="nc" id="L126">        return publicDns;</span>
+    }
+
+    public void setPublicDns(String publicDns) {
+<span class="nc" id="L130">        this.publicDns = publicDns;</span>
+<span class="nc" id="L131">    }</span>
+
+    public String getPublicIp() {
+<span class="nc" id="L134">        return publicIp;</span>
+    }
+
+    public void setPublicIp(String publicIp) {
+<span class="nc" id="L138">        this.publicIp = publicIp;</span>
+<span class="nc" id="L139">    }</span>
+
+    public String getSubnetId() {
+<span class="nc" id="L142">        return subnetId;</span>
+    }
+
+    public void setSubnetId(String subnetId) {
+<span class="nc" id="L146">        this.subnetId = subnetId;</span>
+<span class="nc" id="L147">    }</span>
+
+    public String getVirtualNetworkId() {
+<span class="nc" id="L150">        return virtualNetworkId;</span>
+    }
+
+    public void setVirtualNetworkId(String virtualNetworkId) {
+<span class="nc" id="L154">        this.virtualNetworkId = virtualNetworkId;</span>
+<span class="nc" id="L155">    }</span>
+
+    public String getAge() {
+<span class="nc" id="L158">        return age;</span>
+    }
+
+    public void setAge(String age) {
+<span class="nc" id="L162">        this.age = age;</span>
+<span class="nc" id="L163">    }</span>
+
+    public String getIsEncrypted() {
+<span class="nc" id="L166">        return isEncrypted;</span>
+    }
+
+    public void setIsEncrypted(String isEncrypted) {
+<span class="nc" id="L170">        this.isEncrypted = isEncrypted;</span>
+<span class="nc" id="L171">    }</span>
+
+    public String getStatus() {
+<span class="nc" id="L174">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="nc" id="L178">        this.status = status;</span>
+<span class="nc" id="L179">    }</span>
+
+    public String getIsStopped() {
+<span class="nc" id="L182">        return isStopped;</span>
+    }
+
+    public void setIsStopped(String isStopped) {
+<span class="nc" id="L186">        this.isStopped = isStopped;</span>
+<span class="nc" id="L187">    }</span>
+
+    public String getIsTagged() {
+<span class="nc" id="L190">        return isTagged;</span>
+    }
+
+    public void setIsTagged(String isTagged) {
+<span class="nc" id="L194">        this.isTagged = isTagged;</span>
+<span class="nc" id="L195">    }</span>
+
+    public String getCpuUtilization() {
+<span class="nc" id="L198">        return cpuUtilization;</span>
+    }
+
+    public void setCpuUtilization(String cpuUtilization) {
+<span class="nc" id="L202">        this.cpuUtilization = cpuUtilization;</span>
+<span class="nc" id="L203">    }</span>
+
+    public String getLastUpdatedDate() {
+<span class="nc" id="L206">        return lastUpdatedDate;</span>
+    }
+
+    public void setLastUpdatedDate(String lastUpdatedDate) {
+<span class="nc" id="L210">        this.lastUpdatedDate = lastUpdatedDate;</span>
+<span class="nc" id="L211">    }</span>
+
+    public List&lt;String&gt; getSecurityGroups() {
+<span class="nc" id="L214">        return securityGroups;</span>
+    }
+
+    public void setSecurityGroups(List&lt;String&gt; securityGroups) {
+<span class="nc" id="L218">        this.securityGroups = securityGroups;</span>
+<span class="nc" id="L219">    }</span>
+
+    public List&lt;NameValue&gt; getTags() {
+<span class="nc" id="L222">        return tags;</span>
+    }
+
+    public void setTags(List&lt;NameValue&gt; tags) {
+<span class="nc" id="L226">        this.tags = tags;</span>
+<span class="nc" id="L227">    }</span>
+
+    public String getNetworkIn() {
+<span class="nc" id="L230">        return networkIn;</span>
+    }
+
+    public void setNetworkIn(String networkIn) {
+<span class="nc" id="L234">        this.networkIn = networkIn;</span>
+<span class="nc" id="L235">    }</span>
+
+    public String getNetworkOut() {
+<span class="nc" id="L238">        return networkOut;</span>
+    }
+
+    public void setNetworkOut(String networkOut) {
+<span class="nc" id="L242">        this.networkOut = networkOut;</span>
+<span class="nc" id="L243">    }</span>
+
+    public String getDiskRead() {
+<span class="nc" id="L246">        return diskRead;</span>
+    }
+
+    public void setDiskRead(String diskRead) {
+<span class="nc" id="L250">        this.diskRead = diskRead;</span>
+<span class="nc" id="L251">    }</span>
+
+    public String getDiskWrite() {
+<span class="nc" id="L254">        return diskWrite;</span>
+    }
+
+    public void setDiskWrite(String diskWrite) {
+<span class="nc" id="L258">        this.diskWrite = diskWrite;</span>
+<span class="nc" id="L259">    }</span>
+
+    public String getRootDeviceName() {
+<span class="nc" id="L262">        return rootDeviceName;</span>
+    }
+
+    public void setRootDeviceName(String rootDeviceName) {
+<span class="nc" id="L266">        this.rootDeviceName = rootDeviceName;</span>
+<span class="nc" id="L267">    }</span>
+
+    public String getLastAction() {
+<span class="nc" id="L270">        return lastAction;</span>
+    }
+
+    public void setLastAction(String lastAction) {
+<span class="nc" id="L274">        this.lastAction = lastAction;</span>
+<span class="nc" id="L275">    }</span>
+
+    public String getAutoScaleName() {
+<span class="nc" id="L278">        return autoScaleName;</span>
+    }
+
+    public void setAutoScaleName(String autoScaleName) {
+<span class="nc" id="L282">        this.autoScaleName = autoScaleName;</span>
+<span class="nc" id="L283">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L287" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L288" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L290">        CloudInstanceCreateRequest that = (CloudInstanceCreateRequest) o;</span>
+
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        if (!instanceId.equals(that.instanceId)) return false;</span>
+<span class="nc" id="L293">        return accountNumber.equals(that.accountNumber);</span>
+
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L299">        int result = instanceId.hashCode();</span>
+<span class="nc" id="L300">        result = 31 * result + accountNumber.hashCode();</span>
+<span class="nc" id="L301">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

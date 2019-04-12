@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JobCollectorItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">JobCollectorItem.java</span></div><h1>JobCollectorItem.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+<span class="nc" id="L3">public class JobCollectorItem extends CollectorItem {</span>
+    protected static final String INSTANCE_URL = &quot;instanceUrl&quot;;
+    protected static final String JOB_NAME = &quot;jobName&quot;;
+    protected static final String JOB_URL = &quot;jobUrl&quot;;
+
+    public String getInstanceUrl() {
+<span class="nc" id="L9">        return (String) getOptions().get(INSTANCE_URL);</span>
+    }
+
+    public void setInstanceUrl(String instanceUrl) {
+<span class="nc" id="L13">        getOptions().put(INSTANCE_URL, instanceUrl);</span>
+<span class="nc" id="L14">    }</span>
+
+    public String getJobName() {
+<span class="nc" id="L17">        return (String) getOptions().get(JOB_NAME);</span>
+    }
+
+    public void setJobName(String jobName) {
+<span class="nc" id="L21">        getOptions().put(JOB_NAME, jobName);</span>
+<span class="nc" id="L22">    }</span>
+
+    public String getJobUrl() {
+<span class="nc" id="L25">        return (String) getOptions().get(JOB_URL);</span>
+    }
+
+    public void setJobUrl(String jobUrl) {
+<span class="nc" id="L29">        getOptions().put(JOB_URL, jobUrl);</span>
+<span class="nc" id="L30">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

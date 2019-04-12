@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreComponentMetricBase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score</a> &gt; <span class="el_source">ScoreComponentMetricBase.java</span></div><h1>ScoreComponentMetricBase.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score;
+
+import com.google.common.collect.Maps;
+import org.bson.types.ObjectId;
+
+import java.util.Map;
+
+<span class="nc" id="L8">public class ScoreComponentMetricBase {</span>
+  //Score for the widget/component
+  private String score;
+
+  //Score total
+  private String total;
+
+  //Weight in percent for a widget/component
+  private String weight;
+
+  //Reference Id. When score is for type Dashboard, value is Widget Id
+  private ObjectId refId;
+
+  //Unique display id for widget/component
+  private String displayId;
+
+  //Display name for the widget/component
+  private String displayName;
+
+  //Propagate type value for widget/component
+  private String propagate;
+
+  //Status of score calculation
+  private String state;
+
+  //If widget/component has no score, flag is true
+  private boolean noScore;
+
+  //Alert is true if there is message to alert
+<span class="nc" id="L37">  private boolean alert = false;</span>
+
+  //Message to display
+  private String message;
+
+  //Additional options to save data
+<span class="nc" id="L43">  public Map&lt;String, Object&gt; options = Maps.newHashMap();</span>
+
+  public Map&lt;String, Object&gt; getOptions() {
+<span class="nc" id="L46">    return options;</span>
+  }
+
+  public String getScore() {
+<span class="nc" id="L50">    return score;</span>
+  }
+
+  public void setScore(String score) {
+<span class="nc" id="L54">    this.score = score;</span>
+<span class="nc" id="L55">  }</span>
+
+  public String getTotal() {
+<span class="nc" id="L58">    return total;</span>
+  }
+
+  public void setTotal(String total) {
+<span class="nc" id="L62">    this.total = total;</span>
+<span class="nc" id="L63">  }</span>
+
+  public String getWeight() {
+<span class="nc" id="L66">    return weight;</span>
+  }
+
+  public void setWeight(String weight) {
+<span class="nc" id="L70">    this.weight = weight;</span>
+<span class="nc" id="L71">  }</span>
+
+  public String getDisplayName() {
+<span class="nc" id="L74">    return displayName;</span>
+  }
+
+  public void setDisplayName(String displayName) {
+<span class="nc" id="L78">    this.displayName = displayName;</span>
+<span class="nc" id="L79">  }</span>
+
+  public String getMessage() {
+<span class="nc" id="L82">    return message;</span>
+  }
+
+  public void setMessage(String message) {
+<span class="nc" id="L86">    this.message = message;</span>
+<span class="nc" id="L87">  }</span>
+
+  public String getPropagate() {
+<span class="nc" id="L90">    return propagate;</span>
+  }
+
+  public void setPropagate(String propagate) {
+<span class="nc" id="L94">    this.propagate = propagate;</span>
+<span class="nc" id="L95">  }</span>
+
+  public boolean isNoScore() {
+<span class="nc" id="L98">    return noScore;</span>
+  }
+
+  public void setNoScore(boolean noScore) {
+<span class="nc" id="L102">    this.noScore = noScore;</span>
+<span class="nc" id="L103">  }</span>
+
+  public String getDisplayId() {
+<span class="nc" id="L106">    return displayId;</span>
+  }
+
+  public void setDisplayId(String displayId) {
+<span class="nc" id="L110">    this.displayId = displayId;</span>
+<span class="nc" id="L111">  }</span>
+
+  public ObjectId getRefId() {
+<span class="nc" id="L114">    return refId;</span>
+  }
+
+  public void setRefId(ObjectId refId) {
+<span class="nc" id="L118">    this.refId = refId;</span>
+<span class="nc" id="L119">  }</span>
+
+  public String getState() {
+<span class="nc" id="L122">    return state;</span>
+  }
+
+  public void setState(String state) {
+<span class="nc" id="L126">    this.state = state;</span>
+<span class="nc" id="L127">  }</span>
+
+  public boolean isAlert() {
+<span class="nc" id="L130">    return alert;</span>
+  }
+
+  public void setAlert(boolean alert) {
+<span class="nc" id="L134">    this.alert = alert;</span>
+<span class="nc" id="L135">  }</span>
+
+  @Override public String toString() {
+<span class="nc" id="L138">    return &quot;ScoreComponentMetricBase{&quot; +</span>
+      &quot;score='&quot; + score + '\'' +
+      &quot;, total='&quot; + total + '\'' +
+      &quot;, weight='&quot; + weight + '\'' +
+      &quot;, refId='&quot; + refId + '\'' +
+      &quot;, displayId='&quot; + displayId + '\'' +
+      &quot;, displayName='&quot; + displayName + '\'' +
+      &quot;, message='&quot; + message + '\'' +
+      &quot;, propagate='&quot; + propagate + '\'' +
+      &quot;, state='&quot; + state + '\'' +
+      &quot;, noScore=&quot; + noScore + '\'' +
+      &quot;, alert=&quot; + alert +
+      &quot;, options=&quot; + options +
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

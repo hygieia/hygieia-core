@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TestSuite.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">TestSuite.java</span></div><h1>TestSuite.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * A collection of {@link TestCase}s of a particular {@link TestSuiteType}.
+ */
+<span class="fc" id="L9">public class TestSuite {</span>
+
+    private String id;
+    /**
+     * Description of the test suite that might make sense to a human
+     */
+    private String description;
+
+    /**
+     * Type of test
+     */
+    private TestSuiteType type;
+
+    /**
+     * Start test suite execution time {@link java.util.Date#getTime()}
+     */
+    private long startTime;
+
+    /**
+     * End test suite execution time {@link java.util.Date#getTime()}
+     */
+    private long endTime;
+
+    /**
+     * Test suite duration in milliseconds
+     */
+    private long duration;
+
+    private int totalTestCaseCount;
+    /**
+     * Count of test cases that failed
+     */
+    private int failedTestCaseCount;
+
+    /**
+     * Count of test cases that generated an error
+     */
+    private int successTestCaseCount;
+
+    /**
+     * Count of test cases that were skipped
+     */
+    private int skippedTestCaseCount;
+
+
+    private int unknownStatusCount;
+
+    private TestCaseStatus status;
+
+    /**
+     * Collection of {@link TestCase}s associated with this suite
+     */
+<span class="fc" id="L61">    private Collection&lt;TestCase&gt; testCases = new ArrayList&lt;&gt;();</span>
+
+
+    public String getId() {
+<span class="nc" id="L65">        return id;</span>
+    }
+
+    public void setId(String id) {
+<span class="nc" id="L69">        this.id = id;</span>
+<span class="nc" id="L70">    }</span>
+
+    public String getDescription() {
+<span class="nc" id="L73">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L77">        this.description = description;</span>
+<span class="fc" id="L78">    }</span>
+
+    public TestSuiteType getType() {
+<span class="nc" id="L81">        return type;</span>
+    }
+
+    public void setType(TestSuiteType type) {
+<span class="fc" id="L85">        this.type = type;</span>
+<span class="fc" id="L86">    }</span>
+
+    public long getStartTime() {
+<span class="nc" id="L89">        return startTime;</span>
+    }
+
+    public void setStartTime(long startTime) {
+<span class="nc" id="L93">        this.startTime = startTime;</span>
+<span class="nc" id="L94">    }</span>
+
+    public long getEndTime() {
+<span class="nc" id="L97">        return endTime;</span>
+    }
+
+    public void setEndTime(long endTime) {
+<span class="nc" id="L101">        this.endTime = endTime;</span>
+<span class="nc" id="L102">    }</span>
+
+    public long getDuration() {
+<span class="nc" id="L105">        return duration;</span>
+    }
+
+    public void setDuration(long duration) {
+<span class="fc" id="L109">        this.duration = duration;</span>
+<span class="fc" id="L110">    }</span>
+
+    public TestCaseStatus getStatus() {
+<span class="nc" id="L113">        return status;</span>
+    }
+
+    public void setStatus(TestCaseStatus status) {
+<span class="nc" id="L117">        this.status = status;</span>
+<span class="nc" id="L118">    }</span>
+
+    public int getFailedTestCaseCount() {
+<span class="nc" id="L121">        return failedTestCaseCount;</span>
+    }
+
+    public int getTotalTestCaseCount() {
+<span class="nc" id="L125">        return totalTestCaseCount;</span>
+    }
+
+    public void setTotalTestCaseCount(int totalTestCaseCount) {
+<span class="nc" id="L129">        this.totalTestCaseCount = totalTestCaseCount;</span>
+<span class="nc" id="L130">    }</span>
+
+    public void setFailedTestCaseCount(int failedTestCaseCount) {
+<span class="nc" id="L133">        this.failedTestCaseCount = failedTestCaseCount;</span>
+<span class="nc" id="L134">    }</span>
+
+    public int getSuccessTestCaseCount() {
+<span class="nc" id="L137">        return successTestCaseCount;</span>
+    }
+
+    public void setSuccessTestCaseCount(int successTestCaseCount) {
+<span class="nc" id="L141">        this.successTestCaseCount = successTestCaseCount;</span>
+<span class="nc" id="L142">    }</span>
+
+    public int getSkippedTestCaseCount() {
+<span class="nc" id="L145">        return skippedTestCaseCount;</span>
+    }
+
+    public void setSkippedTestCaseCount(int skippedTestCaseCount) {
+<span class="nc" id="L149">        this.skippedTestCaseCount = skippedTestCaseCount;</span>
+<span class="nc" id="L150">    }</span>
+
+    public int getUnknownStatusCount() {
+<span class="nc" id="L153">        return unknownStatusCount;</span>
+    }
+
+    public void setUnknownStatusCount(int unknownStatusCount) {
+<span class="nc" id="L157">        this.unknownStatusCount = unknownStatusCount;</span>
+<span class="nc" id="L158">    }</span>
+
+    public Collection&lt;TestCase&gt; getTestCases() {
+<span class="fc" id="L161">        return testCases;</span>
+    }
+
+    public void setTestCases(Collection&lt;TestCase&gt; testCases) {
+<span class="fc" id="L165">        this.testCases = testCases;</span>
+<span class="fc" id="L166">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

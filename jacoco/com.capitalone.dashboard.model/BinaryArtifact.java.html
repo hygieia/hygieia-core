@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BinaryArtifact.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">BinaryArtifact.java</span></div><h1>BinaryArtifact.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Binary artifacts produced by build jobs and stored in an artifact repository.
+ *
+ * Possible collectors:
+ *  Nexus (in scope)
+ *  Artifactory
+ *  npm
+ *  nuget
+ *  rubygems
+ *
+ */
+@Document(collection = &quot;artifacts&quot;)
+<span class="fc" id="L23">public class BinaryArtifact extends BaseModel {</span>
+	
+	// list of known metadata properties
+	// Note: these may be hard coded in other modules and external tools
+	private static final String METADATA_BUILD_URL = &quot;buildUrl&quot;;
+	private static final String METADATA_BUILD_NUMBER = &quot;buildNumber&quot;;
+	private static final String METADATA_JOB_URL = &quot;jobUrl&quot;;
+	private static final String METADATA_JOB_NAME = &quot;jobName&quot;;
+	private static final String METADATA_INSTANCE_URL = &quot;instanceUrl&quot;;
+	
+	private static final String METADATA_SCM_URL = &quot;scmUrl&quot;;
+	private static final String METADATA_SCM_BRANCH = &quot;scmBranch&quot;;
+	private static final String METADATA_SCM_REVISION_NUMBER = &quot;scmRevisionNumber&quot;;
+	
+    /**
+     * CollectorItemId for the {@link Build} that produced the artifact
+     */
+    private ObjectId collectorItemId;
+    private long timestamp;
+
+    private String canonicalName;
+    private String artifactGroupId;
+    private String artifactModule;
+    private String artifactVersion;
+    private String artifactName;
+    private String artifactClassifier;
+    private String artifactExtension;
+    private String type;
+    private long createdTimeStamp;
+
+
+    private String createdBy;
+    private long modifiedTimeStamp;
+    private String modifiedBy;
+    private String actual_sha1;
+    private String actual_md5;
+    private String authorLDAPDN;
+    private Build buildInfo;
+      private List&lt;String&gt; virtualRepos;
+    
+<span class="fc" id="L63">    private Map&lt;String, String&gt; metadata = new HashMap&lt;&gt;();</span>
+    
+    // Note this can be null 
+    public Build getBuildInfo() {
+<span class="fc" id="L67">    	return buildInfo;</span>
+    }
+    
+    public void setBuildInfo(Build buildInfo) {
+<span class="fc" id="L71">    	this.buildInfo = buildInfo;</span>
+<span class="fc" id="L72">    }</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="nc" id="L75">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L79">        this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L80">    }</span>
+
+    public long getTimestamp() {
+<span class="fc" id="L83">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="fc" id="L87">        this.timestamp = timestamp;</span>
+<span class="fc" id="L88">    }</span>
+
+    public String getArtifactName() {
+<span class="nc" id="L91">        return artifactName;</span>
+    }
+
+    public void setArtifactName(String artifactName) {
+<span class="nc" id="L95">        this.artifactName = artifactName;</span>
+<span class="nc" id="L96">    }</span>
+
+    public String getArtifactGroupId() {
+<span class="nc" id="L99">        return artifactGroupId;</span>
+    }
+
+    public void setArtifactGroupId(String artifactGroupId) {
+<span class="nc" id="L103">        this.artifactGroupId = artifactGroupId;</span>
+<span class="nc" id="L104">    }</span>
+
+    public String getArtifactVersion() {
+<span class="nc" id="L107">        return artifactVersion;</span>
+    }
+
+    public void setArtifactVersion(String artifactVersion) {
+<span class="nc" id="L111">        this.artifactVersion = artifactVersion;</span>
+<span class="nc" id="L112">    }</span>
+
+    public String getCanonicalName() {
+<span class="nc" id="L115">        return canonicalName;</span>
+    }
+
+    public void setCanonicalName(String canonicalName) {
+<span class="nc" id="L119">        this.canonicalName = canonicalName;</span>
+<span class="nc" id="L120">    }</span>
+    
+	/**
+	 * @return the artifactModule
+	 */
+	public String getArtifactModule() {
+<span class="nc" id="L126">		return artifactModule;</span>
+	}
+
+	/**
+	 * @param artifactModule the artifactModule to set
+	 */
+	public void setArtifactModule(String artifactModule) {
+<span class="nc" id="L133">		this.artifactModule = artifactModule;</span>
+<span class="nc" id="L134">	}</span>
+
+	/**
+	 * @return the artifactClassifier
+	 */
+	public String getArtifactClassifier() {
+<span class="nc" id="L140">		return artifactClassifier;</span>
+	}
+
+	/**
+	 * @param artifactClassifier the artifactClassifier to set
+	 */
+	public void setArtifactClassifier(String artifactClassifier) {
+<span class="nc" id="L147">		this.artifactClassifier = artifactClassifier;</span>
+<span class="nc" id="L148">	}</span>
+
+	/**
+	 * @return the artifactExtension
+	 */
+	public String getArtifactExtension() {
+<span class="nc" id="L154">		return artifactExtension;</span>
+	}
+
+	/**
+	 * @param artifactExtension the artifactExtension to set
+	 */
+	public void setArtifactExtension(String artifactExtension) {
+<span class="nc" id="L161">		this.artifactExtension = artifactExtension;</span>
+<span class="nc" id="L162">	}</span>
+    
+    public String getBuildUrl() {
+<span class="nc" id="L165">    	return getMetadata().get(METADATA_BUILD_URL);</span>
+    }
+    
+    public void setBuildUrl(String buildUrl) {
+<span class="nc" id="L169">    	getMetadata().put(METADATA_BUILD_URL, buildUrl);</span>
+<span class="nc" id="L170">    }</span>
+    
+    public String getBuildNumber() {
+<span class="nc" id="L173">    	return getMetadata().get(METADATA_BUILD_NUMBER);</span>
+    }
+    
+    public void setBuildNumber(String buildNumber) {
+<span class="nc" id="L177">    	getMetadata().put(METADATA_BUILD_NUMBER, buildNumber);</span>
+<span class="nc" id="L178">    }</span>
+    
+    public String getJobUrl() {
+<span class="nc" id="L181">    	return getMetadata().get(METADATA_JOB_URL);</span>
+    }
+    
+    public void setJobUrl(String jobUrl) {
+<span class="nc" id="L185">    	getMetadata().put(METADATA_JOB_URL, jobUrl);</span>
+<span class="nc" id="L186">    }</span>
+    
+    public String getJobName() {
+<span class="nc" id="L189">    	return getMetadata().get(METADATA_JOB_NAME);</span>
+    }
+    
+    public void setJobName(String jobName) {
+<span class="nc" id="L193">    	getMetadata().put(METADATA_JOB_NAME, jobName);</span>
+<span class="nc" id="L194">    }</span>
+    
+    public String getInstanceUrl() {
+<span class="nc" id="L197">    	return getMetadata().get(METADATA_INSTANCE_URL);</span>
+    }
+    
+    public void setInstanceUrl(String instanceUrl) {
+<span class="nc" id="L201">    	getMetadata().put(METADATA_INSTANCE_URL, instanceUrl);</span>
+<span class="nc" id="L202">    }</span>
+    
+    public String getScmUrl() {
+<span class="nc" id="L205">    	return getMetadata().get(METADATA_SCM_URL);</span>
+    }
+    
+    public void setScmUrl(String scmUrl) {
+<span class="nc" id="L209">    	getMetadata().put(METADATA_SCM_URL, scmUrl);</span>
+<span class="nc" id="L210">    }</span>
+    
+    public String getScmBranch() {
+<span class="nc" id="L213">    	return getMetadata().get(METADATA_SCM_BRANCH);</span>
+    }
+    
+    public void setScmBranch(String scmBranch) {
+<span class="nc" id="L217">    	getMetadata().put(METADATA_SCM_BRANCH, scmBranch);</span>
+<span class="nc" id="L218">    }</span>
+    
+    public String getScmRevisionNumber() {
+<span class="nc" id="L221">    	return getMetadata().get(METADATA_SCM_REVISION_NUMBER);</span>
+    }
+    
+    public void setScmRevisionNumber(String scmRevisionNumber) {
+<span class="nc" id="L225">    	getMetadata().put(METADATA_SCM_REVISION_NUMBER, scmRevisionNumber);</span>
+<span class="nc" id="L226">    }</span>
+
+    public String getType() {
+<span class="nc" id="L229">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="nc" id="L233">        this.type = type;</span>
+<span class="nc" id="L234">    }</span>
+
+    public long getCreatedTimeStamp() {
+<span class="nc" id="L237">        return createdTimeStamp;</span>
+    }
+
+    public void setCreatedTimeStamp(long createdTimeStamp) {
+<span class="nc" id="L241">        this.createdTimeStamp = createdTimeStamp;</span>
+<span class="nc" id="L242">    }</span>
+
+    public String getCreatedBy() {
+<span class="nc" id="L245">        return createdBy;</span>
+    }
+
+    public void setCreatedBy(String createdBy) {
+<span class="nc" id="L249">        this.createdBy = createdBy;</span>
+<span class="nc" id="L250">    }</span>
+
+    public long getModifiedTimeStamp() {
+<span class="nc" id="L253">        return modifiedTimeStamp;</span>
+    }
+
+    public void setModifiedTimeStamp(long modifiedTimeStamp) {
+<span class="nc" id="L257">        this.modifiedTimeStamp = modifiedTimeStamp;</span>
+<span class="nc" id="L258">    }</span>
+
+    public String getModifiedBy() {
+<span class="nc" id="L261">        return modifiedBy;</span>
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+<span class="nc" id="L265">        this.modifiedBy = modifiedBy;</span>
+<span class="nc" id="L266">    }</span>
+
+    public String getActual_sha1() {
+<span class="nc" id="L269">        return actual_sha1;</span>
+    }
+
+    public void setActual_sha1(String actual_sha1) {
+<span class="nc" id="L273">        this.actual_sha1 = actual_sha1;</span>
+<span class="nc" id="L274">    }</span>
+
+    public String getActual_md5() {
+<span class="nc" id="L277">        return actual_md5;</span>
+    }
+
+    public void setActual_md5(String actual_md5) {
+<span class="nc" id="L281">        this.actual_md5 = actual_md5;</span>
+<span class="nc" id="L282">    }</span>
+
+
+    public Map&lt;String, String&gt; getMetadata() {
+<span class="nc" id="L286">    	return metadata;</span>
+    }
+
+
+    public String getAuthorLDAPDN() {
+<span class="nc" id="L291">        return authorLDAPDN;</span>
+    }
+
+    public void setAuthorLDAPDN(String authorLDAPDN) {
+<span class="nc" id="L295">        this.authorLDAPDN = authorLDAPDN;</span>
+<span class="nc" id="L296">    }</span>
+
+    public void setVirtualRepos(List&lt;String&gt; virtualRepos) {
+<span class="nc" id="L299">        this.virtualRepos = virtualRepos;</span>
+<span class="nc" id="L300">    }</span>
+
+    public List&lt;String&gt; getVirtualRepos() {
+<span class="nc" id="L303">        return virtualRepos;</span>
+    }
+
+
+<span class="fc" id="L307">    public static final Comparator&lt;BinaryArtifact&gt; TIMESTAMP_COMPARATOR = new Comparator&lt;BinaryArtifact&gt;() {</span>
+        @Override
+        public int compare(BinaryArtifact o1, BinaryArtifact o2) {
+<span class="fc" id="L310">            return Long.compare(o1.getTimestamp(), o2.getTimestamp());</span>
+        }
+    };
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

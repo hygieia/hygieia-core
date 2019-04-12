@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CollectorItemConfigHistory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">CollectorItemConfigHistory.java</span></div><h1>CollectorItemConfigHistory.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Document(collection=&quot;collitem_cfghist&quot;)
+<span class="nc" id="L10">public class CollectorItemConfigHistory extends BaseModel {</span>
+
+    private ObjectId collectorItemId;
+    private long timestamp;
+    private ConfigHistOperationType operation;
+    private String userName;
+    private String userID;
+<span class="nc" id="L17">    private Map&lt;String, Object&gt; changeMap = new HashMap&lt;&gt;();</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="nc" id="L20">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L24">        this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L25">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L28">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L32">        this.timestamp = timestamp;</span>
+<span class="nc" id="L33">    }</span>
+
+    public ConfigHistOperationType getOperation() {
+<span class="nc" id="L36">        return operation;</span>
+    }
+
+    public void setOperation(ConfigHistOperationType operation) {
+<span class="nc" id="L40">        this.operation = operation;</span>
+<span class="nc" id="L41">    }</span>
+
+    public Map&lt;String, Object&gt; getChangeMap() {
+<span class="nc" id="L44">        return changeMap;</span>
+    }
+
+    public void setChangeMap(Map&lt;String, Object&gt; changeMap) {
+<span class="nc" id="L48">        this.changeMap = changeMap;</span>
+<span class="nc" id="L49">    }</span>
+
+    public String getUserName() {
+<span class="nc" id="L52">        return userName;</span>
+    }
+
+    public void setUserName(String userName) {
+<span class="nc" id="L56">        this.userName = userName;</span>
+<span class="nc" id="L57">    }</span>
+
+    public String getUserID() {
+<span class="nc" id="L60">        return userID;</span>
+    }
+
+    public void setUserID(String userID) {
+<span class="nc" id="L64">        this.userID = userID;</span>
+<span class="nc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

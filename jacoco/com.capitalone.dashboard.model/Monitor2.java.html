@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Monitor2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Monitor2.java</span></div><h1>Monitor2.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/*
+Represents the getters and setters for the Aws Server Status object.
+ */
+@Document(collection = &quot;monitor2&quot;)
+<span class="nc" id="L10">public class Monitor2 extends BaseModel {</span>
+    private String name;
+    private String url;
+    private int status;
+    private ObjectId dashboardId;
+    private long lastUpdated;
+    private String applicationName;
+
+    public String getName() {
+<span class="nc" id="L19">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L23">        this.name = name;</span>
+<span class="nc" id="L24">    }</span>
+
+<span class="nc" id="L26">    public String getUrl() { return this.url; }</span>
+
+<span class="nc" id="L28">    public void setUrl(String url) { this.url = url; }</span>
+
+<span class="nc" id="L30">    public int getStatus() { return this.status; }</span>
+
+<span class="nc" id="L32">    public void setStatus(int status) { this.status = status; }</span>
+
+    public ObjectId getDashboardId() {
+<span class="nc" id="L35">        return dashboardId;</span>
+    }
+
+    public void setDashboardId(ObjectId dashboardId) {
+<span class="nc" id="L39">        this.dashboardId = dashboardId;</span>
+<span class="nc" id="L40">    }</span>
+
+    public String getApplicationName() {
+<span class="nc" id="L43">        return applicationName;</span>
+    }
+
+    public void setApplicationName(String applicationName) {
+<span class="nc" id="L47">        this.applicationName = applicationName;</span>
+<span class="nc" id="L48">    }</span>
+
+    public long getLastUpdated() {
+<span class="nc" id="L51">        return lastUpdated;</span>
+    }
+
+    public void setLastUpdated(long lastUpdated) {
+<span class="nc" id="L55">        this.lastUpdated = lastUpdated;</span>
+<span class="nc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

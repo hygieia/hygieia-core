@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QCloudInstance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QCloudInstance.java</span></div><h1>QCloudInstance.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QCloudInstance is a Querydsl query type for CloudInstance
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QCloudInstance extends EntityPathBase&lt;CloudInstance&gt; {
+
+    private static final long serialVersionUID = -1608625848L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QCloudInstance cloudInstance = new QCloudInstance(&quot;cloudInstance&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="fc" id="L27">    public final StringPath accountNumber = createString(&quot;accountNumber&quot;);</span>
+
+<span class="fc" id="L29">    public final NumberPath&lt;Integer&gt; age = createNumber(&quot;age&quot;, Integer.class);</span>
+
+<span class="fc" id="L31">    public final StringPath autoScaleName = createString(&quot;autoScaleName&quot;);</span>
+
+<span class="fc" id="L33">    public final NumberPath&lt;Double&gt; cpuUtilization = createNumber(&quot;cpuUtilization&quot;, Double.class);</span>
+
+<span class="fc" id="L35">    public final NumberPath&lt;Double&gt; diskRead = createNumber(&quot;diskRead&quot;, Double.class);</span>
+
+<span class="fc" id="L37">    public final NumberPath&lt;Double&gt; diskWrite = createNumber(&quot;diskWrite&quot;, Double.class);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L42">    public final BooleanPath imageApproved = createBoolean(&quot;imageApproved&quot;);</span>
+
+<span class="fc" id="L44">    public final NumberPath&lt;Long&gt; imageExpirationDate = createNumber(&quot;imageExpirationDate&quot;, Long.class);</span>
+
+<span class="fc" id="L46">    public final StringPath imageId = createString(&quot;imageId&quot;);</span>
+
+<span class="fc" id="L48">    public final StringPath instanceId = createString(&quot;instanceId&quot;);</span>
+
+<span class="fc" id="L50">    public final StringPath instanceOwner = createString(&quot;instanceOwner&quot;);</span>
+
+<span class="fc" id="L52">    public final StringPath instanceType = createString(&quot;instanceType&quot;);</span>
+
+<span class="fc" id="L54">    public final BooleanPath isMonitored = createBoolean(&quot;isMonitored&quot;);</span>
+
+<span class="fc" id="L56">    public final BooleanPath isStopped = createBoolean(&quot;isStopped&quot;);</span>
+
+<span class="fc" id="L58">    public final BooleanPath isTagged = createBoolean(&quot;isTagged&quot;);</span>
+
+<span class="fc" id="L60">    public final StringPath lastAction = createString(&quot;lastAction&quot;);</span>
+
+<span class="fc" id="L62">    public final NumberPath&lt;Long&gt; lastUpdatedDate = createNumber(&quot;lastUpdatedDate&quot;, Long.class);</span>
+
+<span class="fc" id="L64">    public final BooleanPath monitored = createBoolean(&quot;monitored&quot;);</span>
+
+<span class="fc" id="L66">    public final NumberPath&lt;Double&gt; networkIn = createNumber(&quot;networkIn&quot;, Double.class);</span>
+
+<span class="fc" id="L68">    public final NumberPath&lt;Double&gt; networkOut = createNumber(&quot;networkOut&quot;, Double.class);</span>
+
+<span class="fc" id="L70">    public final StringPath privateDns = createString(&quot;privateDns&quot;);</span>
+
+<span class="fc" id="L72">    public final StringPath privateIp = createString(&quot;privateIp&quot;);</span>
+
+<span class="fc" id="L74">    public final StringPath publicDns = createString(&quot;publicDns&quot;);</span>
+
+<span class="fc" id="L76">    public final StringPath publicIp = createString(&quot;publicIp&quot;);</span>
+
+<span class="fc" id="L78">    public final StringPath rootDeviceName = createString(&quot;rootDeviceName&quot;);</span>
+
+<span class="fc" id="L80">    public final ListPath&lt;String, StringPath&gt; securityGroups = this.&lt;String, StringPath&gt;createList(&quot;securityGroups&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L82">    public final StringPath status = createString(&quot;status&quot;);</span>
+
+<span class="fc" id="L84">    public final BooleanPath stopped = createBoolean(&quot;stopped&quot;);</span>
+
+<span class="fc" id="L86">    public final StringPath subnetId = createString(&quot;subnetId&quot;);</span>
+
+<span class="fc" id="L88">    public final BooleanPath tagged = createBoolean(&quot;tagged&quot;);</span>
+
+<span class="fc" id="L90">    public final ListPath&lt;NameValue, QNameValue&gt; tags = this.&lt;NameValue, QNameValue&gt;createList(&quot;tags&quot;, NameValue.class, QNameValue.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L92">    public final StringPath virtualNetworkId = createString(&quot;virtualNetworkId&quot;);</span>
+
+    public QCloudInstance(String variable) {
+<span class="fc" id="L95">        this(CloudInstance.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L96">    }</span>
+
+    public QCloudInstance(Path&lt;? extends CloudInstance&gt; path) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L100">    }</span>
+
+    public QCloudInstance(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L104">    }</span>
+
+    public QCloudInstance(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L107">        this(CloudInstance.class, metadata, inits);</span>
+<span class="nc" id="L108">    }</span>
+
+    public QCloudInstance(Class&lt;? extends CloudInstance&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L111">        super(type, metadata, inits);</span>
+<span class="fc" id="L112">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="fc" id="L113">        this.id = _super.id;</span>
+<span class="fc" id="L114">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

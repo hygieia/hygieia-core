@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChangeOrder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">ChangeOrder.java</span></div><h1>ChangeOrder.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Objects;
+
+@Document(collection=&quot;changeorder&quot;)
+<span class="nc" id="L11">public class ChangeOrder extends BaseModel{</span>
+
+    private ObjectId collectorItemId;
+    private Long timestamp;
+    private String changeOrderItem;
+
+    private String changeID;
+    private String category;
+    private String status;
+    private String approvalStatus;
+    private String initiatedBy;
+    private String assignedTo;
+    private String assignmentGroup;
+    private String changeCoordinator;
+    private String coordinatorPhone;
+    private Long plannedStart;
+    private Long plannedEnd;
+    private String reason;
+    private String phase;
+    private String riskAssessment;
+    private String priority;
+    private Long dateEntered;
+    private boolean open;
+    private String backoutDuration;
+    private Long closeTime;
+    private String extProjectRef;
+    private String rFCType2;
+    private String company;
+    private String title;
+    private String subcategory;
+    private String sLAAgreementID;
+    private String changeModel;
+    private String service;
+
+<span class="nc" id="L45">    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern(&quot;yyyy-MM-dd'T'HH:mm:ssZZ&quot;);</span>
+
+<span class="nc" id="L47">    public ObjectId getCollectorItemId() { return collectorItemId; }</span>
+
+<span class="nc" id="L49">    public void setCollectorItemId(ObjectId collectorItemId) { this.collectorItemId = collectorItemId; }</span>
+
+<span class="nc" id="L51">    public long getTimestamp() { return timestamp; }</span>
+
+<span class="nc" id="L53">    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }</span>
+
+<span class="nc" id="L55">    public void setTimestamp(String timestamp) { this.timestamp = DATE_FORMATTER.parseMillis(timestamp); }</span>
+
+<span class="nc" id="L57">    public String getChangeOrderItem() { return changeOrderItem; }</span>
+
+<span class="nc" id="L59">    public void setChangeOrderItem(String changeOrderItem) { this.changeOrderItem = changeOrderItem; }</span>
+
+<span class="nc" id="L61">    public String getChangeID() { return changeID; }</span>
+
+<span class="nc" id="L63">    public void setChangeID(String changeID) { this.changeID = changeID; }</span>
+
+<span class="nc" id="L65">    public String getCategory() { return category; }</span>
+
+<span class="nc" id="L67">    public void setCategory(String category) { this.category = category; }</span>
+
+<span class="nc" id="L69">    public String getStatus() { return status; }</span>
+
+<span class="nc" id="L71">    public void setStatus(String status) { this.status = status; }</span>
+
+<span class="nc" id="L73">    public String getApprovalStatus() { return approvalStatus; }</span>
+
+<span class="nc" id="L75">    public void setApprovalStatus(String approvalStatus) { this.approvalStatus = approvalStatus; }</span>
+
+<span class="nc" id="L77">    public String getInitiatedBy() { return initiatedBy; }</span>
+
+<span class="nc" id="L79">    public void setInitiatedBy(String initiatedBy) { this.initiatedBy = initiatedBy; }</span>
+
+<span class="nc" id="L81">    public String getAssignedTo() { return assignedTo; }</span>
+
+<span class="nc" id="L83">    public void setAssignedTo(String assignedTo) { this.assignedTo = assignedTo; }</span>
+
+<span class="nc" id="L85">    public String getAssignmentGroup() { return assignmentGroup; }</span>
+
+<span class="nc" id="L87">    public void setAssignmentGroup(String assignmentGroup) { this.assignmentGroup = assignmentGroup; }</span>
+
+<span class="nc" id="L89">    public String getChangeCoordinator() { return changeCoordinator; }</span>
+
+<span class="nc" id="L91">    public void setChangeCoordinator(String changeCoordinator) { this.changeCoordinator = changeCoordinator; }</span>
+
+<span class="nc" id="L93">    public String getCoordinatorPhone() { return coordinatorPhone; }</span>
+
+<span class="nc" id="L95">    public void setCoordinatorPhone(String coordinatorPhone) { this.coordinatorPhone = coordinatorPhone; }</span>
+
+<span class="nc" id="L97">    public long getPlannedStart() { return plannedStart; }</span>
+
+<span class="nc" id="L99">    public void setPlannedStart(long plannedStart) { this.plannedStart = plannedStart; }</span>
+
+<span class="nc" id="L101">    public void setPlannedStart(String plannedStart) { this.plannedStart = DATE_FORMATTER.parseMillis(plannedStart); }</span>
+
+<span class="nc" id="L103">    public long getPlannedEnd() { return plannedEnd; }</span>
+
+<span class="nc" id="L105">    public void setPlannedEnd(long plannedEnd) { this.plannedEnd = plannedEnd; }</span>
+
+<span class="nc" id="L107">    public void setPlannedEnd(String plannedEnd) { this.plannedEnd = DATE_FORMATTER.parseMillis(plannedEnd); }</span>
+
+<span class="nc" id="L109">    public String getReason() { return reason; }</span>
+
+<span class="nc" id="L111">    public void setReason(String reason) { this.reason = reason; }</span>
+
+<span class="nc" id="L113">    public String getPhase() { return phase; }</span>
+
+<span class="nc" id="L115">    public void setPhase(String phase) { this.phase = phase; }</span>
+
+<span class="nc" id="L117">    public String getRiskAssessment() { return riskAssessment; }</span>
+
+<span class="nc" id="L119">    public void setRiskAssessment(String riskAssessment) { this.riskAssessment = riskAssessment; }</span>
+
+<span class="nc" id="L121">    public String getPriority() { return priority; }</span>
+
+<span class="nc" id="L123">    public void setPriority(String priority) { this.priority = priority; }</span>
+
+<span class="nc" id="L125">    public long getDateEntered() { return dateEntered; }</span>
+
+<span class="nc" id="L127">    public void setDateEntered(long dateEntered) { this.dateEntered = dateEntered; }</span>
+
+<span class="nc" id="L129">    public void setDateEntered(String dateEntered) { this.dateEntered = DATE_FORMATTER.parseMillis(dateEntered); }</span>
+
+<span class="nc" id="L131">    public boolean isOpen() { return open; }</span>
+
+<span class="nc" id="L133">    public void setOpen(boolean open) { this.open = open; }</span>
+
+<span class="nc" id="L135">    public void setOpen(String open) { this.open = Boolean.parseBoolean(open); }</span>
+
+<span class="nc" id="L137">    public String getBackoutDuration() { return backoutDuration; }</span>
+
+<span class="nc" id="L139">    public void setBackoutDuration(String backoutDuration) { this.backoutDuration = backoutDuration; }</span>
+
+<span class="nc" id="L141">    public long getCloseTime() { return closeTime; }</span>
+
+<span class="nc" id="L143">    public void setCloseTime(long closeTime) { this.closeTime = closeTime; }</span>
+
+<span class="nc" id="L145">    public void setCloseTime(String closeTime) { this.closeTime = DATE_FORMATTER.parseMillis(closeTime); }</span>
+
+<span class="nc" id="L147">    public String getExtProjectRef() { return extProjectRef; }</span>
+
+<span class="nc" id="L149">    public void setExtProjectRef(String extProjectRef) { this.extProjectRef = extProjectRef; }</span>
+
+<span class="nc" id="L151">    public String getrFCType2() { return rFCType2; }</span>
+
+<span class="nc" id="L153">    public void setrFCType2(String rFCType2) { this.rFCType2 = rFCType2; }</span>
+
+<span class="nc" id="L155">    public String getCompany() { return company; }</span>
+
+<span class="nc" id="L157">    public void setCompany(String company) { this.company = company; }</span>
+
+<span class="nc" id="L159">    public String getTitle() { return title; }</span>
+
+<span class="nc" id="L161">    public void setTitle(String title) { this.title = title; }</span>
+
+<span class="nc" id="L163">    public String getSubcategory() { return subcategory; }</span>
+
+<span class="nc" id="L165">    public void setSubcategory(String subcategory) { this.subcategory = subcategory; }</span>
+
+<span class="nc" id="L167">    public String getsLAAgreementID() { return sLAAgreementID; }</span>
+
+<span class="nc" id="L169">    public void setsLAAgreementID(String sLAAgreementID) { this.sLAAgreementID = sLAAgreementID; }</span>
+
+<span class="nc" id="L171">    public String getChangeModel() { return changeModel; }</span>
+
+<span class="nc" id="L173">    public void setChangeModel(String changeModel) { this.changeModel = changeModel; }</span>
+
+    public String getService() {
+<span class="nc" id="L176">        return service;</span>
+    }
+
+    public void setService(String service) {
+<span class="nc" id="L180">        this.service = service;</span>
+<span class="nc" id="L181">    }</span>
+
+    @Override
+    public boolean equals(Object compareTo){
+<span class="nc" id="L185">        boolean doesEqual = true;</span>
+
+<span class="nc bnc" id="L187" title="All 4 branches missed.">        if(compareTo == null || !compareTo.getClass().isAssignableFrom(Incident.class)){</span>
+<span class="nc" id="L188">            doesEqual = false;</span>
+        }else {
+<span class="nc" id="L190">            Incident newIncident = (Incident) compareTo;</span>
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            if(!newIncident.toString().equals(toString())){</span>
+<span class="nc" id="L193">                doesEqual = false;</span>
+            }
+        }
+
+<span class="nc" id="L197">        return doesEqual;</span>
+    }
+
+    /**
+     *  Returns human readable string of the ChangeOrder Object.
+     *  * equals(Object object) depends on this method. Changing this method could alter the return of the equals method.
+     * @return object to string
+     */
+    @Override
+    public String toString() {
+
+<span class="nc" id="L208">        StringBuffer buf = new StringBuffer(210);</span>
+<span class="nc" id="L209">        buf.append(&quot;changeID: &quot;)</span>
+<span class="nc" id="L210">                .append(changeID);</span>
+
+<span class="nc" id="L212">        return buf.toString();</span>
+    }
+
+    @Override
+    public int hashCode(){
+<span class="nc" id="L217">        return Objects.hash(changeID);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

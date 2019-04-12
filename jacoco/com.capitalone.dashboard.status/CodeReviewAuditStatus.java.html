@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeReviewAuditStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.status</a> &gt; <span class="el_source">CodeReviewAuditStatus.java</span></div><h1>CodeReviewAuditStatus.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.status;
+
+<span class="nc" id="L3">public enum CodeReviewAuditStatus {</span>
+    //peer review type LGTM, GH REVIEW, COMMENTS ONLY
+<span class="nc" id="L5">    PEER_REVIEW_LGTM_SELF_APPROVAL,</span>
+<span class="nc" id="L6">    PEER_REVIEW_LGTM_ERROR,</span>
+<span class="nc" id="L7">    PEER_REVIEW_LGTM_PENDING,</span>
+<span class="nc" id="L8">    PEER_REVIEW_LGTM_UNKNOWN,</span>
+<span class="nc" id="L9">    PEER_REVIEW_LGTM_SUCCESS,</span>
+<span class="nc" id="L10">    PEER_REVIEW_BY_SERVICEACCOUNT,</span>
+
+<span class="nc" id="L12">    PEER_REVIEW_GHR,</span>
+<span class="nc" id="L13">    PEER_REVIEW_GHR_SELF_APPROVAL,</span>
+<span class="nc" id="L14">    PEER_REVIEW_REG_COMMENTS,</span>
+<span class="nc" id="L15">    PEER_REVIEW_REV_COMMENTS,</span>
+    //no pull requests for queried date range
+<span class="nc" id="L17">    NO_PULL_REQ_FOR_DATE_RANGE,</span>
+    //direct commits to master
+<span class="nc" id="L19">    DIRECT_COMMITS_TO_BASE,</span>
+<span class="nc" id="L20">    DIRECT_COMMITS_TO_BASE_FIRST_COMMIT,</span>
+<span class="nc" id="L21">    COMMIT_AUTHOR_EQ_SYSTEM_USER,</span>
+<span class="nc" id="L22">    DIRECT_COMMIT_NONCODE_CHANGE,</span>
+<span class="nc" id="L23">    DIRECT_COMMIT_NONCODE_CHANGE_SERVICE_ACCOUNT,</span>
+<span class="nc" id="L24">    DIRECT_COMMIT_NONCODE_CHANGE_USER_ACCOUNT,</span>
+    //commit author v/s who merged the pr
+<span class="nc" id="L26">    COMMITAUTHOR_NE_MERGECOMMITER,</span>
+<span class="nc" id="L27">    COMMITAUTHOR_EQ_MERGECOMMITER,</span>
+<span class="nc" id="L28">    MERGECOMMITER_NOT_FOUND,</span>
+<span class="nc" id="L29">    COMMITAUTHOR_EQ_SERVICEACCOUNT,</span>
+<span class="nc" id="L30">    MERGECOMMITER_EQ_SERVICEACCOUNT,</span>
+
+    //peer review of a pull request
+<span class="nc" id="L33">    PULLREQ_REVIEWED_BY_PEER,</span>
+<span class="nc" id="L34">    PULLREQ_NOT_PEER_REVIEWED,</span>
+<span class="nc" id="L35">    BASE_FIRST_COMMIT,</span>
+
+    //type of git workflow
+<span class="nc" id="L38">    GIT_FORK_STRATEGY,</span>
+<span class="nc" id="L39">    GIT_BRANCH_STRATEGY,</span>
+<span class="nc" id="L40">    GIT_NO_WORKFLOW,</span>
+
+<span class="nc" id="L42">    REPO_NOT_CONFIGURED,</span>
+<span class="nc" id="L43">    PENDING_DATA_COLLECTION,</span>
+
+<span class="nc" id="L45">    NO_COMMIT_FOR_DATE_RANGE, //Removew this later when we can remove legacy peer review</span>
+<span class="nc" id="L46">    COMMIT_AFTER_PR_MERGE, COLLECTOR_ITEM_ERROR,</span>
+<span class="nc" id="L47">    SCM_AUTHOR_LOGIN_INVALID, //passed when SCM AUTHOR is unavailable</span>
+<span class="nc" id="L48">    DIRECT_COMMIT_CHANGE_WHITELISTED_ACCOUNT</span>
+    }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

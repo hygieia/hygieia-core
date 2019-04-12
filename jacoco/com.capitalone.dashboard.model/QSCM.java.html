@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QSCM.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QSCM.java</span></div><h1>QSCM.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QSCM is a Querydsl query type for SCM
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QSCM extends BeanPath&lt;SCM&gt; {
+
+    private static final long serialVersionUID = -239848197L;
+
+<span class="fc" id="L21">    public static final QSCM sCM = new QSCM(&quot;sCM&quot;);</span>
+
+<span class="pc" id="L23">    public final ListPath&lt;String, StringPath&gt; filesAdded = this.&lt;String, StringPath&gt;createList(&quot;filesAdded&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="pc" id="L25">    public final ListPath&lt;String, StringPath&gt; filesModified = this.&lt;String, StringPath&gt;createList(&quot;filesModified&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="pc" id="L27">    public final ListPath&lt;String, StringPath&gt; filesRemoved = this.&lt;String, StringPath&gt;createList(&quot;filesRemoved&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="pc" id="L29">    public final NumberPath&lt;Long&gt; numberOfChanges = createNumber(&quot;numberOfChanges&quot;, Long.class);</span>
+
+<span class="pc" id="L31">    public final StringPath pullNumber = createString(&quot;pullNumber&quot;);</span>
+
+<span class="pc" id="L33">    public final StringPath scmAuthor = createString(&quot;scmAuthor&quot;);</span>
+
+<span class="pc" id="L35">    public final StringPath scmAuthorLDAPDN = createString(&quot;scmAuthorLDAPDN&quot;);</span>
+
+<span class="pc" id="L37">    public final StringPath scmAuthorLogin = createString(&quot;scmAuthorLogin&quot;);</span>
+
+<span class="pc" id="L39">    public final StringPath scmBranch = createString(&quot;scmBranch&quot;);</span>
+
+<span class="pc" id="L41">    public final StringPath scmCommitLog = createString(&quot;scmCommitLog&quot;);</span>
+
+<span class="pc" id="L43">    public final StringPath scmCommitter = createString(&quot;scmCommitter&quot;);</span>
+
+<span class="pc" id="L45">    public final StringPath scmCommitterLogin = createString(&quot;scmCommitterLogin&quot;);</span>
+
+<span class="pc" id="L47">    public final NumberPath&lt;Long&gt; scmCommitTimestamp = createNumber(&quot;scmCommitTimestamp&quot;, Long.class);</span>
+
+<span class="pc" id="L49">    public final ListPath&lt;String, StringPath&gt; scmParentRevisionNumbers = this.&lt;String, StringPath&gt;createList(&quot;scmParentRevisionNumbers&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="pc" id="L51">    public final StringPath scmRevisionNumber = createString(&quot;scmRevisionNumber&quot;);</span>
+
+<span class="pc" id="L53">    public final StringPath scmUrl = createString(&quot;scmUrl&quot;);</span>
+
+<span class="pc" id="L55">    public final EnumPath&lt;CommitType&gt; type = createEnum(&quot;type&quot;, CommitType.class);</span>
+
+    public QSCM(String variable) {
+<span class="fc" id="L58">        super(SCM.class, forVariable(variable));</span>
+<span class="fc" id="L59">    }</span>
+
+    public QSCM(Path&lt;? extends SCM&gt; path) {
+<span class="fc" id="L62">        super(path.getType(), path.getMetadata());</span>
+<span class="fc" id="L63">    }</span>
+
+    public QSCM(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L66">        super(SCM.class, metadata);</span>
+<span class="nc" id="L67">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

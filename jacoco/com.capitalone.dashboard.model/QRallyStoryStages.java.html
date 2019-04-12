@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QRallyStoryStages.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QRallyStoryStages.java</span></div><h1>QRallyStoryStages.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QRallyStoryStages is a Querydsl query type for RallyStoryStages
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QRallyStoryStages extends BeanPath&lt;RallyStoryStages&gt; {
+
+    private static final long serialVersionUID = 1322697122L;
+
+<span class="nc" id="L21">    public static final QRallyStoryStages rallyStoryStages = new QRallyStoryStages(&quot;rallyStoryStages&quot;);</span>
+
+<span class="nc" id="L23">    public final StringPath accepted = createString(&quot;accepted&quot;);</span>
+
+<span class="nc" id="L25">    public final StringPath backlog = createString(&quot;backlog&quot;);</span>
+
+<span class="nc" id="L27">    public final StringPath completed = createString(&quot;completed&quot;);</span>
+
+<span class="nc" id="L29">    public final StringPath defects = createString(&quot;defects&quot;);</span>
+
+<span class="nc" id="L31">    public final StringPath defined = createString(&quot;defined&quot;);</span>
+
+<span class="nc" id="L33">    public final StringPath inProgress = createString(&quot;inProgress&quot;);</span>
+
+<span class="nc" id="L35">    public final ListPath&lt;UserStory, SimplePath&lt;UserStory&gt;&gt; userStories = this.&lt;UserStory, SimplePath&lt;UserStory&gt;&gt;createList(&quot;userStories&quot;, UserStory.class, SimplePath.class, PathInits.DIRECT2);</span>
+
+    public QRallyStoryStages(String variable) {
+<span class="nc" id="L38">        super(RallyStoryStages.class, forVariable(variable));</span>
+<span class="nc" id="L39">    }</span>
+
+    public QRallyStoryStages(Path&lt;? extends RallyStoryStages&gt; path) {
+<span class="nc" id="L42">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L43">    }</span>
+
+    public QRallyStoryStages(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L46">        super(RallyStoryStages.class, metadata);</span>
+<span class="nc" id="L47">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

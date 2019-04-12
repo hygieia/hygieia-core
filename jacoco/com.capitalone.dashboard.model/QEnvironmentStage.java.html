@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QEnvironmentStage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QEnvironmentStage.java</span></div><h1>QEnvironmentStage.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QEnvironmentStage is a Querydsl query type for EnvironmentStage
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QEnvironmentStage extends BeanPath&lt;EnvironmentStage&gt; {
+
+    private static final long serialVersionUID = 1288556685L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QEnvironmentStage environmentStage = new QEnvironmentStage(&quot;environmentStage&quot;);</span>
+
+<span class="nc" id="L25">    public final QStage _super = new QStage(this);</span>
+
+    //inherited
+<span class="nc" id="L28">    public final SetPath&lt;PipelineCommit, SimplePath&lt;PipelineCommit&gt;&gt; commits = _super.commits;</span>
+
+    public final QBinaryArtifact lastArtifact;
+
+    public QEnvironmentStage(String variable) {
+<span class="nc" id="L33">        this(EnvironmentStage.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L34">    }</span>
+
+    public QEnvironmentStage(Path&lt;? extends EnvironmentStage&gt; path) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L38">    }</span>
+
+    public QEnvironmentStage(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L42">    }</span>
+
+    public QEnvironmentStage(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L45">        this(EnvironmentStage.class, metadata, inits);</span>
+<span class="nc" id="L46">    }</span>
+
+    public QEnvironmentStage(Class&lt;? extends EnvironmentStage&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L49">        super(type, metadata, inits);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        this.lastArtifact = inits.isInitialized(&quot;lastArtifact&quot;) ? new QBinaryArtifact(forProperty(&quot;lastArtifact&quot;), inits.get(&quot;lastArtifact&quot;)) : null;</span>
+<span class="nc" id="L51">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

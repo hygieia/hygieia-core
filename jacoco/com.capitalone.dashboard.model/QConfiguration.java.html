@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QConfiguration.java</span></div><h1>QConfiguration.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QConfiguration is a Querydsl query type for Configuration
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QConfiguration extends EntityPathBase&lt;Configuration&gt; {
+
+    private static final long serialVersionUID = 1397617748L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QConfiguration configuration = new QConfiguration(&quot;configuration&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="fc" id="L27">    public final StringPath collectorName = createString(&quot;collectorName&quot;);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L32">    public final SetPath&lt;java.util.Map&lt;String, String&gt;, SimplePath&lt;java.util.Map&lt;String, String&gt;&gt;&gt; info = this.&lt;java.util.Map&lt;String, String&gt;, SimplePath&lt;java.util.Map&lt;String, String&gt;&gt;&gt;createSet(&quot;info&quot;, java.util.Map.class, SimplePath.class, PathInits.DIRECT2);</span>
+
+    public QConfiguration(String variable) {
+<span class="fc" id="L35">        this(Configuration.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L36">    }</span>
+
+    public QConfiguration(Path&lt;? extends Configuration&gt; path) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L40">    }</span>
+
+    public QConfiguration(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L44">    }</span>
+
+    public QConfiguration(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L47">        this(Configuration.class, metadata, inits);</span>
+<span class="nc" id="L48">    }</span>
+
+    public QConfiguration(Class&lt;? extends Configuration&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L51">        super(type, metadata, inits);</span>
+<span class="fc" id="L52">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="fc" id="L53">        this.id = _super.id;</span>
+<span class="fc" id="L54">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Commit.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Commit.java</span></div><h1>Commit.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * A specific commit in a version control repository.
+ *
+ * Possible collectors:
+ *  Subversion (in scope)
+ *  Git (in scope)
+ *  GitHub
+ *  TFS
+ *  BitBucket
+ *  Unfuddle
+ *
+ */
+@Document(collection=&quot;commits&quot;)
+@CompoundIndexes({
+        @CompoundIndex(name = &quot;unique_scm_key&quot;, def = &quot;{'collectorItemId' : 1, 'scmRevisionNumber': 1}&quot;)
+})
+<span class="fc" id="L26">public class Commit extends SCM {</span>
+    @Id
+    private ObjectId id;
+    @Indexed
+    private ObjectId collectorItemId;
+    private long timestamp;
+
+    private boolean firstEverCommit;
+
+    public ObjectId getId() {
+<span class="nc" id="L36">        return id;</span>
+    }
+
+    public void setId(ObjectId id) {
+<span class="nc" id="L40">        this.id = id;</span>
+<span class="nc" id="L41">    }</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="fc" id="L44">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="fc" id="L48">        this.collectorItemId = collectorItemId;</span>
+<span class="fc" id="L49">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L52">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L56">        this.timestamp = timestamp;</span>
+<span class="nc" id="L57">    }</span>
+
+    public boolean isFirstEverCommit() {
+<span class="nc" id="L60">        return firstEverCommit;</span>
+    }
+
+    public void setFirstEverCommit(boolean firstEverCommit) {
+<span class="nc" id="L64">        this.firstEverCommit = firstEverCommit;</span>
+<span class="nc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

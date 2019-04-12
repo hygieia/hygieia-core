@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Authentication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Authentication.java</span></div><h1>Authentication.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import com.google.common.hash.Hashing;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.nio.charset.StandardCharsets;
+
+/**
+ * This class serves as the model for storing credential used for login &amp; Signup.
+ */
+
+
+@Document(collection = &quot;authentication&quot;)
+public class Authentication extends BaseModel {
+    static final String HASH_PREFIX = &quot;sha512:&quot;;
+
+    @Indexed(unique = true)
+    private String username;
+
+    private String password;
+
+
+<span class="fc" id="L24">    public Authentication(String username, String password) {</span>
+<span class="fc" id="L25">        this.username = username;</span>
+<span class="fc" id="L26">        this.password = hash(password);</span>
+<span class="fc" id="L27">    }</span>
+
+    public String getUsername() {
+<span class="nc" id="L30">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="nc" id="L34">        this.username = username;</span>
+<span class="nc" id="L35">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L38">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="nc" id="L42">        this.password = hash(password);</span>
+<span class="nc" id="L43">    }</span>
+
+
+    static String hash(String password) {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (!password.startsWith(HASH_PREFIX)) {</span>
+<span class="fc" id="L48">            return HASH_PREFIX + Hashing.sha512().hashString(password, StandardCharsets.UTF_8).toString();</span>
+        }
+<span class="fc" id="L50">        return password;</span>
+    }
+
+    public boolean isHashed() {
+<span class="nc" id="L54">        return password.startsWith(HASH_PREFIX);</span>
+    }
+
+    public boolean checkPassword(String password) {
+<span class="fc" id="L58">        return hash(this.password).equals(hash(password));</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L63">        return &quot;Authentication [username=&quot; + username + &quot;, password=&quot; + password + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

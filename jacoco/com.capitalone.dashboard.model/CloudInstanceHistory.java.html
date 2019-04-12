@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CloudInstanceHistory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">CloudInstanceHistory.java</span></div><h1>CloudInstanceHistory.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * Represents an EC2 instance from AWS
+ */
+@Document(collection = &quot;cloud_instance_history&quot;)
+<span class="nc" id="L10">public class CloudInstanceHistory extends BaseModel{</span>
+    @Indexed
+    private String accountNumber;
+    @Indexed
+    private long time;
+    private int total;
+    private int nonTagged;
+    private int stopped;
+    private int expiredImage;
+    private double estimatedCharge;
+    private double cpu;
+    private double diskRead;
+    private double diskWrite;
+    private double networkIn;
+    private double networkOut;
+<span class="nc" id="L25">    private String currency = &quot;USD&quot;;</span>
+
+    public String getAccountNumber() {
+<span class="nc" id="L28">        return accountNumber;</span>
+    }
+
+    public void setAccountNumber(String accountNumber) {
+<span class="nc" id="L32">        this.accountNumber = accountNumber;</span>
+<span class="nc" id="L33">    }</span>
+
+    public long getTime() {
+<span class="nc" id="L36">        return time;</span>
+    }
+
+    public void setTime(long time) {
+<span class="nc" id="L40">        this.time = time;</span>
+<span class="nc" id="L41">    }</span>
+
+    public int getTotal() {
+<span class="nc" id="L44">        return total;</span>
+    }
+
+    public void setTotal(int total) {
+<span class="nc" id="L48">        this.total = total;</span>
+<span class="nc" id="L49">    }</span>
+
+    public int getNonTagged() {
+<span class="nc" id="L52">        return nonTagged;</span>
+    }
+
+    public void setNonTagged(int nonTagged) {
+<span class="nc" id="L56">        this.nonTagged = nonTagged;</span>
+<span class="nc" id="L57">    }</span>
+
+    public int getStopped() {
+<span class="nc" id="L60">        return stopped;</span>
+    }
+
+    public void setStopped(int stopped) {
+<span class="nc" id="L64">        this.stopped = stopped;</span>
+<span class="nc" id="L65">    }</span>
+
+    public int getExpiredImage() {
+<span class="nc" id="L68">        return expiredImage;</span>
+    }
+
+    public void setExpiredImage(int expiredImage) {
+<span class="nc" id="L72">        this.expiredImage = expiredImage;</span>
+<span class="nc" id="L73">    }</span>
+
+    public double getEstimatedCharge() {
+<span class="nc" id="L76">        return estimatedCharge;</span>
+    }
+
+    public void setEstimatedCharge(double estimatedCharge) {
+<span class="nc" id="L80">        this.estimatedCharge = estimatedCharge;</span>
+<span class="nc" id="L81">    }</span>
+
+    public String getCurrency() {
+<span class="nc" id="L84">        return currency;</span>
+    }
+
+    public void setCurrency(String currency) {
+<span class="nc" id="L88">        this.currency = currency;</span>
+<span class="nc" id="L89">    }</span>
+
+    public double getCpu() {
+<span class="nc" id="L92">        return cpu;</span>
+    }
+
+    public void setCpu(double cpu) {
+<span class="nc" id="L96">        this.cpu = cpu;</span>
+<span class="nc" id="L97">    }</span>
+
+    public double getDiskRead() {
+<span class="nc" id="L100">        return diskRead;</span>
+    }
+
+    public void setDiskRead(double diskRead) {
+<span class="nc" id="L104">        this.diskRead = diskRead;</span>
+<span class="nc" id="L105">    }</span>
+
+    public double getNetworkIn() {
+<span class="nc" id="L108">        return networkIn;</span>
+    }
+
+    public void setNetworkIn(double networkIn) {
+<span class="nc" id="L112">        this.networkIn = networkIn;</span>
+<span class="nc" id="L113">    }</span>
+
+    public double getDiskWrite() {
+<span class="nc" id="L116">        return diskWrite;</span>
+    }
+
+    public void setDiskWrite(double diskWrite) {
+<span class="nc" id="L120">        this.diskWrite = diskWrite;</span>
+<span class="nc" id="L121">    }</span>
+
+    public double getNetworkOut() {
+<span class="nc" id="L124">        return networkOut;</span>
+    }
+
+    public void setNetworkOut(double networkOut) {
+<span class="nc" id="L128">        this.networkOut = networkOut;</span>
+<span class="nc" id="L129">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L136">        CloudInstanceHistory that = (CloudInstanceHistory) o;</span>
+
+<span class="nc bnc" id="L138" title="All 4 branches missed.">        return time == that.time &amp;&amp; accountNumber.equals(that.accountNumber);</span>
+
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L144">        int result = accountNumber.hashCode();</span>
+<span class="nc" id="L145">        result = 31 * result + (int) (time ^ (time &gt;&gt;&gt; 32));</span>
+<span class="nc" id="L146">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

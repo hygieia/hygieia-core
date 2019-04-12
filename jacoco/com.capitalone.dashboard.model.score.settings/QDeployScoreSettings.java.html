@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QDeployScoreSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">QDeployScoreSettings.java</span></div><h1>QDeployScoreSettings.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QDeployScoreSettings is a Querydsl query type for DeployScoreSettings
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QDeployScoreSettings extends BeanPath&lt;DeployScoreSettings&gt; {
+
+    private static final long serialVersionUID = -1486466591L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QDeployScoreSettings deployScoreSettings = new QDeployScoreSettings(&quot;deployScoreSettings&quot;);</span>
+
+<span class="fc" id="L25">    public final QScoreComponentSettings _super = new QScoreComponentSettings(this);</span>
+
+    //inherited
+<span class="fc" id="L28">    public final SimplePath&lt;ScoreCriteria&gt; criteria = _super.criteria;</span>
+
+    public final QScoreComponentSettings deploySuccess;
+
+    //inherited
+<span class="fc" id="L33">    public final BooleanPath disabled = _super.disabled;</span>
+
+    public final QScoreComponentSettings intancesOnline;
+
+    //inherited
+<span class="fc" id="L38">    public final NumberPath&lt;Integer&gt; weight = _super.weight;</span>
+
+    public QDeployScoreSettings(String variable) {
+<span class="fc" id="L41">        this(DeployScoreSettings.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L42">    }</span>
+
+    public QDeployScoreSettings(Path&lt;? extends DeployScoreSettings&gt; path) {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L46">    }</span>
+
+    public QDeployScoreSettings(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L50">    }</span>
+
+    public QDeployScoreSettings(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L53">        this(DeployScoreSettings.class, metadata, inits);</span>
+<span class="fc" id="L54">    }</span>
+
+    public QDeployScoreSettings(Class&lt;? extends DeployScoreSettings&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L57">        super(type, metadata, inits);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        this.deploySuccess = inits.isInitialized(&quot;deploySuccess&quot;) ? new QScoreComponentSettings(forProperty(&quot;deploySuccess&quot;)) : null;</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        this.intancesOnline = inits.isInitialized(&quot;intancesOnline&quot;) ? new QScoreComponentSettings(forProperty(&quot;intancesOnline&quot;)) : null;</span>
+<span class="fc" id="L60">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

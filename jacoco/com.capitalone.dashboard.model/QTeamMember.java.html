@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QTeamMember.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QTeamMember.java</span></div><h1>QTeamMember.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QTeamMember is a Querydsl query type for TeamMember
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QTeamMember extends BeanPath&lt;TeamMember&gt; {
+
+    private static final long serialVersionUID = -455693127L;
+
+<span class="nc" id="L21">    public static final QTeamMember teamMember = new QTeamMember(&quot;teamMember&quot;);</span>
+
+<span class="nc" id="L23">    public final StringPath allocation = createString(&quot;allocation&quot;);</span>
+
+<span class="nc" id="L25">    public final StringPath name = createString(&quot;name&quot;);</span>
+
+<span class="nc" id="L27">    public final StringPath orgId = createString(&quot;orgId&quot;);</span>
+
+<span class="nc" id="L29">    public final StringPath regOrTemp = createString(&quot;regOrTemp&quot;);</span>
+
+<span class="nc" id="L31">    public final StringPath teamId = createString(&quot;teamId&quot;);</span>
+
+<span class="nc" id="L33">    public final ListPath&lt;TeamLevelDetails, QTeamLevelDetails&gt; teams = this.&lt;TeamLevelDetails, QTeamLevelDetails&gt;createList(&quot;teams&quot;, TeamLevelDetails.class, QTeamLevelDetails.class, PathInits.DIRECT2);</span>
+
+    public QTeamMember(String variable) {
+<span class="nc" id="L36">        super(TeamMember.class, forVariable(variable));</span>
+<span class="nc" id="L37">    }</span>
+
+    public QTeamMember(Path&lt;? extends TeamMember&gt; path) {
+<span class="nc" id="L40">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L41">    }</span>
+
+    public QTeamMember(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L44">        super(TeamMember.class, metadata);</span>
+<span class="nc" id="L45">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

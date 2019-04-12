@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QStage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QStage.java</span></div><h1>QStage.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QStage is a Querydsl query type for Stage
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QStage extends BeanPath&lt;Stage&gt; {
+
+    private static final long serialVersionUID = 1435598940L;
+
+<span class="nc" id="L21">    public static final QStage stage = new QStage(&quot;stage&quot;);</span>
+
+<span class="nc" id="L23">    public final SetPath&lt;PipelineCommit, SimplePath&lt;PipelineCommit&gt;&gt; commits = this.&lt;PipelineCommit, SimplePath&lt;PipelineCommit&gt;&gt;createSet(&quot;commits&quot;, PipelineCommit.class, SimplePath.class, PathInits.DIRECT2);</span>
+
+    public QStage(String variable) {
+<span class="nc" id="L26">        super(Stage.class, forVariable(variable));</span>
+<span class="nc" id="L27">    }</span>
+
+    public QStage(Path&lt;? extends Stage&gt; path) {
+<span class="nc" id="L30">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L31">    }</span>
+
+    public QStage(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L34">        super(Stage.class, metadata);</span>
+<span class="nc" id="L35">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

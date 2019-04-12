@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CloudVolumeStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">CloudVolumeStorage.java</span></div><h1>CloudVolumeStorage.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Document(collection = &quot;cloud_volume&quot;)
+<span class="nc" id="L11">public class CloudVolumeStorage extends BaseModel{</span>
+    @Indexed
+    private String volumeId;
+
+    @Indexed
+    private String accountNumber;
+    private String status;
+    private long creationDate;
+    private int size;
+<span class="nc" id="L20">    private List&lt;NameValue&gt; tags = new ArrayList&lt;&gt;();</span>
+    private boolean encrypted;
+    private String type;
+    private String zone;
+<span class="nc" id="L24">    private List&lt;String&gt; attachInstances = new ArrayList&lt;&gt;();</span>
+
+
+    public String getVolumeId() {
+<span class="nc" id="L28">        return volumeId;</span>
+    }
+
+    public void setVolumeId(String volumeId) {
+<span class="nc" id="L32">        this.volumeId = volumeId;</span>
+<span class="nc" id="L33">    }</span>
+
+    public String getAccountNumber() {
+<span class="nc" id="L36">        return accountNumber;</span>
+    }
+
+    public void setAccountNumber(String accountNumber) {
+<span class="nc" id="L40">        this.accountNumber = accountNumber;</span>
+<span class="nc" id="L41">    }</span>
+
+    public String getStatus() {
+<span class="nc" id="L44">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="nc" id="L48">        this.status = status;</span>
+<span class="nc" id="L49">    }</span>
+
+    public long getCreationDate() {
+<span class="nc" id="L52">        return creationDate;</span>
+    }
+
+    public void setCreationDate(long creationDate) {
+<span class="nc" id="L56">        this.creationDate = creationDate;</span>
+<span class="nc" id="L57">    }</span>
+
+    public int getSize() {
+<span class="nc" id="L60">        return size;</span>
+    }
+
+    public void setSize(int size) {
+<span class="nc" id="L64">        this.size = size;</span>
+<span class="nc" id="L65">    }</span>
+
+    public List&lt;NameValue&gt; getTags() {
+<span class="nc" id="L68">        return tags;</span>
+    }
+
+
+    public boolean isEncrypted() {
+<span class="nc" id="L73">        return encrypted;</span>
+    }
+
+    public void setEncrypted(boolean encrypted) {
+<span class="nc" id="L77">        this.encrypted = encrypted;</span>
+<span class="nc" id="L78">    }</span>
+
+    public String getType() {
+<span class="nc" id="L81">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="nc" id="L85">        this.type = type;</span>
+<span class="nc" id="L86">    }</span>
+
+    public String getZone() {
+<span class="nc" id="L89">        return zone;</span>
+    }
+
+    public void setZone(String zone) {
+<span class="nc" id="L93">        this.zone = zone;</span>
+<span class="nc" id="L94">    }</span>
+
+    public List&lt;String&gt; getAttachInstances() {
+<span class="nc" id="L97">        return attachInstances;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L105">        CloudVolumeStorage that = (CloudVolumeStorage) o;</span>
+
+<span class="nc bnc" id="L107" title="All 4 branches missed.">        return volumeId != null ? volumeId.equals(that.volumeId) : that.volumeId == null;</span>
+
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        return volumeId != null ? volumeId.hashCode() : 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

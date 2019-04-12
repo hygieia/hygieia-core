@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CoreFeatureSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.util</a> &gt; <span class="el_source">CoreFeatureSettings.java</span></div><h1>CoreFeatureSettings.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.util;
+
+import java.util.List;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix = &quot;feature&quot;)
+<span class="nc" id="L10">public class CoreFeatureSettings {</span>
+	private List&lt;String&gt; todoStatuses;
+	private List&lt;String&gt; doingStatuses;
+	private List&lt;String&gt; doneStatuses;
+
+	public List&lt;String&gt; getTodoStatuses() {
+<span class="nc" id="L16">		return todoStatuses;</span>
+	}
+
+	public void setTodoStatuses(List&lt;String&gt; todoStatuses) {
+<span class="nc" id="L20">		this.todoStatuses = todoStatuses;</span>
+<span class="nc" id="L21">	}</span>
+
+	public List&lt;String&gt; getDoingStatuses() {
+<span class="nc" id="L24">		return doingStatuses;</span>
+	}
+
+	public void setDoingStatuses(List&lt;String&gt; doingStatuses) {
+<span class="nc" id="L28">		this.doingStatuses = doingStatuses;</span>
+<span class="nc" id="L29">	}</span>
+
+	public List&lt;String&gt; getDoneStatuses() {
+<span class="nc" id="L32">		return doneStatuses;</span>
+	}
+
+	public void setDoneStatuses(List&lt;String&gt; doneStatuses) {
+<span class="nc" id="L36">		this.doneStatuses = doneStatuses;</span>
+<span class="nc" id="L37">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

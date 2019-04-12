@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TestRestOperations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.testutil</a> &gt; <span class="el_source">TestRestOperations.java</span></div><h1>TestRestOperations.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.testutil;
+
+import com.capitalone.dashboard.collector.RestOperationsSupplier;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.RestOperations;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TestRestOperations&lt;T&gt; extends RestOperationsSupplier {
+    TestRestTemplate&lt;? extends T&gt; template;
+
+    private Map&lt;String, TestResponse&lt;T&gt;&gt; response;
+
+<span class="fc" id="L15">    public TestRestOperations(Map&lt;String, TestResponse&lt;T&gt;&gt; response) {</span>
+<span class="fc" id="L16">        this.response = response;</span>
+<span class="fc" id="L17">    }</span>
+
+    public Map&lt;String, TestResponse&lt;T&gt;&gt; getResponse() {
+<span class="nc" id="L20">        return response;</span>
+    }
+
+    public void addResponse(String key, TestResponse testResponse) {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (response == null) {</span>
+<span class="nc" id="L25">            response = new HashMap&lt;&gt;();</span>
+        }
+<span class="nc" id="L27">        this.response.put(key, testResponse);</span>
+<span class="nc" id="L28">    }</span>
+
+    public void addResponse(String key, T body, HttpStatus httpStatus) {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (response == null) {</span>
+<span class="nc" id="L32">            response = new HashMap&lt;&gt;();</span>
+        }
+<span class="nc" id="L34">        this.response.put(key, new TestResponse&lt;&gt;(body, httpStatus));</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (template != null) {</span>
+<span class="nc" id="L36">            template.addResponse(key, new TestResponse&lt;&gt;(body, httpStatus));</span>
+        }
+<span class="nc" id="L38">    }</span>
+
+    public TestRestTemplate&lt;? extends T&gt; getTemplate() {
+<span class="nc" id="L41">        return template;</span>
+    }
+
+    public void setTemplate(TestRestTemplate&lt;? extends T&gt; template) {
+<span class="nc" id="L45">        this.template = template;</span>
+<span class="nc" id="L46">    }</span>
+
+    @Override
+    public RestOperations get() {
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (template == null) {</span>
+<span class="nc" id="L51">            template = new TestRestTemplate&lt;&gt;(response);</span>
+        }
+<span class="nc" id="L53">        return template;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

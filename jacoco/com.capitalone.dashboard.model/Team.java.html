@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Team.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Team.java</span></div><h1>Team.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * Represents a Tempo Team in JIRA.
+ */
+@Document(collection=&quot;team&quot;)
+public class Team extends BaseModel {
+    private ObjectId collectorId;
+    @Indexed
+    private String teamId;
+    @Indexed
+    private String name;
+    private String changeDate;
+    private String assetState;
+    private String isDeleted;
+    private boolean enabled;
+    private String teamType;
+
+    private long lastCollected;
+
+    @Transient
+    private Collector collector;
+
+    public Collector getCollector() {
+<span class="nc" id="L30">        return collector;</span>
+    }
+
+    public void setCollector(Collector collector) {
+<span class="nc" id="L34">        this.collector = collector;</span>
+<span class="nc" id="L35">    }</span>
+
+<span class="fc" id="L37">    public Team(String teamId, String name) {</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        this.teamId = (teamId != null ? teamId.trim() : &quot;&quot;);</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        this.name = (name != null ? name.trim() : &quot;&quot;);</span>
+<span class="fc" id="L40">    }</span>
+
+    public ObjectId getCollectorId() {
+<span class="fc" id="L43">        return collectorId;</span>
+    }
+
+    public void setCollectorId(ObjectId collectorId) {
+<span class="fc" id="L47">        this.collectorId = collectorId;</span>
+<span class="fc" id="L48">    }</span>
+
+    public String getTeamId() {
+<span class="fc" id="L51">        return teamId;</span>
+    }
+
+    public void setTeamId(String teamId) {
+<span class="fc" id="L55">        this.teamId = teamId;</span>
+<span class="fc" id="L56">    }</span>
+
+    public String getName() {
+<span class="nc" id="L59">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L63">        this.name = name;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getChangeDate() {
+<span class="fc" id="L67">        return this.changeDate;</span>
+    }
+
+    public void setChangeDate(String changeDate) {
+<span class="fc" id="L71">        this.changeDate = changeDate;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getAssetState() {
+<span class="nc" id="L75">        return this.assetState;</span>
+    }
+
+    public void setAssetState(String assetState) {
+<span class="fc" id="L79">        this.assetState = assetState;</span>
+<span class="fc" id="L80">    }</span>
+
+    public String getIsDeleted() {
+<span class="nc" id="L83">        return this.isDeleted;</span>
+    }
+
+    public void setIsDeleted(String isDeleted) {
+<span class="fc" id="L87">        this.isDeleted = isDeleted;</span>
+<span class="fc" id="L88">    }</span>
+
+    public boolean isEnabled() {
+<span class="nc" id="L91">        return enabled;</span>
+    }
+
+    public void setEnabled(boolean enabled) {
+<span class="fc" id="L95">        this.enabled = enabled;</span>
+<span class="fc" id="L96">    }</span>
+
+    public String getTeamType() {
+<span class="nc" id="L99">        return teamType;</span>
+    }
+
+    public void setTeamType(String teamType) {
+<span class="nc" id="L103">        this.teamType = teamType;</span>
+<span class="nc" id="L104">    }</span>
+
+    public long getLastCollected() {
+<span class="nc" id="L107">        return lastCollected;</span>
+    }
+
+    public void setLastCollected(long lastCollected) {
+<span class="nc" id="L111">        this.lastCollected = lastCollected;</span>
+<span class="nc" id="L112">    }</span>
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L119">        final int prime = 31;</span>
+<span class="nc" id="L120">        int result = 1;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        result = prime * result + ((teamId == null) ? 0 : teamId.hashCode());</span>
+<span class="nc" id="L122">        return result;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L131">            return true;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L133">            return false;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L135">            return false;</span>
+<span class="nc" id="L136">        Team other = (Team) obj;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (teamId == null) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            if (other.teamId != null)</span>
+<span class="nc" id="L139">                return false;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        } else if (!teamId.equals(other.teamId))</span>
+<span class="nc" id="L141">            return false;</span>
+<span class="nc" id="L142">        return true;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L150">        return &quot;Team [teamId=&quot; + teamId + &quot;, name=&quot; + name + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Feature.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Feature.java</span></div><h1>Feature.java</h1><pre class="source lang-java linenums">/*************************DA-BOARD-LICENSE-START*********************************
+ * Copyright 2014 CapitalOne, LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *************************DA-BOARD-LICENSE-END*********************************/
+
+package com.capitalone.dashboard.model;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+/**
+ * Represents a feature (story/requirement) of a component.
+ * 
+ * Possible collectors: VersionOne PivotalTracker Rally Trello Jira
+ * 
+ * @author kfk884
+ * 
+ */
+@Document(collection = &quot;feature&quot;)
+<span class="fc" id="L38">public class Feature extends BaseModel {</span>
+	private ObjectId collectorId;
+	/*
+	 * Story data
+	 */
+	@Indexed
+	private String sId;
+	private String sNumber;
+	private String sName;
+	private String sTypeId;
+	private String sTypeName;
+	private String sStatus;
+	private String sState;
+	private String sEstimate; // estimate in story points
+	private Integer sEstimateTime; // estimate in minutes
+	private String sUrl;
+	@Indexed
+	private String changeDate;
+	private String isDeleted;
+
+	/*
+	 * Owner data
+	 */
+	private List&lt;String&gt; sOwnersID;
+	private List&lt;String&gt; sOwnersIsDeleted;
+	private List&lt;String&gt; sOwnersChangeDate;
+	private List&lt;String&gt; sOwnersState;
+	private List&lt;String&gt; sOwnersUsername;
+	private List&lt;String&gt; sOwnersFullName;
+	private List&lt;String&gt; sOwnersShortName;
+
+	/*
+	 * ScopeOwner data
+	 */
+	private String sTeamIsDeleted;
+	private String sTeamAssetState;
+	private String sTeamChangeDate;
+	private String sTeamName;
+	@Indexed
+	private String sTeamID;
+
+	/*
+	 * Sprint data
+	 */
+	private String sSprintIsDeleted;
+	private String sSprintChangeDate;
+	private String sSprintAssetState;
+	@Indexed
+	private String sSprintEndDate;
+	@Indexed
+	private String sSprintBeginDate;
+	private String sSprintName;
+	@Indexed
+	private String sSprintID;
+	private String sSprintUrl;
+
+	/*
+	 * Epic data
+	 */
+	private String sEpicIsDeleted;
+	private String sEpicChangeDate;
+	private String sEpicAssetState;
+	private String sEpicType;
+	private String sEpicEndDate;
+	private String sEpicBeginDate;
+	private String sEpicName;
+	private String sEpicUrl;
+	private String sEpicNumber;
+	@Indexed
+	private String sEpicID;
+
+	/*
+	 * Scope data
+	 */
+	private String sProjectPath;
+	private String sProjectIsDeleted;
+	private String sProjectState;
+	private String sProjectChangeDate;
+	private String sProjectEndDate;
+	private String sProjectBeginDate;
+	private String sProjectName;
+	@Indexed
+	private String sProjectID;
+
+
+<span class="fc" id="L123">	private Collection&lt;FeatureIssueLink&gt; issueLinks = new ArrayList&lt;&gt;();</span>
+
+	public ObjectId getCollectorId() {
+<span class="nc" id="L126">        return collectorId;</span>
+    }
+
+    public void setCollectorId(ObjectId collectorId) {
+<span class="fc" id="L130">        this.collectorId = collectorId;</span>
+<span class="fc" id="L131">    }</span>
+	
+	public String getsId() {
+<span class="fc" id="L134">		return sId;</span>
+	}
+
+	public void setsId(String sId) {
+<span class="fc" id="L138">		this.sId = sId;</span>
+<span class="fc" id="L139">	}</span>
+
+	public String getsNumber() {
+<span class="nc" id="L142">		return sNumber;</span>
+	}
+
+	public void setsNumber(String sNumber) {
+<span class="fc" id="L146">		this.sNumber = sNumber;</span>
+<span class="fc" id="L147">	}</span>
+
+	public String getsName() {
+<span class="nc" id="L150">		return sName;</span>
+	}
+
+	public void setsName(String sName) {
+<span class="fc" id="L154">		this.sName = sName;</span>
+<span class="fc" id="L155">	}</span>
+	
+	public String getsTypeId() {
+<span class="nc" id="L158">		return sTypeId;</span>
+	}
+
+	public void setsTypeId(String sTypeId) {
+<span class="nc" id="L162">		this.sTypeId = sTypeId;</span>
+<span class="nc" id="L163">	}</span>
+
+	public String getsTypeName() {
+<span class="nc" id="L166">		return sTypeName;</span>
+	}
+
+	public void setsTypeName(String sTypeName) {
+<span class="nc" id="L170">		this.sTypeName = sTypeName;</span>
+<span class="nc" id="L171">	}</span>
+
+	public String getsStatus() {
+<span class="nc" id="L174">		return sStatus;</span>
+	}
+
+	public void setsStatus(String sStatus) {
+<span class="fc" id="L178">		this.sStatus = sStatus;</span>
+<span class="fc" id="L179">	}</span>
+
+	public String getsState() {
+<span class="nc" id="L182">		return sState;</span>
+	}
+
+	public void setsState(String sState) {
+<span class="fc" id="L186">		this.sState = sState;</span>
+<span class="fc" id="L187">	}</span>
+
+	public String getsEstimate() {
+<span class="nc" id="L190">		return sEstimate;</span>
+	}
+
+	public void setsEstimate(String sEstimate) {
+<span class="fc" id="L194">		this.sEstimate = sEstimate;</span>
+<span class="fc" id="L195">	}</span>
+
+	public Integer getsEstimateTime() {
+<span class="nc" id="L198">		return sEstimateTime;</span>
+	}
+
+	public void setsEstimateTime(Integer sEstimateTime) {
+<span class="nc" id="L202">		this.sEstimateTime = sEstimateTime;</span>
+<span class="nc" id="L203">	}</span>
+	
+	public void setsUrl(String sUrl) {
+<span class="nc" id="L206">        this.sUrl = sUrl;</span>
+<span class="nc" id="L207">    }</span>
+
+    public String getsUrl() {
+<span class="nc" id="L210">        return sUrl;</span>
+    }
+
+	public String getsProjectID() {
+<span class="fc" id="L214">		return sProjectID;</span>
+	}
+
+	public void setsProjectID(String sProjectID) {
+<span class="fc" id="L218">		this.sProjectID = sProjectID;</span>
+<span class="fc" id="L219">	}</span>
+
+	public String getsEpicID() {
+<span class="nc" id="L222">		return sEpicID;</span>
+	}
+
+	public void setsEpicID(String sEpicID) {
+<span class="fc" id="L226">		this.sEpicID = sEpicID;</span>
+<span class="fc" id="L227">	}</span>
+
+	public String getsSprintID() {
+<span class="nc" id="L230">		return sSprintID;</span>
+	}
+
+	public void setsSprintID(String sSprintID) {
+<span class="fc" id="L234">		this.sSprintID = sSprintID;</span>
+<span class="fc" id="L235">	}</span>
+	
+    public void setsSprintUrl(String sSprintUrl) {
+<span class="nc" id="L238">        this.sSprintUrl = sSprintUrl;</span>
+<span class="nc" id="L239">    }</span>
+
+    public String getsSprintUrl() {
+<span class="nc" id="L242">        return sSprintUrl;</span>
+    }
+    
+	public String getsTeamID() {
+<span class="fc" id="L246">		return sTeamID;</span>
+	}
+
+	public void setsTeamID(String sTeamID) {
+<span class="fc" id="L250">		this.sTeamID = sTeamID;</span>
+<span class="fc" id="L251">	}</span>
+
+	public String getChangeDate() {
+<span class="fc" id="L254">		return changeDate;</span>
+	}
+
+	public void setChangeDate(String changeDate) {
+<span class="fc" id="L258">		this.changeDate = changeDate;</span>
+<span class="fc" id="L259">	}</span>
+
+	public List&lt;String&gt; getsOwnersID() {
+<span class="nc" id="L262">		return sOwnersID;</span>
+	}
+
+	public void setsOwnersID(List&lt;String&gt; sOwnersID) {
+<span class="fc" id="L266">		this.sOwnersID = sOwnersID;</span>
+<span class="fc" id="L267">	}</span>
+
+	public String getIsDeleted() {
+<span class="nc" id="L270">		return isDeleted;</span>
+	}
+
+	public void setIsDeleted(String isDeleted) {
+<span class="fc" id="L274">		this.isDeleted = isDeleted;</span>
+<span class="fc" id="L275">	}</span>
+
+	public void setsProjectName(String sProjectName) {
+<span class="fc" id="L278">		this.sProjectName = sProjectName;</span>
+<span class="fc" id="L279">	}</span>
+
+	public String getsProjectName() {
+<span class="fc" id="L282">		return this.sProjectName;</span>
+	}
+
+	public void setsProjectBeginDate(String sProjectBeginDate) {
+<span class="fc" id="L286">		this.sProjectBeginDate = sProjectBeginDate;</span>
+<span class="fc" id="L287">	}</span>
+
+	public String getsProjectBeginDate() {
+<span class="nc" id="L290">		return this.sProjectBeginDate;</span>
+	}
+
+	public void setsProjectEndDate(String sProjectEndDate) {
+<span class="fc" id="L294">		this.sProjectEndDate = sProjectEndDate;</span>
+<span class="fc" id="L295">	}</span>
+
+	public String getsProjectEndDate() {
+<span class="nc" id="L298">		return this.sProjectEndDate;</span>
+	}
+
+	public void setsProjectChangeDate(String sProjectChangeDate) {
+<span class="fc" id="L302">		this.sProjectChangeDate = sProjectChangeDate;</span>
+<span class="fc" id="L303">	}</span>
+
+	public String getsProjectChangeDate() {
+<span class="nc" id="L306">		return this.sProjectChangeDate;</span>
+	}
+
+	public void setsProjectState(String sProjectState) {
+<span class="fc" id="L310">		this.sProjectState = sProjectState;</span>
+<span class="fc" id="L311">	}</span>
+
+	public String getsProjectState() {
+<span class="nc" id="L314">		return this.sProjectState;</span>
+	}
+
+	public void setsProjectIsDeleted(String sProjectIsDeleted) {
+<span class="fc" id="L318">		this.sProjectIsDeleted = sProjectIsDeleted;</span>
+<span class="fc" id="L319">	}</span>
+
+	public String getsProjectIsDeleted() {
+<span class="nc" id="L322">		return this.sProjectIsDeleted;</span>
+	}
+
+	public void setsProjectPath(String sProjectPath) {
+<span class="fc" id="L326">		this.sProjectPath = sProjectPath;</span>
+<span class="fc" id="L327">	}</span>
+
+	public String getsProjectPath() {
+<span class="nc" id="L330">		return this.sProjectPath;</span>
+	}
+
+	public void setsEpicNumber(String sEpicNumber) {
+<span class="fc" id="L334">		this.sEpicNumber = sEpicNumber;</span>
+<span class="fc" id="L335">	}</span>
+
+	public String getsEpicNumber() {
+<span class="nc" id="L338">		return this.sEpicNumber;</span>
+	}
+
+	public void setsEpicName(String sEpicName) {
+<span class="fc" id="L342">		this.sEpicName = sEpicName;</span>
+<span class="fc" id="L343">	}</span>
+
+	public String getsEpicName() {
+<span class="nc" id="L346">		return this.sEpicName;</span>
+	}
+	
+	public void setsEpicUrl(String sEpicUrl) {
+<span class="nc" id="L350">        this.sEpicUrl = sEpicUrl;</span>
+<span class="nc" id="L351">    }</span>
+
+    public String getsEpicUrl() {
+<span class="nc" id="L354">        return sEpicUrl;</span>
+    }
+
+	public void setsEpicBeginDate(String sEpicBeginDate) {
+<span class="fc" id="L358">		this.sEpicBeginDate = sEpicBeginDate;</span>
+<span class="fc" id="L359">	}</span>
+
+	public String getsEpicBeginDate() {
+<span class="nc" id="L362">		return this.sEpicBeginDate;</span>
+	}
+
+	public void setsEpicEndDate(String sEpicEndDate) {
+<span class="fc" id="L366">		this.sEpicEndDate = sEpicEndDate;</span>
+<span class="fc" id="L367">	}</span>
+
+	public String getsEpicEndDate() {
+<span class="nc" id="L370">		return this.sEpicEndDate;</span>
+	}
+
+	public void setsEpicType(String sEpicType) {
+<span class="fc" id="L374">		this.sEpicType = sEpicType;</span>
+<span class="fc" id="L375">	}</span>
+
+	public String getsEpicType() {
+<span class="nc" id="L378">		return this.sEpicType;</span>
+	}
+
+	public void setsEpicAssetState(String sEpicAssetState) {
+<span class="fc" id="L382">		this.sEpicAssetState = sEpicAssetState;</span>
+<span class="fc" id="L383">	}</span>
+
+	public String getsEpicAssetState() {
+<span class="nc" id="L386">		return this.sEpicAssetState;</span>
+	}
+
+	public void setsEpicChangeDate(String sEpicChangeDate) {
+<span class="fc" id="L390">		this.sEpicChangeDate = sEpicChangeDate;</span>
+<span class="fc" id="L391">	}</span>
+
+	public String getsEpicChangeDate() {
+<span class="nc" id="L394">		return this.sEpicChangeDate;</span>
+	}
+
+	public void setsEpicIsDeleted(String sEpicIsDeleted) {
+<span class="fc" id="L398">		this.sEpicIsDeleted = sEpicIsDeleted;</span>
+<span class="fc" id="L399">	}</span>
+
+	public String getsEpicIsDeleted() {
+<span class="nc" id="L402">		return this.sEpicIsDeleted;</span>
+	}
+
+	public void setsSprintName(String sSprintName) {
+<span class="fc" id="L406">		this.sSprintName = sSprintName;</span>
+<span class="fc" id="L407">	}</span>
+
+	public String getsSprintName() {
+<span class="fc" id="L410">		return this.sSprintName;</span>
+	}
+
+	public void setsSprintBeginDate(String sSprintBeginDate) {
+<span class="fc" id="L414">		this.sSprintBeginDate = sSprintBeginDate;</span>
+<span class="fc" id="L415">	}</span>
+
+	public String getsSprintBeginDate() {
+<span class="nc" id="L418">		return this.sSprintBeginDate;</span>
+	}
+
+	public void setsSprintEndDate(String sSprintEndDate) {
+<span class="fc" id="L422">		this.sSprintEndDate = sSprintEndDate;</span>
+<span class="fc" id="L423">	}</span>
+
+	public String getsSprintEndDate() {
+<span class="nc" id="L426">		return this.sSprintEndDate;</span>
+	}
+
+	public void setsSprintAssetState(String sSprintAssetState) {
+<span class="fc" id="L430">		this.sSprintAssetState = sSprintAssetState;</span>
+<span class="fc" id="L431">	}</span>
+
+	public String getsSprintAssetState() {
+<span class="nc" id="L434">		return this.sSprintAssetState;</span>
+	}
+
+	public void setsSprintChangeDate(String sSprintChangeDate) {
+<span class="fc" id="L438">		this.sSprintChangeDate = sSprintChangeDate;</span>
+<span class="fc" id="L439">	}</span>
+
+	public String getsSprintChangeDate() {
+<span class="nc" id="L442">		return this.sSprintChangeDate;</span>
+	}
+
+	public void setsSprintIsDeleted(String sSprintIsDeleted) {
+<span class="fc" id="L446">		this.sSprintIsDeleted = sSprintIsDeleted;</span>
+<span class="fc" id="L447">	}</span>
+
+	public String getsSprintIsDeleted() {
+<span class="nc" id="L450">		return this.sSprintIsDeleted;</span>
+	}
+
+	public void setsTeamName(String sTeamName) {
+<span class="fc" id="L454">		this.sTeamName = sTeamName;</span>
+<span class="fc" id="L455">	}</span>
+
+	public String getsTeamName() {
+<span class="nc" id="L458">		return this.sTeamName;</span>
+	}
+
+	public void setsTeamChangeDate(String sTeamChangeDate) {
+<span class="fc" id="L462">		this.sTeamChangeDate = sTeamChangeDate;</span>
+<span class="fc" id="L463">	}</span>
+
+	public String getsTeamChangeDate() {
+<span class="nc" id="L466">		return this.sTeamChangeDate;</span>
+	}
+
+	public void setsTeamAssetState(String sTeamAssetState) {
+<span class="fc" id="L470">		this.sTeamAssetState = sTeamAssetState;</span>
+<span class="fc" id="L471">	}</span>
+
+	public String getsTeamAssetState() {
+<span class="nc" id="L474">		return this.sTeamAssetState;</span>
+	}
+
+	public void setsTeamIsDeleted(String sTeamIsDeleted) {
+<span class="fc" id="L478">		this.sTeamIsDeleted = sTeamIsDeleted;</span>
+<span class="fc" id="L479">	}</span>
+
+	public String getsTeamIsDeleted() {
+<span class="nc" id="L482">		return this.sTeamIsDeleted;</span>
+	}
+
+	public void setsOwnersShortName(List&lt;String&gt; list) {
+<span class="fc" id="L486">		this.sOwnersShortName = list;</span>
+<span class="fc" id="L487">	}</span>
+
+	public List&lt;String&gt; getsOwnersShortName() {
+<span class="nc" id="L490">		return this.sOwnersShortName;</span>
+	}
+
+	public void setsOwnersFullName(List&lt;String&gt; list) {
+<span class="fc" id="L494">		this.sOwnersFullName = list;</span>
+<span class="fc" id="L495">	}</span>
+
+	public List&lt;String&gt; getsOwnersFullName() {
+<span class="nc" id="L498">		return this.sOwnersFullName;</span>
+	}
+
+	public void setsOwnersUsername(List&lt;String&gt; list) {
+<span class="fc" id="L502">		this.sOwnersUsername = list;</span>
+<span class="fc" id="L503">	}</span>
+
+	public List&lt;String&gt; getsOwnersUsername() {
+<span class="nc" id="L506">		return this.sOwnersUsername;</span>
+	}
+
+	public void setsOwnersState(List&lt;String&gt; list) {
+<span class="fc" id="L510">		this.sOwnersState = list;</span>
+<span class="fc" id="L511">	}</span>
+
+	public List&lt;String&gt; getsOwnersState() {
+<span class="nc" id="L514">		return this.sOwnersState;</span>
+	}
+
+	public void setsOwnersChangeDate(List&lt;String&gt; list) {
+<span class="fc" id="L518">		this.sOwnersChangeDate = list;</span>
+<span class="fc" id="L519">	}</span>
+
+	public List&lt;String&gt; getsOwnersChangeDate() {
+<span class="nc" id="L522">		return this.sOwnersChangeDate;</span>
+	}
+
+	public void setsOwnersIsDeleted(List&lt;String&gt; list) {
+<span class="fc" id="L526">		this.sOwnersIsDeleted = list;</span>
+<span class="fc" id="L527">	}</span>
+
+	public List&lt;String&gt; getsOwnersIsDeleted() {
+<span class="nc" id="L530">		return this.sOwnersIsDeleted;</span>
+	}
+
+	public Collection&lt;FeatureIssueLink&gt; getIssueLinks() {
+<span class="nc" id="L534">		return issueLinks;</span>
+	}
+
+	public void setIssueLinks(Collection&lt;FeatureIssueLink&gt; issueLinks) {
+<span class="nc" id="L538">		this.issueLinks = issueLinks;</span>
+<span class="nc" id="L539">	}</span>
+	
+	@Override
+	public boolean equals(Object o) {
+<span class="nc bnc" id="L543" title="All 2 branches missed.">		if (this == o)</span>
+<span class="nc" id="L544">			return true;</span>
+<span class="nc bnc" id="L545" title="All 4 branches missed.">		if (o == null || getClass() != o.getClass())</span>
+<span class="nc" id="L546">			return false;</span>
+
+<span class="nc" id="L548">		Feature that = (Feature) o;</span>
+<span class="nc" id="L549">		EqualsBuilder builder = new EqualsBuilder();</span>
+<span class="nc" id="L550">		return builder.append(collectorId, that.collectorId).append(sId, that.sId).build();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L555">		return new HashCodeBuilder(17, 37).append(collectorId).append(sId).toHashCode();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

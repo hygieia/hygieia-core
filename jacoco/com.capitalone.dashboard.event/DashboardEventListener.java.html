@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DashboardEventListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.event</a> &gt; <span class="el_source">DashboardEventListener.java</span></div><h1>DashboardEventListener.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.event;
+
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.repository.CollectorItemRepository;
+import com.capitalone.dashboard.repository.CollectorRepository;
+import com.mongodb.DBObject;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+import org.springframework.data.mongodb.core.mapping.event.AfterDeleteEvent;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+import org.springframework.stereotype.Component;
+
+/**
+ * Listens for Dashboard lifecycle events to create and delete Product collector CollectorItems
+ * whenever a Team Dashboard is created or deleted.
+ */
+@Component
+public class DashboardEventListener extends AbstractMongoEventListener&lt;Dashboard&gt; {
+
+    private final CollectorRepository collectorRepository;
+    private final CollectorItemRepository collectorItemRepository;
+
+    @Autowired
+    public DashboardEventListener(CollectorRepository collectorRepository,
+<span class="nc" id="L29">                                  CollectorItemRepository collectorItemRepository) {</span>
+<span class="nc" id="L30">        this.collectorRepository = collectorRepository;</span>
+<span class="nc" id="L31">        this.collectorItemRepository = collectorItemRepository;</span>
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Creates a collector item for new team dashboards
+     * @param event
+     */
+    @Override
+    public void onAfterSave(AfterSaveEvent&lt;Dashboard&gt; event) {
+<span class="nc" id="L40">        Dashboard dashboard = event.getSource();</span>
+        // Ignore product dashboards
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (DashboardType.Product.equals(dashboard.getType())) {</span>
+<span class="nc" id="L43">            return;</span>
+        }
+
+<span class="nc" id="L46">        Collector productCollector = getProductCollector();</span>
+<span class="nc" id="L47">        CollectorItem item = getDashboardCollectorItem(dashboard.getId().toString(), productCollector.getId());</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (item == null) {</span>
+            // Create a new Collector Item
+<span class="nc" id="L51">            item = new CollectorItem();</span>
+<span class="nc" id="L52">            item.setCollectorId(productCollector.getId());</span>
+<span class="nc" id="L53">            item.setDescription(dashboard.getTitle());</span>
+<span class="nc" id="L54">            item.getOptions().put(&quot;dashboardId&quot;, dashboard.getId().toString());</span>
+        } else {
+            // Update the title of the existing Collector Item in case it changed
+<span class="nc" id="L57">            item.setDescription(dashboard.getTitle());</span>
+        }
+
+<span class="nc" id="L60">        collectorItemRepository.save(item);</span>
+<span class="nc" id="L61">    }</span>
+
+    /**
+     * Removes the collector item for deleted dashboards
+     * @param event
+     */
+    @Override
+    public void onAfterDelete(AfterDeleteEvent&lt;Dashboard&gt; event) {
+<span class="nc" id="L69">        DBObject dbo = event.getDBObject();</span>
+<span class="nc" id="L70">        String dashboardId = dbo.get(&quot;id&quot;).toString();</span>
+
+<span class="nc" id="L72">        CollectorItem item = getDashboardCollectorItem(dashboardId, getProductCollector().getId());</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (item != null) {</span>
+<span class="nc" id="L74">            collectorItemRepository.delete(item);</span>
+        }
+<span class="nc" id="L76">    }</span>
+
+    private CollectorItem getDashboardCollectorItem(String dashboardId, ObjectId id) {
+<span class="nc" id="L79">        return collectorItemRepository.findTeamDashboardCollectorItemsByCollectorIdAndDashboardId(</span>
+                id, dashboardId);
+    }
+
+    private Collector getProductCollector() {
+<span class="nc" id="L84">        return collectorRepository.findByName(&quot;Product&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

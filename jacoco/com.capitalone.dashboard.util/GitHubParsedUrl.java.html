@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitHubParsedUrl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.util</a> &gt; <span class="el_source">GitHubParsedUrl.java</span></div><h1>GitHubParsedUrl.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.util;
+
+public class GitHubParsedUrl {
+    private String url;
+    private String host;
+    private String apiUrl;
+    private String orgName;
+    private String repoName;
+
+
+<span class="nc" id="L11">    public GitHubParsedUrl(String url){</span>
+<span class="nc" id="L12">        this.url = url;</span>
+<span class="nc" id="L13">        parse();</span>
+<span class="nc" id="L14">    }</span>
+
+    private void parse(){
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (url.endsWith(&quot;.git&quot;)) {</span>
+<span class="nc" id="L18">            url = url.substring(0, url.lastIndexOf(&quot;.git&quot;));</span>
+        }
+<span class="nc" id="L20">    }</span>
+
+    public String getUrl() {
+<span class="nc" id="L23">        return url;</span>
+    }
+
+    public void setUrl(String url) {
+<span class="nc" id="L27">        this.url = url;</span>
+<span class="nc" id="L28">    }</span>
+
+    public String getHost() {
+<span class="nc" id="L31">        return host;</span>
+    }
+
+    public void setHost(String host) {
+<span class="nc" id="L35">        this.host = host;</span>
+<span class="nc" id="L36">    }</span>
+
+    public String getApiUrl() {
+<span class="nc" id="L39">        return apiUrl;</span>
+    }
+
+    public void setApiUrl(String apiUrl) {
+<span class="nc" id="L43">        this.apiUrl = apiUrl;</span>
+<span class="nc" id="L44">    }</span>
+
+    public String getOrgName() {
+<span class="nc" id="L47">        return orgName;</span>
+    }
+
+    public void setOrgName(String orgName) {
+<span class="nc" id="L51">        this.orgName = orgName;</span>
+<span class="nc" id="L52">    }</span>
+
+    public String getRepoName() {
+<span class="nc" id="L55">        return repoName;</span>
+    }
+
+    public void setRepoName(String repoName) {
+<span class="nc" id="L59">        this.repoName = repoName;</span>
+<span class="nc" id="L60">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

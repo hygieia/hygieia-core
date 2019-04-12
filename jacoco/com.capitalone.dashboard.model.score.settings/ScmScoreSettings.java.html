@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScmScoreSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">ScmScoreSettings.java</span></div><h1>ScmScoreSettings.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+/**
+ * Bean to hold score settings specific to scm
+ */
+<span class="nc" id="L6">public class ScmScoreSettings extends ScoreComponentSettings {</span>
+
+  public static final int SCM_NUM_OF_DAYS = 14;
+
+  private ScoreComponentSettings commitsPerDay;
+
+<span class="nc" id="L12">  private int numberOfDays = SCM_NUM_OF_DAYS;</span>
+
+  public static ScmScoreSettings cloneScmScoreSettings(ScmScoreSettings scmScoreSettings) {
+<span class="nc bnc" id="L15" title="All 2 branches missed.">    if (null == scmScoreSettings) {</span>
+<span class="nc" id="L16">      return null;</span>
+    }
+
+<span class="nc" id="L19">    ScmScoreSettings scmScoreSettingsClone = new ScmScoreSettings();</span>
+<span class="nc" id="L20">    ScoreComponentSettings.copyScoreComponentSettings(scmScoreSettings, scmScoreSettingsClone);</span>
+<span class="nc" id="L21">    scmScoreSettingsClone.setNumberOfDays(</span>
+<span class="nc" id="L22">      scmScoreSettings.getNumberOfDays()</span>
+    );
+<span class="nc" id="L24">    scmScoreSettingsClone.setCommitsPerDay(</span>
+<span class="nc" id="L25">      ScoreComponentSettings.cloneScoreComponentSettings(scmScoreSettings.getCommitsPerDay())</span>
+    );
+
+<span class="nc" id="L28">    return scmScoreSettingsClone;</span>
+  }
+
+  public int getNumberOfDays() {
+<span class="nc" id="L32">    return numberOfDays;</span>
+  }
+
+  public void setNumberOfDays(int numberOfDays) {
+<span class="nc" id="L36">    this.numberOfDays = numberOfDays;</span>
+<span class="nc" id="L37">  }</span>
+
+  public ScoreComponentSettings getCommitsPerDay() {
+<span class="nc" id="L40">    return commitsPerDay;</span>
+  }
+
+  public void setCommitsPerDay(ScoreComponentSettings commitsPerDay) {
+<span class="nc" id="L44">    this.commitsPerDay = commitsPerDay;</span>
+<span class="nc" id="L45">  }</span>
+
+  @Override public String toString() {
+<span class="nc" id="L48">    return &quot;ScmScoreSettings{&quot; +</span>
+      &quot;commitsPerDay=&quot; + commitsPerDay +
+      &quot;, numberOfDays=&quot; + numberOfDays +
+<span class="nc" id="L51">      &quot;, disabled=&quot; + isDisabled() +</span>
+<span class="nc" id="L52">      &quot;, weight=&quot; + getWeight() +</span>
+<span class="nc" id="L53">      &quot;, criteria=&quot; + getCriteria() +</span>
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

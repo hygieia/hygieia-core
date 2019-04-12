@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiToken.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">ApiToken.java</span></div><h1>ApiToken.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import com.google.common.hash.Hashing;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.nio.charset.StandardCharsets;
+
+@Document(collection=&quot;apitoken&quot;)
+public class ApiToken extends BaseModel {
+
+    static final String HASH_PREFIX = &quot;sha512:&quot;;
+    private String apiUser;
+    private String apiKey;
+    private Long expirationDt;
+
+<span class="nc" id="L16">    public ApiToken(String apiUser, String apiKey, Long expirationDt) {</span>
+<span class="nc" id="L17">        this.apiUser = apiUser;</span>
+<span class="nc" id="L18">        this.apiKey = hash(apiKey);</span>
+<span class="nc" id="L19">        this.expirationDt = expirationDt;</span>
+<span class="nc" id="L20">    }</span>
+
+    public String getApiUser() {
+<span class="nc" id="L23">        return apiUser;</span>
+    }
+
+    public void setApiUser(String apiUser) {
+<span class="nc" id="L27">        this.apiUser = apiUser;</span>
+<span class="nc" id="L28">    }</span>
+
+    public String getApiKey() {
+<span class="nc" id="L31">        return apiKey;</span>
+    }
+
+    public void setApiKey(String apiKey) {
+<span class="nc" id="L35">        this.apiKey = hash(apiKey);</span>
+<span class="nc" id="L36">    }</span>
+
+    public Long getExpirationDt() {
+<span class="nc" id="L39">        return expirationDt;</span>
+    }
+
+    public void setExpirationDt(Long expirationDt) {
+<span class="nc" id="L43">        this.expirationDt = expirationDt;</span>
+<span class="nc" id="L44">    }</span>
+
+    static String hash(String apiKey) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (!apiKey.startsWith(HASH_PREFIX)) {</span>
+<span class="nc" id="L48">            return HASH_PREFIX + Hashing.sha512().hashString(apiKey, StandardCharsets.UTF_8).toString();</span>
+        }
+<span class="nc" id="L50">        return apiKey;</span>
+    }
+
+    public boolean isHashed() {
+<span class="nc" id="L54">        return apiKey.startsWith(HASH_PREFIX);</span>
+    }
+
+    public boolean checkApiKey(String apiKey) {
+<span class="nc" id="L58">        return hash(this.apiKey).equals(hash(apiKey));</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L63">        return &quot;ApiToken [apiUser=&quot; + apiUser + &quot;, apiKey=&quot; + apiKey + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

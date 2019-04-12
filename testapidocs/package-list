@@ -1,0 +1,7 @@
+com.capitalone.dashboard
+com.capitalone.dashboard.collector
+com.capitalone.dashboard.event
+com.capitalone.dashboard.event.sync
+com.capitalone.dashboard.model
+com.capitalone.dashboard.repository
+com.capitalone.dashboard.util

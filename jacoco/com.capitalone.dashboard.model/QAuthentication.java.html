@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QAuthentication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QAuthentication.java</span></div><h1>QAuthentication.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QAuthentication is a Querydsl query type for Authentication
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QAuthentication extends EntityPathBase&lt;Authentication&gt; {
+
+    private static final long serialVersionUID = 1021136602L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QAuthentication authentication = new QAuthentication(&quot;authentication&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="nc" id="L27">    public final BooleanPath hashed = createBoolean(&quot;hashed&quot;);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L32">    public final StringPath password = createString(&quot;password&quot;);</span>
+
+<span class="nc" id="L34">    public final StringPath username = createString(&quot;username&quot;);</span>
+
+    public QAuthentication(String variable) {
+<span class="nc" id="L37">        this(Authentication.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L38">    }</span>
+
+    public QAuthentication(Path&lt;? extends Authentication&gt; path) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L42">    }</span>
+
+    public QAuthentication(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L46">    }</span>
+
+    public QAuthentication(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L49">        this(Authentication.class, metadata, inits);</span>
+<span class="nc" id="L50">    }</span>
+
+    public QAuthentication(Class&lt;? extends Authentication&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L53">        super(type, metadata, inits);</span>
+<span class="nc" id="L54">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="nc" id="L55">        this.id = _super.id;</span>
+<span class="nc" id="L56">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

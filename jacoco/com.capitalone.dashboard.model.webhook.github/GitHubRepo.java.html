@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitHubRepo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.webhook.github</a> &gt; <span class="el_source">GitHubRepo.java</span></div><h1>GitHubRepo.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.webhook.github;
+
+import com.capitalone.dashboard.model.CollectorItem;
+
+/**
+ * CollectorItem extension to store the github repo url and branch.
+ */
+<span class="nc" id="L8">public class GitHubRepo extends CollectorItem {</span>
+    public static final String REPO_URL = &quot;url&quot;; // http://github.company.com/jack/somejavacode
+    public static final String BRANCH = &quot;branch&quot;; // master, development etc.
+    public static final String USER_ID = &quot;userID&quot;;
+    public static final String PASSWORD = &quot;password&quot;;
+    public static final String PERSONAL_ACCESS_TOKEN = &quot;personalAccessToken&quot;;
+
+    public String getUserId() {
+<span class="nc" id="L16">        return (String) getOptions().get(USER_ID);</span>
+    }
+
+    public String getPassword() {
+<span class="nc" id="L20">        return (String) getOptions().get(PASSWORD);</span>
+    }
+
+
+    public String getRepoUrl() {
+<span class="nc" id="L25">        return (String) getOptions().get(REPO_URL);</span>
+    }
+
+    public void setRepoUrl(String instanceUrl) {
+<span class="nc" id="L29">        getOptions().put(REPO_URL, instanceUrl);</span>
+<span class="nc" id="L30">    }</span>
+    
+    public String getBranch() {
+<span class="nc" id="L33">        return (String) getOptions().get(BRANCH);</span>
+    }
+
+    public void setBranch(String branch) {
+<span class="nc" id="L37">        getOptions().put(BRANCH, branch);</span>
+<span class="nc" id="L38">    }</span>
+
+    public String getPersonalAccessToken() {
+<span class="nc" id="L41">        return String.valueOf(getOptions().get(PERSONAL_ACCESS_TOKEN));</span>
+    }
+
+    public void setPersonalAccessToken(String personalAccessToken) {
+<span class="nc" id="L45">        getOptions().put(PERSONAL_ACCESS_TOKEN, personalAccessToken);</span>
+<span class="nc" id="L46">    }</span>
+
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L52">        	return true;</span>
+        }
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L55">        	return false;</span>
+        }
+
+<span class="nc" id="L58">        GitHubRepo gitHubRepo = (GitHubRepo) o;</span>
+
+<span class="nc bnc" id="L60" title="All 4 branches missed.">        return getRepoUrl().equals(gitHubRepo.getRepoUrl()) &amp;&amp; getBranch().equals(gitHubRepo.getBranch());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L65">        return getRepoUrl().hashCode();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

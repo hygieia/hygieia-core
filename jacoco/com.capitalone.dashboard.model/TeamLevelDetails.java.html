@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeamLevelDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">TeamLevelDetails.java</span></div><h1>TeamLevelDetails.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+<span class="nc" id="L3">public class TeamLevelDetails extends CollectorItem {</span>
+
+
+    public String getInstanceUrl() {
+<span class="nc" id="L7">        return (String) getOptions().get(&quot;instanceUrl&quot;);</span>
+    }
+
+    public void setInstanceUrl(String url) {
+<span class="nc" id="L11">        getOptions().put(&quot;instanceUrl&quot;, url);</span>
+<span class="nc" id="L12">    }</span>
+
+    public String getTeamId() {
+<span class="nc" id="L15">        return (String) getOptions().get(&quot;teamId&quot;);</span>
+    }
+
+    public void setTeamId(String teamId) {
+<span class="nc" id="L19">        getOptions().put(&quot;teamId&quot;, teamId);</span>
+<span class="nc" id="L20">    }</span>
+
+    public String getTeamName() {
+<span class="nc" id="L23">        return (String) getOptions().get(&quot;teamName&quot;);</span>
+    }
+
+    public void setTeamName(String teamName) {
+<span class="nc" id="L27">        getOptions().put(&quot;teamName&quot;, teamName);</span>
+<span class="nc" id="L28">    }</span>
+
+    public String getUrl() {
+<span class="nc" id="L31">        return (String) getOptions().get(&quot;url&quot;);</span>
+    }
+
+    public void setUrl(String url) {
+<span class="nc" id="L35">        getOptions().put(&quot;url&quot;, url);</span>
+<span class="nc" id="L36">    }</span>
+
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="nc" id="L44">        TeamLevelDetails that = (TeamLevelDetails) o;</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        return getTeamId().equals(that.getTeamId()) &amp;&amp; getTeamName().equals(that.getTeamName());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L50">        int result = getTeamId().hashCode();</span>
+<span class="nc" id="L51">        result = 31 * result + getTeamName().hashCode();</span>
+<span class="nc" id="L52">        return result;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

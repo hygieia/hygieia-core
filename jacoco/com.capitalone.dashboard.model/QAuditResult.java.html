@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QAuditResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QAuditResult.java</span></div><h1>QAuditResult.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QAuditResult is a Querydsl query type for AuditResult
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QAuditResult extends EntityPathBase&lt;AuditResult&gt; {
+
+    private static final long serialVersionUID = -115114314L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QAuditResult auditResult = new QAuditResult(&quot;auditResult&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="nc" id="L27">    public final StringPath auditDetails = createString(&quot;auditDetails&quot;);</span>
+
+<span class="nc" id="L29">    public final StringPath auditStatus = createString(&quot;auditStatus&quot;);</span>
+
+<span class="nc" id="L31">    public final EnumPath&lt;AuditType&gt; auditType = createEnum(&quot;auditType&quot;, AuditType.class);</span>
+
+<span class="nc" id="L33">    public final StringPath auditTypeStatus = createString(&quot;auditTypeStatus&quot;);</span>
+
+<span class="nc" id="L35">    public final StringPath configItemBusAppName = createString(&quot;configItemBusAppName&quot;);</span>
+
+<span class="nc" id="L37">    public final StringPath configItemBusAppOwner = createString(&quot;configItemBusAppOwner&quot;);</span>
+
+<span class="nc" id="L39">    public final StringPath configItemBusServName = createString(&quot;configItemBusServName&quot;);</span>
+
+<span class="nc" id="L41">    public final StringPath configItemBusServOwner = createString(&quot;configItemBusServOwner&quot;);</span>
+
+    public final org.bson.types.QObjectId dashboardId;
+
+<span class="nc" id="L45">    public final StringPath dashboardTitle = createString(&quot;dashboardTitle&quot;);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L50">    public final StringPath lineOfBusiness = createString(&quot;lineOfBusiness&quot;);</span>
+
+<span class="nc" id="L52">    public final MapPath&lt;String, Object, SimplePath&lt;Object&gt;&gt; options = this.&lt;String, Object, SimplePath&lt;Object&gt;&gt;createMap(&quot;options&quot;, String.class, Object.class, SimplePath.class);</span>
+
+<span class="nc" id="L54">    public final NumberPath&lt;Long&gt; timestamp = createNumber(&quot;timestamp&quot;, Long.class);</span>
+
+<span class="nc" id="L56">    public final MapPath&lt;Object, Object, SimplePath&lt;Object&gt;&gt; traceability = this.&lt;Object, Object, SimplePath&lt;Object&gt;&gt;createMap(&quot;traceability&quot;, Object.class, Object.class, SimplePath.class);</span>
+
+<span class="nc" id="L58">    public final StringPath url = createString(&quot;url&quot;);</span>
+
+    public QAuditResult(String variable) {
+<span class="nc" id="L61">        this(AuditResult.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L62">    }</span>
+
+    public QAuditResult(Path&lt;? extends AuditResult&gt; path) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L66">    }</span>
+
+    public QAuditResult(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L70">    }</span>
+
+    public QAuditResult(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L73">        this(AuditResult.class, metadata, inits);</span>
+<span class="nc" id="L74">    }</span>
+
+    public QAuditResult(Class&lt;? extends AuditResult&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L77">        super(type, metadata, inits);</span>
+<span class="nc" id="L78">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        this.dashboardId = inits.isInitialized(&quot;dashboardId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;dashboardId&quot;)) : null;</span>
+<span class="nc" id="L80">        this.id = _super.id;</span>
+<span class="nc" id="L81">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

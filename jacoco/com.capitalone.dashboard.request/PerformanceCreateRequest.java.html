@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PerformanceCreateRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.request</a> &gt; <span class="el_source">PerformanceCreateRequest.java</span></div><h1>PerformanceCreateRequest.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.request;
+
+import com.capitalone.dashboard.model.PerformanceType;
+
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="nc" id="L9">public class PerformanceCreateRequest {</span>
+    private String hygieiaId;
+    @NotNull
+    private long timestamp;
+    @NotNull
+    private String projectName;
+    @NotNull
+    private String projectId;
+    @NotNull
+    private String projectUrl;
+    @NotNull
+    private String serverUrl;
+    @NotNull
+    private PerformanceType type;
+    @NotNull
+    private String projectVersion;
+    @NotNull
+    private String collectorName;
+
+    private String niceName;
+
+    private String targetAppName;
+
+    private String targetEnvName;
+
+<span class="nc" id="L34">    private Map&lt;String,Object&gt; metrics = new HashMap&lt;&gt;();</span>
+
+
+
+    public long getTimestamp() {
+<span class="nc" id="L39">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L43">        this.timestamp = timestamp;</span>
+<span class="nc" id="L44">    }</span>
+
+
+    public PerformanceType getType() {
+<span class="nc" id="L48">        return type;</span>
+    }
+
+    public void setType(PerformanceType type) {
+<span class="nc" id="L52">        this.type = type;</span>
+<span class="nc" id="L53">    }</span>
+
+    public String getHygieiaId() {
+<span class="nc" id="L56">        return hygieiaId;</span>
+    }
+
+    public void setHygieiaId(String hygieiaId) {
+<span class="nc" id="L60">        this.hygieiaId = hygieiaId;</span>
+<span class="nc" id="L61">    }</span>
+
+    public String getProjectName() {
+<span class="nc" id="L64">        return projectName;</span>
+    }
+
+    public void setProjectName(String projectName) {
+<span class="nc" id="L68">        this.projectName = projectName;</span>
+<span class="nc" id="L69">    }</span>
+
+    public String getProjectUrl() {
+<span class="nc" id="L72">        return projectUrl;</span>
+    }
+
+    public void setProjectUrl(String projectUrl) {
+<span class="nc" id="L76">        this.projectUrl = projectUrl;</span>
+<span class="nc" id="L77">    }</span>
+
+    public String getProjectVersion() {
+<span class="nc" id="L80">        return projectVersion;</span>
+    }
+
+    public void setProjectVersion(String projectVersion) {
+<span class="nc" id="L84">        this.projectVersion = projectVersion;</span>
+<span class="nc" id="L85">    }</span>
+
+    public String getProjectId() {
+<span class="nc" id="L88">        return projectId;</span>
+    }
+
+    public void setProjectId(String projectId) {
+<span class="nc" id="L92">        this.projectId = projectId;</span>
+<span class="nc" id="L93">    }</span>
+
+    public String getServerUrl() {
+<span class="nc" id="L96">        return serverUrl;</span>
+    }
+
+    public void setServerUrl(String serverUrl) {
+<span class="nc" id="L100">        this.serverUrl = serverUrl;</span>
+<span class="nc" id="L101">    }</span>
+
+    public Map&lt;String, Object&gt; getMetrics() {
+<span class="nc" id="L104">        return metrics;</span>
+    }
+
+    public String getNiceName() {
+<span class="nc" id="L108">        return niceName;</span>
+    }
+
+    public void setNiceName(String niceName) {
+<span class="nc" id="L112">        this.niceName = niceName;</span>
+<span class="nc" id="L113">    }</span>
+
+    public String getCollectorName() {
+<span class="nc" id="L116">        return collectorName;</span>
+    }
+
+    public void setCollectorName(String collectorName) {
+<span class="nc" id="L120">        this.collectorName = collectorName;</span>
+<span class="nc" id="L121">    }</span>
+
+    public String getTargetAppName() {
+<span class="nc" id="L124">        return targetAppName;</span>
+    }
+
+    public void setTargetAppName(String targetAppName) {
+<span class="nc" id="L128">        this.targetAppName = targetAppName;</span>
+<span class="nc" id="L129">    }</span>
+
+    public String getTargetEnvName() {
+<span class="nc" id="L132">        return targetEnvName;</span>
+    }
+
+    public void setTargetEnvName(String targetEnvName) {
+<span class="nc" id="L136">        this.targetEnvName = targetEnvName;</span>
+<span class="nc" id="L137">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreTypeValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">ScoreTypeValue.java</span></div><h1>ScoreTypeValue.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+/**
+ * Score Value with Type Details
+ */
+public class ScoreTypeValue {
+
+<span class="nc" id="L8">  private ScoreType scoreType = ScoreType.value_percent;</span>
+
+  private Double scoreValue;
+
+  //Propagate the score
+<span class="nc" id="L13">  private PropagateType propagate = PropagateType.no;</span>
+
+<span class="nc" id="L15">  public ScoreTypeValue() {}</span>
+
+  public static ScoreTypeValue noScore() {
+<span class="nc" id="L18">    ScoreTypeValue scoreTypeValue = new ScoreTypeValue();</span>
+<span class="nc" id="L19">    scoreTypeValue.setScoreType(ScoreType.no_score);</span>
+<span class="nc" id="L20">    return scoreTypeValue;</span>
+  }
+
+  public static ScoreTypeValue zeroScore() {
+<span class="nc" id="L24">    ScoreTypeValue scoreTypeValue = new ScoreTypeValue();</span>
+<span class="nc" id="L25">    scoreTypeValue.setScoreType(ScoreType.zero_score);</span>
+<span class="nc" id="L26">    return scoreTypeValue;</span>
+  }
+
+<span class="nc" id="L29">  public ScoreTypeValue(Double scoreValue) {</span>
+<span class="nc" id="L30">    this.scoreValue = scoreValue;</span>
+<span class="nc" id="L31">  }</span>
+
+  public static ScoreTypeValue cloneScoreTypeValue(ScoreTypeValue scoreTypeValue) {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">    if (null == scoreTypeValue) {</span>
+<span class="nc" id="L35">      return null;</span>
+    }
+<span class="nc" id="L37">    ScoreTypeValue scoreTypeValueClone = new ScoreTypeValue();</span>
+<span class="nc" id="L38">    scoreTypeValueClone.setScoreType(scoreTypeValue.getScoreType());</span>
+<span class="nc" id="L39">    scoreTypeValueClone.setScoreValue(scoreTypeValue.getScoreValue());</span>
+<span class="nc" id="L40">    scoreTypeValueClone.setPropagate(scoreTypeValue.getPropagate());</span>
+<span class="nc" id="L41">    return scoreTypeValueClone;</span>
+  }
+
+  public ScoreType getScoreType() {
+<span class="nc" id="L45">    return scoreType;</span>
+  }
+
+  public boolean isNoScore() {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">    return scoreType == ScoreType.no_score;</span>
+  }
+
+  public void setScoreType(ScoreType scoreType) {
+<span class="nc" id="L53">    this.scoreType = scoreType;</span>
+<span class="nc" id="L54">  }</span>
+
+  public Double getScoreValue() {
+<span class="nc bnc" id="L57" title="All 6 branches missed.">    if (null != scoreType &amp;&amp;</span>
+      (scoreType == ScoreType.no_score || scoreType == ScoreType.zero_score)) {
+<span class="nc" id="L59">      return 0.0d;</span>
+    }
+<span class="nc" id="L61">    return scoreValue;</span>
+  }
+
+  public void setScoreValue(Double scoreValue) {
+<span class="nc" id="L65">    this.scoreValue = scoreValue;</span>
+<span class="nc" id="L66">  }</span>
+
+  public PropagateType getPropagate() {
+<span class="nc" id="L69">    return propagate;</span>
+  }
+
+  public void setPropagate(PropagateType propagate) {
+<span class="nc" id="L73">    this.propagate = propagate;</span>
+<span class="nc" id="L74">  }</span>
+
+  @Override
+  public String toString() {
+<span class="nc" id="L78">    return &quot;ScoreTypeValue{&quot; +</span>
+      &quot;scoreType=&quot; + scoreType +
+      &quot;, scoreValue=&quot; + scoreValue +
+      &quot;, propagate=&quot; + propagate +
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

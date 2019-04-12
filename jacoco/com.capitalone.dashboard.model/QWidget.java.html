@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QWidget.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QWidget.java</span></div><h1>QWidget.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QWidget is a Querydsl query type for Widget
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QWidget extends BeanPath&lt;Widget&gt; {
+
+    private static final long serialVersionUID = 1658341542L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QWidget widget = new QWidget(&quot;widget&quot;);</span>
+
+    public final org.bson.types.QObjectId componentId;
+
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L29">    public final StringPath name = createString(&quot;name&quot;);</span>
+
+<span class="nc" id="L31">    public final MapPath&lt;String, Object, SimplePath&lt;Object&gt;&gt; options = this.&lt;String, Object, SimplePath&lt;Object&gt;&gt;createMap(&quot;options&quot;, String.class, Object.class, SimplePath.class);</span>
+
+    public QWidget(String variable) {
+<span class="nc" id="L34">        this(Widget.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L35">    }</span>
+
+    public QWidget(Path&lt;? extends Widget&gt; path) {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L39">    }</span>
+
+    public QWidget(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L43">    }</span>
+
+    public QWidget(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L46">        this(Widget.class, metadata, inits);</span>
+<span class="nc" id="L47">    }</span>
+
+    public QWidget(Class&lt;? extends Widget&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L50">        super(type, metadata, inits);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        this.componentId = inits.isInitialized(&quot;componentId&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;componentId&quot;)) : null;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        this.id = inits.isInitialized(&quot;id&quot;) ? new org.bson.types.QObjectId(forProperty(&quot;id&quot;)) : null;</span>
+<span class="nc" id="L53">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

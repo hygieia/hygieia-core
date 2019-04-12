@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QReview.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QReview.java</span></div><h1>QReview.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+
+
+/**
+ * QReview is a Querydsl query type for Review
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QReview extends BeanPath&lt;Review&gt; {
+
+    private static final long serialVersionUID = 1512039866L;
+
+<span class="nc" id="L20">    public static final QReview review = new QReview(&quot;review&quot;);</span>
+
+<span class="nc" id="L22">    public final StringPath author = createString(&quot;author&quot;);</span>
+
+<span class="nc" id="L24">    public final StringPath authorLDAPDN = createString(&quot;authorLDAPDN&quot;);</span>
+
+<span class="nc" id="L26">    public final StringPath body = createString(&quot;body&quot;);</span>
+
+<span class="nc" id="L28">    public final NumberPath&lt;Long&gt; createdAt = createNumber(&quot;createdAt&quot;, Long.class);</span>
+
+<span class="nc" id="L30">    public final StringPath state = createString(&quot;state&quot;);</span>
+
+<span class="nc" id="L32">    public final NumberPath&lt;Long&gt; updatedAt = createNumber(&quot;updatedAt&quot;, Long.class);</span>
+
+    public QReview(String variable) {
+<span class="nc" id="L35">        super(Review.class, forVariable(variable));</span>
+<span class="nc" id="L36">    }</span>
+
+    public QReview(Path&lt;? extends Review&gt; path) {
+<span class="nc" id="L39">        super(path.getType(), path.getMetadata());</span>
+<span class="nc" id="L40">    }</span>
+
+    public QReview(PathMetadata&lt;?&gt; metadata) {
+<span class="nc" id="L43">        super(Review.class, metadata);</span>
+<span class="nc" id="L44">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

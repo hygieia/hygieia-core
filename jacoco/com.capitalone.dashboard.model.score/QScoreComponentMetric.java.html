@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QScoreComponentMetric.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score</a> &gt; <span class="el_source">QScoreComponentMetric.java</span></div><h1>QScoreComponentMetric.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QScoreComponentMetric is a Querydsl query type for ScoreComponentMetric
+ */
+@Generated(&quot;com.mysema.query.codegen.EmbeddableSerializer&quot;)
+public class QScoreComponentMetric extends BeanPath&lt;ScoreComponentMetric&gt; {
+
+    private static final long serialVersionUID = -1258987687L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QScoreComponentMetric scoreComponentMetric = new QScoreComponentMetric(&quot;scoreComponentMetric&quot;);</span>
+
+    public final QScoreComponentMetricBase _super;
+
+    //inherited
+    public final BooleanPath alert;
+
+<span class="nc" id="L30">    public final ListPath&lt;ScoreComponentMetricBase, QScoreComponentMetricBase&gt; children = this.&lt;ScoreComponentMetricBase, QScoreComponentMetricBase&gt;createList(&quot;children&quot;, ScoreComponentMetricBase.class, QScoreComponentMetricBase.class, PathInits.DIRECT2);</span>
+
+    //inherited
+    public final StringPath displayId;
+
+    //inherited
+    public final StringPath displayName;
+
+    //inherited
+    public final StringPath message;
+
+    //inherited
+    public final BooleanPath noScore;
+
+    //inherited
+    public final MapPath&lt;String, Object, SimplePath&lt;Object&gt;&gt; options;
+
+    //inherited
+    public final StringPath propagate;
+
+    // inherited
+    public final org.bson.types.QObjectId refId;
+
+    //inherited
+    public final StringPath score;
+
+    //inherited
+    public final StringPath state;
+
+    //inherited
+    public final StringPath total;
+
+    //inherited
+    public final StringPath weight;
+
+    public QScoreComponentMetric(String variable) {
+<span class="nc" id="L66">        this(ScoreComponentMetric.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L67">    }</span>
+
+    public QScoreComponentMetric(Path&lt;? extends ScoreComponentMetric&gt; path) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L71">    }</span>
+
+    public QScoreComponentMetric(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L75">    }</span>
+
+    public QScoreComponentMetric(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L78">        this(ScoreComponentMetric.class, metadata, inits);</span>
+<span class="nc" id="L79">    }</span>
+
+    public QScoreComponentMetric(Class&lt;? extends ScoreComponentMetric&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L82">        super(type, metadata, inits);</span>
+<span class="nc" id="L83">        this._super = new QScoreComponentMetricBase(type, metadata, inits);</span>
+<span class="nc" id="L84">        this.alert = _super.alert;</span>
+<span class="nc" id="L85">        this.displayId = _super.displayId;</span>
+<span class="nc" id="L86">        this.displayName = _super.displayName;</span>
+<span class="nc" id="L87">        this.message = _super.message;</span>
+<span class="nc" id="L88">        this.noScore = _super.noScore;</span>
+<span class="nc" id="L89">        this.options = _super.options;</span>
+<span class="nc" id="L90">        this.propagate = _super.propagate;</span>
+<span class="nc" id="L91">        this.refId = _super.refId;</span>
+<span class="nc" id="L92">        this.score = _super.score;</span>
+<span class="nc" id="L93">        this.state = _super.state;</span>
+<span class="nc" id="L94">        this.total = _super.total;</span>
+<span class="nc" id="L95">        this.weight = _super.weight;</span>
+<span class="nc" id="L96">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

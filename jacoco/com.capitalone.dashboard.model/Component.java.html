@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Component.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">Component.java</span></div><h1>Component.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * A self-contained, independently deployable piece of the larger application. Each component of an application
+ * has a different source repo, build job, deploy job, etc.
+ *
+ */
+@Document(collection=&quot;components&quot;)
+public class Component extends BaseModel {
+    private String name; // must be unique to the application
+    private String owner;
+<span class="fc" id="L22">    private Map&lt;CollectorType, List&lt;CollectorItem&gt;&gt; collectorItems = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L24">    public Component() {</span>
+<span class="fc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public Component(String name) {</span>
+<span class="fc" id="L28">        this.name = name;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getName() {
+<span class="nc" id="L32">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L36">        this.name = name;</span>
+<span class="fc" id="L37">    }</span>
+
+    public String getOwner() {
+<span class="nc" id="L40">        return owner;</span>
+    }
+
+    public void setOwner(String owner) {
+<span class="fc" id="L44">        this.owner = owner;</span>
+<span class="fc" id="L45">    }</span>
+
+    public Map&lt;CollectorType, List&lt;CollectorItem&gt;&gt; getCollectorItems() {
+<span class="fc" id="L48">        return collectorItems;</span>
+    }
+
+    public void setCollectorItems(Map&lt;CollectorType, List&lt;CollectorItem&gt;&gt; collectorItems) {
+<span class="nc" id="L52">        this.collectorItems = collectorItems;</span>
+<span class="nc" id="L53">    }</span>
+
+    public List&lt;CollectorItem&gt; getCollectorItems(CollectorType type) {
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">        return collectorItems != null &amp;&amp; collectorItems.get(type) != null ? collectorItems.get(type) : new ArrayList&lt;&gt;();</span>
+    }
+
+    public void addCollectorItem(CollectorType collectorType, CollectorItem collectorItem) {
+        // Currently only one collectorItem per collectorType is supported
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (collectorItems.get(collectorType) == null) {</span>
+<span class="fc" id="L62">            collectorItems.put(collectorType, Collections.singletonList(collectorItem));</span>
+        } else {
+<span class="fc" id="L64">            List&lt;CollectorItem&gt; existing = new ArrayList&lt;&gt; (collectorItems.get(collectorType));</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if (isNewCollectorItem(existing, collectorItem)) {</span>
+<span class="nc" id="L66">                existing.add(collectorItem);</span>
+<span class="nc" id="L67">                collectorItems.put(collectorType, existing);</span>
+            }
+        }
+<span class="fc" id="L70">    }</span>
+
+    public void updateCollectorItem(CollectorType collectorType, CollectorItem collectorItem) {
+<span class="fc" id="L73">            List&lt;CollectorItem&gt; existing = new ArrayList&lt;&gt; (collectorItems.get(collectorType));</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            if (!isNewCollectorItem(existing, collectorItem)) {</span>
+<span class="fc" id="L75">                findCollectorItem(existing,collectorItem).setLastUpdated(collectorItem.getLastUpdated());</span>
+<span class="fc" id="L76">                collectorItems.put(collectorType, existing);</span>
+            }
+<span class="fc" id="L78">    }</span>
+
+    private boolean isNewCollectorItem (List&lt;CollectorItem&gt; existing, CollectorItem item) {
+<span class="fc" id="L81">        return existing.stream().noneMatch(ci -&gt; Objects.equals(ci.getId(), item.getId()));</span>
+    }
+
+    private CollectorItem findCollectorItem (List&lt;CollectorItem&gt; existing, CollectorItem item) {
+<span class="fc" id="L85">        return existing.stream().filter(ci-&gt; Objects.equals(ci.getId(),item.getId())).findFirst().orElse(null);</span>
+    }
+
+    public CollectorItem getFirstCollectorItemForType(CollectorType type){
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(getCollectorItems().get(type) == null) {</span>
+<span class="nc" id="L91">            return null;</span>
+        }
+<span class="nc" id="L93">        List&lt;CollectorItem&gt; collectorItems = new ArrayList&lt;&gt;(getCollectorItems().get(type));</span>
+<span class="nc" id="L94">        return collectorItems.get(0);</span>
+    }
+
+    public CollectorItem getLastUpdatedCollectorItemForType(CollectorType type){
+
+<span class="pc bpc" id="L99" title="2 of 4 branches missed.">        if(getCollectorItems().get(type) == null || getCollectorItems().get(type).isEmpty()) {</span>
+<span class="nc" id="L100">            return null;</span>
+        }
+<span class="fc" id="L102">        List&lt;CollectorItem&gt; collectorItems = new ArrayList&lt;&gt;(getCollectorItems().get(type));</span>
+<span class="fc" id="L103">        return getLastUpdateItem(collectorItems);</span>
+    }
+
+    private CollectorItem getLastUpdateItem(List&lt;CollectorItem&gt; collectorItems){
+<span class="fc" id="L107">        Comparator&lt;CollectorItem&gt; collectorItemComparator = Comparator.comparing(CollectorItem::getLastUpdated);</span>
+<span class="fc" id="L108">        collectorItems.sort(collectorItemComparator.reversed());</span>
+<span class="fc" id="L109">        return collectorItems.get(0);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

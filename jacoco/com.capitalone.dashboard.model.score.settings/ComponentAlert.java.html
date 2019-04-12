@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComponentAlert.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">ComponentAlert.java</span></div><h1>ComponentAlert.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+/**
+ * Alert Settings for Scoring component
+ */
+<span class="nc" id="L6">public class ComponentAlert {</span>
+
+<span class="nc" id="L8">  private ScoreThresholdSettings.ComparatorType comparator = ScoreThresholdSettings.ComparatorType.less_or_equal;</span>
+
+  //Value to compare
+  private Double value;
+
+  public static ComponentAlert cloneComponentAlert(ComponentAlert componentAlert) {
+<span class="nc bnc" id="L14" title="All 2 branches missed.">    if (null == componentAlert) {</span>
+<span class="nc" id="L15">      return null;</span>
+    }
+
+<span class="nc" id="L18">    ComponentAlert componentAlertClone = new ComponentAlert();</span>
+<span class="nc" id="L19">    componentAlertClone.setComparator(componentAlert.getComparator());</span>
+<span class="nc" id="L20">    componentAlertClone.setValue(componentAlert.getValue());</span>
+<span class="nc" id="L21">    return componentAlertClone;</span>
+  }
+
+  public ScoreThresholdSettings.ComparatorType getComparator() {
+<span class="nc" id="L25">    return comparator;</span>
+  }
+
+  public void setComparator(ScoreThresholdSettings.ComparatorType comparator) {
+<span class="nc" id="L29">    this.comparator = comparator;</span>
+<span class="nc" id="L30">  }</span>
+
+  public Double getValue() {
+<span class="nc" id="L33">    return value;</span>
+  }
+
+  public void setValue(Double value) {
+<span class="nc" id="L37">    this.value = value;</span>
+<span class="nc" id="L38">  }</span>
+
+  @Override public String toString() {
+<span class="nc" id="L41">    return &quot;WidgetAlert{&quot; +</span>
+      &quot;comparator=&quot; + comparator +
+      &quot;, value=&quot; + value +
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

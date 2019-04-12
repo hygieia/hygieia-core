@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">GitRequest.java</span></div><h1>GitRequest.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+
+@Document(collection=&quot;gitrequests&quot;)
+<span class="nc" id="L12">public class GitRequest  {</span>
+
+    // fields added from SCM class that we are not extending anymore
+    private String scmUrl;
+    private String scmBranch;
+    private String scmRevisionNumber;
+    //squash merge commit may be different from pr commit
+    private String scmMergeEventRevisionNumber;
+    private String scmCommitLog;
+    private long scmCommitTimestamp;
+    private String scmAuthor;
+    private long numberOfChanges;
+    // fields added above are from SCM class that we are not extending anymore
+
+    @Id
+    private ObjectId id;
+    private String orgName;
+    private String repoName;
+    private String sourceRepo;
+    private String sourceBranch;
+    private String targetRepo;
+    private String targetBranch;
+    private String number;
+    @Indexed
+    private ObjectId collectorItemId;
+    private long updatedAt;
+    private long createdAt;
+    private long closedAt;
+    private String state;
+    private long mergedAt;
+    private String mergeAuthor;
+    private String mergeAuthorLDAPDN;
+    private long timestamp;
+    private long resolutiontime;
+<span class="nc" id="L46">    private String userId = null;</span>
+    private String commentsUrl;
+    private String reviewCommentsUrl;
+    private List&lt;Comment&gt; comments;
+    private List&lt;Review&gt; reviews;
+    private List&lt;CommitStatus&gt; commitStatuses;
+    private String headSha;
+    private String baseSha;
+    private String requestType;
+    private List&lt;Commit&gt; commits;
+
+
+    public long getNumberOfChanges() {
+<span class="nc" id="L59">        return numberOfChanges;</span>
+    }
+
+    public void setNumberOfChanges(long numberOfChanges) {
+<span class="nc" id="L63">        this.numberOfChanges = numberOfChanges;</span>
+<span class="nc" id="L64">    }</span>
+
+    public String getScmAuthor() {
+<span class="nc" id="L67">        return scmAuthor;</span>
+    }
+
+    public void setScmAuthor(String scmAuthor) {
+<span class="nc" id="L71">        this.scmAuthor = scmAuthor;</span>
+<span class="nc" id="L72">    }</span>
+
+    public long getScmCommitTimestamp() {
+<span class="nc" id="L75">        return scmCommitTimestamp;</span>
+    }
+
+    public void setScmCommitTimestamp(long scmCommitTimestamp) {
+<span class="nc" id="L79">        this.scmCommitTimestamp = scmCommitTimestamp;</span>
+<span class="nc" id="L80">    }</span>
+
+    public String getScmBranch() {
+<span class="nc" id="L83">        return scmBranch;</span>
+    }
+
+    public void setScmBranch(String scmBranch) {
+<span class="nc" id="L87">        this.scmBranch = scmBranch;</span>
+<span class="nc" id="L88">    }</span>
+
+    public String getScmCommitLog() {
+<span class="nc" id="L91">        return scmCommitLog;</span>
+    }
+
+    public void setScmCommitLog(String scmCommitLog) {
+<span class="nc" id="L95">        this.scmCommitLog = scmCommitLog;</span>
+<span class="nc" id="L96">    }</span>
+
+    public String getScmUrl() {
+<span class="nc" id="L99">        return scmUrl;</span>
+    }
+
+    public void setScmUrl(String scmUrl) {
+<span class="nc" id="L103">        this.scmUrl = scmUrl;</span>
+<span class="nc" id="L104">    }</span>
+
+    public String getScmRevisionNumber() {
+<span class="nc" id="L107">        return scmRevisionNumber;</span>
+    }
+
+    public void setScmRevisionNumber(String scmRevisionNumber) {
+<span class="nc" id="L111">        this.scmRevisionNumber = scmRevisionNumber;</span>
+<span class="nc" id="L112">    }</span>
+
+    public String getScmMergeEventRevisionNumber() {
+<span class="nc" id="L115">        return scmMergeEventRevisionNumber;</span>
+    }
+
+    public void setScmMergeEventRevisionNumber(String scmMergeEventRevisionNumber) {
+<span class="nc" id="L119">        this.scmMergeEventRevisionNumber = scmMergeEventRevisionNumber;</span>
+<span class="nc" id="L120">    }</span>
+
+    public String getRequestType() {
+<span class="nc" id="L123">        return requestType;</span>
+    }
+
+    public void setRequestType(String requestType) {
+<span class="nc" id="L127">        this.requestType = requestType;</span>
+<span class="nc" id="L128">    }</span>
+
+
+    public ObjectId getId() {
+<span class="nc" id="L132">        return id;</span>
+    }
+
+    public void setId(ObjectId id) {
+<span class="nc" id="L136">        this.id = id;</span>
+<span class="nc" id="L137">    }</span>
+
+    public String getSourceRepo() {
+<span class="nc" id="L140">        return sourceRepo;</span>
+    }
+
+    public void setSourceRepo(String sourceRepo) {
+<span class="nc" id="L144">        this.sourceRepo = sourceRepo;</span>
+<span class="nc" id="L145">    }</span>
+
+    public String getSourceBranch() {
+<span class="nc" id="L148">        return sourceBranch;</span>
+    }
+
+    public void setSourceBranch(String sourceBranch) {
+<span class="nc" id="L152">        this.sourceBranch = sourceBranch;</span>
+<span class="nc" id="L153">    }</span>
+
+    public String getTargetRepo() {
+<span class="nc" id="L156">        return targetRepo;</span>
+    }
+
+    public void setTargetRepo(String targetRepo) {
+<span class="nc" id="L160">        this.targetRepo = targetRepo;</span>
+<span class="nc" id="L161">    }</span>
+
+    public String getTargetBranch() {
+<span class="nc" id="L164">        return targetBranch;</span>
+    }
+
+    public void setTargetBranch(String targetBranch) {
+<span class="nc" id="L168">        this.targetBranch = targetBranch;</span>
+<span class="nc" id="L169">    }</span>
+
+    public String getOrgName() {
+<span class="nc" id="L172">        return orgName;</span>
+    }
+
+    public void setOrgName(String orgName) {
+<span class="nc" id="L176">        this.orgName = orgName;</span>
+<span class="nc" id="L177">    }</span>
+
+    public String getRepoName() {
+<span class="nc" id="L180">        return repoName;</span>
+    }
+
+    public void setRepoName(String repoName) {
+<span class="nc" id="L184">        this.repoName = repoName;</span>
+<span class="nc" id="L185">    }</span>
+
+    public String getNumber() {
+<span class="nc" id="L188">        return number;</span>
+    }
+
+    public void setNumber(String number) {
+<span class="nc" id="L192">        this.number = number;</span>
+<span class="nc" id="L193">    }</span>
+
+    public ObjectId getCollectorItemId() {
+<span class="nc" id="L196">        return collectorItemId;</span>
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+<span class="nc" id="L200">        this.collectorItemId = collectorItemId;</span>
+<span class="nc" id="L201">    }</span>
+
+    public long getCreatedAt() {
+<span class="nc" id="L204">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(long createdAt) {
+<span class="nc" id="L208">        this.createdAt = createdAt;</span>
+<span class="nc" id="L209">    }</span>
+
+    public long getClosedAt() {
+<span class="nc" id="L212">        return closedAt;</span>
+    }
+
+    public void setClosedAt(long closedAt) {
+<span class="nc" id="L216">        this.closedAt = closedAt;</span>
+<span class="nc" id="L217">    }</span>
+
+    public long getMergedAt() {
+<span class="nc" id="L220">        return mergedAt;</span>
+    }
+
+    public void setMergedAt(long mergedAt) {
+<span class="nc" id="L224">        this.mergedAt = mergedAt;</span>
+<span class="nc" id="L225">    }</span>
+
+    public long getTimestamp() {
+<span class="nc" id="L228">        return timestamp;</span>
+    }
+
+    public void setTimestamp(long timestamp) {
+<span class="nc" id="L232">        this.timestamp = timestamp;</span>
+<span class="nc" id="L233">    }</span>
+
+    public long getResolutiontime() {
+<span class="nc" id="L236">        return resolutiontime;</span>
+    }
+
+    public void setResolutiontime(long resolutiontime) {
+<span class="nc" id="L240">        this.resolutiontime = resolutiontime;</span>
+<span class="nc" id="L241">    }</span>
+
+    public String getUserId() {
+<span class="nc" id="L244">        return userId;</span>
+    }
+
+    public void setUserId(String userId) {
+<span class="nc" id="L248">        this.userId = userId;</span>
+<span class="nc" id="L249">    }</span>
+
+    public String getState() {
+<span class="nc" id="L252">        return state;</span>
+    }
+
+    public void setState(String state) {
+<span class="nc" id="L256">        this.state = state;</span>
+<span class="nc" id="L257">    }</span>
+
+    public String getCommentsUrl() {
+<span class="nc" id="L260">        return commentsUrl;</span>
+    }
+
+    public void setCommentsUrl(String commentsUrl) {
+<span class="nc" id="L264">        this.commentsUrl = commentsUrl;</span>
+<span class="nc" id="L265">    }</span>
+
+    public String getReviewCommentsUrl() {
+<span class="nc" id="L268">        return reviewCommentsUrl;</span>
+    }
+
+    public void setReviewCommentsUrl(String reviewCommentsUrl) {
+<span class="nc" id="L272">        this.reviewCommentsUrl = reviewCommentsUrl;</span>
+<span class="nc" id="L273">    }</span>
+
+    public List&lt;Comment&gt; getComments() {
+<span class="nc" id="L276">        return comments;</span>
+    }
+
+    public void setComments(List&lt;Comment&gt; comments) {
+<span class="nc" id="L280">        this.comments = comments;</span>
+<span class="nc" id="L281">    }</span>
+
+    public List&lt;Review&gt; getReviews() {
+<span class="nc" id="L284">        return reviews;</span>
+    }
+
+    public void setReviews(List&lt;Review&gt; reviews) {
+<span class="nc" id="L288">        this.reviews = reviews;</span>
+<span class="nc" id="L289">    }</span>
+
+    public List&lt;CommitStatus&gt; getCommitStatuses() {
+<span class="nc" id="L292">        return commitStatuses;</span>
+    }
+
+    public void setCommitStatuses(List&lt;CommitStatus&gt; commitStatuses) {
+<span class="nc" id="L296">        this.commitStatuses = commitStatuses;</span>
+<span class="nc" id="L297">    }</span>
+
+    public List&lt;Commit&gt; getCommits() {
+<span class="nc" id="L300">        return commits;</span>
+    }
+
+    public void setCommits(List&lt;Commit&gt; commits) {
+<span class="nc" id="L304">        this.commits = commits;</span>
+<span class="nc" id="L305">    }</span>
+
+    public String getHeadSha() {
+<span class="nc" id="L308">        return headSha;</span>
+    }
+
+    public void setHeadSha(String headSha) {
+<span class="nc" id="L312">        this.headSha = headSha;</span>
+<span class="nc" id="L313">    }</span>
+
+    public String getBaseSha() {
+<span class="nc" id="L316">        return baseSha;</span>
+    }
+
+    public void setBaseSha(String baseSha) {
+<span class="nc" id="L320">        this.baseSha = baseSha;</span>
+<span class="nc" id="L321">    }</span>
+
+    public long getUpdatedAt() {
+<span class="nc" id="L324">        return updatedAt;</span>
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+<span class="nc" id="L328">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L329">    }</span>
+
+    public String getMergeAuthor() {
+<span class="nc" id="L332">        return mergeAuthor;</span>
+    }
+
+    public void setMergeAuthor(String mergeAuthor) {
+<span class="nc" id="L336">        this.mergeAuthor = mergeAuthor;</span>
+<span class="nc" id="L337">    }</span>
+
+    public String getMergeAuthorLDAPDN() {
+<span class="nc" id="L340">        return mergeAuthorLDAPDN;</span>
+    }
+
+    public void setMergeAuthorLDAPDN(String mergeAuthorLDAPDN) {
+<span class="nc" id="L344">        this.mergeAuthorLDAPDN = mergeAuthorLDAPDN;</span>
+<span class="nc" id="L345">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

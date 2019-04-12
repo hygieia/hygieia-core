@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QTeamLevelDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QTeamLevelDetails.java</span></div><h1>QTeamLevelDetails.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QTeamLevelDetails is a Querydsl query type for TeamLevelDetails
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QTeamLevelDetails extends EntityPathBase&lt;TeamLevelDetails&gt; {
+
+    private static final long serialVersionUID = -1427472131L;
+
+<span class="nc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="nc" id="L23">    public static final QTeamLevelDetails teamLevelDetails = new QTeamLevelDetails(&quot;teamLevelDetails&quot;);</span>
+
+    public final QCollectorItem _super;
+
+    // inherited
+    public final QCollector collector;
+
+    // inherited
+    public final org.bson.types.QObjectId collectorId;
+
+    //inherited
+    public final StringPath description;
+
+    //inherited
+    public final BooleanPath enabled;
+
+    //inherited
+    public final StringPath environment;
+
+    //inherited
+    public final NumberPath&lt;Integer&gt; errorCount;
+
+    //inherited
+    public final ListPath&lt;CollectionError, QCollectionError&gt; errors;
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="nc" id="L51">    public final StringPath instanceUrl = createString(&quot;instanceUrl&quot;);</span>
+
+    //inherited
+    public final NumberPath&lt;Long&gt; lastUpdated;
+
+    //inherited
+    public final StringPath niceName;
+
+    //inherited
+    public final MapPath&lt;String, Object, SimplePath&lt;Object&gt;&gt; options;
+
+    //inherited
+    public final BooleanPath pushed;
+
+<span class="nc" id="L65">    public final StringPath teamId = createString(&quot;teamId&quot;);</span>
+
+<span class="nc" id="L67">    public final StringPath teamName = createString(&quot;teamName&quot;);</span>
+
+<span class="nc" id="L69">    public final StringPath url = createString(&quot;url&quot;);</span>
+
+    public QTeamLevelDetails(String variable) {
+<span class="nc" id="L72">        this(TeamLevelDetails.class, forVariable(variable), INITS);</span>
+<span class="nc" id="L73">    }</span>
+
+    public QTeamLevelDetails(Path&lt;? extends TeamLevelDetails&gt; path) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L77">    }</span>
+
+    public QTeamLevelDetails(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L81">    }</span>
+
+    public QTeamLevelDetails(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L84">        this(TeamLevelDetails.class, metadata, inits);</span>
+<span class="nc" id="L85">    }</span>
+
+    public QTeamLevelDetails(Class&lt;? extends TeamLevelDetails&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L88">        super(type, metadata, inits);</span>
+<span class="nc" id="L89">        this._super = new QCollectorItem(type, metadata, inits);</span>
+<span class="nc" id="L90">        this.collector = _super.collector;</span>
+<span class="nc" id="L91">        this.collectorId = _super.collectorId;</span>
+<span class="nc" id="L92">        this.description = _super.description;</span>
+<span class="nc" id="L93">        this.enabled = _super.enabled;</span>
+<span class="nc" id="L94">        this.environment = _super.environment;</span>
+<span class="nc" id="L95">        this.errorCount = _super.errorCount;</span>
+<span class="nc" id="L96">        this.errors = _super.errors;</span>
+<span class="nc" id="L97">        this.id = _super.id;</span>
+<span class="nc" id="L98">        this.lastUpdated = _super.lastUpdated;</span>
+<span class="nc" id="L99">        this.niceName = _super.niceName;</span>
+<span class="nc" id="L100">        this.options = _super.options;</span>
+<span class="nc" id="L101">        this.pushed = _super.pushed;</span>
+<span class="nc" id="L102">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

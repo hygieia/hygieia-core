@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TestResultEventListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.event</a> &gt; <span class="el_source">TestResultEventListener.java</span></div><h1>TestResultEventListener.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.event;
+
+import com.capitalone.dashboard.model.TestResult;
+import com.capitalone.dashboard.model.TestCapability;
+import com.capitalone.dashboard.model.TestSuiteType;
+import com.capitalone.dashboard.model.TestCase;
+import com.capitalone.dashboard.model.TestCaseStatus;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Performance;
+import com.capitalone.dashboard.model.PerformanceType;
+import com.capitalone.dashboard.repository.CollectorItemRepository;
+import com.capitalone.dashboard.repository.CollectorRepository;
+import com.capitalone.dashboard.repository.PerformanceRepository;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+import org.springframework.stereotype.Component;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.Optional;
+
+@Component
+public class TestResultEventListener extends AbstractMongoEventListener&lt;TestResult&gt; {
+
+<span class="fc" id="L37">    private static final Logger LOGGER = LoggerFactory.getLogger(TestResultEventListener.class);</span>
+
+    private static final String STR_RESP_TIME_THRESHOLD = &quot;KPI : Avg response times&quot;;
+    private static final String STR_ACTUAL_RESP_TIME = &quot;Actual Response Time&quot;;
+    private static final String STR_TARGET_RESP_TIME = &quot;Target Response Time&quot;;
+    private static final String STR_TXN_PER_SEC_THRESHOLD = &quot;KPI : Transaction Per Second&quot;;
+    private static final String STR_ACTUAL_TXN_PER_SEC = &quot;Actual Transactions per sec&quot;;
+    private static final String STR_TARGET_TXN_PER_SEC = &quot;Target Transactions per sec&quot;;
+    private static final String STR_ERROR_RATE_THRESHOLD = &quot;KPI : Error Rate Threshold&quot;;
+    private static final String STR_ACTUAL_ERROR_RATE = &quot;Actual Error Rate&quot;;
+    private static final String STR_TARGET_ERROR_RATE = &quot;Target Error Rate&quot;;
+    private static final String STR_CRITICAL = &quot;CRITICAL&quot;;
+    private static final String STR_OPEN = &quot;OPEN&quot;;
+    private static final String COLLECTOR_NAME = &quot;PerfTools&quot;;
+    private static final String KEY_JOB_NAME = &quot;jobName&quot;;
+    private static final int SIXTY_SECS = 60;
+<span class="fc" id="L53">    private static double HEALTH_GOOD = 1.0;</span>
+    // 1.0 is good health, value less than 1.0 considered bad
+<span class="fc" id="L55">    private static double HEALTH_CRITICAL = 0.98;</span>
+<span class="fc" id="L56">    private static long SEVERITY_CRITICAL = 2;</span>
+<span class="fc" id="L57">    private static long SEVERITY_GOOD = 0;</span>
+
+    private static double targetRespTime;
+    private static double actualRespTime;
+    private static double targetTxnsPerSec;
+    private static double actualTxnsPerSec;
+    private static double actualErrorRate;
+    private static double targetErrorRate;
+    private static double actualErrorsVal;
+    private static double txnHealthPercentVal;
+    private static long errRateSeverityVal;
+    private static long respTimeSeverityVal;
+<span class="fc" id="L69">    private static boolean isResponseTimeGood = false;</span>
+<span class="fc" id="L70">    private static boolean isTxnGoodHealth = false;</span>
+<span class="fc" id="L71">    private static boolean isErrorRateGood = false;</span>
+
+    private final PerformanceRepository performanceRepository;
+    private final CollectorRepository collectorRepository;
+    private final CollectorItemRepository collectorItemRepository;
+
+<span class="fc" id="L77">    private enum PERFORMANCE_METRICS {</span>
+<span class="fc" id="L78">        averageResponseTime,totalCalls,errorsperMinute,actualErrorRate,businessTransactionHealthPercent,nodeHealthPercent,violationObject,</span>
+<span class="fc" id="L79">        totalErrors,errorRateSeverity,responseTimeSeverity,callsperMinute,targetResponseTime,targetTransactionPerSec,</span>
+<span class="fc" id="L80">        targetErrorRateThreshold</span>
+    }
+<span class="fc" id="L82">    private enum VIOLATION_ATTRIBUTES {</span>
+<span class="fc" id="L83">        severity,incidentStatus</span>
+    }
+
+    @Autowired
+    public TestResultEventListener(CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository,
+<span class="fc" id="L88">                                   PerformanceRepository performanceRepository) {</span>
+<span class="fc" id="L89">        this.collectorRepository = collectorRepository;</span>
+<span class="fc" id="L90">        this.collectorItemRepository = collectorItemRepository;</span>
+<span class="fc" id="L91">        this.performanceRepository = performanceRepository;</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Create and save performance object for every test_result type is performance
+     * @param event
+     */
+    @Override
+    public void onAfterSave(AfterSaveEvent&lt;TestResult&gt; event) {
+<span class="fc" id="L100">        TestResult testResult = event.getSource();</span>
+<span class="fc" id="L101">        LOGGER.info(&quot;TestResult save event triggered&quot;);</span>
+
+        // Ignore anything other than performance tests
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (!TestSuiteType.Performance.equals(testResult.getType())) {</span>
+<span class="nc" id="L105">            LOGGER.info(&quot;TestResult save event ignored since its not performance type&quot;);</span>
+<span class="nc" id="L106">            return;</span>
+        }
+
+<span class="fc" id="L109">        List&lt;TestCapability&gt; testCapabilities = new ArrayList&lt;&gt;(testResult.getTestCapabilities());</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (CollectionUtils.isEmpty(testCapabilities)){</span>
+<span class="nc" id="L111">            LOGGER.info(&quot;No Test Capabilities found for the test result : &quot; + testResult.getId());</span>
+<span class="nc" id="L112">            return;</span>
+        }
+<span class="fc" id="L114">        testCapabilities.sort(Comparator.comparing(TestCapability::getTimestamp).reversed());</span>
+<span class="fc" id="L115">        TestCapability lastExecutedTestCapabiblity = testCapabilities.iterator().next();</span>
+<span class="fc" id="L116">        lastExecutedTestCapabiblity.getTestSuites().forEach(testSuite -&gt; testSuite.getTestCases().forEach(testCase -&gt;</span>
+<span class="fc" id="L117">                extractPerformanceMetrics(testCase, lastExecutedTestCapabiblity)));</span>
+<span class="fc" id="L118">        CollectorItem perfCollectorItem = getPerfCollectorItem(testResult);</span>
+<span class="fc" id="L119">        createPerformanceDoc(testResult, lastExecutedTestCapabiblity, perfCollectorItem);</span>
+<span class="fc" id="L120">        LOGGER.info(&quot;New performance document created from test_result successfully&quot;);</span>
+<span class="fc" id="L121">        }</span>
+
+    /**
+     * Extracts the test result threshold values to build performance metrics object
+     * @param testCase, testCapability
+     */
+    private void extractPerformanceMetrics(TestCase testCase, TestCapability testCapability) {
+
+<span class="fc" id="L129">        long testCapabilityDurationSecs = TimeUnit.MILLISECONDS.toSeconds(testCapability.getDuration());</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if(testCase.getDescription().equalsIgnoreCase(STR_RESP_TIME_THRESHOLD)){</span>
+<span class="fc" id="L131">            isResponseTimeGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());</span>
+<span class="fc" id="L132">            testCase.getTestSteps().forEach(testCaseStep -&gt; {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_RESP_TIME)){</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                    targetRespTime = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L135">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                }
+<span class="fc bfc" id="L137" title="All 2 branches covered.">                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_RESP_TIME)){</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                    actualRespTime = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L139">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                }
+<span class="fc" id="L141">            });</span>
+        }
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if(testCase.getDescription().equalsIgnoreCase(STR_TXN_PER_SEC_THRESHOLD)){</span>
+<span class="fc" id="L144">            isTxnGoodHealth = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());</span>
+<span class="fc" id="L145">            testCase.getTestSteps().forEach(testCaseStep -&gt; {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_TXN_PER_SEC)) {</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                    targetTxnsPerSec = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L148">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                }
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_TXN_PER_SEC)) {</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                    actualTxnsPerSec = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L152">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                }
+<span class="fc" id="L154">            });</span>
+        }
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if(testCase.getDescription().equalsIgnoreCase(STR_ERROR_RATE_THRESHOLD)){</span>
+<span class="fc" id="L157">            isErrorRateGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());</span>
+<span class="fc" id="L158">            testCase.getTestSteps().forEach(testCaseStep -&gt; {</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                if (testCaseStep.getId().contains(STR_TARGET_ERROR_RATE)){</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">                    targetErrorRate = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L161">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                }
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_ERROR_RATE)){</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">                    actualErrorRate = NumberUtils.isCreatable(testCaseStep.getDescription()) ?</span>
+<span class="pc" id="L165">                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;</span>
+                    // Error rate is percentage of actual errors in total calls
+<span class="fc" id="L167">                    actualErrorsVal =  (actualErrorRate / 100) * (testCapabilityDurationSecs * actualTxnsPerSec);</span>
+                }
+<span class="fc" id="L169">            });</span>
+        }
+<span class="fc" id="L171">    }</span>
+
+    /**
+     * Creates new performance object from test result
+     * @param testResult, testCapability, perfCollectorItem
+     */
+    public Performance createPerformanceDoc(TestResult testResult, TestCapability testCapability, CollectorItem perfCollectorItem) {
+<span class="fc" id="L178">        Performance performance = new Performance();</span>
+<span class="fc" id="L179">        performance.setId(ObjectId.get());</span>
+<span class="fc" id="L180">        performance.setCollectorItemId(perfCollectorItem.getId());</span>
+<span class="fc" id="L181">        performance.setType(PerformanceType.ApplicationPerformance);</span>
+<span class="fc" id="L182">        performance.setUrl(testResult.getUrl());</span>
+<span class="fc" id="L183">        performance.setTimestamp(System.currentTimeMillis());</span>
+<span class="fc" id="L184">        performance.setTargetAppName(testResult.getTargetAppName());</span>
+<span class="fc" id="L185">        performance.setTargetEnvName(testResult.getTargetEnvName());</span>
+<span class="fc" id="L186">        performance.setMetrics(getPerfMetrics(testCapability));</span>
+<span class="fc" id="L187">        return performanceRepository.save(performance);</span>
+    }
+    /**
+     * Get performance collector item or create new if not exists already
+     * @param testResult
+     */
+    public CollectorItem getPerfCollectorItem(TestResult testResult) {
+
+<span class="fc" id="L195">        CollectorItem testResultCollItem = collectorItemRepository.findOne(testResult.getCollectorItemId());</span>
+<span class="fc" id="L196">        String description = testResultCollItem.getDescription();</span>
+<span class="fc" id="L197">        String niceName = testResultCollItem.getNiceName();</span>
+<span class="fc" id="L198">        Optional&lt;Map&lt;String, Object&gt;&gt; optOptions = Optional.ofNullable(testResultCollItem.getOptions());</span>
+<span class="fc" id="L199">        Optional&lt;Object&gt; optJobName = Optional.ofNullable(optOptions.get().get(KEY_JOB_NAME));</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        String jobName = optJobName.isPresent() ? optJobName.get().toString() : &quot;&quot;;</span>
+<span class="fc" id="L201">        LOGGER.info(&quot;Posted Test Result Description(niceName : jobName) - &quot; + niceName + &quot; : &quot; + jobName);</span>
+<span class="fc" id="L202">        Collector perfToolsCollector = getPerfToolsCollector();</span>
+<span class="fc" id="L203">        Optional&lt;CollectorItem&gt; optCollectorItem = Optional.ofNullable(collectorItemRepository.findByCollectorIdNiceNameAndJobName(</span>
+<span class="fc" id="L204">                perfToolsCollector.getId(), niceName, jobName));</span>
+<span class="pc" id="L205">        optCollectorItem.ifPresent(collectorItem -&gt; collectorItem.setLastUpdated(System.currentTimeMillis()));</span>
+<span class="fc" id="L206">        optCollectorItem = Optional.ofNullable(optCollectorItem.orElseGet(() -&gt; {</span>
+<span class="fc" id="L207">            CollectorItem collectorItem = new CollectorItem();</span>
+<span class="fc" id="L208">            collectorItem.setId(ObjectId.get());</span>
+<span class="fc" id="L209">            collectorItem.setCollectorId(perfToolsCollector.getId());</span>
+<span class="fc" id="L210">            collectorItem.setCollector(perfToolsCollector);</span>
+<span class="fc" id="L211">            collectorItem.setLastUpdated(System.currentTimeMillis());</span>
+<span class="fc" id="L212">            collectorItem.setEnabled(true);</span>
+<span class="fc" id="L213">            collectorItem.setPushed(true);</span>
+<span class="fc" id="L214">            collectorItem.setNiceName(testResultCollItem.getNiceName());</span>
+<span class="fc" id="L215">            collectorItem.setOptions(testResultCollItem.getOptions());</span>
+<span class="fc" id="L216">            collectorItem.setDescription(description);</span>
+<span class="fc" id="L217">            return collectorItem;</span>
+        }));
+<span class="fc" id="L219">        return collectorItemRepository.save(optCollectorItem.get());</span>
+    }
+
+    /**
+     * Creates collector if not exists already
+     */
+    public Collector getPerfToolsCollector() {
+
+<span class="fc" id="L227">        Optional&lt;Collector&gt; optCollector = Optional.ofNullable(collectorRepository.findByName(COLLECTOR_NAME));</span>
+<span class="pc" id="L228">        optCollector.ifPresent(collector -&gt; collector.setLastExecuted(System.currentTimeMillis()));</span>
+<span class="fc" id="L229">        optCollector = Optional.ofNullable(optCollector.orElseGet(() -&gt; {</span>
+<span class="fc" id="L230">            Collector collector = new Collector(COLLECTOR_NAME, CollectorType.AppPerformance);</span>
+<span class="fc" id="L231">            collector.setId(ObjectId.get());</span>
+<span class="fc" id="L232">            collector.setEnabled(true);</span>
+<span class="fc" id="L233">            collector.setOnline(true);</span>
+<span class="fc" id="L234">            collector.setLastExecuted(System.currentTimeMillis());</span>
+<span class="fc" id="L235">            return collector;</span>
+        }));
+<span class="fc" id="L237">        return collectorRepository.save(optCollector.get());</span>
+    }
+
+    /**
+     * Get performance test metrics
+     * @param testCapability
+     */
+    public LinkedHashMap&lt;String,Object&gt; getPerfMetrics(TestCapability testCapability) {
+
+<span class="fc" id="L246">        LinkedHashMap&lt;String,Object&gt; metrics = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L247">        long testCapabilitySecs = TimeUnit.MILLISECONDS.toSeconds(testCapability.getDuration());</span>
+        // If test execution duration less than a minute, calculate calls per minute from actual test execution seconds
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        double callsPerMinuteVal = testCapabilitySecs &gt; SIXTY_SECS ? actualTxnsPerSec * SIXTY_SECS : actualTxnsPerSec * testCapabilitySecs;</span>
+        // calculate errors per second from total number of errors of a test execution
+<span class="fc" id="L251">        double actualErrorsPerSec = actualErrorsVal/testCapabilitySecs;</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        double errorsPerMinuteVal = testCapabilitySecs &gt; SIXTY_SECS ? actualErrorsPerSec * SIXTY_SECS : actualErrorsPerSec * testCapabilitySecs;</span>
+<span class="fc" id="L253">        double totalCallsVal = actualTxnsPerSec * testCapabilitySecs;</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">        txnHealthPercentVal = isTxnGoodHealth ? HEALTH_GOOD : HEALTH_CRITICAL;</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">        respTimeSeverityVal = isResponseTimeGood ? SEVERITY_GOOD : SEVERITY_CRITICAL;</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">        errRateSeverityVal = isErrorRateGood ? SEVERITY_GOOD : SEVERITY_CRITICAL;</span>
+
+<span class="fc" id="L258">        metrics.put(PERFORMANCE_METRICS.averageResponseTime.name(), Math.round(actualRespTime));</span>
+<span class="fc" id="L259">        metrics.put(PERFORMANCE_METRICS.callsperMinute.name(), Math.round(callsPerMinuteVal));</span>
+<span class="fc" id="L260">        metrics.put(PERFORMANCE_METRICS.errorsperMinute.name(), Math.round(errorsPerMinuteVal));</span>
+<span class="fc" id="L261">        metrics.put(PERFORMANCE_METRICS.actualErrorRate.name(), actualErrorRate);</span>
+<span class="fc" id="L262">        metrics.put(PERFORMANCE_METRICS.totalCalls.name(), Math.round(totalCallsVal));</span>
+<span class="fc" id="L263">        metrics.put(PERFORMANCE_METRICS.totalErrors.name(), Math.round(actualErrorsVal));</span>
+<span class="fc" id="L264">        metrics.put(PERFORMANCE_METRICS.businessTransactionHealthPercent.name(), txnHealthPercentVal);</span>
+<span class="fc" id="L265">        metrics.put(PERFORMANCE_METRICS.nodeHealthPercent.name(), HEALTH_GOOD);</span>
+<span class="fc" id="L266">        metrics.put(PERFORMANCE_METRICS.errorRateSeverity.name(), errRateSeverityVal);</span>
+<span class="fc" id="L267">        metrics.put(PERFORMANCE_METRICS.responseTimeSeverity.name(), respTimeSeverityVal);</span>
+<span class="fc" id="L268">        metrics.put(PERFORMANCE_METRICS.violationObject.name(), getPerfTestViolation());</span>
+
+<span class="fc" id="L270">        metrics.put(PERFORMANCE_METRICS.targetResponseTime.name(), targetRespTime);</span>
+<span class="fc" id="L271">        metrics.put(PERFORMANCE_METRICS.targetTransactionPerSec.name(), targetTxnsPerSec);</span>
+<span class="fc" id="L272">        metrics.put(PERFORMANCE_METRICS.targetErrorRateThreshold.name(), targetErrorRate);</span>
+<span class="fc" id="L273">        return metrics;</span>
+    }
+
+    /**
+     * Get performance test violation details
+     */
+    public List getPerfTestViolation() {
+<span class="fc" id="L280">        List&lt;LinkedHashMap&lt;Object, Object&gt;&gt; violationObjList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L281">        LinkedHashMap&lt;Object, Object&gt; violationObjMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L282" title="4 of 6 branches missed.">        if (!(isResponseTimeGood &amp;&amp; isTxnGoodHealth &amp;&amp; isErrorRateGood)){</span>
+<span class="fc" id="L283">            violationObjMap.put(VIOLATION_ATTRIBUTES.severity, STR_CRITICAL);</span>
+<span class="fc" id="L284">            violationObjMap.put(VIOLATION_ATTRIBUTES.incidentStatus, STR_OPEN);</span>
+        }
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if(!violationObjMap.isEmpty()) {</span>
+<span class="fc" id="L287">            violationObjList.add(violationObjMap);</span>
+        }
+<span class="fc" id="L289">        return violationObjList;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

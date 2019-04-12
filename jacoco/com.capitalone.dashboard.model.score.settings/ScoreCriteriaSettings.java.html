@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreCriteriaSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">ScoreCriteriaSettings.java</span></div><h1>ScoreCriteriaSettings.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+import com.capitalone.dashboard.model.BaseModel;
+import com.capitalone.dashboard.model.score.ScoreValueType;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = &quot;score_criteria_settings&quot;)
+<span class="nc" id="L8">public class ScoreCriteriaSettings extends BaseModel {</span>
+
+  //Max Score
+  private int maxScore;
+
+  //Build Score Settings
+  private BuildScoreSettings build;
+
+  //Quality Score Settings
+  private QualityScoreSettings quality;
+
+  //Deploy Score Settings
+  private DeployScoreSettings deploy;
+
+  //SCM Score Settings
+  private ScmScoreSettings scm;
+
+  //Alert Score Component Settings
+  private ComponentAlert componentAlert;
+
+  //Score can be calculated for types defined in ScoreValueType
+<span class="nc" id="L29">  private ScoreValueType type = ScoreValueType.DASHBOARD;</span>
+
+  //Time when score was calculated
+  private long timestamp;
+
+  public int getMaxScore() {
+<span class="nc" id="L35">    return maxScore;</span>
+  }
+
+  public void setMaxScore(int maxScore) {
+<span class="nc" id="L39">    this.maxScore = maxScore;</span>
+<span class="nc" id="L40">  }</span>
+
+  public BuildScoreSettings getBuild() {
+<span class="nc" id="L43">    return build;</span>
+  }
+
+  public void setBuild(BuildScoreSettings build) {
+<span class="nc" id="L47">    this.build = build;</span>
+<span class="nc" id="L48">  }</span>
+
+  public QualityScoreSettings getQuality() {
+<span class="nc" id="L51">    return quality;</span>
+  }
+
+  public void setQuality(QualityScoreSettings quality) {
+<span class="nc" id="L55">    this.quality = quality;</span>
+<span class="nc" id="L56">  }</span>
+
+  public DeployScoreSettings getDeploy() {
+<span class="nc" id="L59">    return deploy;</span>
+  }
+
+  public void setDeploy(DeployScoreSettings deploy) {
+<span class="nc" id="L63">    this.deploy = deploy;</span>
+<span class="nc" id="L64">  }</span>
+
+  public ScmScoreSettings getScm() {
+<span class="nc" id="L67">    return scm;</span>
+  }
+
+  public void setScm(ScmScoreSettings scm) {
+<span class="nc" id="L71">    this.scm = scm;</span>
+<span class="nc" id="L72">  }</span>
+
+  public ComponentAlert getComponentAlert() {
+<span class="nc" id="L75">    return componentAlert;</span>
+  }
+
+  public void setComponentAlert(ComponentAlert componentAlert) {
+<span class="nc" id="L79">    this.componentAlert = componentAlert;</span>
+<span class="nc" id="L80">  }</span>
+
+  public ScoreValueType getType() {
+<span class="nc" id="L83">    return type;</span>
+  }
+
+  public void setType(ScoreValueType type) {
+<span class="nc" id="L87">    this.type = type;</span>
+<span class="nc" id="L88">  }</span>
+
+  public long getTimestamp() {
+<span class="nc" id="L91">    return timestamp;</span>
+  }
+
+  public void setTimestamp(long timestamp) {
+<span class="nc" id="L95">    this.timestamp = timestamp;</span>
+<span class="nc" id="L96">  }</span>
+
+  @Override public String toString() {
+<span class="nc" id="L99">    return &quot;ScoreCriteriaSettings{&quot; +</span>
+      &quot;maxScore=&quot; + maxScore +
+      &quot;, build=&quot; + build +
+      &quot;, quality=&quot; + quality +
+      &quot;, deploy=&quot; + deploy +
+      &quot;, scm=&quot; + scm +
+      &quot;, componentAlert=&quot; + componentAlert +
+      &quot;, type=&quot; + type +
+      &quot;, timestamp=&quot; + timestamp +
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

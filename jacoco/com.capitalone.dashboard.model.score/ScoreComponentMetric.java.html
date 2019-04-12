@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScoreComponentMetric.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score</a> &gt; <span class="el_source">ScoreComponentMetric.java</span></div><h1>ScoreComponentMetric.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score;
+
+import java.util.List;
+
+/*
+  Score for a component like widget
+ */
+<span class="nc" id="L8">public class ScoreComponentMetric extends ScoreComponentMetricBase {</span>
+  //Individual components within a component, with scores for them
+  private List&lt;ScoreComponentMetricBase&gt; children;
+
+  public List&lt;ScoreComponentMetricBase&gt; getChildren() {
+<span class="nc" id="L13">    return children;</span>
+  }
+
+  public void setChildren(List&lt;ScoreComponentMetricBase&gt; children) {
+<span class="nc" id="L17">    this.children = children;</span>
+<span class="nc" id="L18">  }</span>
+
+  @Override public String toString() {
+<span class="nc" id="L21">    return &quot;ScoreComponentMetric{&quot; +</span>
+<span class="nc" id="L22">      &quot;score='&quot; + getScore() + '\'' +</span>
+<span class="nc" id="L23">      &quot;, total='&quot; + getTotal() + '\'' +</span>
+<span class="nc" id="L24">      &quot;, weight='&quot; + getWeight() + '\'' +</span>
+<span class="nc" id="L25">      &quot;, refId='&quot; + getRefId() + '\'' +</span>
+<span class="nc" id="L26">      &quot;, displayId='&quot; + getDisplayId() + '\'' +</span>
+<span class="nc" id="L27">      &quot;, displayName='&quot; + getDisplayName() + '\'' +</span>
+<span class="nc" id="L28">      &quot;, message='&quot; + getMessage() + '\'' +</span>
+<span class="nc" id="L29">      &quot;, propagate='&quot; + getPropagate() + '\'' +</span>
+<span class="nc" id="L30">      &quot;, state='&quot; + getState() + '\'' +</span>
+<span class="nc" id="L31">      &quot;, noScore=&quot; + isNoScore() +</span>
+      &quot;, children=&quot; + children + '\'' +
+<span class="nc" id="L33">      &quot;, options=&quot; + getOptions() + '\'' +</span>
+<span class="nc" id="L34">      &quot;, alert='&quot; + isAlert() +</span>
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

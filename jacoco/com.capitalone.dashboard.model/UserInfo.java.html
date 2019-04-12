@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">UserInfo.java</span></div><h1>UserInfo.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import java.util.Collection;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.google.common.collect.Sets;
+
+@Document(collection=&quot;user_info&quot;)
+@CompoundIndexes({
+    @CompoundIndex(name = &quot;username_authType&quot;, def = &quot;{'username' : 1, 'authType': 1}&quot;)
+})
+public class UserInfo {
+	
+	@Id
+	private ObjectId id;
+	private String username;
+	private Collection&lt;UserRole&gt; authorities;
+	private AuthType authType;
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private String displayName;
+	private String emailAddress;
+	
+<span class="nc" id="L30">	public UserInfo() {</span>
+<span class="nc" id="L31">	    authorities = Sets.newHashSet();</span>
+<span class="nc" id="L32">	}</span>
+	
+	public ObjectId getId() {
+<span class="nc" id="L35">		return id;</span>
+	}
+	
+	public void setId(ObjectId id) {
+<span class="nc" id="L39">		this.id = id;</span>
+<span class="nc" id="L40">	}</span>
+	
+	public String getUsername() {
+<span class="nc" id="L43">		return username;</span>
+	}
+	
+	public void setUsername(String username) {
+<span class="nc" id="L47">		this.username = username;</span>
+<span class="nc" id="L48">	}</span>
+	
+	public Collection&lt;UserRole&gt; getAuthorities() {
+		
+<span class="nc" id="L52">		return authorities;</span>
+	}
+	
+	public void setAuthorities(Collection&lt;UserRole&gt; authorities) {
+<span class="nc" id="L56">		this.authorities = authorities;</span>
+<span class="nc" id="L57">	}</span>
+
+	public AuthType getAuthType() {
+<span class="nc" id="L60">		return authType;</span>
+	}
+
+	public void setAuthType(AuthType authType) {
+<span class="nc" id="L64">		this.authType = authType;</span>
+<span class="nc" id="L65">	}</span>
+
+	public String getFirstName() {
+<span class="nc" id="L68">		return firstName;</span>
+	}
+
+	public void setFirstName(String firstName) {
+<span class="nc" id="L72">		this.firstName = firstName;</span>
+<span class="nc" id="L73">	}</span>
+
+	public String getMiddleName() {
+<span class="nc" id="L76">		return middleName;</span>
+	}
+
+	public void setMiddleName(String middleName) {
+<span class="nc" id="L80">		this.middleName = middleName;</span>
+<span class="nc" id="L81">	}</span>
+
+	public String getLastName() {
+<span class="nc" id="L84">		return lastName;</span>
+	}
+
+	public void setLastName(String lastName) {
+<span class="nc" id="L88">		this.lastName = lastName;</span>
+<span class="nc" id="L89">	}</span>
+
+	public String getDisplayName() {
+<span class="nc" id="L92">		return displayName;</span>
+	}
+
+	public void setDisplayName(String displayName) {
+<span class="nc" id="L96">		this.displayName = displayName;</span>
+<span class="nc" id="L97">	}</span>
+
+	public String getEmailAddress() {
+<span class="nc" id="L100">		return emailAddress;</span>
+	}
+
+	public void setEmailAddress(String emailAddress) {
+<span class="nc" id="L104">		this.emailAddress = emailAddress;</span>
+<span class="nc" id="L105">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

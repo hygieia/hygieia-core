@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DashboardAuditStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.status</a> &gt; <span class="el_source">DashboardAuditStatus.java</span></div><h1>DashboardAuditStatus.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.status;
+
+<span class="nc" id="L3">public enum DashboardAuditStatus {</span>
+<span class="nc" id="L4">    DASHBOARD_BAD_LOOKUP_DATA,</span>
+<span class="nc" id="L5">    DASHBOARD_REPO_NOT_CONFIGURED,</span>
+<span class="nc" id="L6">    DASHBOARD_BUILD_CONFIGURED,</span>
+<span class="nc" id="L7">    DASHBOARD_BUILD_NOT_CONFIGURED,</span>
+<span class="nc" id="L8">    DASHBOARD_CODEQUALITY_CONFIGURED,</span>
+<span class="nc" id="L9">    DASHBOARD_CODEQUALITY_NOT_CONFIGURED,</span>
+<span class="nc" id="L10">    DASHBOARD_STATIC_SECURITY_ANALYSIS_CONFIGURED,</span>
+<span class="nc" id="L11">    DASHBOARD_STATIC_SECURITY_ANALYSIS_NOT_CONFIGURED,</span>
+<span class="nc" id="L12">    DASHBOARD_LIBRARY_POLICY_ANALYSIS_CONFIGURED,</span>
+<span class="nc" id="L13">    DASHBOARD_LIBRARY_POLICY_ANALYSIS_NOT_CONFIGURED,</span>
+<span class="nc" id="L14">    DASHBOARD_NOT_REGISTERED,</span>
+<span class="nc" id="L15">    DASHBOARD_TEST_CONFIGURED,</span>
+<span class="nc" id="L16">    DASHBOARD_TEST_NOT_CONFIGURED,</span>
+<span class="nc" id="L17">    DASHBOARD_REPO_BUILD_VALID,</span>
+<span class="nc" id="L18">    DASHBOARD_REPO_BUILD_INVALID,</span>
+<span class="nc" id="L19">    DASHBOARD_REPO_PR_AUTHOR_EQ_BUILD_AUTHOR,</span>
+<span class="nc" id="L20">    DASHBOARD_REPO_PR_AUTHOR_NE_BUILD_AUTHOR,</span>
+    // Error collecting from repo
+<span class="nc" id="L22">    COLLECTOR_ITEM_ERROR, // Git repo not configured</span>
+<span class="nc" id="L23">    DASHBOARD_PERFORMANCE_TEST_CONFIGURED, DASHBOARD_PERFORMANCE_TEST_NOT_CONFIGURED, DASHBOARD_REPO_CONFIGURED,</span>
+<span class="nc" id="L24">    DASHBOARD_ARTIFACT_CONFIGURED,DASHBOARD_ARTIFACT_NOT_CONFIGURED</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

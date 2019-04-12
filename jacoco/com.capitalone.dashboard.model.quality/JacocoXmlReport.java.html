@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JacocoXmlReport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.quality</a> &gt; <span class="el_source">JacocoXmlReport.java</span></div><h1>JacocoXmlReport.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.quality;
+
+import javax.xml.bind.annotation.*;
+import java.util.List;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = &quot;report&quot;)
+<span class="nc" id="L8">public class JacocoXmlReport implements CodeQualityVisitee{</span>
+
+    @XmlElement(name=&quot;counter&quot;)
+    private List&lt;Counter&gt; counters;
+
+
+    @Override
+    public void accept(CodeQualityVisitor visitor) {
+<span class="nc" id="L16">        visitor.visit(this);</span>
+<span class="nc" id="L17">    }</span>
+
+    public List&lt;Counter&gt; getCounters() {
+<span class="nc" id="L20">        return counters;</span>
+    }
+
+    public void setCounters(List&lt;Counter&gt; counters) {
+<span class="nc" id="L24">        this.counters = counters;</span>
+<span class="nc" id="L25">    }</span>
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+<span class="nc" id="L28">    public static class Counter {</span>
+        @XmlAttribute(name=&quot;type&quot;)
+        private CounterType type;
+
+        @XmlAttribute(name=&quot;missed&quot;)
+        private int missed;
+
+        @XmlAttribute(name=&quot;covered&quot;)
+        private int covered;
+
+        public int getMissed() {
+<span class="nc" id="L39">            return missed;</span>
+        }
+
+        public void setMissed(int missed) {
+<span class="nc" id="L43">            this.missed = missed;</span>
+<span class="nc" id="L44">        }</span>
+
+        public int getCovered() {
+<span class="nc" id="L47">            return covered;</span>
+        }
+
+        public void setCovered(int covered) {
+<span class="nc" id="L51">            this.covered = covered;</span>
+<span class="nc" id="L52">        }</span>
+
+        public CounterType getType() {
+<span class="nc" id="L55">            return type;</span>
+        }
+
+        public void setType(CounterType type) {
+<span class="nc" id="L59">            this.type = type;</span>
+<span class="nc" id="L60">        }</span>
+    }
+
+<span class="nc" id="L63">    public enum CounterType {</span>
+<span class="nc" id="L64">        INSTRUCTION,BRANCH,LINE,COMPLEXITY,METHOD,CLASS;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

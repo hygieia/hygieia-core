@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QCloudVolumeStorage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QCloudVolumeStorage.java</span></div><h1>QCloudVolumeStorage.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QCloudVolumeStorage is a Querydsl query type for CloudVolumeStorage
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QCloudVolumeStorage extends EntityPathBase&lt;CloudVolumeStorage&gt; {
+
+    private static final long serialVersionUID = -1707352786L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QCloudVolumeStorage cloudVolumeStorage = new QCloudVolumeStorage(&quot;cloudVolumeStorage&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="fc" id="L27">    public final StringPath accountNumber = createString(&quot;accountNumber&quot;);</span>
+
+<span class="fc" id="L29">    public final ListPath&lt;String, StringPath&gt; attachInstances = this.&lt;String, StringPath&gt;createList(&quot;attachInstances&quot;, String.class, StringPath.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L31">    public final NumberPath&lt;Long&gt; creationDate = createNumber(&quot;creationDate&quot;, Long.class);</span>
+
+<span class="fc" id="L33">    public final BooleanPath encrypted = createBoolean(&quot;encrypted&quot;);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L38">    public final NumberPath&lt;Integer&gt; size = createNumber(&quot;size&quot;, Integer.class);</span>
+
+<span class="fc" id="L40">    public final StringPath status = createString(&quot;status&quot;);</span>
+
+<span class="fc" id="L42">    public final ListPath&lt;NameValue, QNameValue&gt; tags = this.&lt;NameValue, QNameValue&gt;createList(&quot;tags&quot;, NameValue.class, QNameValue.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L44">    public final StringPath type = createString(&quot;type&quot;);</span>
+
+<span class="fc" id="L46">    public final StringPath volumeId = createString(&quot;volumeId&quot;);</span>
+
+<span class="fc" id="L48">    public final StringPath zone = createString(&quot;zone&quot;);</span>
+
+    public QCloudVolumeStorage(String variable) {
+<span class="fc" id="L51">        this(CloudVolumeStorage.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L52">    }</span>
+
+    public QCloudVolumeStorage(Path&lt;? extends CloudVolumeStorage&gt; path) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L56">    }</span>
+
+    public QCloudVolumeStorage(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L60">    }</span>
+
+    public QCloudVolumeStorage(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L63">        this(CloudVolumeStorage.class, metadata, inits);</span>
+<span class="nc" id="L64">    }</span>
+
+    public QCloudVolumeStorage(Class&lt;? extends CloudVolumeStorage&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L67">        super(type, metadata, inits);</span>
+<span class="fc" id="L68">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="fc" id="L69">        this.id = _super.id;</span>
+<span class="fc" id="L70">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

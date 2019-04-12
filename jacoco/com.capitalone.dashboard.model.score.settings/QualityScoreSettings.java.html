@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QualityScoreSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model.score.settings</a> &gt; <span class="el_source">QualityScoreSettings.java</span></div><h1>QualityScoreSettings.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model.score.settings;
+
+/**
+ * Bean to hold score settings specific to quality
+ */
+<span class="nc" id="L6">public class QualityScoreSettings extends ScoreComponentSettings {</span>
+
+  //Settings for Code Coverage
+  private ScoreComponentSettings codeCoverage;
+
+  //Settings for Unit Tests
+  private ScoreComponentSettings unitTests;
+
+  //Settings for Violations
+  private ViolationsScoreSettings violations;
+
+  public static QualityScoreSettings cloneQualityScoreSettings(QualityScoreSettings qualityScoreSettings) {
+<span class="nc bnc" id="L18" title="All 2 branches missed.">    if (null == qualityScoreSettings) {</span>
+<span class="nc" id="L19">      return null;</span>
+    }
+
+<span class="nc" id="L22">    QualityScoreSettings qualityScoreSettingsClone = new QualityScoreSettings();</span>
+<span class="nc" id="L23">    ScoreComponentSettings.copyScoreComponentSettings(qualityScoreSettings, qualityScoreSettingsClone);</span>
+<span class="nc" id="L24">    qualityScoreSettingsClone.setCodeCoverage(</span>
+<span class="nc" id="L25">      ScoreComponentSettings.cloneScoreComponentSettings(qualityScoreSettings.getCodeCoverage())</span>
+    );
+<span class="nc" id="L27">    qualityScoreSettingsClone.setUnitTests(</span>
+<span class="nc" id="L28">      ScoreComponentSettings.cloneScoreComponentSettings(qualityScoreSettings.getUnitTests())</span>
+    );
+<span class="nc" id="L30">    qualityScoreSettingsClone.setViolations(</span>
+<span class="nc" id="L31">      ViolationsScoreSettings.cloneViolationsScoreSettings(qualityScoreSettings.getViolations())</span>
+    );
+
+<span class="nc" id="L34">    return qualityScoreSettingsClone;</span>
+  }
+
+
+  public ScoreComponentSettings getCodeCoverage() {
+<span class="nc" id="L39">    return codeCoverage;</span>
+  }
+
+  public void setCodeCoverage(ScoreComponentSettings codeCoverage) {
+<span class="nc" id="L43">    this.codeCoverage = codeCoverage;</span>
+<span class="nc" id="L44">  }</span>
+
+  public ScoreComponentSettings getUnitTests() {
+<span class="nc" id="L47">    return unitTests;</span>
+  }
+
+  public void setUnitTests(ScoreComponentSettings unitTests) {
+<span class="nc" id="L51">    this.unitTests = unitTests;</span>
+<span class="nc" id="L52">  }</span>
+
+  public ViolationsScoreSettings getViolations() {
+<span class="nc" id="L55">    return violations;</span>
+  }
+
+  public void setViolations(ViolationsScoreSettings violations) {
+<span class="nc" id="L59">    this.violations = violations;</span>
+<span class="nc" id="L60">  }</span>
+
+<span class="nc" id="L62">  public static class ViolationsScoreSettings extends ScoreComponentSettings {</span>
+
+    public static final int BLOCKER_VIOLATIONS_WEIGHT = 20;
+    public static final int CRITICAL_VIOLATIONS_WEIGHT = 5;
+    public static final int MAJOR_VIOLATIONS_WEIGHT = 1;
+
+<span class="nc" id="L68">    private int blockerViolationsWeight = BLOCKER_VIOLATIONS_WEIGHT;</span>
+<span class="nc" id="L69">    private int criticalViolationsWeight = CRITICAL_VIOLATIONS_WEIGHT;</span>
+<span class="nc" id="L70">    private int majorViolationWeight = MAJOR_VIOLATIONS_WEIGHT;</span>
+<span class="nc" id="L71">    private boolean allowNegative = false;</span>
+
+    public static ViolationsScoreSettings cloneViolationsScoreSettings(ViolationsScoreSettings violationsScoreSettings) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">      if (null == violationsScoreSettings) {</span>
+<span class="nc" id="L75">        return null;</span>
+      }
+
+<span class="nc" id="L78">      ViolationsScoreSettings violationsScoreSettingsClone = new ViolationsScoreSettings();</span>
+<span class="nc" id="L79">      ScoreComponentSettings.copyScoreComponentSettings(violationsScoreSettings, violationsScoreSettingsClone);</span>
+<span class="nc" id="L80">      violationsScoreSettingsClone.setAllowNegative(</span>
+<span class="nc" id="L81">        violationsScoreSettings.isAllowNegative()</span>
+      );
+<span class="nc" id="L83">      violationsScoreSettingsClone.setBlockerViolationsWeight(</span>
+<span class="nc" id="L84">        violationsScoreSettings.getBlockerViolationsWeight()</span>
+      );
+<span class="nc" id="L86">      violationsScoreSettingsClone.setCriticalViolationsWeight(</span>
+<span class="nc" id="L87">        violationsScoreSettings.getCriticalViolationsWeight()</span>
+      );
+<span class="nc" id="L89">      violationsScoreSettingsClone.setMajorViolationWeight(</span>
+<span class="nc" id="L90">        violationsScoreSettings.getMajorViolationWeight()</span>
+      );
+
+<span class="nc" id="L93">      return violationsScoreSettingsClone;</span>
+    }
+
+    public int getBlockerViolationsWeight() {
+<span class="nc" id="L97">      return blockerViolationsWeight;</span>
+    }
+
+    public void setBlockerViolationsWeight(int blockerViolationsWeight) {
+<span class="nc" id="L101">      this.blockerViolationsWeight = blockerViolationsWeight;</span>
+<span class="nc" id="L102">    }</span>
+
+    public int getCriticalViolationsWeight() {
+<span class="nc" id="L105">      return criticalViolationsWeight;</span>
+    }
+
+    public void setCriticalViolationsWeight(int criticalViolationsWeight) {
+<span class="nc" id="L109">      this.criticalViolationsWeight = criticalViolationsWeight;</span>
+<span class="nc" id="L110">    }</span>
+
+    public int getMajorViolationWeight() {
+<span class="nc" id="L113">      return majorViolationWeight;</span>
+    }
+
+    public void setMajorViolationWeight(int majorViolationWeight) {
+<span class="nc" id="L117">      this.majorViolationWeight = majorViolationWeight;</span>
+<span class="nc" id="L118">    }</span>
+
+    public boolean isAllowNegative() {
+<span class="nc" id="L121">      return allowNegative;</span>
+    }
+
+    public void setAllowNegative(boolean allowNegative) {
+<span class="nc" id="L125">      this.allowNegative = allowNegative;</span>
+<span class="nc" id="L126">    }</span>
+
+    @Override public String toString() {
+<span class="nc" id="L129">      return &quot;ViolationsScoreSettings{&quot; +</span>
+        &quot;blockerViolationsWeight=&quot; + blockerViolationsWeight +
+        &quot;, criticalViolationsWeight=&quot; + criticalViolationsWeight +
+        &quot;, majorViolationWeight=&quot; + majorViolationWeight +
+        &quot;, allowNegative=&quot; + allowNegative +
+<span class="nc" id="L134">        &quot;, disabled=&quot; + isDisabled() +</span>
+<span class="nc" id="L135">        &quot;, weight=&quot; + getWeight() +</span>
+<span class="nc" id="L136">        &quot;, criteria=&quot; + getCriteria() +</span>
+        '}';
+    }
+  }
+
+  @Override public String toString() {
+<span class="nc" id="L142">    return &quot;QualityScoreSettings{&quot; +</span>
+      &quot;codeCoverage=&quot; + codeCoverage +
+      &quot;, unitTests=&quot; + unitTests +
+      &quot;, violations=&quot; + violations +
+<span class="nc" id="L146">      &quot;, disabled=&quot; + isDisabled() +</span>
+<span class="nc" id="L147">      &quot;, weight=&quot; + getWeight() +</span>
+<span class="nc" id="L148">      &quot;, criteria=&quot; + getCriteria() +</span>
+      '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

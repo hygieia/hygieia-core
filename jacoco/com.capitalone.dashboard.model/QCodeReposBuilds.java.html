@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QCodeReposBuilds.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.model</a> &gt; <span class="el_source">QCodeReposBuilds.java</span></div><h1>QCodeReposBuilds.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.model;
+
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
+import com.mysema.query.types.PathMetadata;
+import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
+
+
+/**
+ * QCodeReposBuilds is a Querydsl query type for CodeReposBuilds
+ */
+@Generated(&quot;com.mysema.query.codegen.EntitySerializer&quot;)
+public class QCodeReposBuilds extends EntityPathBase&lt;CodeReposBuilds&gt; {
+
+    private static final long serialVersionUID = 1547560471L;
+
+<span class="fc" id="L21">    private static final PathInits INITS = PathInits.DIRECT2;</span>
+
+<span class="fc" id="L23">    public static final QCodeReposBuilds codeReposBuilds = new QCodeReposBuilds(&quot;codeReposBuilds&quot;);</span>
+
+    public final QBaseModel _super;
+
+<span class="fc" id="L27">    public final SetPath&lt;org.bson.types.ObjectId, org.bson.types.QObjectId&gt; buildCollectorItems = this.&lt;org.bson.types.ObjectId, org.bson.types.QObjectId&gt;createSet(&quot;buildCollectorItems&quot;, org.bson.types.ObjectId.class, org.bson.types.QObjectId.class, PathInits.DIRECT2);</span>
+
+<span class="fc" id="L29">    public final StringPath codeRepo = createString(&quot;codeRepo&quot;);</span>
+
+    // inherited
+    public final org.bson.types.QObjectId id;
+
+<span class="fc" id="L34">    public final NumberPath&lt;Long&gt; timestamp = createNumber(&quot;timestamp&quot;, Long.class);</span>
+
+    public QCodeReposBuilds(String variable) {
+<span class="fc" id="L37">        this(CodeReposBuilds.class, forVariable(variable), INITS);</span>
+<span class="fc" id="L38">    }</span>
+
+    public QCodeReposBuilds(Path&lt;? extends CodeReposBuilds&gt; path) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L42">    }</span>
+
+    public QCodeReposBuilds(PathMetadata&lt;?&gt; metadata) {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);</span>
+<span class="nc" id="L46">    }</span>
+
+    public QCodeReposBuilds(PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="nc" id="L49">        this(CodeReposBuilds.class, metadata, inits);</span>
+<span class="nc" id="L50">    }</span>
+
+    public QCodeReposBuilds(Class&lt;? extends CodeReposBuilds&gt; type, PathMetadata&lt;?&gt; metadata, PathInits inits) {
+<span class="fc" id="L53">        super(type, metadata, inits);</span>
+<span class="fc" id="L54">        this._super = new QBaseModel(type, metadata, inits);</span>
+<span class="fc" id="L55">        this.id = _super.id;</span>
+<span class="fc" id="L56">    }</span>
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

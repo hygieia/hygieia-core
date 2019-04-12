@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BuildEventListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.capitalone.dashboard:core</a> &gt; <a href="index.source.html" class="el_package">com.capitalone.dashboard.event</a> &gt; <span class="el_source">BuildEventListener.java</span></div><h1>BuildEventListener.java</h1><pre class="source lang-java linenums">package com.capitalone.dashboard.event;
+
+import com.capitalone.dashboard.event.sync.SyncDashboard;
+import com.capitalone.dashboard.model.BaseModel;
+import com.capitalone.dashboard.model.Build;
+import com.capitalone.dashboard.model.BuildStatus;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.Pipeline;
+import com.capitalone.dashboard.model.PipelineCommit;
+import com.capitalone.dashboard.model.PipelineStage;
+import com.capitalone.dashboard.model.SCM;
+import com.capitalone.dashboard.repository.CollectorItemRepository;
+import com.capitalone.dashboard.repository.CollectorRepository;
+import com.capitalone.dashboard.repository.CommitRepository;
+import com.capitalone.dashboard.repository.ComponentRepository;
+import com.capitalone.dashboard.repository.DashboardRepository;
+import com.capitalone.dashboard.repository.PipelineRepository;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static com.capitalone.dashboard.util.PipelineUtils.isMoveCommitToBuild;
+import static com.capitalone.dashboard.util.PipelineUtils.processPreviousFailedBuilds;
+
+@org.springframework.stereotype.Component
+public class BuildEventListener extends HygieiaMongoEventListener&lt;Build&gt; {
+    private final DashboardRepository dashboardRepository;
+    private final ComponentRepository componentRepository;
+    private final CommitRepository commitRepository;
+    private final SyncDashboard syncDashboard;
+
+    @Autowired
+    public BuildEventListener(DashboardRepository dashboardRepository,
+                              CollectorItemRepository collectorItemRepository,
+                              ComponentRepository componentRepository,
+                              PipelineRepository pipelineRepository,
+                              CollectorRepository collectorRepository, CommitRepository commitRepository, SyncDashboard syncDashboard) {
+<span class="fc" id="L46">        super(collectorItemRepository, pipelineRepository, collectorRepository);</span>
+<span class="fc" id="L47">        this.dashboardRepository = dashboardRepository;</span>
+<span class="fc" id="L48">        this.componentRepository = componentRepository;</span>
+<span class="fc" id="L49">        this.commitRepository = commitRepository;</span>
+<span class="fc" id="L50">        this.syncDashboard = syncDashboard;</span>
+<span class="fc" id="L51">    }</span>
+
+    @Override
+    public void onAfterSave(AfterSaveEvent&lt;Build&gt; event) {
+<span class="fc" id="L55">        Build build = event.getSource();</span>
+        //if a build is successful, process it
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (build.getBuildStatus().equals(BuildStatus.Success)) {</span>
+<span class="fc" id="L58">            processBuild(event.getSource());</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        } else if (build.getBuildStatus().equals(BuildStatus.Failure)) {</span>
+<span class="nc" id="L60">            processFailedBuild(event.getSource());</span>
+        }
+<span class="fc" id="L62">        syncDashboard.sync(build);</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * If the build has failed, find the pipelines of the dashboards referencing the build and add the failed build to
+     * the failed builds bucket on the pipeline
+     *
+     * @param failedBuild
+     */
+    private void processFailedBuild(Build failedBuild) {
+<span class="nc" id="L72">        List&lt;Dashboard&gt; teamDashboardsReferencingBuild = findAllDashboardsForBuild(failedBuild);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (Dashboard teamDashboard : teamDashboardsReferencingBuild) {</span>
+<span class="nc" id="L74">            Pipeline pipeline = getOrCreatePipeline(teamDashboard);</span>
+<span class="nc" id="L75">            pipeline.addFailedBuild(failedBuild);</span>
+<span class="nc" id="L76">            pipelineRepository.save(pipeline);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Find all dashboards referencing the build and then then for each commit in the changeset of the build (as per jenkins)
+     * add the commit to the pipeline for the dashboard
+     *
+     * @param build
+     */
+    private void processBuild(Build build) {
+<span class="fc" id="L87">        List&lt;Dashboard&gt; teamDashboardsReferencingBuild = findAllDashboardsForBuild(build);</span>
+
+        //for every team dashboard referencing the build, find the pipeline, put this commit in the build stage
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (Dashboard teamDashboard : teamDashboardsReferencingBuild) {</span>
+<span class="fc" id="L91">            Pipeline pipeline = getOrCreatePipeline(teamDashboard);</span>
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            for (SCM scm : build.getSourceChangeSet()) {</span>
+                // we want to use the build start time since the timestamp was just the time that the collector ran
+<span class="fc" id="L95">                PipelineCommit commit = new PipelineCommit(scm, build.getStartTime());</span>
+<span class="fc" id="L96">                pipeline.addCommit(PipelineStage.BUILD.getName(), commit);</span>
+<span class="fc" id="L97">            }</span>
+
+<span class="fc" id="L99">            processPreviousFailedBuilds(build, pipeline);</span>
+
+
+            /**
+             * If some build events are missed, here is an attempt to move commits to the build stage
+             * This also takes care of the problem with Jenkins first build change set being empty.
+             *
+             * Logic:
+             * If the build start time is after the scm commit, move the commit to build stage. Match the repo at the very least.
+             */
+<span class="fc" id="L109">            Map&lt;String, PipelineCommit&gt; commitStageCommits = pipeline.getCommitsByEnvironmentName(PipelineStage.COMMIT.getName());</span>
+<span class="fc" id="L110">            Map&lt;String, PipelineCommit&gt; buildStageCommits = pipeline.getCommitsByEnvironmentName(PipelineStage.BUILD.getName());</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            for (String rev : commitStageCommits.keySet()) {</span>
+<span class="fc" id="L112">                PipelineCommit commit = commitStageCommits.get(rev);</span>
+<span class="pc bpc" id="L113" title="3 of 6 branches missed.">                if ((commit.getScmCommitTimestamp() &lt; build.getStartTime()) &amp;&amp; !buildStageCommits.containsKey(rev) &amp;&amp; isMoveCommitToBuild(build, commit, commitRepository)) {</span>
+<span class="fc" id="L114">                    pipeline.addCommit(PipelineStage.BUILD.getName(), commit);</span>
+                }
+<span class="fc" id="L116">            }</span>
+<span class="fc" id="L117">            pipelineRepository.save(pipeline);</span>
+
+<span class="fc" id="L119">        }</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Finds all of the dashboards for a given build way of the build by:
+     * 1. Get collector item id for the build
+     * 2. Get the build components referencing the build collectoritem
+     * 3. Find all dashboards whose application references the build components
+     *
+     * @param build
+     * @return
+     */
+    private List&lt;Dashboard&gt; findAllDashboardsForBuild(Build build) {
+<span class="fc" id="L132">        List&lt;Dashboard&gt; dashboards = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L133" title="2 of 4 branches missed.">        if (build == null || build.getCollectorItemId() == null) {</span>
+            //return an empty list if the build is not associated with a Dashboard
+<span class="nc" id="L135">            return dashboards;</span>
+        }
+<span class="fc" id="L137">        CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if(buildCollectorItem != null) {</span>
+<span class="fc" id="L139">            List&lt;Component&gt; components = componentRepository.findByBuildCollectorItemId(buildCollectorItem.getId());</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">            if (!components.isEmpty()) {</span>
+                //return an empty list if the build is not associated with a Dashboard
+<span class="fc" id="L142">                List&lt;ObjectId&gt; componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());</span>
+<span class="fc" id="L143">                dashboards = dashboardRepository.findByApplicationComponentIdsIn(componentIds);</span>
+            }
+        }
+<span class="fc" id="L146">        return dashboards;</span>
+    }
+
+
+    private CollectorItem getCollectorItem(ObjectId id) {
+<span class="nc" id="L151">        return collectorItemRepository.findOne(id);</span>
+    }
+
+    private Collector getCollector(ObjectId id) {
+<span class="nc" id="L155">        return collectorRepository.findOne(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
