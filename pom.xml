@@ -35,7 +35,7 @@
         <guava.version>16.0.1</guava.version>
         <hamcrest.version>1.3</hamcrest.version>
         <jacoco.maven.plugin.version>0.8.3</jacoco.maven.plugin.version>
-        <jacoco.coverage.percentage.minimum>0.900</jacoco.coverage.percentage.minimum>
+        <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>15</jacoco.classes.missed.minimum>
         <java.compilation.source>1.8</java.compilation.source>
         <java.compilation.target>1.8</java.compilation.target>
@@ -72,6 +72,13 @@
         <version>1.3.0.RELEASE</version>
     </parent>
 
+    <scm>
+        <connection>scm:git:http://github.com/Hygieia/hygieia-core.git</connection>
+        <developerConnection>scm:git:http://github.com/Hygieia/hygieia-core.git
+        </developerConnection>
+        <url>http://github.com/Hygieia/hygieia-core</url>
+    </scm>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -81,6 +88,11 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <site>
+            <id>hygieia.core.website</id>
+            <name>Capital One Maven Plugins Site</name>
+            <url>scm:git:https://${github.username}@github.com/Hygieia/hygieia-core</url>
+        </site>
     </distributionManagement>
 
     <developers>
