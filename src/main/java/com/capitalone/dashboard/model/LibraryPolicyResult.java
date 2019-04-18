@@ -1,6 +1,5 @@
 package com.capitalone.dashboard.model;
 
-import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
 import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,6 +23,7 @@ public class LibraryPolicyResult extends BaseModel {
     private Integer totalComponentCount;
     private Integer knownComponentCount;
     private List<PolicyScanMetric> policyAlert = new ArrayList<>();
+    private ObjectId buildId;
 
     public static class Threat {
         LibraryPolicyThreatLevel level;
@@ -216,4 +216,7 @@ public class LibraryPolicyResult extends BaseModel {
         return String.format("%s##%s", component, disposition.toString());
     }
 
+    public ObjectId getBuildId() { return buildId; }
+
+    public void setBuildId(ObjectId buildId) { this.buildId = buildId; }
 }

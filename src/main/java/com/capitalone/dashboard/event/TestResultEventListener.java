@@ -14,6 +14,7 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.PerformanceRepository;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     private static double actualRespTime;
     private static double targetTxnsPerSec;
     private static double actualTxnsPerSec;
+    private static double actualErrorRate;
     private static double targetErrorRate;
     private static double actualErrorsVal;
     private static double txnHealthPercentVal;
@@ -73,7 +75,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     private final CollectorItemRepository collectorItemRepository;
 
     private enum PERFORMANCE_METRICS {
-        averageResponseTime,totalCalls,errorsperMinute,businessTransactionHealthPercent,nodeHealthPercent,violationObject,
+        averageResponseTime,totalCalls,errorsperMinute,actualErrorRate,businessTransactionHealthPercent,nodeHealthPercent,violationObject,
         totalErrors,errorRateSeverity,responseTimeSeverity,callsperMinute,targetResponseTime,targetTransactionPerSec,
         targetErrorRateThreshold
     }
@@ -129,10 +131,12 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isResponseTimeGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_RESP_TIME)){
-                    targetRespTime = Double.valueOf(testCaseStep.getDescription());
+                    targetRespTime = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_RESP_TIME)){
-                    actualRespTime = Double.valueOf(testCaseStep.getDescription());
+                    actualRespTime = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                 }
             });
         }
@@ -140,10 +144,12 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isTxnGoodHealth = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().equalsIgnoreCase(STR_TARGET_TXN_PER_SEC)) {
-                    targetTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
+                    targetTxnsPerSec = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_TXN_PER_SEC)) {
-                    actualTxnsPerSec = Double.valueOf(testCaseStep.getDescription());
+                    actualTxnsPerSec = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                 }
             });
         }
@@ -151,10 +157,12 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
             isErrorRateGood = testCase.getStatus().name().equalsIgnoreCase(TestCaseStatus.Success.name());
             testCase.getTestSteps().forEach(testCaseStep -> {
                 if (testCaseStep.getId().contains(STR_TARGET_ERROR_RATE)){
-                    targetErrorRate = Double.valueOf(testCaseStep.getDescription());
+                    targetErrorRate = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                 }
                 if (testCaseStep.getId().equalsIgnoreCase(STR_ACTUAL_ERROR_RATE)){
-                    double actualErrorRate = Double.valueOf(testCaseStep.getDescription());
+                    actualErrorRate = NumberUtils.isCreatable(testCaseStep.getDescription()) ?
+                            Double.valueOf(testCaseStep.getDescription()) : NumberUtils.DOUBLE_ZERO;
                     // Error rate is percentage of actual errors in total calls
                     actualErrorsVal =  (actualErrorRate / 100) * (testCapabilityDurationSecs * actualTxnsPerSec);
                 }
@@ -250,6 +258,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
         metrics.put(PERFORMANCE_METRICS.averageResponseTime.name(), Math.round(actualRespTime));
         metrics.put(PERFORMANCE_METRICS.callsperMinute.name(), Math.round(callsPerMinuteVal));
         metrics.put(PERFORMANCE_METRICS.errorsperMinute.name(), Math.round(errorsPerMinuteVal));
+        metrics.put(PERFORMANCE_METRICS.actualErrorRate.name(), actualErrorRate);
         metrics.put(PERFORMANCE_METRICS.totalCalls.name(), Math.round(totalCallsVal));
         metrics.put(PERFORMANCE_METRICS.totalErrors.name(), Math.round(actualErrorsVal));
         metrics.put(PERFORMANCE_METRICS.businessTransactionHealthPercent.name(), txnHealthPercentVal);

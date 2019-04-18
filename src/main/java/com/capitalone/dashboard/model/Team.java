@@ -21,6 +21,8 @@ public class Team extends BaseModel {
     private boolean enabled;
     private String teamType;
 
+    private long lastCollected;
+
     @Transient
     private Collector collector;
 
@@ -99,6 +101,14 @@ public class Team extends BaseModel {
 
     public void setTeamType(String teamType) {
         this.teamType = teamType;
+    }
+
+    public long getLastCollected() {
+        return lastCollected;
+    }
+
+    public void setLastCollected(long lastCollected) {
+        this.lastCollected = lastCollected;
     }
 
     /* (non-Javadoc)

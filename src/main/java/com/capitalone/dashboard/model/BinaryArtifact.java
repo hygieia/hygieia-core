@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,18 +48,17 @@ public class BinaryArtifact extends BaseModel {
     private String artifactClassifier;
     private String artifactExtension;
     private String type;
-    private String createdTimeStamp;
+    private long createdTimeStamp;
 
 
     private String createdBy;
-    private String modifiedTimeStamp;
+    private long modifiedTimeStamp;
     private String modifiedBy;
     private String actual_sha1;
     private String actual_md5;
-
-
-    
+    private String authorLDAPDN;
     private Build buildInfo;
+      private List<String> virtualRepos;
     
     private Map<String, String> metadata = new HashMap<>();
     
@@ -233,11 +233,11 @@ public class BinaryArtifact extends BaseModel {
         this.type = type;
     }
 
-    public String getCreatedTimeStamp() {
+    public long getCreatedTimeStamp() {
         return createdTimeStamp;
     }
 
-    public void setCreatedTimeStamp(String createdTimeStamp) {
+    public void setCreatedTimeStamp(long createdTimeStamp) {
         this.createdTimeStamp = createdTimeStamp;
     }
 
@@ -249,11 +249,11 @@ public class BinaryArtifact extends BaseModel {
         this.createdBy = createdBy;
     }
 
-    public String getModifiedTimeStamp() {
+    public long getModifiedTimeStamp() {
         return modifiedTimeStamp;
     }
 
-    public void setModifiedTimeStamp(String modifiedTimeStamp) {
+    public void setModifiedTimeStamp(long modifiedTimeStamp) {
         this.modifiedTimeStamp = modifiedTimeStamp;
     }
 
@@ -285,6 +285,24 @@ public class BinaryArtifact extends BaseModel {
     public Map<String, String> getMetadata() {
     	return metadata;
     }
+
+
+    public String getAuthorLDAPDN() {
+        return authorLDAPDN;
+    }
+
+    public void setAuthorLDAPDN(String authorLDAPDN) {
+        this.authorLDAPDN = authorLDAPDN;
+    }
+
+    public void setVirtualRepos(List<String> virtualRepos) {
+        this.virtualRepos = virtualRepos;
+    }
+
+    public List<String> getVirtualRepos() {
+        return virtualRepos;
+    }
+
 
     public static final Comparator<BinaryArtifact> TIMESTAMP_COMPARATOR = new Comparator<BinaryArtifact>() {
         @Override

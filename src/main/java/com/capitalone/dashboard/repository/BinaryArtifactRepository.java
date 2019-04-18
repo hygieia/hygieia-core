@@ -5,6 +5,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact, ObjectId>, BinaryArtifactRepositoryCustom {
 
     Iterable<BinaryArtifact> findByCollectorItemId(ObjectId collectorItemId);
@@ -22,4 +24,7 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
 
     @Query(value="{'metadata.buildUrl' : ?0}")
     Iterable<BinaryArtifact> findByMetadataBuildUrl(String buildUrl);
+
+    List<BinaryArtifact> findByCollectorItemIdAndTimestampIsBetweenOrderByTimestampDesc(ObjectId collectorItemId, long beginDate, long endDate);
+
 }
