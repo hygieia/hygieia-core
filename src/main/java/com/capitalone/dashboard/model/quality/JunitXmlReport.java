@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains the results of exexuting a testsuite
+ * Contains the results of executing a testsuite
  * <p>
  * <p>Java class for testsuite complex type.
  * <p>
@@ -120,7 +120,7 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "testsuite")
-public class JunitXmlReport implements CodeQualityVisitee {
+public class JunitXmlReport implements QualityVisitee {
 
     @XmlElement(required = true)
     protected JunitXmlReport.Properties properties;
@@ -356,7 +356,7 @@ public class JunitXmlReport implements CodeQualityVisitee {
     }
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 
