@@ -5,13 +5,13 @@ import java.util.List;
 
 @XmlRootElement(name="checkstyle")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CheckstyleReport implements CodeQualityVisitee {
+public class CheckstyleReport implements QualityVisitee {
 
     @XmlElement(name="file")
     private List<CheckstyleFile> files;
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 

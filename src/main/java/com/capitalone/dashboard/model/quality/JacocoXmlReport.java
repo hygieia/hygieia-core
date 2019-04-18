@@ -5,14 +5,14 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "report")
-public class JacocoXmlReport implements CodeQualityVisitee{
+public class JacocoXmlReport implements QualityVisitee {
 
     @XmlElement(name="counter")
     private List<Counter> counters;
 
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 
