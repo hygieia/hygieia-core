@@ -171,7 +171,7 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         	
         	List<Build> builds = artifact.getBuildInfos();
         	Build build ;
-        	if (builds== null || builds.isEmpty()) {
+        	if (CollectionUtils.isEmpty(builds)) {
         		// Attempt to get the build based on the artifact metadata information if possible
         		build = getBuildByMetadata(artifact);
         	}else {
