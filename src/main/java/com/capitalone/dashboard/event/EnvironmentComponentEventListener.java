@@ -27,6 +27,7 @@ import com.capitalone.dashboard.util.PipelineUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -169,8 +170,8 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         	}
         	
         	List<Build> builds = artifact.getBuildInfos();
-        	Build build;
-        	if (builds.isEmpty()) {
+        	Build build ;
+        	if (builds== null || builds.isEmpty()) {
         		// Attempt to get the build based on the artifact metadata information if possible
         		build = getBuildByMetadata(artifact);
         	}else {
