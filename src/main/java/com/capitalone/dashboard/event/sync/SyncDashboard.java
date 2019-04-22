@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.event.sync;
 
+import com.capitalone.dashboard.event.constants.sync.Reason;
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.CodeQuality;
@@ -42,8 +43,8 @@ public class SyncDashboard {
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
 
-    private static final String BUILD_REPO_REASON = "Code Repo build";
-    private static final String CODEQUALITY_TRIGGERED_REASON = "Code scan triggered by build";
+//    private static final String BUILD_REPO_REASON = "Code Repo build";
+//    private static final String CODEQUALITY_TRIGGERED_REASON = "Code scan triggered by build";
 
     @Autowired
     public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository,
@@ -223,7 +224,7 @@ public class SyncDashboard {
         // For each repo collector item, add the item to the referenced dashboards
         repoCollectorItemsInBuild.forEach(
                 ci -> {
-                    relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(),  BUILD_REPO_REASON);
+                    relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(), Reason.BUILD_REPO_REASON.getAction());
                 }
         );
     }
@@ -238,7 +239,7 @@ public class SyncDashboard {
         if (buildId == null) return;
         Build build = buildRepository.findOne(buildId);
         if (build == null) return;
-        relatedCollectorItemRepository.saveRelatedItems(build.getCollectorItemId(), codeQuality.getCollectorItemId(), this.getClass().toString(), CODEQUALITY_TRIGGERED_REASON);
+        relatedCollectorItemRepository.saveRelatedItems(build.getCollectorItemId(), codeQuality.getCollectorItemId(), this.getClass().toString(), Reason.CODEQUALITY_TRIGGERED_REASON.getAction());
     }
 
 
@@ -248,7 +249,7 @@ public class SyncDashboard {
      * @param relatedCollectorItem
      * @throws SyncException
      */
-    public void sync(RelatedCollectorItem relatedCollectorItem) throws SyncException{
+    public void sync(RelatedCollectorItem relatedCollectorItem,boolean addWidget) throws SyncException{
         ObjectId left = relatedCollectorItem.getLeft();
         ObjectId right = relatedCollectorItem.getRight();
         CollectorItem leftItem = collectorItemRepository.findOne(left);
@@ -266,8 +267,8 @@ public class SyncDashboard {
         List<Dashboard> dashboardsWithLeft = getDashboardsByCollectorItems(Sets.newHashSet(leftItem), leftCollector.getCollectorType());
         List<Dashboard> dashboardsWithRight = getDashboardsByCollectorItems(Sets.newHashSet(rightItem), rightCollector.getCollectorType());
 
-        addCollectorItemToDashboard(dashboardsWithLeft, rightItem, rightCollector.getCollectorType(), true);
-        addCollectorItemToDashboard(dashboardsWithRight, leftItem, leftCollector.getCollectorType(), true);
+        addCollectorItemToDashboard(dashboardsWithLeft, rightItem, rightCollector.getCollectorType(), addWidget);
+        addCollectorItemToDashboard(dashboardsWithRight, leftItem, leftCollector.getCollectorType(), addWidget);
     }
 
 }

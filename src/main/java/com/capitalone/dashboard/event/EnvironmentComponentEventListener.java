@@ -168,14 +168,13 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         		LOGGER.debug("Processing artifact " + artifact.getArtifactGroupId() + ":" + artifact.getArtifactName() + ":" + artifact.getArtifactVersion());
         	}
         	
-        	Build build = artifact.getBuildInfo();
-        	
-        	if (build == null) {
+        	List<Build> builds = artifact.getBuildInfos();
+        	Build build;
+        	if (builds.isEmpty()) {
         		// Attempt to get the build based on the artifact metadata information if possible
         		build = getBuildByMetadata(artifact);
-        	}
-        	
-        	if (build != null) {
+        	}else {
+        	    build = builds.get(0);
 				for (SCM scm : build.getSourceChangeSet()) {
 					PipelineCommit commit = new PipelineCommit(scm, environmentComponent.getAsOfDate());
 					pipeline.addCommit(environmentComponent.getEnvironmentName(), commit);
