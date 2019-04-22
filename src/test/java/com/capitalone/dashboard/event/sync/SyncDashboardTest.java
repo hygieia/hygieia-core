@@ -206,7 +206,7 @@ public class SyncDashboardTest {
 
         relatedCollectorItemRepository.findAll().forEach( r -> {
             try {
-                syncDashboard().sync(r);
+                syncDashboard().sync(r,true);
             } catch (SyncException e) {
             }
         });

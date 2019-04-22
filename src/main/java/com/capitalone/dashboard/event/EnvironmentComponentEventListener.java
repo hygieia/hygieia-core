@@ -27,6 +27,7 @@ import com.capitalone.dashboard.util.PipelineUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,14 +169,13 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         		LOGGER.debug("Processing artifact " + artifact.getArtifactGroupId() + ":" + artifact.getArtifactName() + ":" + artifact.getArtifactVersion());
         	}
         	
-        	Build build = artifact.getBuildInfo();
-        	
-        	if (build == null) {
+        	List<Build> builds = artifact.getBuildInfos();
+        	Build build ;
+        	if (CollectionUtils.isEmpty(builds)) {
         		// Attempt to get the build based on the artifact metadata information if possible
         		build = getBuildByMetadata(artifact);
-        	}
-        	
-        	if (build != null) {
+        	}else {
+        	    build = builds.get(0);
 				for (SCM scm : build.getSourceChangeSet()) {
 					PipelineCommit commit = new PipelineCommit(scm, environmentComponent.getAsOfDate());
 					pipeline.addCommit(environmentComponent.getEnvironmentName(), commit);

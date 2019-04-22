@@ -45,6 +45,9 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     @Query(value="{'options.projectId' : ?0}")
     CollectorItem findByJiraProjectId(String projectId);
 
+    @Query(value ="{'options.artifactName': ?0}")
+    List<CollectorItem> findByArtifactName(String artifactName);
+
     List<CollectorItem> findByDescription(String description);
 
     default Iterable<CollectorItem> findAllByOptionNameValue(String optionName, String optionValue) {
