@@ -18,6 +18,7 @@ pids
 *.iml
 /target
 /.idea
+site-content
 
 # Distributable artifacts
 target

@@ -5,13 +5,13 @@ import java.util.List;
 
 @XmlRootElement(name="pmd")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PmdReport implements CodeQualityVisitee {
+public class PmdReport implements QualityVisitee {
 
     @XmlElement(name="file")
     private List<PmdFile> files;
 
     @Override
-    public void accept(CodeQualityVisitor visitor) {
+    public void accept(QualityVisitor visitor) {
         visitor.visit(this);
     }
 
