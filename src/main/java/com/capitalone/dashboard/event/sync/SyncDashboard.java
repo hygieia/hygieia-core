@@ -43,8 +43,6 @@ public class SyncDashboard {
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
 
-//    private static final String BUILD_REPO_REASON = "Code Repo build";
-//    private static final String CODEQUALITY_TRIGGERED_REASON = "Code scan triggered by build";
 
     @Autowired
     public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository,
