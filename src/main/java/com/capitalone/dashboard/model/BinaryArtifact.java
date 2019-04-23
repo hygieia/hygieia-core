@@ -3,6 +3,7 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,7 @@ public class BinaryArtifact extends BaseModel {
     private String authorLDAPDN;
 
 
-    private List<Build> buildInfos;
+    private List<Build> buildInfos = new ArrayList<>();
       private List<String> virtualRepos;
     
     private Map<String, String> metadata = new HashMap<>();
