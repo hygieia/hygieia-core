@@ -23,6 +23,7 @@ public class AuditResult extends BaseModel {
     private String auditDetails;
     private Map traceability;
     private long timestamp;
+    private ObjectId collectorItemId;
     private Map<String, Object> options = new HashMap<>();
 
     public AuditResult() { }
@@ -172,6 +173,14 @@ public class AuditResult extends BaseModel {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public ObjectId getCollectorItemId() {
+        return collectorItemId;
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+        this.collectorItemId = collectorItemId;
     }
 
     public Map<String, Object> getOptions() {
