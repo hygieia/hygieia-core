@@ -16,6 +16,7 @@ public class AuditResult extends BaseModel {
     private String configItemBusAppName;
     private String configItemBusServOwner;
     private String configItemBusAppOwner;
+    private ObjectId collectorItemId;
     private AuditType auditType;
     private String auditTypeStatus;
     private String auditStatus;
@@ -23,7 +24,6 @@ public class AuditResult extends BaseModel {
     private String auditDetails;
     private Map traceability;
     private long timestamp;
-    private ObjectId collectorItemId;
     private Map<String, Object> options = new HashMap<>();
 
     public AuditResult() { }
