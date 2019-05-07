@@ -3,6 +3,7 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -57,19 +58,14 @@ public class BinaryArtifact extends BaseModel {
     private String actual_sha1;
     private String actual_md5;
     private String authorLDAPDN;
-    private Build buildInfo;
+
+
+    private List<Build> buildInfos = new ArrayList<>();
       private List<String> virtualRepos;
     
     private Map<String, String> metadata = new HashMap<>();
     
-    // Note this can be null 
-    public Build getBuildInfo() {
-    	return buildInfo;
-    }
-    
-    public void setBuildInfo(Build buildInfo) {
-    	this.buildInfo = buildInfo;
-    }
+
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -301,6 +297,19 @@ public class BinaryArtifact extends BaseModel {
 
     public List<String> getVirtualRepos() {
         return virtualRepos;
+    }
+
+
+    public List<Build> getBuildInfos() {
+        return buildInfos;
+    }
+
+    public void addBuild(Build build){
+	    getBuildInfos().add(build);
+    }
+
+    public void setBuildInfos(List<Build> buildInfos) {
+        this.buildInfos = buildInfos;
     }
 
 
