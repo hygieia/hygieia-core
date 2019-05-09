@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 
+
 @org.springframework.stereotype.Component
 public class RelatedCollectorItemEventListener extends HygieiaMongoEventListener<RelatedCollectorItem> {
     private static final Log LOG = LogFactory.getLog(RelatedCollectorItemEventListener.class);
