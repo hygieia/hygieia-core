@@ -31,7 +31,7 @@ public class LibraryPolicyResult extends BaseModel {
         List<String> components = new ArrayList<>();
         int count;
         private Map<LibraryPolicyThreatDisposition, Integer> dispositionCounts = new HashMap<>();
-        int age;
+        int maxAge;
 
         public Threat(LibraryPolicyThreatLevel level, int count) {
             this.level = level;
@@ -39,13 +39,7 @@ public class LibraryPolicyResult extends BaseModel {
         }
 
 
-        public int getAge() {
-            return age;
-        }
 
-        public void setAge(int age) {
-            this.age = age;
-        }
 
 
         public LibraryPolicyThreatLevel getLevel() {
@@ -74,6 +68,14 @@ public class LibraryPolicyResult extends BaseModel {
 
         public void addDispositionCount(LibraryPolicyThreatDisposition disposition) {
             dispositionCounts.merge(disposition, 1, (a, b) -> a + b);
+        }
+
+        public int getMaxAge() {
+            return maxAge;
+        }
+
+        public void setMaxAge(int maxAge) {
+            this.maxAge = maxAge;
         }
 
         public Map<LibraryPolicyThreatDisposition, Integer> getDispositionCounts() {
@@ -186,7 +188,7 @@ public class LibraryPolicyResult extends BaseModel {
     private void setCriticalAndHighVulAge(String age, Threat threat, LibraryPolicyThreatDisposition disposition) {
         if (disposition.equals(LibraryPolicyThreatDisposition.Open)) {
             int currentValue = NumberUtils.toInt(age);
-            threat.setAge(threat.getAge() <= currentValue ? currentValue : threat.getAge());
+            threat.setMaxAge(threat.getMaxAge() <= currentValue ? currentValue : threat.getMaxAge());
         }
     }
 
