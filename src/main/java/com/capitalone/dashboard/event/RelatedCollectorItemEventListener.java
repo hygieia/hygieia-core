@@ -7,11 +7,12 @@ import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.apache.commons.lang3.StringUtils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 
 
 @org.springframework.stereotype.Component
@@ -33,7 +34,7 @@ public class RelatedCollectorItemEventListener extends HygieiaMongoEventListener
     public void onAfterSave(AfterSaveEvent<RelatedCollectorItem> event) {
         RelatedCollectorItem relatedCollectorItem = event.getSource();
         try {
-            syncDashboard.sync(relatedCollectorItem,!StringUtils.equalsAnyIgnoreCase(Reason.ARTIFACT_REASON.getAction(),relatedCollectorItem.getReason()));
+            syncDashboard.sync(relatedCollectorItem,!(Reason.ARTIFACT_REASON.getAction().equalsIgnoreCase(relatedCollectorItem.getReason())));
         } catch (SyncException e) {
             LOG.error("Error processing related collector item. ID = " + relatedCollectorItem.getId() + ". Reason " + e.getMessage());
         }
