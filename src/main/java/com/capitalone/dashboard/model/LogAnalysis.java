@@ -6,9 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by stevegal on 16/06/2018.
- */
 @Document(collection="log_analysis")
 public class LogAnalysis extends BaseModel {
 
