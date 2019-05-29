@@ -101,6 +101,18 @@ public class CollectorTaskTest {
         assertTrue(result);
     }
 
+    @Test
+    public void testRepoBranchNonZeroPort() {
+
+        String branch = "master";
+        String url0 = "https://gh.pages.com:8087/org/repo.git";
+        String url1 = "git@gh.pages.com:org/repo";
+        RepoBranch rp0 = new RepoBranch(url0, branch, RepoBranch.RepoType.GIT);
+        RepoBranch rp1 = new RepoBranch(url1, branch, RepoBranch.RepoType.GIT);
+        boolean result = rp0.equals(rp1);
+        assertTrue(result);
+    }
+
     private class TestCollectorTask extends CollectorTask<Collector> {
 
         public TestCollectorTask() {
