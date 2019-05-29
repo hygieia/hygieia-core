@@ -123,9 +123,16 @@ public class RepoBranch {
             url = url.replace(GIT_SCHEME, DEFAULT_SCHEME);
         }
 
-        URI uri = URI.create(url.replaceAll(" ", "%20"));
-        String host = uri.getHost();
-        String path = uri.getPath();
+        String host;
+        String path;
+        try {
+            URI processedURI = URI.create(url.replaceAll(" ", "%20"));
+            host = processedURI.getHost();
+            path = processedURI.getPath();
+        } catch (IllegalArgumentException e) {
+            return url;
+        }
+
         /*
          * Force the urls to use https just as a means of Normalization.
          * */

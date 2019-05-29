@@ -113,6 +113,30 @@ public class CollectorTaskTest {
         assertTrue(result);
     }
 
+    @Test
+    public void testRepoBranchSpecialCharacter() {
+
+        String branch = "master";
+        String url0 = "https://gh.pages.com/org/repo-1.git";
+        String url1 = "git@gh.pages.com:org/repo-1";
+        RepoBranch rp0 = new RepoBranch(url0, branch, RepoBranch.RepoType.GIT);
+        RepoBranch rp1 = new RepoBranch(url1, branch, RepoBranch.RepoType.GIT);
+        boolean result = rp0.equals(rp1);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testRepoBranchWhiteSpace() {
+
+        String branch = "master";
+        String url0 = "https://gh.pages.com/org one/repo-1.git";
+        String url1 = "git@gh.pages.com:org one/repo-1";
+        RepoBranch rp0 = new RepoBranch(url0, branch, RepoBranch.RepoType.GIT);
+        RepoBranch rp1 = new RepoBranch(url1, branch, RepoBranch.RepoType.GIT);
+        boolean result = rp0.equals(rp1);
+        assertTrue(result);
+    }
+
     private class TestCollectorTask extends CollectorTask<Collector> {
 
         public TestCollectorTask() {
