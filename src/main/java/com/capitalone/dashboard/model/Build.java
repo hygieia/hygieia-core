@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,6 +35,7 @@ public class Build extends BaseModel {
     private String log;
     private List<RepoBranch> codeRepos = new ArrayList<>();
     private List<SCM> sourceChangeSet = new ArrayList<>();
+    private List<BuildStage> stages = new LinkedList<>();
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -133,6 +135,14 @@ public class Build extends BaseModel {
 
     public void setCodeRepos(List<RepoBranch> codeRepos) {
         this.codeRepos = codeRepos;
+    }
+
+    public List<BuildStage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<BuildStage> stages) {
+        this.stages = stages;
     }
 
 }
