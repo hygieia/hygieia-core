@@ -1,6 +1,8 @@
 package com.capitalone.dashboard.model;
 
 
+import java.util.Map;
+
 public class BuildStage {
 
     private String id;
@@ -12,6 +14,8 @@ public class BuildStage {
     private String parentId;
     private Object error;
     private String durationMillis;
+    private Map<String,Object> _links;
+    private String exec_node_logUrl;
 
     public String getId() {
         return id;
@@ -85,4 +89,23 @@ public class BuildStage {
     public void setError(Object error) {
         this.error = error;
     }
+
+    public String getExec_node_logUrl() {
+        return exec_node_logUrl;
+    }
+
+    public void setExec_node_logUrl(String exec_node_logUrl) {
+        this.exec_node_logUrl = exec_node_logUrl;
+    }
+    public void set_links(Map<String, Object> _links) {
+        this._links = _links;
+    }
+
+
+    public Map<String, Object> get_links() {
+        return _links;
+    }
+
+
+
 }
