@@ -3,9 +3,9 @@ package com.capitalone.dashboard.model;
 
 import java.util.Map;
 
-public class BuildStage {
+public class BuildStage extends BaseModel {
 
-    private String id;
+    private String stageId;
     private String name;
     private String status;
     private String startTimeMillis;
@@ -17,12 +17,12 @@ public class BuildStage {
     private Map<String,Object> _links;
     private String exec_node_logUrl;
 
-    public String getId() {
-        return id;
+    public String getStageId() {
+        return stageId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStageId(String stageId) {
+        this.stageId = stageId;
     }
 
     public String getName() {
