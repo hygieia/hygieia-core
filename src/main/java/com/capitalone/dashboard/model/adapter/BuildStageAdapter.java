@@ -27,7 +27,7 @@ public class BuildStageAdapter implements JsonDeserializer<BuildStage> {
         buildStage.setEndTime(getStringValue(jsonObject, "endTime"));
         buildStage.setLog(getStringValue(jsonObject, "log"));
         buildStage.setParentId(getStringValue(jsonObject, "parentId"));
-        buildStage.setError((Error) getObjectValue(jsonObject, "error"));
+        buildStage.setError(new Gson().fromJson(jsonObject.get("error"),Error.class));
         buildStage.setDurationMillis(getStringValue(jsonObject, "durationMillis"));
         JsonElement linksElement = jsonObject.get("_links");
         if (linksElement != null) {
@@ -42,9 +42,5 @@ public class BuildStageAdapter implements JsonDeserializer<BuildStage> {
         return jsonObject.get(key).getAsString();
     }
 
-    private Object getObjectValue(JsonObject jsonObject, String key) {
-        if (jsonObject == null || jsonObject.get(key) == null) return null;
-        return jsonObject.get(key);
-    }
 
 }
