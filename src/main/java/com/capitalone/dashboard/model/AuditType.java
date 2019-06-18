@@ -10,7 +10,8 @@ public enum AuditType {
     LIBRARY_POLICY,
     TEST_RESULT,
     PERF_TEST,
-    ARTIFACT;
+    ARTIFACT,
+    DEPLOY;
 
 
     public static AuditType fromString(String value) {
