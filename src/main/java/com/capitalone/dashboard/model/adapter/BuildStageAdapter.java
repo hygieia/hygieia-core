@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.model.adapter;
 
 import com.capitalone.dashboard.model.BuildStage;
+import com.capitalone.dashboard.model.Error;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -26,7 +27,7 @@ public class BuildStageAdapter implements JsonDeserializer<BuildStage> {
         buildStage.setEndTime(getStringValue(jsonObject, "endTime"));
         buildStage.setLog(getStringValue(jsonObject, "log"));
         buildStage.setParentId(getStringValue(jsonObject, "parentId"));
-        buildStage.setError(getStringValue(jsonObject, "error"));
+        buildStage.setError((Error) getObjectValue(jsonObject, "error"));
         buildStage.setDurationMillis(getStringValue(jsonObject, "durationMillis"));
         JsonElement linksElement = jsonObject.get("_links");
         if (linksElement != null) {
@@ -39,6 +40,11 @@ public class BuildStageAdapter implements JsonDeserializer<BuildStage> {
     private String getStringValue(JsonObject jsonObject, String key) {
         if (jsonObject == null || jsonObject.get(key) == null) return null;
         return jsonObject.get(key).getAsString();
+    }
+
+    private Object getObjectValue(JsonObject jsonObject, String key) {
+        if (jsonObject == null || jsonObject.get(key) == null) return null;
+        return jsonObject.get(key);
     }
 
 }

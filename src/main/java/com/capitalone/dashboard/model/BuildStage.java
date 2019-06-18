@@ -12,7 +12,7 @@ public class BuildStage extends BaseModel {
     private String endTime;
     private String log;
     private String parentId;
-    private Object error;
+    private Error error;
     private String durationMillis;
     private Map<String,Object> _links;
     private String exec_node_logUrl;
@@ -82,11 +82,11 @@ public class BuildStage extends BaseModel {
         this.durationMillis = durationMillis;
     }
 
-    public Object getError() {
+    public Error getError() {
         return error;
     }
 
-    public void setError(Object error) {
+    public void setError(Error error) {
         this.error = error;
     }
 
