@@ -48,8 +48,8 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     @Query(value="{'options.projectId' : ?0}")
     CollectorItem findByJiraProjectId(String projectId);
 
-    @Query(value ="{'options.artifactName': ?0}")
-    List<CollectorItem> findByArtifactName(String artifactName);
+    @Query(value ="{'options.artifactName': ?0, 'options.path': ?1}")
+    List<CollectorItem> findByArtifactNameAndPath(String artifactName, String path);
 
     List<CollectorItem> findByDescription(String description);
 
