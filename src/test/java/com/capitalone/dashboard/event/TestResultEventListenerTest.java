@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.event;
 
+import com.capitalone.dashboard.event.sync.SyncDashboard;
 import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.model.TestCapability;
 import com.capitalone.dashboard.model.TestSuiteType;
@@ -45,6 +46,8 @@ public class TestResultEventListenerTest {
     private CollectorItemRepository collectorItemRepository;
     @Mock
     private PerformanceRepository performanceRepository;
+    @Mock
+    private SyncDashboard syncDashboard;
     @InjectMocks
     private TestResultEventListener testResultEventListener;
     private static final String COLLECTOR_NAME = "PerfTools";

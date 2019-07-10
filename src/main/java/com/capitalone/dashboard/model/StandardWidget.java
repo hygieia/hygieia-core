@@ -1,6 +1,5 @@
 package com.capitalone.dashboard.model;
 
-import org.apache.commons.collections.MapUtils;
 import org.bson.types.ObjectId;
 
 import java.util.HashMap;

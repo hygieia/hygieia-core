@@ -10,6 +10,7 @@ import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Performance;
 import com.capitalone.dashboard.model.PerformanceType;
+import com.capitalone.dashboard.event.sync.SyncDashboard;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.PerformanceRepository;
@@ -73,6 +74,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     private final PerformanceRepository performanceRepository;
     private final CollectorRepository collectorRepository;
     private final CollectorItemRepository collectorItemRepository;
+    private SyncDashboard syncDashboard;
 
     private enum PERFORMANCE_METRICS {
         averageResponseTime,totalCalls,errorsperMinute,actualErrorRate,businessTransactionHealthPercent,nodeHealthPercent,violationObject,
@@ -85,10 +87,11 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
 
     @Autowired
     public TestResultEventListener(CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository,
-                                   PerformanceRepository performanceRepository) {
+                                   PerformanceRepository performanceRepository, SyncDashboard syncDashboard) {
         this.collectorRepository = collectorRepository;
         this.collectorItemRepository = collectorItemRepository;
         this.performanceRepository = performanceRepository;
+        this.syncDashboard = syncDashboard;
     }
 
     /**
@@ -99,6 +102,9 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
     public void onAfterSave(AfterSaveEvent<TestResult> event) {
         TestResult testResult = event.getSource();
         LOGGER.info("TestResult save event triggered");
+
+        // Configure test result with dashboard
+        syncDashboard.sync(testResult);
 
         // Ignore anything other than performance tests
         if (!TestSuiteType.Performance.equals(testResult.getType())) {
@@ -118,7 +124,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
         CollectorItem perfCollectorItem = getPerfCollectorItem(testResult);
         createPerformanceDoc(testResult, lastExecutedTestCapabiblity, perfCollectorItem);
         LOGGER.info("New performance document created from test_result successfully");
-        }
+    }
 
     /**
      * Extracts the test result threshold values to build performance metrics object

@@ -108,6 +108,8 @@
       ]
     },
     "validServiceName": false,
+    "configurationItemBusServName": "TestPlugin",
+    "configurationItemBusAppName": "TestPlugin",
     "validAppName": false,
     "remoteCreated": false,
     "scoreEnabled": false,
