@@ -16,6 +16,7 @@ public class AuditResult extends BaseModel {
     private String configItemBusAppName;
     private String configItemBusServOwner;
     private String configItemBusAppOwner;
+    private ObjectId collectorItemId;
     private AuditType auditType;
     private String auditTypeStatus;
     private String auditStatus;
@@ -172,6 +173,14 @@ public class AuditResult extends BaseModel {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public ObjectId getCollectorItemId() {
+        return collectorItemId;
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+        this.collectorItemId = collectorItemId;
     }
 
     public Map<String, Object> getOptions() {

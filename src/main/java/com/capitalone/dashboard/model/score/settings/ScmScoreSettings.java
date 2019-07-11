@@ -7,7 +7,7 @@ public class ScmScoreSettings extends ScoreComponentSettings {
 
   public static final int SCM_NUM_OF_DAYS = 14;
 
-  private ScoreComponentSettings commitsPerDay;
+  private ScoreComponentSettings daysWithCommits;
 
   private int numberOfDays = SCM_NUM_OF_DAYS;
 
@@ -21,8 +21,8 @@ public class ScmScoreSettings extends ScoreComponentSettings {
     scmScoreSettingsClone.setNumberOfDays(
       scmScoreSettings.getNumberOfDays()
     );
-    scmScoreSettingsClone.setCommitsPerDay(
-      ScoreComponentSettings.cloneScoreComponentSettings(scmScoreSettings.getCommitsPerDay())
+    scmScoreSettingsClone.setDaysWithCommits(
+                ScoreComponentSettings.cloneScoreComponentSettings(scmScoreSettings.getDaysWithCommits())
     );
 
     return scmScoreSettingsClone;
@@ -36,17 +36,17 @@ public class ScmScoreSettings extends ScoreComponentSettings {
     this.numberOfDays = numberOfDays;
   }
 
-  public ScoreComponentSettings getCommitsPerDay() {
-    return commitsPerDay;
+    public ScoreComponentSettings getDaysWithCommits() {
+    return daysWithCommits;
   }
 
-  public void setCommitsPerDay(ScoreComponentSettings commitsPerDay) {
-    this.commitsPerDay = commitsPerDay;
+  public void setDaysWithCommits(ScoreComponentSettings daysWithCommits) {
+    this.daysWithCommits = daysWithCommits;
   }
 
   @Override public String toString() {
     return "ScmScoreSettings{" +
-      "commitsPerDay=" + commitsPerDay +
+      "commitsPerDay=" + daysWithCommits +
       ", numberOfDays=" + numberOfDays +
       ", disabled=" + isDisabled() +
       ", weight=" + getWeight() +

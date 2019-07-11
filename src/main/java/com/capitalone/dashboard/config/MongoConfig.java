@@ -25,7 +25,7 @@ import java.util.List;
 public class MongoConfig extends AbstractMongoConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoConfig.class);
 
-    @Value("${dbname:dashboard}")
+    @Value("${dbname:dashboarddb}")
     private String databaseName;
     @Value("${dbhost:localhost}")
     private String host;
@@ -39,8 +39,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private String userName;
     @Value("${dbpassword:}")
     private String password;
-
-
+    @Value("${dbssl:false}")
+    private String dbssl;
 
     @Override
     protected String getDatabaseName() {
@@ -56,6 +56,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
         MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
         builder.maxConnectionIdleTime(60000);
+        builder.sslEnabled(Boolean.parseBoolean(dbssl));
         MongoClientOptions opts = builder.build();
 
         if (Boolean.parseBoolean(dbreplicaset)) {

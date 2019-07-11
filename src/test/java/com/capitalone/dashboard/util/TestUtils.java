@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -62,7 +63,7 @@ public class TestUtils {
     public static BinaryArtifact getBinaryArtifact() {
         BinaryArtifact binaryArtifact = new BinaryArtifact();
         binaryArtifact.setTimestamp(374268428);
-        binaryArtifact.setBuildInfo(createBuild());
+        binaryArtifact.setBuildInfos(Arrays.asList(createBuild()));
         return binaryArtifact;
     }
 

@@ -34,6 +34,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class EnvironmentComponentEventListenerTest {
     private BinaryArtifact getBinaryArtifact() {
         BinaryArtifact binaryArtifact = new BinaryArtifact();
         binaryArtifact.setTimestamp(374268428);
-        binaryArtifact.setBuildInfo(createBuild());
+        binaryArtifact.setBuildInfos(Arrays.asList(createBuild()));
         return binaryArtifact;
     }
 
