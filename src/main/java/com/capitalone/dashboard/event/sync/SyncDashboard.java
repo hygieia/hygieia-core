@@ -9,6 +9,7 @@ import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.FeatureFlag;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.StandardWidget;
 import com.capitalone.dashboard.model.Widget;
@@ -19,10 +20,12 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
+import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,13 +45,15 @@ public class SyncDashboard {
     private final BuildRepository buildRepository;
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
+    private final FeatureFlagRepository featureFlagRepository;
 
 
     @Autowired
     public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository,
                          CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository,
                          BuildRepository buildRepository, RelatedCollectorItemRepository relatedCollectorItemRepository,
-                         CodeQualityRepository codeQualityRepository) {
+                         CodeQualityRepository codeQualityRepository,
+                         FeatureFlagRepository featureFlagRepository) {
         this.dashboardRepository = dashboardRepository;
         this.componentRepository = componentRepository;
         this.collectorRepository = collectorRepository;
@@ -56,6 +61,7 @@ public class SyncDashboard {
         this.buildRepository = buildRepository;
         this.relatedCollectorItemRepository = relatedCollectorItemRepository;
         this.codeQualityRepository = codeQualityRepository;
+        this.featureFlagRepository = featureFlagRepository;
     }
 
 
@@ -79,10 +85,24 @@ public class SyncDashboard {
      */
     private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) {
         if (CollectionUtils.isEmpty(existingDashboards)) return;
-        /**
-         * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
-         */
-        if(CollectorType.SCM.equals(collectorType)) return;
+        Iterable<FeatureFlag> ff = featureFlagRepository.findAll();
+        if(!IterableUtils.isEmpty(ff)){
+            FeatureFlag f = ff.iterator().next();
+            if(CollectorType.SCM.equals(collectorType) && f.isScm()) return;
+            if(CollectorType.CodeQuality.equals(collectorType) && f.isCodeQuality()) return;
+            if(CollectorType.LibraryPolicy.equals(collectorType) && f.isLibraryPolicy()) return;
+            if(CollectorType.StaticSecurityScan.equals(collectorType) && f.isStaticSecurity()) return;
+            if(CollectorType.Artifact.equals(collectorType) && f.isArtifact()) return;
+            if(CollectorType.Build.equals(collectorType) && f.isBuild()) return;
+            if(CollectorType.Deployment.equals(collectorType) && f.isDeployment()) return;
+            if(CollectorType.AgileTool.equals(collectorType) && f.isAgileTool()) return;
+            if(CollectorType.Test.equals(collectorType) && f.isTest()) return;
+        }else{
+            /**
+             * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
+             */
+            if(CollectorType.SCM.equals(collectorType)) return;
+        }
 
         for(Dashboard dashboard : existingDashboards) {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();

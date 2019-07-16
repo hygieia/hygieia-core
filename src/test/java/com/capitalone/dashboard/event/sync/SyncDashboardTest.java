@@ -15,6 +15,7 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
+import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.repository.TestResultRepository;
@@ -76,10 +77,13 @@ public class SyncDashboardTest {
     @Autowired
     private RelatedCollectorItemRepository relatedCollectorItemRepository;
 
+    @Autowired
+    private FeatureFlagRepository featureFlagRepository;
+
 
     @Bean
     private SyncDashboard syncDashboard() {
-        return new SyncDashboard(dashboardRepository, componentRepository, collectorRepository, collectorItemRepository, buildRepository, relatedCollectorItemRepository, codeQualityRepository);
+        return new SyncDashboard(dashboardRepository, componentRepository, collectorRepository, collectorItemRepository, buildRepository, relatedCollectorItemRepository, codeQualityRepository,featureFlagRepository);
     }
 
 
