@@ -2,91 +2,38 @@ package com.capitalone.dashboard.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 @Document(collection="feature_flags")
 public class FeatureFlag extends BaseModel {
 
-    private boolean scm;
-    private boolean codeQuality;
-    private boolean libraryPolicy;
-    private boolean staticSecurity;
-    private boolean build;
-    private boolean test;
-    private boolean agileTool;
-    private boolean artifact;
-    private boolean deployment;
+    private String name;
 
-    public boolean isScm() {
-        return scm;
+
+    private String description;
+    private Map<String,Boolean> flags;
+
+    public String getName() {
+        return name;
     }
 
-    public void setScm(boolean scm) {
-        this.scm = scm;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean isCodeQuality() {
-        return codeQuality;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCodeQuality(boolean codeQuality) {
-        this.codeQuality = codeQuality;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean isLibraryPolicy() {
-        return libraryPolicy;
+    public Map<String, Boolean> getFlags() {
+        return flags;
     }
 
-    public void setLibraryPolicy(boolean libraryPolicy) {
-        this.libraryPolicy = libraryPolicy;
+    public void setFlags(Map<String, Boolean> flags) {
+        this.flags = flags;
     }
-
-    public boolean isStaticSecurity() {
-        return staticSecurity;
-    }
-
-    public void setStaticSecurity(boolean staticSecurity) {
-        this.staticSecurity = staticSecurity;
-    }
-
-    public boolean isBuild() {
-        return build;
-    }
-
-    public void setBuild(boolean build) {
-        this.build = build;
-    }
-
-    public boolean isTest() {
-        return test;
-    }
-
-    public void setTest(boolean test) {
-        this.test = test;
-    }
-
-    public boolean isAgileTool() {
-        return agileTool;
-    }
-
-    public void setAgileTool(boolean agileTool) {
-        this.agileTool = agileTool;
-    }
-
-    public boolean isArtifact() {
-        return artifact;
-    }
-
-    public void setArtifact(boolean artifact) {
-        this.artifact = artifact;
-    }
-
-    public boolean isDeployment() {
-        return deployment;
-    }
-
-    public void setDeployment(boolean deployment) {
-        this.deployment = deployment;
-    }
-
-
-
 }

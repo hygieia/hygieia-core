@@ -33,6 +33,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,7 @@ public class SyncDashboard {
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
     private final FeatureFlagRepository featureFlagRepository;
+    private static final String AUTO_DISCOVERY_UPDATE = "auto_discovery_update";
 
 
     @Autowired
@@ -85,18 +88,9 @@ public class SyncDashboard {
      */
     private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) {
         if (CollectionUtils.isEmpty(existingDashboards)) return;
-        Iterable<FeatureFlag> ff = featureFlagRepository.findAll();
-        if(!IterableUtils.isEmpty(ff)){
-            FeatureFlag f = ff.iterator().next();
-            if(CollectorType.SCM.equals(collectorType) && f.isScm()) return;
-            if(CollectorType.CodeQuality.equals(collectorType) && f.isCodeQuality()) return;
-            if(CollectorType.LibraryPolicy.equals(collectorType) && f.isLibraryPolicy()) return;
-            if(CollectorType.StaticSecurityScan.equals(collectorType) && f.isStaticSecurity()) return;
-            if(CollectorType.Artifact.equals(collectorType) && f.isArtifact()) return;
-            if(CollectorType.Build.equals(collectorType) && f.isBuild()) return;
-            if(CollectorType.Deployment.equals(collectorType) && f.isDeployment()) return;
-            if(CollectorType.AgileTool.equals(collectorType) && f.isAgileTool()) return;
-            if(CollectorType.Test.equals(collectorType) && f.isTest()) return;
+        FeatureFlag ff = featureFlagRepository.findByName(AUTO_DISCOVERY_UPDATE);
+        if(!Objects.isNull(ff)){
+            auto_discover_flags_check(collectorType, ff);
         }else{
             /**
              * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
@@ -127,6 +121,22 @@ public class SyncDashboard {
         }
     }
 
+    private void auto_discover_flags_check(CollectorType collectorType,FeatureFlag f){
+        if(CollectorType.SCM.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.CodeQuality.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.LibraryPolicy.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.StaticSecurityScan.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Artifact.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Build.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Deployment.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.AgileTool.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Test.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+    }
+
+    private boolean allow(Map<String,Boolean> flags, CollectorType collectorType){
+        String key = collectorType.toString().toLowerCase();
+       return flags.get(key);
+    }
     /*
     * Additional logic for association by Collector Type
     * */
