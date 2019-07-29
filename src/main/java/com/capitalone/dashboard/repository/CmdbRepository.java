@@ -35,4 +35,10 @@ public interface CmdbRepository extends CrudRepository<Cmdb, ObjectId>  {
     Cmdb findByItemTypeAndCommonNameContainingIgnoreCase(String itemType, String commonName);
 
     Cmdb findByItemTypeAndConfigurationItemIgnoreCase(String itemType, String configurationItem);
+
+    List<Cmdb> findByItemTypeAndOwnerDeptAndValidConfigItem(String itemType, String ownerDept,Boolean bol);
+
+    Cmdb findByConfigurationItemAndItemTypeAndValidConfigItem(String configurationItem,String itemType, Boolean bol);
+
+    List<Cmdb> findByBusinessOwnerAndItemTypeAndValidConfigItem(String businessOwner, String itemType, Boolean bol);
 }
