@@ -20,7 +20,6 @@ public enum CollectorType {
     Scope,
     CodeQuality,
     Test,
-    TestSync,
     StaticSecurityScan,
     LibraryPolicy,
     ChatOps,
