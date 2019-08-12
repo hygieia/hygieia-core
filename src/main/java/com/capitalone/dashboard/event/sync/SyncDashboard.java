@@ -13,8 +13,6 @@ import com.capitalone.dashboard.model.FeatureFlag;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.StandardWidget;
 import com.capitalone.dashboard.model.Widget;
-import com.capitalone.dashboard.model.DashboardType;
-import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
 import com.capitalone.dashboard.repository.BuildRepository;
 import com.capitalone.dashboard.repository.CodeQualityRepository;
@@ -27,7 +25,6 @@ import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.IterableUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -257,35 +254,6 @@ public class SyncDashboard {
                     relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(), Reason.BUILD_REPO_REASON.getAction());
                 }
         );
-    }
-
-    /***
-     * Sync test result with dashboard
-     * @param testResult
-     */
-    public void sync(TestResult testResult) {
-
-        Iterable<Dashboard> dashboards = dashboardRepository.findAllByTypeAndConfigurationItemBusServNameContainingIgnoreCaseAndConfigurationItemBusAppNameContainingIgnoreCase
-                (DashboardType.Team, testResult.getTargetAppName(), testResult.getTargetEnvName());
-        Dashboard dashboard = dashboards.iterator().hasNext() ? dashboards.iterator().next() : null;
-        if (dashboard == null) { return; }
-
-        com.capitalone.dashboard.model.Component component = dashboard.getApplication().getComponents().get(0);
-        if (component == null) { return; }
-
-        CollectorItem testResultCollectorItem = collectorItemRepository.findOne(testResult.getCollectorItemId());
-        if (testResultCollectorItem == null) { return; }
-
-        testResultCollectorItem.setEnabled(true);
-        component.addCollectorItem(CollectorType.Test, testResultCollectorItem);
-        collectorItemRepository.save(testResultCollectorItem);
-        componentRepository.save(component);
-
-        StandardWidget standardWidget = new StandardWidget(CollectorType.Test, component.getId());
-        if(getWidget(standardWidget.getName(), dashboard) != null) { return; }
-
-        dashboard.getWidgets().add(standardWidget.getWidget());
-        dashboardRepository.save(dashboard);
     }
 
     /**

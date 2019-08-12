@@ -8,7 +8,6 @@ import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.Widget;
-import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
 import com.capitalone.dashboard.repository.BuildRepository;
 import com.capitalone.dashboard.repository.CodeQualityRepository;
@@ -225,18 +224,5 @@ public class SyncDashboardTest {
         CollectorItem si = component.getCollectorItems(CollectorType.CodeQuality).get(0);
 
         assertTrue(si != null);
-    }
-
-
-
-    @Test
-    public void syncTestResult(){
-        relatedCollectorItemRepository.deleteAll();
-        TestResult testResult = testResultsRepository.findOne(new ObjectId("5b22b0b9f5c2f30601895e9d"));
-        syncDashboard().sync(testResult);
-        Dashboard dashboard = dashboardRepository.findOne(new ObjectId("5ba155820be2d339d2f24627"));
-        Component component = dashboard.getApplication().getComponents().get(0);
-        assertEquals(component.getCollectorItems(CollectorType.Test).get(0).getId(), testResult.getCollectorItemId());
-        assertEquals(syncDashboard().getWidget("codeanalysis", dashboard).getComponentId(), component.getId());
     }
 }
