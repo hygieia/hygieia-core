@@ -178,8 +178,6 @@
     "totalCount" : 1,
     "unknownStatusCount" : 0,
     "type" : "Performance",
-    "targetAppName" : "TestPlugin",
-    "targetEnvName" : "TestPlugin",
     "testCapabilities" : [
       {
         "timestamp" : 1529000121,

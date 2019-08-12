@@ -118,7 +118,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
         CollectorItem perfCollectorItem = getPerfCollectorItem(testResult);
         createPerformanceDoc(testResult, lastExecutedTestCapabiblity, perfCollectorItem);
         LOGGER.info("New performance document created from test_result successfully");
-    }
+        }
 
     /**
      * Extracts the test result threshold values to build performance metrics object

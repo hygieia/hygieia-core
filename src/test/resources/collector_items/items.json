@@ -117,19 +117,5 @@
       "jobNumber": 123456789,
       "instanceUrl": "http://localhost:8083/"
     }
-  },
-  {
-    "id": "57f2a0193b55670a9e06d63a",
-    "_class": "com.capitalone.dashboard.model.CollectorItem",
-    "description": "sync test result",
-    "niceName": "sync-test",
-    "enabled": false,
-    "errors": [],
-    "pushed": true,
-    "collectorId": "5ba136220be2d32568777fff",
-    "lastUpdated": 1537548485332,
-    "options": {
-      "jobName": "jobname"
-    }
   }
 ]
