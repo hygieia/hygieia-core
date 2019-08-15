@@ -36,9 +36,9 @@ public interface CmdbRepository extends CrudRepository<Cmdb, ObjectId>  {
 
     Cmdb findByItemTypeAndConfigurationItemIgnoreCase(String itemType, String configurationItem);
 
-    List<Cmdb> findByItemTypeAndOwnerDeptAndValidConfigItem(String itemType, String ownerDept, boolean bol);
+    List<Cmdb> findByItemTypeAndOwnerDeptAndValidConfigItem(String itemType, String ownerDept, boolean isValid);
 
-    Cmdb findByConfigurationItemAndItemTypeAndValidConfigItem(String configurationItem,String itemType, boolean bol);
+    Cmdb findByConfigurationItemAndItemTypeAndValidConfigItem(String configurationItem,String itemType, boolean isValid);
 
-    List<Cmdb> findByBusinessOwnerAndItemTypeAndValidConfigItem(String businessOwner, String itemType, boolean bol);
+    List<Cmdb> findByBusinessOwnerAndItemTypeAndValidConfigItem(String businessOwner, String itemType, boolean isValid);
 }
