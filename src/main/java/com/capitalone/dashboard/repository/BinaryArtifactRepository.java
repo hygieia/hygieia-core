@@ -21,6 +21,7 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
     Iterable<BinaryArtifact> findByArtifactNameAndTimestampGreaterThan(String artifactName, Long timestamp);
     Iterable<BinaryArtifact> findByArtifactNameAndArtifactExtensionAndTimestampGreaterThan(String artifactName, String artifactExtension, Long timestamp);
     Iterable<BinaryArtifact> findByArtifactNameAndArtifactVersionAndCreatedTimeStamp(String artifactName, String artifactVersion,Long timestamp);
+    Iterable<BinaryArtifact> findByArtifactNameAndArtifactVersion(String artifactName, String artifactVersion);
 
     @Query(value="{'metadata.buildUrl' : ?0}")
     Iterable<BinaryArtifact> findByMetadataBuildUrl(String buildUrl);
