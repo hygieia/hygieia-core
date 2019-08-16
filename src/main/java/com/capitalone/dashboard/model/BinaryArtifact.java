@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Binary artifacts produced by build jobs and stored in an artifact repository.
@@ -319,4 +320,22 @@ public class BinaryArtifact extends BaseModel {
             return Long.compare(o1.getTimestamp(), o2.getTimestamp());
         }
     };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        BinaryArtifact that = (BinaryArtifact) obj;
+        return Objects.equals(getArtifactName(),that.getArtifactName()) &&
+                Objects.equals(getArtifactVersion(),that.getArtifactVersion());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getArtifactName(), getArtifactVersion());
+    }
+
 }
