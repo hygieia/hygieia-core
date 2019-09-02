@@ -1,10 +1,12 @@
 package com.capitalone.dashboard.request;
 
+import com.capitalone.dashboard.model.BuildStage;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.SCM;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -33,6 +35,8 @@ public class BuildDataCreateRequest {
     private String log;
     private List<RepoBranch> codeRepos = new ArrayList<>();
     private List<SCM> sourceChangeSet = new ArrayList<>();
+
+    private List<BuildStage> stages = new LinkedList<>();
 
     public String getNumber() {
         return number;
@@ -145,5 +149,13 @@ public class BuildDataCreateRequest {
 
     public List<RepoBranch> getCodeRepos() {
         return codeRepos;
+    }
+
+    public List<BuildStage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<BuildStage> stages) {
+        this.stages = stages;
     }
 }

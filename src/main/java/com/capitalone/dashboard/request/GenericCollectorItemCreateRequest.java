@@ -17,6 +17,8 @@ public class GenericCollectorItemCreateRequest {
     @NotNull
     private String source;
 
+    private String pattern;
+
 
     public String getBuildId() {
         return buildId;
@@ -57,4 +59,13 @@ public class GenericCollectorItemCreateRequest {
     public void setRelatedCollectorItemId(String relatedCollectorItemId) {
         this.relatedCollectorItemId = relatedCollectorItemId;
     }
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+
 }

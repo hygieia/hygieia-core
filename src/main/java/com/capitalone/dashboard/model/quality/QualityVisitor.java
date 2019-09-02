@@ -1,10 +1,8 @@
 package com.capitalone.dashboard.model.quality;
 
-import com.capitalone.dashboard.model.CodeQuality;
+public interface QualityVisitor<T> {
 
-public interface CodeQualityVisitor {
-
-    CodeQuality produceResult();
+    T produceResult();
 
     void visit(JunitXmlReport junitXmlReport);
 
@@ -15,4 +13,8 @@ public interface CodeQualityVisitor {
     void visit(PmdReport pmdReport);
 
     void visit(CheckstyleReport checkstyleReport);
+
+    void visit(MochaJsSpecReport mochaJsSpecReport);
+
+    void visit(CucumberJsonReport cucumberJsonReport);
 }

@@ -3,9 +3,12 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Binary artifacts produced by build jobs and stored in an artifact repository.
@@ -47,29 +50,23 @@ public class BinaryArtifact extends BaseModel {
     private String artifactClassifier;
     private String artifactExtension;
     private String type;
-    private String createdTimeStamp;
+    private long createdTimeStamp;
 
 
     private String createdBy;
-    private String modifiedTimeStamp;
+    private long modifiedTimeStamp;
     private String modifiedBy;
     private String actual_sha1;
     private String actual_md5;
+    private String authorLDAPDN;
 
 
-    
-    private Build buildInfo;
+    private List<Build> buildInfos = new ArrayList<>();
+      private List<String> virtualRepos;
     
     private Map<String, String> metadata = new HashMap<>();
     
-    // Note this can be null 
-    public Build getBuildInfo() {
-    	return buildInfo;
-    }
-    
-    public void setBuildInfo(Build buildInfo) {
-    	this.buildInfo = buildInfo;
-    }
+
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -233,11 +230,11 @@ public class BinaryArtifact extends BaseModel {
         this.type = type;
     }
 
-    public String getCreatedTimeStamp() {
+    public long getCreatedTimeStamp() {
         return createdTimeStamp;
     }
 
-    public void setCreatedTimeStamp(String createdTimeStamp) {
+    public void setCreatedTimeStamp(long createdTimeStamp) {
         this.createdTimeStamp = createdTimeStamp;
     }
 
@@ -249,11 +246,11 @@ public class BinaryArtifact extends BaseModel {
         this.createdBy = createdBy;
     }
 
-    public String getModifiedTimeStamp() {
+    public long getModifiedTimeStamp() {
         return modifiedTimeStamp;
     }
 
-    public void setModifiedTimeStamp(String modifiedTimeStamp) {
+    public void setModifiedTimeStamp(long modifiedTimeStamp) {
         this.modifiedTimeStamp = modifiedTimeStamp;
     }
 
@@ -286,10 +283,59 @@ public class BinaryArtifact extends BaseModel {
     	return metadata;
     }
 
+
+    public String getAuthorLDAPDN() {
+        return authorLDAPDN;
+    }
+
+    public void setAuthorLDAPDN(String authorLDAPDN) {
+        this.authorLDAPDN = authorLDAPDN;
+    }
+
+    public void setVirtualRepos(List<String> virtualRepos) {
+        this.virtualRepos = virtualRepos;
+    }
+
+    public List<String> getVirtualRepos() {
+        return virtualRepos;
+    }
+
+
+    public List<Build> getBuildInfos() {
+        return buildInfos;
+    }
+
+    public void addBuild(Build build){
+	    getBuildInfos().add(build);
+    }
+
+    public void setBuildInfos(List<Build> buildInfos) {
+        this.buildInfos = buildInfos;
+    }
+
+
     public static final Comparator<BinaryArtifact> TIMESTAMP_COMPARATOR = new Comparator<BinaryArtifact>() {
         @Override
         public int compare(BinaryArtifact o1, BinaryArtifact o2) {
             return Long.compare(o1.getTimestamp(), o2.getTimestamp());
         }
     };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        BinaryArtifact that = (BinaryArtifact) obj;
+        return Objects.equals(getArtifactName(),that.getArtifactName()) &&
+                Objects.equals(getArtifactVersion(),that.getArtifactVersion());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getArtifactName(), getArtifactVersion());
+    }
+
 }

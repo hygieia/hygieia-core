@@ -44,4 +44,6 @@ public interface ScopeRepository extends CrudRepository<Scope, ObjectId>,
 	List<Scope> findByCollectorId(ObjectId collectorId);
 
 	Page<Scope> findAllByCollectorIdAndNameContainingIgnoreCase(ObjectId collectorId, String name, Pageable pageable);
+
+	Scope findByCollectorIdAndPId(ObjectId collectorId, String pId);
 }
