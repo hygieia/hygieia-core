@@ -84,4 +84,6 @@ public class AutoDiscoveryMetaData {
     public void setType(String type) {
         this.type = type;
     }
+
+    public AutoDiscoveryMetaData(){ }
 }

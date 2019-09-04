@@ -1,9 +1,10 @@
 package com.capitalone.dashboard.model;
 
-import javax.validation.constraints.NotNull;
+import com.capitalone.dashboard.misc.HygieiaException;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,10 @@ public class AutoDiscoveredEntry {
     String description;
 
     String niceName;
+
+    boolean pushed = false;
+
+    boolean enabled = false;
 
     @NotEmpty
     Map<String, Object> options = new HashMap<>();
@@ -60,8 +65,45 @@ public class AutoDiscoveredEntry {
         return status;
     }
 
+
+    public boolean isPushed() {
+        return pushed;
+    }
+
+    public void setPushed(boolean pushed) {
+        this.pushed = pushed;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+
     public void setStatus(AutoDiscoveryStatusType status) {
         this.status = status;
     }
 
+    public AutoDiscoverCollectorItem toAutoDiscoverCollectorItem(Collector collector) throws HygieiaException {
+        if (options.keySet().containsAll(collector.getUniqueFields().keySet())) {
+            AutoDiscoverCollectorItem collectorItem = new AutoDiscoverCollectorItem();
+            collectorItem.setEnabled(true);
+            collectorItem.setPushed(isPushed());
+            collectorItem.setDescription(description);
+            collectorItem.setNiceName(niceName);
+            collectorItem.setCollectorId(collector.getId());
+            for (String key : options.keySet()) {
+                if (collector.getAllFields().keySet().contains(key)) {
+                    collectorItem.getOptions().put(key, options.get(key));
+                }
+            }
+            collectorItem.setAutoDiscoverStatus(status);
+            return collectorItem;
+        } else {
+            throw new HygieiaException("Missing required fields. " + toolName + " collector required fields are: " + String.join(", ", collector.getUniqueFields().keySet()), HygieiaException.COLLECTOR_ITEM_CREATE_ERROR);
+        }
+    }
 }
