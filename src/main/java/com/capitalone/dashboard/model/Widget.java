@@ -73,6 +73,10 @@ public class Widget {
 
         Widget widget = (Widget) o;
 
+        if (id == null) {
+            return widget.id == null;
+        }
+
         return id.equals(widget.id);
     }
 
