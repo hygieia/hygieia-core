@@ -35,6 +35,7 @@ public class SonarProject extends CollectorItem {
         if (o == null || getClass() != o.getClass()) return false;
 
         SonarProject that = (SonarProject) o;
+        if (that == null) return false;
         return getProjectId().equals(that.getProjectId()) && getInstanceUrl().equals(that.getInstanceUrl());
     }
 
