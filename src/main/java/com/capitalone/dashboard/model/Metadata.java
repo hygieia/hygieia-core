@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Document(collection = "metadata")
 @CompoundIndexes({
-        @CompoundIndex(name = "unique_mdata_key_type", def = "{'key' : 1, 'type': 1}", unique = true)
+        @CompoundIndex(name = "unique_mdata_key_type", def = "{'key' : 1, 'type': 1}")
 })
 public class Metadata extends BaseModel {
 

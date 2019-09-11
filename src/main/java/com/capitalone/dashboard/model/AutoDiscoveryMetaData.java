@@ -1,8 +1,12 @@
 package com.capitalone.dashboard.model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import java.util.List;
 
 /**
  * AutoDiscovery Metadata
@@ -28,6 +32,12 @@ public class AutoDiscoveryMetaData {
     private String businessService;
 
     private String businessApplication;
+
+    @Ignore
+    private Owner owner;
+
+    @Ignore
+    private List<Owner> owners;
 
     public String getTemplate() {
         return template;
@@ -84,4 +94,14 @@ public class AutoDiscoveryMetaData {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Owner getOwner() { return owner; }
+
+    public void setOwner(Owner owner) { this.owner = owner; }
+
+    public List<Owner> getOwners() { return owners; }
+
+    public void setOwners(List<Owner> owners) { this.owners = owners; }
+
+    public AutoDiscoveryMetaData(){ }
 }

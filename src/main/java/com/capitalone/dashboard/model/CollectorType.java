@@ -30,7 +30,8 @@ public enum CollectorType {
     Score,
     TEAM,
     Audit,
-    Log;
+    Log,
+    AutoDiscover;
 
     public static CollectorType fromString(String value) {
         for (CollectorType collectorType : values()) {

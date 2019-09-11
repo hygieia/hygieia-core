@@ -44,6 +44,10 @@ public class AutoDiscovery extends BaseModel {
     @Valid
     private List<AutoDiscoveredEntry> featureEntries = new ArrayList<>();
 
+    private long createdTimestamp;
+
+    private long modifiedTimestamp;
+
     public  AutoDiscovery() {
         metaData = null;
     }
@@ -129,6 +133,22 @@ public class AutoDiscovery extends BaseModel {
 
     public void setStaticCodeEntries(List<AutoDiscoveredEntry> staticCodeEntries) {
         this.staticCodeEntries = staticCodeEntries;
+    }
+
+    public long getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(long createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public long getModifiedTimestamp() {
+        return modifiedTimestamp;
+    }
+
+    public void setModifiedTimestamp(long modifiedTimestamp) {
+        this.modifiedTimestamp = modifiedTimestamp;
     }
 
     public List<AutoDiscoveredEntry> getFeatureEntries() { return featureEntries; }

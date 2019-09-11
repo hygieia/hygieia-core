@@ -4,6 +4,7 @@ package com.capitalone.dashboard.model;
  * Defines the type of AutoDiscoveredEntry.status.
  */
 public enum AutoDiscoveryStatusType {
+    NEW,
     AWAITING_USER_RESPONSE,
     USER_ACCEPTED,
     USER_REJECTED;

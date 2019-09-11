@@ -30,6 +30,21 @@ public interface ComponentRepository extends CrudRepository<Component, ObjectId>
     @Query(value="{'collectorItems.Incident.enabled' : ?0}")
     List<Component> findByIncidentCollectorItems(boolean enabled);
 
+    @Query(value="{'collectorItems.Artifact._id' : ?0}")
+    List<Component> findByArtifactCollectorItems(ObjectId artifactCollectorItemId);
+
+    @Query(value="{'collectorItems.CodeQuality._id' : ?0}")
+    List<Component> findByCodeQualityCollectorItems(ObjectId codeQualityCollectorItemId);
+
+    @Query(value="{'collectorItems.LibraryPolicy._id' : ?0}")
+    List<Component> findByLibraryPolicyCollectorItems(ObjectId libraryPolicyCollectorItemId);
+
+    @Query(value="{'collectorItems.Test._id' : ?0}")
+    List<Component> findByTestCollectorItems(ObjectId testCollectorItemId);
+
+    @Query(value="{'collectorItems.StaticSecurityScan._id' : ?0}")
+    List<Component> findByStaticSecurityScanCollectorItems(ObjectId staticSecurityCollectorItemId);
+
 
     default List<Component> findByCollectorTypeAndItemIdIn(CollectorType collectorType, List<ObjectId> collectorItemIds) {
         BooleanBuilder builder = new BooleanBuilder();
