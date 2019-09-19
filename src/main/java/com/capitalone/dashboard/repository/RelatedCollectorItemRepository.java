@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 /**
- * Repository for {@link Build} data.
+ * Repository for {@link RelatedCollectorItem} data.
  */
 public interface RelatedCollectorItemRepository extends CrudRepository<RelatedCollectorItem, ObjectId>, QueryDslPredicateExecutor<RelatedCollectorItem> {
     List<RelatedCollectorItem> findRelatedCollectorItemByLeft(ObjectId left);
@@ -30,4 +30,5 @@ public interface RelatedCollectorItemRepository extends CrudRepository<RelatedCo
         related.setReason(reason);
         return save(related);
     }
+    List<RelatedCollectorItem> findAllByCreationTimeIsBetweenOrderByCreationTimeDesc(long beginDate, long endDate);
 }
