@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import java.nio.charset.StandardCharsets;
@@ -33,107 +35,107 @@ public class RestClient {
         this.restOperations = restOperationsSupplier.get();
     }
 
+    private ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
+
+        long start = System.currentTimeMillis();
+        ResponseEntity<String> response;
+        HttpStatus status = null;
+        try {
+            response = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
+            status = response.getStatusCode();
+        } catch (HttpStatusCodeException e) {
+            status = e.getStatusCode();
+            throw e;
+        } finally {
+            long end = System.currentTimeMillis();
+            LOG.info("makeRestCall op=POST url=" + url + ", status=" + status + " duration=" + (end - start));
+        }
+
+        return response;
+    }
+
     public ResponseEntity<String> makeRestCallPost(String url, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        long start = System.currentTimeMillis();
+        HttpHeaders headers = null;
 
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, null), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallPost(url, headers, body);
     }
 
     public ResponseEntity<String> makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
         if (restOperations == null) { return null; }
 
+        HttpHeaders headers;
         if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            return makeRestCallPost(url, body);
+            headers = null;
+        } else {
+            headers = createHeaders(headerKey, token);
         }
 
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, createHeaders(headerKey, token)), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallPost(url, headers, body);
     }
 
     public ResponseEntity<String> makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
         if (restOperations == null) { return null; }
 
+        HttpHeaders headers;
         if ((userInfo == null)) {
-            return makeRestCallPost(url, body);
+            headers = null;
+        } else {
+            headers = createHeaders(userInfo.getFormattedString());
         }
 
+        return this.makeRestCallPost(url, headers, body);
+    }
+
+    private ResponseEntity<String> makeRestCallGet(String url, HttpEntity entity) throws RestClientException {
+
         long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, createHeaders(userInfo.getFormattedString())), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
+        ResponseEntity<String> response;
+        HttpStatus status = null;
+        try {
+            response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
+            status = response.getStatusCode();
+        } catch (HttpStatusCodeException e) {
+            status = e.getStatusCode();
+            throw e;
+        } finally {
+            long end = System.currentTimeMillis();
+            LOG.info("makeRestCall op=GET url=" + url + " status=" + status + " duration=" + (end - start));
+        }
         return response;
     }
 
     public ResponseEntity<String> makeRestCallGet(String url) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, null, String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
+        HttpEntity entity = null;
+        return this.makeRestCallGet(url, entity);
     }
 
     public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
         if (restOperations == null) { return null; }
 
+        HttpEntity entity;
         if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            return makeRestCallGet(url);
+            entity = null;
+        } else {
+            entity = new HttpEntity<>(createHeaders(headerKey, token));
         }
+        return this.makeRestCallGet(url, entity);
 
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity<>(createHeaders(headerKey, token)), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
     }
 
     public ResponseEntity<String> makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
         if (restOperations == null) { return null; }
 
+        HttpEntity entity;
         if ((userInfo == null) || StringUtils.isEmpty(userInfo.getFormattedString())) {
-            return makeRestCallGet(url);
+            entity = null;
+        } else {
+            entity = new HttpEntity<>(createHeaders(userInfo.getFormattedString()));
         }
-
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity<>(createHeaders(userInfo.getFormattedString())), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallGet(url, entity);
     }
 
     protected HttpHeaders createHeaders(RestUserInfo restUserInfo) {
