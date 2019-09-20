@@ -109,19 +109,17 @@ public class RestClient {
     public ResponseEntity<String> makeRestCallGet(String url) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        HttpEntity entity = null;
-        return this.makeRestCallGet(url, entity);
+        return this.makeRestCallGet(url, (HttpEntity)null);
     }
 
     public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        HttpEntity entity;
-        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            entity = null;
-        } else {
+        HttpEntity entity = null;
+        if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
             entity = new HttpEntity<>(createHeaders(headerKey, token));
         }
+
         return this.makeRestCallGet(url, entity);
 
     }
@@ -129,10 +127,8 @@ public class RestClient {
     public ResponseEntity<String> makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        HttpEntity entity;
-        if ((userInfo == null) || StringUtils.isEmpty(userInfo.getFormattedString())) {
-            entity = null;
-        } else {
+        HttpEntity entity = null;
+        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getFormattedString())) {
             entity = new HttpEntity<>(createHeaders(userInfo.getFormattedString()));
         }
         return this.makeRestCallGet(url, entity);
