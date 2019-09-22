@@ -57,18 +57,14 @@ public class RestClient {
     public ResponseEntity<String> makeRestCallPost(String url, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        HttpHeaders headers = null;
-
-        return this.makeRestCallPost(url, headers, body);
+        return this.makeRestCallPost(url, (HttpHeaders)null, body);
     }
 
     public ResponseEntity<String> makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        HttpHeaders headers;
-        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            headers = null;
-        } else {
+        HttpHeaders headers = null;
+        if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
             headers = createHeaders(headerKey, token);
         }
 
@@ -78,10 +74,8 @@ public class RestClient {
     public ResponseEntity<String> makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        HttpHeaders headers;
-        if ((userInfo == null)) {
-            headers = null;
-        } else {
+        HttpHeaders headers = null;
+        if ((userInfo != null)) {
             headers = createHeaders(userInfo.getFormattedString());
         }
 
