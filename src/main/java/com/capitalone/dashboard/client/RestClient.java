@@ -35,7 +35,14 @@ public class RestClient {
         this.restOperations = restOperationsSupplier.get();
     }
 
-    private ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
+    /**
+     * The most general version of POST call
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
@@ -54,12 +61,29 @@ public class RestClient {
         return response;
     }
 
+    /**
+     * Make a POST call with no HTTP headers
+     *
+     * @param url
+     * @param body Cannot be null
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, JSONObject body) {
         if (restOperations == null) { return null; }
 
         return this.makeRestCallPost(url, (HttpHeaders)null, body);
     }
 
+    /**
+     * Make a POST call with a single header, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @param body
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
         if (restOperations == null) { return null; }
 
@@ -71,6 +95,15 @@ public class RestClient {
         return this.makeRestCallPost(url, headers, body);
     }
 
+    /**
+     * Make a POST call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
+     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
+     * When userInfo is null, no header is added
+     * @param url
+     * @param userInfo
+     * @param body
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
         if (restOperations == null) { return null; }
 
@@ -82,12 +115,20 @@ public class RestClient {
         return this.makeRestCallPost(url, headers, body);
     }
 
-    private ResponseEntity<String> makeRestCallGet(String url, HttpEntity entity) throws RestClientException {
+    /**
+     * The most general form of GET calls.
+     * @param url
+     * @param headers Can be null if no header is needed
+     * @return
+     * @throws RestClientException
+     */
+    public ResponseEntity<String> makeRestCallGet(String url, HttpHeaders headers) throws RestClientException {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
         HttpStatus status = null;
         try {
+            HttpEntity entity = headers==null?null:new HttpEntity(headers);
             response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
             status = response.getStatusCode();
         } catch (HttpStatusCodeException e) {
@@ -100,32 +141,57 @@ public class RestClient {
         return response;
     }
 
+    /**
+     * Make a GET call without headers
+     * @param url
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        return this.makeRestCallGet(url, (HttpEntity)null);
+        return this.makeRestCallGet(url, (HttpHeaders)null);
     }
 
+    /**
+     * Make a GET call with a single header, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        HttpEntity entity = null;
+        HttpHeaders headers = null;
         if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
-            entity = new HttpEntity<>(createHeaders(headerKey, token));
+            headers = createHeaders(headerKey, token);
         }
 
-        return this.makeRestCallGet(url, entity);
+        return this.makeRestCallGet(url, headers);
 
     }
 
+    /**
+     * Make a GET call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
+     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
+     * When userInfo is null, no header is added
+     * @param url
+     * @param userInfo
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        HttpEntity entity = null;
+        HttpHeaders headers = null;
         if (userInfo != null && StringUtils.isNotEmpty(userInfo.getFormattedString())) {
-            entity = new HttpEntity<>(createHeaders(userInfo.getFormattedString()));
+            headers = createHeaders(userInfo.getFormattedString());
         }
-        return this.makeRestCallGet(url, entity);
+        return this.makeRestCallGet(url, headers);
     }
 
     protected HttpHeaders createHeaders(RestUserInfo restUserInfo) {
