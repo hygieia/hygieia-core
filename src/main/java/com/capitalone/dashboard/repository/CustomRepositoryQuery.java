@@ -4,6 +4,7 @@ import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Metadata;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface CustomRepositoryQuery {
     List<Component> findComponents(Collector collector, CollectorItem collectorItem);
     List<Component> findComponents(ObjectId collectorId, CollectorType collectorType, CollectorItem collectorItem);
     List<Component> findComponents(ObjectId collectorId, CollectorType collectorType, ObjectId collectorItemId);
+    Iterable<Metadata> findAllMetaDataBySearchQuery(String searchKey, String value);
 }
