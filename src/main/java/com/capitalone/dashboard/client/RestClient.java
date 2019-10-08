@@ -42,7 +42,7 @@ public class RestClient {
      * @param body Cannot be null
      * @return
      */
-    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
+    private <T> ResponseEntity<String> makeRestCallPost_private(String url, HttpHeaders headers, T body) {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
@@ -62,7 +62,29 @@ public class RestClient {
     }
 
     /**
-     * Make a POST call with no HTTP headers
+     * The general POST call taking a JSONObject as the body
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
+        return this.makeRestCallPost_private(url, headers, body);
+    }
+
+    /**
+     * The general POST call taking a String as the body, for non-json data
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, String body) {
+        return this.makeRestCallPost_private(url, headers, body);
+    }
+
+    /**
+     * Make a POST call with no HTTP headers and a Json body
      *
      * @param url
      * @param body Cannot be null
@@ -140,6 +162,7 @@ public class RestClient {
         }
         return response;
     }
+
 
     /**
      * Make a GET call without headers
