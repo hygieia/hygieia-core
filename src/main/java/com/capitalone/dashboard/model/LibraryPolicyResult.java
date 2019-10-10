@@ -25,6 +25,7 @@ public class LibraryPolicyResult extends BaseModel {
     private Integer knownComponentCount;
     private List<PolicyScanMetric> policyAlert = new ArrayList<>();
     private ObjectId buildId;
+    private String scanState;
 
     public static class Threat {
         LibraryPolicyThreatLevel level;
@@ -248,4 +249,10 @@ public class LibraryPolicyResult extends BaseModel {
     public ObjectId getBuildId() { return buildId; }
 
     public void setBuildId(ObjectId buildId) { this.buildId = buildId; }
+
+    public void setScanState(String scanState) { this.scanState = scanState; }
+
+    public String getScanState() { return this.scanState; }
+
+
 }
