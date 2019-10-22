@@ -52,6 +52,7 @@ public class RestClient {
             status = response.getStatusCode();
         } catch (HttpStatusCodeException e) {
             status = e.getStatusCode();
+            LOG.info("status=" + status + ", requestBody=" + body);
             throw e;
         } finally {
             long end = System.currentTimeMillis();
