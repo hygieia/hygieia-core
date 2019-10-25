@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import java.nio.charset.StandardCharsets;
@@ -33,32 +35,110 @@ public class RestClient {
         this.restOperations = restOperationsSupplier.get();
     }
 
+    /**
+     * The most general version of POST call
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    private <T> ResponseEntity<String> makeRestCallPost_private(String url, HttpHeaders headers, T body) {
+
+        long start = System.currentTimeMillis();
+        ResponseEntity<String> response;
+        HttpStatus status = null;
+        try {
+            response = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
+            status = response.getStatusCode();
+        } catch (HttpStatusCodeException e) {
+            status = e.getStatusCode();
+            throw e;
+        } finally {
+            long end = System.currentTimeMillis();
+            LOG.info("makeRestCall op=POST url=" + url + ", status=" + status + " duration=" + (end - start));
+        }
+
+        return response;
+    }
+
+    /**
+     * The general POST call taking a JSONObject as the body
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
+        return this.makeRestCallPost_private(url, headers, body);
+    }
+
+    /**
+     * The general POST call taking a String as the body, for non-json data
+     * @param url
+     * @param headers HTTP headers, can be null
+     * @param body Cannot be null
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, String body) {
+        return this.makeRestCallPost_private(url, headers, body);
+    }
+
+    /**
+     * Make a POST call with no HTTP headers and a Json body
+     *
+     * @param url
+     * @param body Cannot be null
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, null), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallPost(url, (HttpHeaders)null, body);
     }
 
+    /**
+     * Make a POST call with a single header, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @param body
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            return makeRestCallPost(url, body);
+        HttpHeaders headers = null;
+        if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
+            headers = createHeaders(headerKey, token);
         }
+
+        return this.makeRestCallPost(url, headers, body);
+    }
+
+    /**
+     * Make a POST call with a single header for graphql calls, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @param body
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPostGraphQL(String url, String headerKey, String token, JSONObject body) {
+        if (restOperations == null) { return null; }
+
+        if(StringUtils.isEmpty(headerKey) && StringUtils.isEmpty(token) ) { return null; }
 
         long start = System.currentTimeMillis();
 
+        HttpHeaders headers = createHeaders(headerKey, token);
+        //This Header is needed for making GraphQL calls
+        headers.add("Content-Type","application/json");
         ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, createHeaders(headerKey, token)), String.class);
+                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
 
         long end = System.currentTimeMillis();
 
@@ -67,73 +147,104 @@ public class RestClient {
         return response;
     }
 
+    /**
+     * Make a POST call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
+     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
+     * When userInfo is null, no header is added
+     * @param url
+     * @param userInfo
+     * @param body
+     * @return
+     */
     public ResponseEntity<String> makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
         if (restOperations == null) { return null; }
 
-        if ((userInfo == null)) {
-            return makeRestCallPost(url, body);
+        HttpHeaders headers = null;
+        if ((userInfo != null)) {
+            headers = createHeaders(userInfo.getFormattedString());
         }
 
+        return this.makeRestCallPost(url, headers, body);
+    }
+
+    /**
+     * The most general form of GET calls.
+     * @param url
+     * @param headers Can be null if no header is needed
+     * @return
+     * @throws RestClientException
+     */
+    public ResponseEntity<String> makeRestCallGet(String url, HttpHeaders headers) throws RestClientException {
+
         long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, createHeaders(userInfo.getFormattedString())), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
+        ResponseEntity<String> response;
+        HttpStatus status = null;
+        try {
+            HttpEntity entity = headers==null?null:new HttpEntity(headers);
+            response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
+            status = response.getStatusCode();
+        } catch (HttpStatusCodeException e) {
+            status = e.getStatusCode();
+            throw e;
+        } finally {
+            long end = System.currentTimeMillis();
+            LOG.info("makeRestCall op=GET url=" + url + " status=" + status + " duration=" + (end - start));
+        }
         return response;
     }
 
+
+    /**
+     * Make a GET call without headers
+     * @param url
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, null, String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallGet(url, (HttpHeaders)null);
     }
 
+    /**
+     * Make a GET call with a single header, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        if (StringUtils.isEmpty(headerKey) || StringUtils.isEmpty(token)) {
-            return makeRestCallGet(url);
+        HttpHeaders headers = null;
+        if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
+            headers = createHeaders(headerKey, token);
         }
 
-        long start = System.currentTimeMillis();
+        return this.makeRestCallGet(url, headers);
 
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity<>(createHeaders(headerKey, token)), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
     }
 
+    /**
+     * Make a GET call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
+     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
+     * When userInfo is null, no header is added
+     * @param url
+     * @param userInfo
+     * @return
+     * @throws RestClientException
+     */
     public ResponseEntity<String> makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
         if (restOperations == null) { return null; }
 
-        if ((userInfo == null) || StringUtils.isEmpty(userInfo.getFormattedString())) {
-            return makeRestCallGet(url);
+        HttpHeaders headers = null;
+        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getFormattedString())) {
+            headers = createHeaders(userInfo.getFormattedString());
         }
-
-        long start = System.currentTimeMillis();
-
-        ResponseEntity<String> response = restOperations.exchange(url, HttpMethod.GET, new HttpEntity<>(createHeaders(userInfo.getFormattedString())), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a get call to "+url+" = "+(end-start));
-
-        return response;
+        return this.makeRestCallGet(url, headers);
     }
 
     protected HttpHeaders createHeaders(RestUserInfo restUserInfo) {

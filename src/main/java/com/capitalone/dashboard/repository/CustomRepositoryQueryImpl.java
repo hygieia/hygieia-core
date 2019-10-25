@@ -1,13 +1,11 @@
 package com.capitalone.dashboard.repository;
 
 
-import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
-import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.Metadata;
 import com.capitalone.dashboard.util.GitHubParsedUrl;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Component
 public class CustomRepositoryQueryImpl implements CustomRepositoryQuery {
@@ -77,7 +72,13 @@ public class CustomRepositoryQueryImpl implements CustomRepositoryQuery {
         return template.find(new Query(c), com.capitalone.dashboard.model.Component.class);
     }
 
-	private String getGitHubParsedString(Map<String, Object> options, Map.Entry<String, Object> e) {
+    @Override
+    public List<Metadata> findAllMetaDataBySearchQuery(String searchKey, String value) {
+        Criteria c = Criteria.where(searchKey).is(value);
+        return template.find(new Query(c), Metadata.class);
+    }
+
+    private String getGitHubParsedString(Map<String, Object> options, Map.Entry<String, Object> e) {
         String url = (String)options.get(e.getKey());
         GitHubParsedUrl gitHubParsedUrl = new GitHubParsedUrl(url);
         return gitHubParsedUrl.getUrl();

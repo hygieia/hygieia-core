@@ -9,6 +9,7 @@ import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.FeatureFlag;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.StandardWidget;
 import com.capitalone.dashboard.model.Widget;
@@ -19,10 +20,12 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
+import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +33,8 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,13 +47,16 @@ public class SyncDashboard {
     private final BuildRepository buildRepository;
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
+    private final FeatureFlagRepository featureFlagRepository;
+    private static final String AUTO_DISCOVERY_UPDATE = "auto_discovery_update";
 
 
     @Autowired
     public SyncDashboard(DashboardRepository dashboardRepository, ComponentRepository componentRepository,
                          CollectorRepository collectorRepository, CollectorItemRepository collectorItemRepository,
                          BuildRepository buildRepository, RelatedCollectorItemRepository relatedCollectorItemRepository,
-                         CodeQualityRepository codeQualityRepository) {
+                         CodeQualityRepository codeQualityRepository,
+                         FeatureFlagRepository featureFlagRepository) {
         this.dashboardRepository = dashboardRepository;
         this.componentRepository = componentRepository;
         this.collectorRepository = collectorRepository;
@@ -56,6 +64,7 @@ public class SyncDashboard {
         this.buildRepository = buildRepository;
         this.relatedCollectorItemRepository = relatedCollectorItemRepository;
         this.codeQualityRepository = codeQualityRepository;
+        this.featureFlagRepository = featureFlagRepository;
     }
 
 
@@ -79,10 +88,15 @@ public class SyncDashboard {
      */
     private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) {
         if (CollectionUtils.isEmpty(existingDashboards)) return;
-        /**
-         * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
-         */
-        if(CollectorType.SCM.equals(collectorType)) return;
+        FeatureFlag ff = featureFlagRepository.findByName(AUTO_DISCOVERY_UPDATE);
+        if(!Objects.isNull(ff)){
+            auto_discover_flags_check(collectorType, ff);
+        }else{
+            /**
+             * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
+             */
+            if(CollectorType.SCM.equals(collectorType)) return;
+        }
 
         for(Dashboard dashboard : existingDashboards) {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
@@ -107,6 +121,22 @@ public class SyncDashboard {
         }
     }
 
+    private void auto_discover_flags_check(CollectorType collectorType,FeatureFlag f){
+        if(CollectorType.SCM.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.CodeQuality.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.LibraryPolicy.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.StaticSecurityScan.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Artifact.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Build.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Deployment.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.AgileTool.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+        if(CollectorType.Test.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
+    }
+
+    private boolean allow(Map<String,Boolean> flags, CollectorType collectorType){
+        String key = collectorType.toString().toLowerCase();
+       return flags.get(key);
+    }
     /*
     * Additional logic for association by Collector Type
     * */
