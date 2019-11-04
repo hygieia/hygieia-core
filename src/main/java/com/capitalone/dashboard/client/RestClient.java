@@ -119,6 +119,36 @@ public class RestClient {
     }
 
     /**
+     * Make a POST call with a single header for graphql calls, Authorization, which has the value "[headerKey] [token]".
+     * E.g. Authorization: token xxxxxxxxxxx
+     * When either headerKey or token is null, no header is added
+     * @param url
+     * @param headerKey
+     * @param token
+     * @param body
+     * @return
+     */
+    public ResponseEntity<String> makeRestCallPostGraphQL(String url, String headerKey, String token, JSONObject body) {
+        if (restOperations == null) { return null; }
+
+        if(StringUtils.isEmpty(headerKey) && StringUtils.isEmpty(token) ) { return null; }
+
+        long start = System.currentTimeMillis();
+
+        HttpHeaders headers = createHeaders(headerKey, token);
+        //This Header is needed for making GraphQL calls
+        headers.add("Content-Type","application/json");
+        ResponseEntity<String> response
+                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
+
+        long end = System.currentTimeMillis();
+
+        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
+
+        return response;
+    }
+
+    /**
      * Make a POST call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
      * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
      * When userInfo is null, no header is added
