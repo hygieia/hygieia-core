@@ -110,7 +110,6 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
      * @param environmentComponent
      * @param pipeline
      */
-    //@SuppressWarnings("PMD.NPathComplexity")
     private void addCommitsToEnvironmentStage(EnvironmentComponent environmentComponent, Pipeline pipeline){
         EnvironmentStage currentStage = getOrCreateEnvironmentStage(pipeline, environmentComponent.getEnvironmentName());
         String pseudoEnvName = environmentComponent.getEnvironmentName();
