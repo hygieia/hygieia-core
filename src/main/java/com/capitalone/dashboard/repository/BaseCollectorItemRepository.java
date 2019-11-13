@@ -1,16 +1,15 @@
 package com.capitalone.dashboard.repository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
+import com.capitalone.dashboard.model.CollectorItem;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.capitalone.dashboard.model.CollectorItem;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base {@link CollectorItem} repository that provides methods useful for any {@link CollectorItem}
@@ -39,6 +38,7 @@ public interface BaseCollectorItemRepository<T extends CollectorItem> extends Pa
      * Finds paged results of {@link CollectorItem}s that match the provided id's.
      *
      * @param ids {@link Collection} of ids
+     * @param description {@link String}
      * @param {@link org.springframework.data.domain.Pageable} object to determine which page to return
      * @return page of {@link CollectorItem}s
      */
