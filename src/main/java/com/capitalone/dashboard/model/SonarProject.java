@@ -3,9 +3,9 @@ package com.capitalone.dashboard.model;
 import java.util.Objects;
 
 public class SonarProject extends CollectorItem {
-    protected static final String INSTANCE_URL = "instanceUrl";
-    protected static final String PROJECT_NAME = "projectName";
-    protected static final String PROJECT_ID = "projectId";
+    private static final String INSTANCE_URL = "instanceUrl";
+    private static final String PROJECT_NAME = "projectName";
+    private static final String PROJECT_ID = "projectId";
 
     public String getInstanceUrl() {
         return (String) getOptions().get(INSTANCE_URL);
@@ -34,10 +34,9 @@ public class SonarProject extends CollectorItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof SonarProject)) return false;
+        if (!(o instanceof SonarProject)) return false;
 
         SonarProject that = (SonarProject) o;
-        if (that == null) return false;
         return Objects.equals(getProjectId(), that.getProjectId()) && Objects.equals(getInstanceUrl(), that.getInstanceUrl());
     }
 
