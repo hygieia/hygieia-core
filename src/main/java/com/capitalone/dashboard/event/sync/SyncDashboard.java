@@ -22,19 +22,23 @@ import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
+import com.capitalone.dashboard.util.FeatureFlagsEnum;
+import com.capitalone.dashboard.util.HygieiaUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.PredicateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,7 +52,6 @@ public class SyncDashboard {
     private final RelatedCollectorItemRepository relatedCollectorItemRepository;
     private final CodeQualityRepository codeQualityRepository;
     private final FeatureFlagRepository featureFlagRepository;
-    private static final String AUTO_DISCOVERY_UPDATE = "auto_discovery_update";
 
 
     @Autowired
@@ -71,9 +74,9 @@ public class SyncDashboard {
     /**
      * Get the widget by name from a dashboard
      *
-     * @param name
-     * @param dashboard
-     * @return widget
+     * @param name name of the widget
+     * @param dashboard Dashboard
+     * @return widget Widget
      */
     public Widget getWidget(String name, Dashboard dashboard) {
         List<Widget> widgets = dashboard.getWidgets();
@@ -88,15 +91,18 @@ public class SyncDashboard {
      */
     private void addCollectorItemToDashboard(List<Dashboard> existingDashboards, CollectorItem collectorItem, CollectorType collectorType, boolean addWidget) {
         if (CollectionUtils.isEmpty(existingDashboards)) return;
-        FeatureFlag ff = featureFlagRepository.findByName(AUTO_DISCOVERY_UPDATE);
-        if(!Objects.isNull(ff)){
-            auto_discover_flags_check(collectorType, ff);
-        }else{
-            /**
-             * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
-             */
-            if(CollectorType.SCM.equals(collectorType)) return;
-        }
+
+        /*
+         * Add feature flag capability to toggle between automatic association vs manual association
+         * if auto_discover record exists then it is considered manual association and the association
+         * will be handled by the hygieia-relateditems-collector.
+         */
+        FeatureFlag featureFlag = featureFlagRepository.findByName(FeatureFlagsEnum.auto_discover.toString());
+
+        /*
+         * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
+         */
+        if(CollectorType.SCM.equals(collectorType)) return;
 
         for(Dashboard dashboard : existingDashboards) {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
@@ -105,7 +111,7 @@ public class SyncDashboard {
             if (component == null) continue;
 
             // if the additional association logic does not comply do not associate
-            if(!associateByType(collectorType, component, collectorItem)) continue;
+            if(!associateByType(collectorType, component, collectorItem, featureFlag)) continue;
 
             component.addCollectorItem(collectorType, collectorItem);
             componentRepository.save(component);
@@ -117,34 +123,19 @@ public class SyncDashboard {
                 dashboard.getWidgets().add(widget);
                 dashboardRepository.save(dashboard);
             }
-
         }
     }
 
-    private void auto_discover_flags_check(CollectorType collectorType,FeatureFlag f){
-        if(CollectorType.SCM.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.CodeQuality.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.LibraryPolicy.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.StaticSecurityScan.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.Artifact.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.Build.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.Deployment.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.AgileTool.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-        if(CollectorType.Test.equals(collectorType) && !allow(f.getFlags(),collectorType)) return;
-    }
 
-    private boolean allow(Map<String,Boolean> flags, CollectorType collectorType){
-        String key = collectorType.toString().toLowerCase();
-       return flags.get(key);
-    }
     /*
     * Additional logic for association by Collector Type
     * */
-    private boolean associateByType(CollectorType collectorType, Component component, CollectorItem collectorItem) {
+    private boolean associateByType(CollectorType collectorType, Component component, CollectorItem collectorItem, FeatureFlag featureFlag) {
         switch (collectorType) {
-            case Build: return associateBuild(component,collectorItem);
-            case CodeQuality: return associateCodeQuality(component,collectorItem);
-            default: return true;
+            // if auto_discover feature flag is turned on then do not sync
+            case Build: return HygieiaUtils.allowSync(featureFlag, collectorType) && associateBuild(component,collectorItem);
+            case CodeQuality: return HygieiaUtils.allowSync(featureFlag, collectorType) && associateCodeQuality(component,collectorItem);
+            default: return HygieiaUtils.allowSync(featureFlag, collectorType);
         }
     }
 
@@ -196,7 +187,7 @@ public class SyncDashboard {
     }
 
     /*
-    * Retrieve Repotype from Build.
+    * Retrieve Repository type from Build.
     * */
     private RepoBranch.RepoType getRepoType(@NotNull Build build) {
         if(CollectionUtils.isEmpty(build.getCodeRepos())) return RepoBranch.RepoType.Unknown;
@@ -229,7 +220,7 @@ public class SyncDashboard {
      */
     public void sync(Build build) {
 
-        /** Step 1: Add build collector item to Dashboard if built repo is in on the dashboard. **/
+        /* Step 1: Add build collector item to Dashboard if built repo is in on the dashboard. */
 
         // Find the collectorItem of build
         CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());
@@ -246,14 +237,21 @@ public class SyncDashboard {
         Set<CollectorItem> repoCollectorItemsInBuild = new HashSet<>();
 
         //create a list of the repo collector items that are being built, most cases have only 1
-        repos.stream().map(repoBranch -> collectorItemRepository.findAllByOptionNameValueAndCollectorIdsIn("url", repoBranch.getUrl(), scmCollectorIds))
-                .forEach(collectorItems -> CollectionUtils.addAll(repoCollectorItemsInBuild, collectorItems.iterator()));
+        if (CollectionUtils.isEmpty(repos)) return;
+        CollectionUtils.filter(repos, PredicateUtils.notNullPredicate());
+        repos.forEach((
+                repoBranch -> {
+                    Map<String, Object> options = new HashMap<>();
+                    options.put("url", repoBranch.getUrl());
+                    if (StringUtils.isNotEmpty(repoBranch.getBranch())) {
+                        options.put("branch", repoBranch.getBranch());
+                    }
+                    repoCollectorItemsInBuild.addAll(IterableUtils.toList(collectorItemRepository.findAllByOptionMapAndCollectorIdsIn(options, scmCollectorIds)));
+                }));
 
         // For each repo collector item, add the item to the referenced dashboards
         repoCollectorItemsInBuild.forEach(
-                ci -> {
-                    relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(), Reason.BUILD_REPO_REASON.getAction());
-                }
+                ci -> relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(), Reason.BUILD_REPO_REASON.getAction())
         );
     }
 

@@ -1,7 +1,10 @@
 package com.capitalone.dashboard.util;
 
 
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.FeatureFlag;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 
@@ -137,7 +140,25 @@ public class HygieiaUtils {
 		for (String value: values) {
 			if (StringUtils.isEmpty(value)) { return true; }
 		}
-
 		return false;
 	}
+
+	/*
+	 * If Feature flag is present then do not sync else allow to sync.
+	 */
+	public static boolean allowSync(FeatureFlag featureFlag, CollectorType collectorType){
+		if(featureFlag == null) return true;
+		if(MapUtils.isEmpty(featureFlag.getFlags())) return true;
+		return !featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+	}
+
+	/*
+	 * If Feature flag is present then check for the collectortype and see if its enabled for AutoDiscover.
+	 */
+	public static boolean allowAutoDiscover(FeatureFlag featureFlag, CollectorType collectorType) {
+		if(featureFlag == null) return false;
+		if(MapUtils.isEmpty(featureFlag.getFlags())) return false;
+		return featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+	}
+
 }
