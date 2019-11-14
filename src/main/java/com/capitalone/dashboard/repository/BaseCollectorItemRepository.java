@@ -39,7 +39,7 @@ public interface BaseCollectorItemRepository<T extends CollectorItem> extends Pa
      *
      * @param ids {@link Collection} of ids
      * @param description {@link String}
-     * @param {@link org.springframework.data.domain.Pageable} object to determine which page to return
+     * @param pageable {@link org.springframework.data.domain.Pageable} object to determine which page to return
      * @return page of {@link CollectorItem}s
      */
     Page<T> findByCollectorIdInAndDescriptionContainingIgnoreCase(Collection<ObjectId> ids, String description, Pageable pageable);
