@@ -5,11 +5,13 @@ import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.FeatureFlag;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.util.Objects;
 
 public class HygieiaUtils {
 	private static final Logger LOGGER = Logger.getLogger(HygieiaUtils.class);
@@ -148,8 +150,9 @@ public class HygieiaUtils {
 	 */
 	public static boolean allowSync(FeatureFlag featureFlag, CollectorType collectorType){
 		if(featureFlag == null) return true;
-		if(MapUtils.isEmpty(featureFlag.getFlags())) return true;
-		return !featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key)) ) return true;
+		return !BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
 	}
 
 	/*
@@ -157,8 +160,9 @@ public class HygieiaUtils {
 	 */
 	public static boolean allowAutoDiscover(FeatureFlag featureFlag, CollectorType collectorType) {
 		if(featureFlag == null) return false;
-		if(MapUtils.isEmpty(featureFlag.getFlags())) return false;
-		return featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key))) return false;
+		return BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
 	}
 
 }
