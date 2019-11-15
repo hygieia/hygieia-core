@@ -148,8 +148,9 @@ public class HygieiaUtils {
 	 */
 	public static boolean allowSync(FeatureFlag featureFlag, CollectorType collectorType){
 		if(featureFlag == null) return true;
-		if(MapUtils.isEmpty(featureFlag.getFlags())) return true;
-		return !featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key)) ) return true;
+		return !BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
 	}
 
 	/*
@@ -157,8 +158,9 @@ public class HygieiaUtils {
 	 */
 	public static boolean allowAutoDiscover(FeatureFlag featureFlag, CollectorType collectorType) {
 		if(featureFlag == null) return false;
-		if(MapUtils.isEmpty(featureFlag.getFlags())) return false;
-		return featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString()));
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key))) return false;
+		return BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
 	}
 
 }
