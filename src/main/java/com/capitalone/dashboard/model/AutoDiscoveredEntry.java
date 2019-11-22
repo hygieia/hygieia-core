@@ -1,6 +1,8 @@
 package com.capitalone.dashboard.model;
 
 import com.capitalone.dashboard.misc.HygieiaException;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -12,22 +14,22 @@ import java.util.Map;
  */
 public class AutoDiscoveredEntry {
     @NotNull
-    AutoDiscoveryStatusType status;
+    private AutoDiscoveryStatusType status;
 
     @NotNull
-    String toolName;
+    private String toolName;
 
     @NotNull
-    String description;
+    private String description;
 
-    String niceName;
+    private String niceName;
 
-    boolean pushed = false;
+    private boolean pushed = false;
 
-    boolean enabled = false;
+    private boolean enabled = false;
 
     @NotEmpty
-    Map<String, Object> options = new HashMap<>();
+    private Map<String, Object> options = new HashMap<>();
 
     public String getToolName() {
         return toolName;
@@ -85,6 +87,30 @@ public class AutoDiscoveredEntry {
 
     public void setStatus(AutoDiscoveryStatusType status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AutoDiscoveredEntry that = (AutoDiscoveredEntry) o;
+
+        return new EqualsBuilder()
+                .append(status, that.status)
+                .append(description, that.description)
+                .append(options, that.options)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(status)
+                .append(description)
+                .append(options)
+                .toHashCode();
     }
 
     public AutoDiscoverCollectorItem toAutoDiscoverCollectorItem(Collector collector) throws HygieiaException {
