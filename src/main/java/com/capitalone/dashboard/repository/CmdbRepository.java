@@ -41,4 +41,6 @@ public interface CmdbRepository extends CrudRepository<Cmdb, ObjectId>  {
     Cmdb findByConfigurationItemAndItemTypeAndValidConfigItem(String configurationItem,String itemType, boolean isValid);
 
     List<Cmdb> findByBusinessOwnerAndItemTypeAndValidConfigItem(String businessOwner, String itemType, boolean isValid);
+
+    List<Cmdb>  findByCommonNameOrderByTimestamp(String commonName);
 }
