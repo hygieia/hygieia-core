@@ -41,7 +41,7 @@
         <java.compilation.target>1.8</java.compilation.target>
         <joda-time.version>2.7</joda-time.version>
         <joda-convert.version>1.8.1</joda-convert.version>
-        <jackson.version>2.10</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <junit.version>4.11</junit.version>
         <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
