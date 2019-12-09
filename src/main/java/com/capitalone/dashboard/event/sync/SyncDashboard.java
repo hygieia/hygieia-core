@@ -105,7 +105,8 @@ public class SyncDashboard {
         if(CollectorType.SCM.equals(collectorType)) return;
 
         for(Dashboard dashboard : existingDashboards) {
-            ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
+            if (CollectionUtils.isEmpty(dashboard.getApplication().getComponents())) continue;
+            ObjectId componentId = dashboard.getApplication().getComponents().get(0).getId();
             if (componentId == null) continue;
             StandardWidget standardWidget = new StandardWidget(collectorType, componentId);
             Component component = componentRepository.findOne(componentId);
