@@ -92,14 +92,15 @@ public class SyncDashboard {
         if(!Objects.isNull(ff)){
             auto_discover_flags_check(collectorType, ff);
         }else{
-            /**
-             * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
-             */
-            if(CollectorType.SCM.equals(collectorType)) return;
-        }
+        /**
+         * The assumption is the dashboard already has a SCM widget and the sync process should not add SCM widgets.
+         */
+        if(CollectorType.SCM.equals(collectorType)) return;
+    }
 
         for(Dashboard dashboard : existingDashboards) {
             ObjectId componentId = dashboard.getWidgets().get(0).getComponentId();
+            if (componentId == null) continue;
             StandardWidget standardWidget = new StandardWidget(collectorType, componentId);
             Component component = componentRepository.findOne(componentId);
             if (component == null) continue;
