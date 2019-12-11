@@ -43,10 +43,9 @@
         <joda-convert.version>1.8.1</joda-convert.version>
         <jackson.version>2.10.0</jackson.version>
         <junit.version>4.11</junit.version>
-        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
-        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
         <maven.pmd.plugin.version>3.11.0</maven.pmd.plugin.version>
         <maven.project-info.version>3.0.0</maven.project-info.version>
