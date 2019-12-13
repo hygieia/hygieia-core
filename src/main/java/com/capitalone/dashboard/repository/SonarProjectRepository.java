@@ -13,4 +13,7 @@ public interface SonarProjectRepository extends BaseCollectorItemRepository<Sona
 
     @Query(value="{ 'collectorId' : ?0, options.instanceUrl : ?1, enabled: true}")
     List<SonarProject> findEnabledProjects(ObjectId collectorId, String instanceUrl);
+
+    @Query(value="{ 'collectorId' : ?0, options.instanceUrl : ?1, options.projectName : ?2}")
+    SonarProject findSonarProjectByProjectName(ObjectId collectorId, String instanceUrl, String projectName);
 }
