@@ -11,8 +11,6 @@ import com.capitalone.dashboard.model.quality.CucumberJsonReport;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,6 @@ import java.util.List;
  */
 
 public class CucumberJsonToTestCapabilityTransformer {
-    private static final Log logger = LogFactory.getLog(CucumberJsonToTestCapabilityTransformer.class);
 
     private BuildDataCreateRequest buildDataCreateRequest;
     private String capabilityDescription;
