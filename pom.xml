@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.1.19-SNAPSHOT</version>
+    <version>3.2.1-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -43,10 +43,9 @@
         <joda-convert.version>1.8.1</joda-convert.version>
         <jackson.version>2.10.0</jackson.version>
         <junit.version>4.11</junit.version>
-        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
-        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
         <maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
         <maven.pmd.plugin.version>3.11.0</maven.pmd.plugin.version>
         <maven.project-info.version>3.0.0</maven.project-info.version>
