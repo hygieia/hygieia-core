@@ -13,4 +13,9 @@ public interface GitHubRepoRepository extends BaseCollectorItemRepository<GitHub
 
     @Query(value="{ 'collectorId' : ?0, enabled: true}")
     List<GitHubRepo> findEnabledGitHubRepos(ObjectId collectorId);
+
+    @Query(value="{ 'collectorId' : ?0, options.url : {$regex : '^?1$', $options: 'i'}, options.branch : {$regex : '^?2$', $options: 'i'}}")
+    List<GitHubRepo> findRepoByUrlAndBranch(ObjectId collectorId, String repo, String branch);
+
+
 }
