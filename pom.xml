@@ -161,6 +161,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Misc Deps -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+
         <!-- apache commons -->
         <dependency>
             <groupId>commons-codec</groupId>
