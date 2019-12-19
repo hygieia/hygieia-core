@@ -11,6 +11,7 @@ import com.capitalone.dashboard.model.quality.CucumberJsonReport;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,7 +252,7 @@ public class CucumberJsonToTestCapabilityTransformer {
         cap.setUnknownStatusTestSuiteCount(testSuiteUnknownCount);
         cap.setTotalTestSuiteCount(testSuites.size());
         cap.setDuration(duration);
-        cap.setExecutionId(String.valueOf(buildDataCreateRequest.getNumber()));
+        cap.setExecutionId(StringUtils.isBlank(buildDataCreateRequest.getNumber()) ? null: String.valueOf(buildDataCreateRequest.getNumber()));
         cap.setDescription(this.capabilityDescription);
         return cap;
     }
