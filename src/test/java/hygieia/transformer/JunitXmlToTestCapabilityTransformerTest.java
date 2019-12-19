@@ -7,6 +7,7 @@ import com.capitalone.dashboard.model.quality.JunitXmlReport;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import java.io.File;
@@ -21,6 +22,16 @@ public class JunitXmlToTestCapabilityTransformerTest {
 
     JunitXmlToTestCapabilityTransformer sut = new JunitXmlToTestCapabilityTransformer();
 
+    private static  JAXBContext jaxbContext;
+
+    static {
+        try {
+            jaxbContext = JAXBContext.newInstance(JunitXmlReport.class);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void producesJunitTestResult() throws Exception {
 
@@ -28,7 +39,7 @@ public class JunitXmlToTestCapabilityTransformerTest {
         File file = new File(url.getPath());
         FileReader fileReader = new FileReader(file);
         JunitXmlReport responseReport = null;
-        JAXBContext jaxbContext = JAXBContext.newInstance(JunitXmlReport.class);
+
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         responseReport = (JunitXmlReport) unmarshaller.unmarshal(fileReader);
 
