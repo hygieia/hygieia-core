@@ -6,7 +6,8 @@ import com.capitalone.dashboard.model.TestCaseStatus;
 import com.capitalone.dashboard.model.TestSuite;
 import com.capitalone.dashboard.model.TestSuiteType;
 import com.capitalone.dashboard.model.quality.JunitXmlReport;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,6 @@ public class JunitXmlToTestCapabilityTransformer {
 
     private TestCase parseScenarioAsTestCase(JunitXmlReport.Testcase scenarioElement) {
         TestCase testCase = new TestCase();
-       // testCase.setId(scenarioElement.getId());
         testCase.setDescription( scenarioElement.getName());
         // Parse each step as a TestCase
         int testStepSuccessCount = 0, testStepFailCount = 0, testStepSkippedCount = 0, testStepUnknownCount = 0;
