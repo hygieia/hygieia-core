@@ -252,7 +252,7 @@ public class CucumberJsonToTestCapabilityTransformer {
         cap.setUnknownStatusTestSuiteCount(testSuiteUnknownCount);
         cap.setTotalTestSuiteCount(testSuites.size());
         cap.setDuration(duration);
-        cap.setExecutionId(StringUtils.isBlank(buildDataCreateRequest.getNumber()) ? null: String.valueOf(buildDataCreateRequest.getNumber()));
+        cap.setExecutionId(buildDataCreateRequest == null ? null : String.valueOf(buildDataCreateRequest.getNumber()));
         cap.setDescription(this.capabilityDescription);
         return cap;
     }
