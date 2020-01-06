@@ -37,13 +37,13 @@ public class SonarProject extends CollectorItem {
         if (!(o instanceof SonarProject)) return false;
 
         SonarProject that = (SonarProject) o;
-        return Objects.equals(getProjectId(), that.getProjectId()) && Objects.equals(getInstanceUrl(), that.getInstanceUrl());
+        return Objects.equals(getProjectName(), that.getProjectName()) && Objects.equals(getInstanceUrl(), that.getInstanceUrl());
     }
 
     @Override
     public int hashCode() {
         int result = getInstanceUrl().hashCode();
-        result = 31 * result + getProjectId().hashCode();
+        result = 31 * result + getProjectName().hashCode();
         return result;
     }
 }
