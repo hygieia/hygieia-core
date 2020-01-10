@@ -145,12 +145,12 @@ public class LibraryPolicyResult extends BaseModel {
         }
     }
 
-    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String component,String age) {
+    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String dispositionStatus, String component,String age) {
         Set<Threat> threatSet = threats.get(type);
 
         if (CollectionUtils.isEmpty(threatSet)) {
             Threat threat = new Threat(level, 1);
-            threat.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,age));
+            threat.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
             threat.addDispositionCount(disposition);
             setCriticalAndHighVulAge(age, threat,disposition);
             Set<Threat> set = new HashSet<>();
@@ -163,8 +163,8 @@ public class LibraryPolicyResult extends BaseModel {
                     t.setCount(t.getCount() + 1);
                     t.addDispositionCount(disposition);
                     setCriticalAndHighVulAge(age, t,disposition);
-                    if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,age))) {
-                        t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,age));
+                    if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age))) {
+                        t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
                     }
                     threatSet.add(t);
                     threats.put(type, threatSet);
@@ -174,8 +174,8 @@ public class LibraryPolicyResult extends BaseModel {
             }
             if (!found) {
                 Threat t = new Threat(level, 1);
-                if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,age))) {
-                    t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,age));
+                if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age))) {
+                    t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
                 }
                 t.addDispositionCount(disposition);
                 setCriticalAndHighVulAge(age, t,disposition);
@@ -241,8 +241,8 @@ public class LibraryPolicyResult extends BaseModel {
         return String.format("%s##%s", component, disposition.toString());
     }
 
-    private String getComponentPlusDispositionPlusAge (String component, LibraryPolicyThreatDisposition disposition,String age) {
-        return String.format("%s##%s##%s", component, disposition.toString(),age);
+    private String getComponentPlusDispositionPlusAge (String component, LibraryPolicyThreatDisposition disposition, String dispositionStatus,String age) {
+        return String.format("%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus);
     }
 
 
