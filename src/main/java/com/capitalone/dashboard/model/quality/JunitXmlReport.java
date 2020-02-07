@@ -145,8 +145,11 @@ public class JunitXmlReport implements QualityVisitee {
     protected int errors;
     @XmlAttribute(name = "time", required = true)
     protected BigDecimal time;
-    @XmlAttribute(name = "skipped", required = true)
+    @XmlAttribute(name = "skipped")
     protected String skipped;
+
+    @XmlAttribute(name = "skips")
+    protected String skips;
 
     /**
      * Gets the value of the properties property.
@@ -363,6 +366,14 @@ public class JunitXmlReport implements QualityVisitee {
 
     public void setSkipped(String skipped) {
         this.skipped = skipped;
+    }
+
+    public String getSkips() {
+        return skips;
+    }
+
+    public void setSkips(String skips) {
+        this.skips = skips;
     }
 
     @Override
