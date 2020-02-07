@@ -1,14 +1,16 @@
 package com.capitalone.dashboard.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A self-contained, independently deployable piece of the larger application. Each component of an application
@@ -48,21 +50,22 @@ public class Component extends BaseModel {
         return collectorItems;
     }
 
-    public void setCollectorItems(Map<CollectorType, List<CollectorItem>> collectorItems) {
-        this.collectorItems = collectorItems;
-    }
-
     public List<CollectorItem> getCollectorItems(CollectorType type) {
         return collectorItems != null && collectorItems.get(type) != null ? collectorItems.get(type) : new ArrayList<>();
     }
 
+    public void setAllCollectorItems(Map<CollectorType, List<CollectorItem>> replacementCollectorItems) {
+        this.collectorItems = replacementCollectorItems;
+    }
+
     public void addCollectorItem(CollectorType collectorType, CollectorItem collectorItem) {
-        // Currently only one collectorItem per collectorType is supported
         if (collectorItems.get(collectorType) == null) {
-            collectorItems.put(collectorType, Collections.singletonList(collectorItem));
+            List<CollectorItem> newList = new ArrayList<>();
+            newList.add(collectorItem);
+            collectorItems.put(collectorType,newList);
         } else {
             List<CollectorItem> existing = new ArrayList<> (collectorItems.get(collectorType));
-            if (isNewCollectorItem(existing, collectorItem)) {
+            if(isNewCollectorItem(existing,collectorItem)) {
                 existing.add(collectorItem);
                 collectorItems.put(collectorType, existing);
             }
@@ -92,6 +95,16 @@ public class Component extends BaseModel {
         }
         List<CollectorItem> collectorItems = new ArrayList<>(getCollectorItems().get(type));
         return collectorItems.get(0);
+    }
+
+    public CollectorItem getCollectorItemMatchingTypeAndCollectorItemId(CollectorType type, ObjectId... collectorItemIds) {
+        List<ObjectId> inputList = Arrays.asList(collectorItemIds);
+        List<CollectorItem> collectorItems = getCollectorItems().get(type);
+        if (null == collectorItems ) {
+                return  null;
+            }
+        Optional<CollectorItem> found = collectorItems.stream().filter(item -> inputList.contains(item.getId())).findFirst();
+        return found.isPresent() ? found.get() : null;
     }
 
     public CollectorItem getLastUpdatedCollectorItemForType(CollectorType type){

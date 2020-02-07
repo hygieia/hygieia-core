@@ -49,7 +49,7 @@ public class Dashboard extends BaseModel {
     //Default to HEADER
     private ScoreDisplayType scoreDisplay = ScoreDisplayType.HEADER;
 
-    private List<String> activeWidgets;
+    private List<ActiveWidget> activeWidgets;
 
     private long createdAt;
 
@@ -64,11 +64,12 @@ public class Dashboard extends BaseModel {
     Dashboard() {
     }
 
-    public Dashboard(String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+
+    public Dashboard(String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<ActiveWidget> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
         this(false, template, title, application, owners, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);
     }
 
-    public Dashboard(boolean remoteCreated, String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
+    public Dashboard(boolean remoteCreated, String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<ActiveWidget> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
         this.template = template;
         this.title = title;
         this.configurationItemBusServName = configurationItemBusServName;
@@ -190,11 +191,11 @@ public class Dashboard extends BaseModel {
         this.remoteCreated = remoteCreated;
     }
 
-    public List<String> getActiveWidgets() {
+    public List<ActiveWidget> getActiveWidgets() {
         return activeWidgets;
     }
 
-    public void setActiveWidgets(List<String> activeWidgets) {
+    public void setActiveWidgets(List<ActiveWidget> activeWidgets) {
         this.activeWidgets = activeWidgets;
     }
 

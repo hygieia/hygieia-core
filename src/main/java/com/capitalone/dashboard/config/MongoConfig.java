@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.config;
 
+import com.capitalone.dashboard.model.converter.ActiveWidgetReaderConverter;
 import com.capitalone.dashboard.repository.RepositoryPackage;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -10,8 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -39,6 +48,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private String userName;
     @Value("${dbpassword:}")
     private String password;
+
     @Value("${dbssl:false}")
     private String dbssl;
 
@@ -102,7 +112,25 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(mongo(), getDatabaseName());
+
+        MongoDbFactory factory = new SimpleMongoDbFactory(mongo(), getDatabaseName());
+        return new MongoTemplate(factory , mongoConverter(factory));
+    }
+
+    @Override
+    public CustomConversions customConversions(){
+        List<Converter<?, ?>> converters = new ArrayList<>();
+        converters.add(new ActiveWidgetReaderConverter());
+        return new CustomConversions(converters);
+    }
+
+    public MappingMongoConverter mongoConverter(MongoDbFactory factory) throws Exception {
+        MongoMappingContext mappingContext = new MongoMappingContext();
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
+        MappingMongoConverter mongoConverter = new MappingMongoConverter(dbRefResolver, mappingContext);
+        mongoConverter.setCustomConversions(customConversions());
+        mongoConverter.afterPropertiesSet();
+        return mongoConverter;
     }
 
     @Bean

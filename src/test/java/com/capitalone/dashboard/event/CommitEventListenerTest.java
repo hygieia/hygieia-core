@@ -1,20 +1,6 @@
 package com.capitalone.dashboard.event;
 
-import com.capitalone.dashboard.model.Application;
-import com.capitalone.dashboard.model.AuthType;
-import com.capitalone.dashboard.model.BaseModel;
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.CollectorType;
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.CommitType;
-import com.capitalone.dashboard.model.Component;
-import com.capitalone.dashboard.model.Dashboard;
-import com.capitalone.dashboard.model.DashboardType;
-import com.capitalone.dashboard.model.Owner;
-import com.capitalone.dashboard.model.Pipeline;
-import com.capitalone.dashboard.model.PipelineStage;
-import com.capitalone.dashboard.model.ScoreDisplayType;
+import com.capitalone.dashboard.model.*;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
@@ -184,7 +170,7 @@ public class CommitEventListenerTest {
         }
 
         Application application = new Application("app", component);
-        List<String> activeWidgets = new ArrayList<>();
+        List<ActiveWidget> activeWidgets = new ArrayList<>();
         List<Owner> owners = new ArrayList<Owner>();
         owners.add(new Owner("owner", AuthType.STANDARD));
         Dashboard dashboard = new Dashboard("template", "title", application, owners,  DashboardType.Team , "ASVTEST", "BAPTEST",activeWidgets, false, ScoreDisplayType.HEADER);
