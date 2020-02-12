@@ -86,8 +86,6 @@ public class Pipeline extends BaseModel{
         if(pipelineStage == null) {
             return new HashMap<>();
         }
-
-        Map<String, PipelineCommit> commitsByStage = PipelineUtils.commitSetToMap(pipelineStage.getCommits());
-        return commitsByStage;
+        return PipelineUtils.commitSetToMap(pipelineStage.getCommits());
     }
 }

@@ -19,6 +19,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
+import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,9 +55,13 @@ public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
                 .forEach(teamDashboard -> {
                     if (CommitType.New.equals(commit.getType())) {
                         PipelineCommit pipelineCommit = new PipelineCommit(commit, commit.getScmCommitTimestamp());
-                        Pipeline pipeline = getOrCreatePipeline(teamDashboard);
-                        pipeline.addCommit(PipelineStage.COMMIT.getName(), pipelineCommit);
-                        pipelineRepository.save(pipeline);
+                        Component component = teamDashboard.getApplication().getComponents().get(0);
+                        List<CollectorItem> SCMs = component.getCollectorItems(CollectorType.SCM);
+                        for (CollectorItem SCM : SCMs) {
+                            Pipeline pipeline = getOrCreatePipeline(SCM);
+                            pipeline.addCommit(PipelineStage.COMMIT.getName(), pipelineCommit);
+                            pipelineRepository.save(pipeline);
+                        }
                     }
                 });
     }
