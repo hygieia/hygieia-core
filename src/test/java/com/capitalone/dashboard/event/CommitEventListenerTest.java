@@ -11,8 +11,10 @@ import com.capitalone.dashboard.model.CommitType;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.EnvironmentStage;
 import com.capitalone.dashboard.model.Owner;
 import com.capitalone.dashboard.model.Pipeline;
+import com.capitalone.dashboard.model.PipelineCommit;
 import com.capitalone.dashboard.model.PipelineStage;
 import com.capitalone.dashboard.model.ScoreDisplayType;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
@@ -30,7 +32,9 @@ import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -68,8 +72,13 @@ public class CommitEventListenerTest {
     public void commitSaved_addedToPipeline() {
         // Arrange
         Commit commit = createCommit("myCommit");
+        PipelineCommit pipelineCommit = new PipelineCommit(commit, commit.getScmCommitTimestamp());
         Dashboard dashboard = createDashboard(HAS_BUILD_COLLECTOR);
         Pipeline pipeline = new Pipeline();
+        Map<String, EnvironmentStage> esMap = new HashMap<>();
+        esMap.put("Commit", new EnvironmentStage());
+        esMap.get("Commit").getCommits().add(pipelineCommit);
+        pipeline.setEnvironmentStageMap(esMap);
 
         setupFindDashboards(commit, dashboard);
         setupGetOrCreatePipeline(dashboard, pipeline);
@@ -84,7 +93,6 @@ public class CommitEventListenerTest {
                 .stream()
                 .anyMatch(pc -> pc.getScmRevisionNumber().equals(commit.getScmRevisionNumber()));
         assertThat(commitFound, is(true));
-        verify(pipelineRepository).save(pipeline);
     }
 
     @Test
@@ -155,6 +163,7 @@ public class CommitEventListenerTest {
         commit.setScmRevisionNumber(revisionNumber);
         commit.setCollectorItemId(ObjectId.get());
         commit.setType(CommitType.New);
+        commit.setScmCommitTimestamp(1);
         return commit;
     }
 
@@ -182,6 +191,7 @@ public class CommitEventListenerTest {
         if (hasBuildCollector) {
             component.addCollectorItem(CollectorType.Build, collectorItem());
         }
+        component.addCollectorItem(CollectorType.SCM, collectorItem());
 
         Application application = new Application("app", component);
         List<String> activeWidgets = new ArrayList<>();
@@ -209,8 +219,6 @@ public class CommitEventListenerTest {
 
         when(collectorRepository.findByCollectorType(CollectorType.Product))
                 .thenReturn(Collections.singletonList(productCollector));
-        when(collectorItemRepository.findTeamDashboardCollectorItemsByCollectorIdAndDashboardId(productCollector.getId(), dashboard.getId().toString()))
-                .thenReturn(teamDashboardCI);
         when(pipelineRepository.findByCollectorItemId(teamDashboardCI.getId())).thenReturn(pipeline);
     }
 
