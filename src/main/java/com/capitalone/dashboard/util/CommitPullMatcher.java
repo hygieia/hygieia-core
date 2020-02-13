@@ -3,10 +3,14 @@ package com.capitalone.dashboard.util;
 import com.capitalone.dashboard.model.Commit;
 import com.capitalone.dashboard.model.GitRequest;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class CommitPullMatcher {
@@ -24,40 +28,53 @@ public class CommitPullMatcher {
          */
 
         public static List<Commit> matchCommitToPulls(List<Commit> commits, List<GitRequest> pullRequests) {
-            List<Commit> newCommitList = new LinkedList<>();
+            // No commits or pull requests to match
             if (CollectionUtils.isEmpty(commits) || CollectionUtils.isEmpty(pullRequests)) {
                 return commits;
             }
-            //TODO: Need to optimize this method
-            for (Commit commit : commits) {
-                Iterator<GitRequest> pIter = pullRequests.iterator();
-                boolean foundPull = false;
-                while (!foundPull && pIter.hasNext()) {
-                    GitRequest pull = pIter.next();
-                    if (Objects.equals(pull.getScmRevisionNumber(), commit.getScmRevisionNumber()) ||
-                            Objects.equals(pull.getScmMergeEventRevisionNumber(), commit.getScmRevisionNumber())) {
-                        foundPull = true;
-                        commit.setPullNumber(pull.getNumber());
-                    } else {
-                        List<Commit> prCommits = pull.getCommits();
-                        boolean foundCommit = false;
-                        if (!CollectionUtils.isEmpty(prCommits)) {
-                            Iterator<Commit> cIter = prCommits.iterator();
-                            while (!foundCommit && cIter.hasNext()) {
-                                Commit loopCommit = cIter.next();
-                                if (Objects.equals(commit.getScmAuthor(), loopCommit.getScmAuthor()) &&
-                                        (commit.getScmCommitTimestamp() == loopCommit.getScmCommitTimestamp()) &&
-                                        Objects.equals(commit.getScmCommitLog(), loopCommit.getScmCommitLog())) {
-                                    foundCommit = true;
-                                    foundPull = true;
-                                    commit.setPullNumber(pull.getNumber());
+            List<Commit> newCommits = new ArrayList<>();
+            List<Commit> noMatch = new ArrayList<>();
+            // Convert to map for faster look up
+            Map<String, GitRequest> revNumToPR = new HashMap<>();
+            for(GitRequest pr : pullRequests) {
+                revNumToPR.put(pr.getScmRevisionNumber(), pr);
+                revNumToPR.put(pr.getScmMergeEventRevisionNumber(), pr);
+                if(Objects.equals("merged", pr.getState())) {
+                    for(Commit commit : pr.getCommits()) {
+                        revNumToPR.put(commit.getScmRevisionNumber(), pr);
+                    }
+                }
+
+            }
+            // Try to find a match
+            for(Commit commit : commits) {
+                // Look with scm revision number
+                if(revNumToPR.get(commit.getScmRevisionNumber()) != null) {
+                    commit.setPullNumber(revNumToPR.get(commit.getScmRevisionNumber()).getNumber());
+                    newCommits.add(commit);
+                } else {
+                    // Rebase merge commit
+                    noMatch.add(commit);
+                }
+            }
+            // Try to find a match for rebase merge commit
+            for(Commit commit : noMatch) {
+                search: {
+                    for(GitRequest pr : pullRequests) {
+                        if(Objects.equals("merged", pr.getState())) {
+                            for(Commit prCommit : pr.getCommits()) {
+                                if(Objects.equals(commit.getScmAuthor(), prCommit.getScmAuthor()) &&
+                                        Objects.equals(commit.getScmCommitLog(), prCommit.getScmCommitLog()) &&
+                                        commit.getScmCommitTimestamp() == prCommit.getScmCommitTimestamp()) {
+                                    commit.setPullNumber(pr.getNumber());
+                                    newCommits.add(commit);
+                                    break search;
                                 }
                             }
                         }
                     }
                 }
-                newCommitList.add(commit);
             }
-            return newCommitList;
+            return newCommits;
         }
     }
