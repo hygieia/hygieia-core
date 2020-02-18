@@ -20,7 +20,6 @@ before_script:
 script:
   - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn clean install -q; fi
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then cp ./src/devops/deploy-snapshot.sh . && ./deploy-snapshot.sh; fi
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [[ "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then  fi
 
 notifications:
   webhooks:
