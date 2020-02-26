@@ -76,6 +76,7 @@
         <developerConnection>scm:git:http://github.com/Hygieia/hygieia-core.git
         </developerConnection>
         <url>http://github.com/Hygieia/hygieia-core</url>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -392,7 +393,7 @@
                     <suppressionsLocation>src/devops/checkstyle-suppressions.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
+                    <failsOnError>false</failsOnError>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>
@@ -525,6 +526,38 @@
                     <!-- don't deploy site with maven-site-plugin -->
                     <skipDeploy>true</skipDeploy>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.5</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
         <testResources>
@@ -809,6 +842,12 @@
         </profile>
         <profile>
             <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -863,6 +902,8 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    
                 </plugins>
             </build>
         </profile>
