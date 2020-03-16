@@ -33,6 +33,15 @@ public interface BaseCollectorItemRepository<T extends CollectorItem> extends Pa
      * @return list of {@link CollectorItem}s
      */
     List<T> findByCollectorIdIn(Collection<ObjectId> ids);
+
+    /**
+     * Finds all {@link CollectorItem}s that match the provided id's.
+     *
+     * @param ids {@link Collection} of ids
+     * @param pageable
+     * @return Page of {@link CollectorItem}s
+     */
+    Page<T> findByCollectorIdIn(Collection<ObjectId> ids, Pageable pageable);
     
     /**
      * Finds paged results of {@link CollectorItem}s that match the provided id's.

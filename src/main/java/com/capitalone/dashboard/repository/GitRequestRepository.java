@@ -50,4 +50,6 @@ public interface GitRequestRepository  extends CrudRepository<GitRequest, Object
 
     @Query(value="{'commits.scmRevisionNumber' : ?0}")
     GitRequest findByCommitScmRevisionNumber(String revisionNumber);
+
+    GitRequest findTopByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
 }
