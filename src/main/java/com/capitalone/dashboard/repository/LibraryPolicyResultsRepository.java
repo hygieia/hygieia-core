@@ -18,4 +18,5 @@ public interface LibraryPolicyResultsRepository extends CrudRepository<LibraryPo
     LibraryPolicyResult findByCollectorItemId(ObjectId collectorItemId);
     List<LibraryPolicyResult> findByCollectorItemIdAndTimestampIsBetweenOrderByTimestampDesc(ObjectId collectorItemId, long beginDate, long endDate);
     List<LibraryPolicyResult> findByCollectorItemIdAndEvaluationTimestampIsBetweenOrderByTimestampDesc(ObjectId collectorItemId, long beginDate, long endDate);
+    LibraryPolicyResult findTopByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
 }

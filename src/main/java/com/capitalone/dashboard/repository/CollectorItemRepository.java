@@ -12,6 +12,7 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A {@link CollectorItem} repository
@@ -70,7 +71,7 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
         PathBuilder<CollectorItem> path = new PathBuilder<>(CollectorItem.class, "collectorItem");
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(path.get("collectorId", ObjectId.class).in(collectorIds));
-        options.forEach((key, value) -> builder.and(path.get("options", Map.class).get(key, Object.class).eq(value)));
+        options.forEach((key, value) -> builder.and(Objects.isNull(value)?path.get("options", Map.class).get(key, Object.class).isNull():path.get("options", Map.class).get(key, Object.class).eq(value)));
         return findAll(builder.getValue());
     }
 }

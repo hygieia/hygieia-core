@@ -28,4 +28,6 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
 
     List<BinaryArtifact> findByCollectorItemIdAndTimestampIsBetweenOrderByTimestampDesc(ObjectId collectorItemId, long beginDate, long endDate);
 
+    BinaryArtifact findTopByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
+
 }
