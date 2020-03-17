@@ -12,5 +12,5 @@ public interface MaturityModelRepository extends CrudRepository<MaturityModel, O
     MaturityModel findByProfile(String profile);
 
     @Query(value="{}", fields="{ profile : 1 }")
-    List<String> getAllProfiles();
+    List<MaturityModel> getAllProfiles();
 }
