@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.util;
 
+import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.Commit;
 import com.capitalone.dashboard.model.Dashboard;
@@ -35,7 +36,7 @@ public final class PipelineUtils {
         return returnMap;
     }
 
-    public static Map<PipelineStage, String> getStageToEnvironmentNameMap(Dashboard dashboard) {
+    public static Map<PipelineStage, String> getStageToEnvironmentNameMap(Dashboard dashboard) throws HygieiaException {
         Map<PipelineStage, String> rt = new LinkedHashMap<>();
 
         for(Widget widget : dashboard.getWidgets()) {
@@ -46,6 +47,9 @@ public final class PipelineUtils {
             }
             if (widget.getName().equalsIgnoreCase("pipeline")) {
                 Map<?,?> gh = (Map<?,?>) widget.getOptions().get("mappings");
+                if(gh == null) {
+                    throw new HygieiaException("Pipeline " + widget.getId() + " is missing mappings ", HygieiaException.BAD_DATA);
+                }
                 for (Map.Entry<?, ?> entry : gh.entrySet()) {
                     rt.put(PipelineStage.valueOf((String) entry.getKey()), (String) entry.getValue());
 
