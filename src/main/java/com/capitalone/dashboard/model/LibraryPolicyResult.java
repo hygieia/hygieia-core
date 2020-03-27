@@ -33,6 +33,7 @@ public class LibraryPolicyResult extends BaseModel {
         int count;
         private Map<LibraryPolicyThreatDisposition, Integer> dispositionCounts = new HashMap<>();
         int maxAge;
+        double maxScore;
 
         public Threat(LibraryPolicyThreatLevel level, int count) {
             this.level = level;
@@ -77,6 +78,14 @@ public class LibraryPolicyResult extends BaseModel {
 
         public void setMaxAge(int maxAge) {
             this.maxAge = maxAge;
+        }
+
+        public double getMaxScore() {
+            return maxScore;
+        }
+
+        public void setMaxScore(double maxScore) {
+            this.maxScore = maxScore;
         }
 
         public Map<LibraryPolicyThreatDisposition, Integer> getDispositionCounts() {
@@ -145,14 +154,15 @@ public class LibraryPolicyResult extends BaseModel {
         }
     }
 
-    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String dispositionStatus, String component,String age) {
+    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String dispositionStatus, String component,String age,String score) {
         Set<Threat> threatSet = threats.get(type);
 
         if (CollectionUtils.isEmpty(threatSet)) {
             Threat threat = new Threat(level, 1);
-            threat.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
+            threat.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age,score));
             threat.addDispositionCount(disposition);
             setCriticalAndHighVulAge(age, threat,disposition);
+            setCriticalAndHighVulScore(score,threat,disposition);
             Set<Threat> set = new HashSet<>();
             set.add(threat);
             threats.put(type, set);
@@ -163,8 +173,9 @@ public class LibraryPolicyResult extends BaseModel {
                     t.setCount(t.getCount() + 1);
                     t.addDispositionCount(disposition);
                     setCriticalAndHighVulAge(age, t,disposition);
-                    if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age))) {
-                        t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
+                    setCriticalAndHighVulScore(score,t,disposition);
+                    if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age,score))) {
+                        t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age,score));
                     }
                     threatSet.add(t);
                     threats.put(type, threatSet);
@@ -174,11 +185,12 @@ public class LibraryPolicyResult extends BaseModel {
             }
             if (!found) {
                 Threat t = new Threat(level, 1);
-                if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age))) {
-                    t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age));
+                if (!t.getComponents().contains(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age,score))) {
+                    t.getComponents().add(getComponentPlusDispositionPlusAge(component,disposition,dispositionStatus,age,score));
                 }
                 t.addDispositionCount(disposition);
                 setCriticalAndHighVulAge(age, t,disposition);
+                setCriticalAndHighVulScore(score,t,disposition);
                 threatSet.add(t);
                 threats.put(type, threatSet);
             }
@@ -190,6 +202,13 @@ public class LibraryPolicyResult extends BaseModel {
         if (disposition.equals(LibraryPolicyThreatDisposition.Open)) {
             int currentValue = NumberUtils.toInt(age);
             threat.setMaxAge(threat.getMaxAge() <= currentValue ? currentValue : threat.getMaxAge());
+        }
+    }
+
+    private void setCriticalAndHighVulScore(String score, Threat threat, LibraryPolicyThreatDisposition disposition) {
+        if (disposition.equals(LibraryPolicyThreatDisposition.Open)) {
+            double currentScore = Double.parseDouble(score);
+            threat.setMaxScore(threat.getMaxScore() <= currentScore ? currentScore : threat.getMaxScore());
         }
     }
 
@@ -241,8 +260,8 @@ public class LibraryPolicyResult extends BaseModel {
         return String.format("%s##%s", component, disposition.toString());
     }
 
-    private String getComponentPlusDispositionPlusAge (String component, LibraryPolicyThreatDisposition disposition, String dispositionStatus,String age) {
-        return String.format("%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus);
+    private String getComponentPlusDispositionPlusAge (String component, LibraryPolicyThreatDisposition disposition, String dispositionStatus,String age, String score) {
+        return String.format("%s##%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus,score);
     }
 
 
