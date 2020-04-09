@@ -4,13 +4,7 @@ jdk:
 
 branches:
   only:
-    - master
-    - gerrit-integration
     - "/^v[0-9]+\\.[0-9]+\\.[0-9]+.*$/"
-
-cache:
-  directories:
-    - "$TRAVIS_BUILD_DIR/UI/node_modules"
 
 install: true
 
@@ -18,7 +12,6 @@ before_script:
   - sudo chown -R $USER:$GROUP $TRAVIS_BUILD_DIR
 
 script:
-  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn clean install -q; fi
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then cp ./src/devops/deploy-snapshot.sh . && ./deploy-snapshot.sh; fi
 
 notifications:
@@ -32,5 +25,5 @@ notifications:
       - tapabrata.pal@capitalone.com
       - ragha.vema@capitalone.com
       - hygieia2@capitalone.com
-    on_success: always
+    on_success: change
     on_failure: always
