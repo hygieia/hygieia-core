@@ -249,8 +249,13 @@ public class SyncDashboard {
                         options.put("branch", repoBranch.getBranch());
                     }
                     repoCollectorItemsInBuild.addAll(IterableUtils.toList(collectorItemRepository.findAllByOptionMapAndCollectorIdsIn(options, scmCollectorIds)));
+
                 }));
 
+        repoCollectorItemsInBuild.forEach(rci->{
+            rci.setEnabled(true);
+            collectorItemRepository.save(rci);
+        });
         // For each repo collector item, add the item to the referenced dashboards
         repoCollectorItemsInBuild.forEach(
                 ci -> relatedCollectorItemRepository.saveRelatedItems(buildCollectorItem.getId(), ci.getId(), this.getClass().toString(), Reason.BUILD_REPO_REASON.getAction())
