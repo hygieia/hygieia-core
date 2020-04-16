@@ -41,9 +41,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private String password;
     @Value("${dbssl:false}")
     private String dbssl;
-    @Value("${dbconnecttimeout:10000}")
+    @Value("${dbconnecttimeout:30000}")
     private int dbConnectTimeout;
-    @Value("${dbsockettimeout:120000}")
+    @Value("${dbsockettimeout:900000}")
     private int dbSocketTimeout;
 
     @Override
