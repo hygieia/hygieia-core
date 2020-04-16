@@ -41,6 +41,10 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private String password;
     @Value("${dbssl:false}")
     private String dbssl;
+    @Value("${dbconnecttimeout:10000}")
+    private int dbConnectTimeout;
+    @Value("${dbsockettimeout:120000}")
+    private int dbSocketTimeout;
 
     @Override
     protected String getDatabaseName() {
@@ -57,6 +61,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
         MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
         builder.maxConnectionIdleTime(60000);
         builder.sslEnabled(Boolean.parseBoolean(dbssl));
+        // builder.serverSelectionTimeout(30000);   // MongoDB default 30 seconds
+        builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
+        builder.socketTimeout(dbSocketTimeout);        // MongoDB default is 0, means no timeout
         MongoClientOptions opts = builder.build();
 
         if (Boolean.parseBoolean(dbreplicaset)) {
