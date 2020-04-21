@@ -202,14 +202,6 @@
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
 
-
-        <!-- release to ossrh -->
-        <dependency>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
@@ -562,8 +554,8 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    <autoDropAfterRelease>true</autoDropAfterRelease>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoDropAfterRelease>false</autoDropAfterRelease>
                     <stagingProfileId>26a9600c05a6d3</stagingProfileId>
                 </configuration>
             </plugin>
