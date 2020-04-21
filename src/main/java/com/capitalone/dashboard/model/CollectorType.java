@@ -31,7 +31,8 @@ public enum CollectorType {
     TEAM,
     Audit,
     Log,
-    AutoDiscover;
+    AutoDiscover,
+    InfrastructureAsCode;
 
     public static CollectorType fromString(String value) {
         for (CollectorType collectorType : values()) {
