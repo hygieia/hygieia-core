@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.6.8-SNAPSHOT</version>
+    <version>3.6.9-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -200,14 +200,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-        </dependency>
-
-
-        <!-- release to ossrh -->
-        <dependency>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
         </dependency>
 
         <dependency>
@@ -562,8 +554,8 @@
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    <autoDropAfterRelease>true</autoDropAfterRelease>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoDropAfterRelease>false</autoDropAfterRelease>
                     <stagingProfileId>26a9600c05a6d3</stagingProfileId>
                 </configuration>
             </plugin>
