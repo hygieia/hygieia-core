@@ -195,7 +195,7 @@ public class GithubGraphQLQuery {
                     "              updatedAt \n" +
                     "            }\n" +
                     "          }\n" +
-                    "          reviews(first: 100) {\n" +
+                    "          reviews(last: 100) {\n" +
                     "            totalCount\n" +
                     "            nodes {\n" +
                     "              id\n" +
