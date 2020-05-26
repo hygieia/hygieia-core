@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a {@link CodeQuality} metric. Each metric should have a unique name property.
  */
@@ -9,6 +12,7 @@ public class CodeQualityMetric {
     private String formattedValue;
     private CodeQualityMetricStatus status;
     private String statusMessage;
+    private List<Instance> instances = new ArrayList<>();
 
     public CodeQualityMetric(String name) {
         this.name = name;
@@ -50,6 +54,14 @@ public class CodeQualityMetric {
 
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+    }
+
+    public List<Instance> getInstances() {
+        return instances;
+    }
+
+    public void addInstance(Instance instance){
+        getInstances().add(instance);
     }
 
     @Override
