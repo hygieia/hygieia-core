@@ -35,9 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/ping").permitAll()
                 .antMatchers("/swagger/**").permitAll()
-                //TODO: sample call secured with ROLE_API
-                //.antMatchers("/ping").hasAuthority("ROLE_API")
-                //.antMatchers(HttpMethod.GET, "/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
 
