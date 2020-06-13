@@ -44,6 +44,9 @@ public class AutoDiscovery extends BaseModel {
     @Valid
     private List<AutoDiscoveredEntry> featureEntries = new ArrayList<>();
 
+    @Valid
+    private List<AutoDiscoveredEntry> performanceTestEntries = new ArrayList<>();
+
     private long createdTimestamp;
 
     private long modifiedTimestamp;
@@ -53,7 +56,7 @@ public class AutoDiscovery extends BaseModel {
     }
     public AutoDiscovery(AutoDiscoveryMetaData metaData, List<AutoDiscoveredEntry> codeRepoEntries, List<AutoDiscoveredEntry> buildEntries, List<AutoDiscoveredEntry> securityScanEntries,
                          List<AutoDiscoveredEntry> deploymentEntries, List<AutoDiscoveredEntry> libraryScanEntries, List<AutoDiscoveredEntry> functionalTestEntries,
-                         List<AutoDiscoveredEntry> artifactEntries, List<AutoDiscoveredEntry> staticCodeEntries, List<AutoDiscoveredEntry> featureEntries) {
+                         List<AutoDiscoveredEntry> artifactEntries, List<AutoDiscoveredEntry> staticCodeEntries, List<AutoDiscoveredEntry> featureEntries,List<AutoDiscoveredEntry> performanceTestEntries) {
         setMetaData(metaData);
         setCodeRepoEntries(codeRepoEntries);
         setBuildEntries(buildEntries);
@@ -64,6 +67,7 @@ public class AutoDiscovery extends BaseModel {
         setArtifactEntries(artifactEntries);
         setStaticCodeEntries(staticCodeEntries);
         setFeatureEntries(featureEntries);
+        setPerformanceTestEntries(performanceTestEntries);
     }
 
 
@@ -135,6 +139,16 @@ public class AutoDiscovery extends BaseModel {
         this.staticCodeEntries = staticCodeEntries;
     }
 
+
+    public List<AutoDiscoveredEntry> getPerformanceTestEntries() {
+        return performanceTestEntries;
+    }
+
+    public void setPerformanceTestEntries(List<AutoDiscoveredEntry> performanceTestEntries) {
+        this.performanceTestEntries = performanceTestEntries;
+    }
+
+
     public long getCreatedTimestamp() {
         return createdTimestamp;
     }
@@ -168,6 +182,7 @@ public class AutoDiscovery extends BaseModel {
         all.addAll(deploymentEntries);
         all.addAll(featureEntries);
         all.addAll(artifactEntries);
+        all.addAll(performanceTestEntries);
         return all;
     }
 }

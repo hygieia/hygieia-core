@@ -31,4 +31,5 @@ public interface RelatedCollectorItemRepository extends CrudRepository<RelatedCo
         return save(related);
     }
     List<RelatedCollectorItem> findAllByCreationTimeIsBetweenOrderByCreationTimeDesc(long beginDate, long endDate);
+    List<RelatedCollectorItem> findAllByReasonAndCreationTimeIsBetweenOrderByCreationTimeDesc(String reason, long beginDate, long endDate);
 }

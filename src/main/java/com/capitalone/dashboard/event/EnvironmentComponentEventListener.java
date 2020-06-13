@@ -35,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +95,7 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         	if (LOGGER.isDebugEnabled()) {
         		LOGGER.debug("Attempting to update pipeline " + pipeline.getId());
         	}
-            
+
             addCommitsToEnvironmentStage(environmentComponent, pipeline);
             pipelineRepository.save(pipeline);
         }
@@ -111,14 +110,13 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
      * @param environmentComponent
      * @param pipeline
      */
-    @SuppressWarnings("PMD.NPathComplexity")
     private void addCommitsToEnvironmentStage(EnvironmentComponent environmentComponent, Pipeline pipeline){
         EnvironmentStage currentStage = getOrCreateEnvironmentStage(pipeline, environmentComponent.getEnvironmentName());
         String pseudoEnvName = environmentComponent.getEnvironmentName();
         if (LOGGER.isDebugEnabled()) {
         	LOGGER.debug("Attempting to find new artifacts to process for environment '" + environmentComponent.getEnvironmentName() + "'");
         }
-        
+
         String artifactName = environmentComponent.getComponentName();
         String artifactExtension = null;
         int dotIdx = artifactName.lastIndexOf('.');
@@ -132,9 +130,9 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         List<BinaryArtifact> artifacts = new ArrayList<>();
         BinaryArtifact oldLastArtifact = currentStage.getLastArtifact();
         if(oldLastArtifact != null){
-            Long lastArtifactTimestamp = oldLastArtifact != null ? oldLastArtifact.getTimestamp() : null;
+            Long lastArtifactTimestamp =oldLastArtifact.getTimestamp();
             artifacts.addAll(Lists.newArrayList(binaryArtifactRepository.findByArtifactNameAndArtifactExtensionAndTimestampGreaterThan(artifactName, artifactExtension, lastArtifactTimestamp)));
-            
+
             // Backwards compatibility
             if (artifactExtension != null) {
 	        	// In the past the extension was saved as part of the artifact name
@@ -145,9 +143,9 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         	Map<String, Object> attributes = new HashMap<>();
         	attributes.put(BinaryArtifactRepository.ARTIFACT_NAME, artifactName);
         	attributes.put(BinaryArtifactRepository.ARTIFACT_EXTENSION, artifactExtension);
-        	
+
         	artifacts.addAll(Lists.newArrayList(binaryArtifactRepository.findByAttributes(attributes)));
-        	
+
         	// Backwards compatibility
         	if (artifactExtension != null) {
 	        	// In the past the extension was saved as part of the artifact name
@@ -158,17 +156,16 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         	}
         }
 
-        /**
-         * Sort the artifacts by timestamp and iterate through each artifact, getting their changesets and adding them to the bucket
-         */
+        //Sort the artifacts by timestamp and iterate through each artifact, getting their changesets and adding them to the bucket
         List<BinaryArtifact> sortedArtifacts = Lists.newArrayList(artifacts);
-        Collections.sort(sortedArtifacts, BinaryArtifact.TIMESTAMP_COMPARATOR);
-
+        if(CollectionUtils.isEmpty(sortedArtifacts)) return;
+        sortedArtifacts.sort(BinaryArtifact.TIMESTAMP_COMPARATOR);
         for(BinaryArtifact artifact : sortedArtifacts){
-        	if (LOGGER.isDebugEnabled()) {
+        	if(artifact == null) continue;
+            if (LOGGER.isDebugEnabled()) {
         		LOGGER.debug("Processing artifact " + artifact.getArtifactGroupId() + ":" + artifact.getArtifactName() + ":" + artifact.getArtifactVersion());
         	}
-        	
+
         	List<Build> builds = artifact.getBuildInfos();
         	Build build ;
         	if (CollectionUtils.isEmpty(builds)) {
@@ -182,7 +179,7 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
 				}
         	}
             PipelineUtils.processPreviousFailedBuilds(build, pipeline);
-            /**
+            /*
              * If some build events are missed, here is an attempt to move commits to the build stage
              * This also takes care of the problem with Jenkins first build change set being empty.
              *
@@ -198,53 +195,48 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
                 }
             }
             pipelineRepository.save(pipeline);
-
         }
-        /**
-         * Update last artifact on the pipeline
-         */
-        if(sortedArtifacts != null && !sortedArtifacts.isEmpty()){
+
             BinaryArtifact lastArtifact = sortedArtifacts.get(sortedArtifacts.size() - 1);
             currentStage.setLastArtifact(lastArtifact);
-        }
     }
 
     /**
      * Attempts to find the build for the artifact based on the artifacts build metadata information.
-     * 
+     *
      * @param artifact
      * @return
      */
     private Build getBuildByMetadata(BinaryArtifact artifact) {
     	Build build = null;
-    	
+
     	// Note: in order to work properly both the artifact and the build must exist when this is run
     	// This shouldn't be a problem as they would exist by the time the component is deployed so
     	// long as the collector frequency allowed the information to be picked up
     	String jobName = null;
     	String buildNumber = null;
     	String instanceUrl = null;
-    	
+
     	if (artifact.getMetadata() != null) {
     		jobName = artifact.getJobName();
     		buildNumber = artifact.getBuildNumber();
     		instanceUrl = artifact.getInstanceUrl();
     	}
-    	
+
     	if (jobName != null && buildNumber != null && instanceUrl != null) {
         	List<Collector> buildCollectors = collectorRepository.findByCollectorType(CollectorType.Build);
         	List<ObjectId> collectorIds = Lists.newArrayList(Iterables.transform(buildCollectors, new ToCollectorId()));
-        	
+
         	// Just in case more build collectors are added in the future that run together...
         	for (ObjectId buildCollectorId : collectorIds) {
             	CollectorItem jobCollectorItem = jobRepository.findJob(buildCollectorId, instanceUrl, jobName);
-            	
+
             	if (jobCollectorItem == null) {
             		continue;
             	}
-            	
+
             	build = buildRepository.findByCollectorItemIdAndNumber(jobCollectorItem.getId(), buildNumber);
-            	
+
             	if (build != null) {
             		break;
             	}
@@ -252,11 +244,11 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
     	} else {
     		LOGGER.debug("Artifact " + artifact.getId() + " is missing build information.");
     	}
-    	
+
     	if (build == null) {
     		LOGGER.debug("Artifact " + artifact.getId() + " references build " + buildNumber + " in '" + instanceUrl + "' but no build with that information was found.");
     	}
-    	
+
     	return build;
     }
 
@@ -271,7 +263,7 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         return dashboardRepository.findByApplicationComponentIdsIn(componentIds);
     }
-    
+
     private static class ToCollectorId implements Function<Collector, ObjectId> {
         @Override
         public ObjectId apply(Collector input) {

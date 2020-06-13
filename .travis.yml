@@ -5,12 +5,6 @@ jdk:
 branches:
   only:
     - master
-    - gerrit-integration
-    - "/^v[0-9]+\\.[0-9]+\\.[0-9]+.*$/"
-
-cache:
-  directories:
-    - "$TRAVIS_BUILD_DIR/UI/node_modules"
 
 install: true
 
@@ -18,9 +12,7 @@ before_script:
   - sudo chown -R $USER:$GROUP $TRAVIS_BUILD_DIR
 
 script:
-  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then mvn clean install -q; fi
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then cp ./src/devops/deploy-snapshot.sh . && ./deploy-snapshot.sh; fi
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [[ "$TRAVIS_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then cp ./src/devops/release.sh . && ./release.sh; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [[ "$TRAVIS_BRANCH" = "master" ]]; then cp ./src/devops/release.sh . && ./release.sh; fi
 
 notifications:
   webhooks:
@@ -32,11 +24,6 @@ notifications:
     recipients:
       - tapabrata.pal@capitalone.com
       - ragha.vema@capitalone.com
-      - nireesh.thiruveedula@capitalone.com
-      - Stephen.Hughes@capitalone.com
-      - jiyang.xu@capitalone.com
-      - brian.shriver@capitalone.com
-      - kaitlyn.heinzmann@capitalone.com
-      - Justin.Hoelscher@capitalone.com
-    on_success: always
+      - hygieia2@capitalone.com
+    on_success: change
     on_failure: always

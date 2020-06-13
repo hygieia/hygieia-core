@@ -15,10 +15,12 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
+import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
+import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,11 +54,15 @@ public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
                 .stream()
                 .filter(this::dashboardHasBuildCollector)
                 .forEach(teamDashboard -> {
-                    if (CommitType.New.equals(commit.getType())) {
+                    if (CollectionUtils.isNotEmpty(teamDashboard.getApplication().getComponents()) &&  CommitType.New.equals(commit.getType())) {
                         PipelineCommit pipelineCommit = new PipelineCommit(commit, commit.getScmCommitTimestamp());
-                        Pipeline pipeline = getOrCreatePipeline(teamDashboard);
-                        pipeline.addCommit(PipelineStage.COMMIT.getName(), pipelineCommit);
-                        pipelineRepository.save(pipeline);
+                        Component component = teamDashboard.getApplication().getComponents().get(0);
+                        List<CollectorItem> productCIs = component.getCollectorItems(CollectorType.Product);
+                        for (CollectorItem productCI : productCIs) {
+                            Pipeline pipeline = getOrCreatePipeline(productCI);
+                            pipeline.addCommit(PipelineStage.COMMIT.getName(), pipelineCommit);
+                            pipelineRepository.save(pipeline);
+                        }
                     }
                 });
     }

@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -38,20 +39,20 @@ public class RestClient {
     /**
      * The most general version of POST call
      * @param url
-     * @param headers HTTP headers, can be null
-     * @param body Cannot be null
+     * @param httpEntity HTTP headers and body
      * @return
      */
-    private <T> ResponseEntity<String> makeRestCallPost_private(String url, HttpHeaders headers, T body) {
+    private <T> ResponseEntity<String> makeRestCallPost(String url, HttpEntity<T> httpEntity) {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
         HttpStatus status = null;
         try {
-            response = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
+            response = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
             status = response.getStatusCode();
         } catch (HttpStatusCodeException e) {
             status = e.getStatusCode();
+            LOG.info("status=" + status + ", requestBody=" + httpEntity.getBody());
             throw e;
         } finally {
             long end = System.currentTimeMillis();
@@ -69,7 +70,10 @@ public class RestClient {
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
-        return this.makeRestCallPost_private(url, headers, body);
+	if (headers==null) headers = new HttpHeaders();
+	headers.setContentType(MediaType.APPLICATION_JSON);
+	HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
+	return this.makeRestCallPost(url, httpEntity);
     }
 
     /**
@@ -80,7 +84,8 @@ public class RestClient {
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, String body) {
-        return this.makeRestCallPost_private(url, headers, body);
+	HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
+	return this.makeRestCallPost(url, httpEntity);
     }
 
     /**
@@ -115,36 +120,6 @@ public class RestClient {
         }
 
         return this.makeRestCallPost(url, headers, body);
-    }
-
-    /**
-     * Make a POST call with a single header for graphql calls, Authorization, which has the value "[headerKey] [token]".
-     * E.g. Authorization: token xxxxxxxxxxx
-     * When either headerKey or token is null, no header is added
-     * @param url
-     * @param headerKey
-     * @param token
-     * @param body
-     * @return
-     */
-    public ResponseEntity<String> makeRestCallPostGraphQL(String url, String headerKey, String token, JSONObject body) {
-        if (restOperations == null) { return null; }
-
-        if(StringUtils.isEmpty(headerKey) && StringUtils.isEmpty(token) ) { return null; }
-
-        long start = System.currentTimeMillis();
-
-        HttpHeaders headers = createHeaders(headerKey, token);
-        //This Header is needed for making GraphQL calls
-        headers.add("Content-Type","application/json");
-        ResponseEntity<String> response
-                = restOperations.exchange(url, HttpMethod.POST, new HttpEntity<Object>(body, headers), String.class);
-
-        long end = System.currentTimeMillis();
-
-        LOG.info("Time taken to make a post call to "+url+" = "+(end-start));
-
-        return response;
     }
 
     /**

@@ -1,12 +1,17 @@
 package com.capitalone.dashboard.util;
 
 
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.FeatureFlag;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.logging.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.util.Objects;
 
 public class HygieiaUtils {
 	private static final Logger LOGGER = Logger.getLogger(HygieiaUtils.class);
@@ -137,7 +142,27 @@ public class HygieiaUtils {
 		for (String value: values) {
 			if (StringUtils.isEmpty(value)) { return true; }
 		}
-
 		return false;
 	}
+
+	/*
+	 * If Feature flag is present then do not sync else allow to sync.
+	 */
+	public static boolean allowSync(FeatureFlag featureFlag, CollectorType collectorType){
+		if(featureFlag == null) return true;
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key)) ) return true;
+		return !BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
+	}
+
+	/*
+	 * If Feature flag is present then check for the collectortype and see if its enabled for AutoDiscover.
+	 */
+	public static boolean allowAutoDiscover(FeatureFlag featureFlag, CollectorType collectorType) {
+		if(featureFlag == null) return false;
+		String key = StringUtils.lowerCase(collectorType.toString());
+		if(MapUtils.isEmpty(featureFlag.getFlags()) || Objects.isNull(featureFlag.getFlags().get(key))) return false;
+		return BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
+	}
+
 }

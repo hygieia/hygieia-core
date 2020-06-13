@@ -23,6 +23,9 @@ public interface DashboardRepository extends PagingAndSortingRepository<Dashboar
 	List<Dashboard> findByOwners(Owner owner);
 	List<Dashboard> findByOwnersAndTypeContainingIgnoreCase(Owner owner, String type);
 
+	@Query(value="{'template': ?0}")
+	List<Dashboard> findByTemplate(String template);
+
 	List<Dashboard> findByTitle(String title);
 	Dashboard findByTitleAndType(String title, DashboardType type);
 
