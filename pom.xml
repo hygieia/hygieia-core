@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.7.7</version>
+    <version>3.7.8</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -163,12 +163,12 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>4.2.13.RELEASE</version>
+            <version>4.2.17.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-ldap</artifactId>
-            <version>4.2.13.RELEASE</version>
+            <version>4.2.17.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
