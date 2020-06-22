@@ -13,6 +13,7 @@ public class SCM {
 	protected String scmRevisionNumber;
     protected String scmCommitLog;
     protected String scmAuthor;
+    protected AuthorType scmAuthorType;
     protected String scmAuthorLogin;
     protected String scmAuthorLDAPDN;
     protected String scmCommitter;
@@ -36,6 +37,7 @@ public class SCM {
         this.scmRevisionNumber = scm.scmRevisionNumber;
         this.scmCommitLog = scm.scmCommitLog;
         this.scmAuthor = scm.scmAuthor;
+        this.scmAuthorType = scm.scmAuthorType;
         this.scmAuthorLogin = scm.scmAuthorLogin;
         this.scmParentRevisionNumbers = scm.scmParentRevisionNumbers;
         this.scmCommitTimestamp = scm.scmCommitTimestamp;
@@ -47,12 +49,24 @@ public class SCM {
     }
 
     @SuppressWarnings({"PMD.ExcessiveParameterList"})
-    public SCM(String scmUrl, String scmBranch, String scmRevisionNumber, String scmCommitLog, String scmAuthor, String scmAuthorLogin, List<String> scmParentRevisionNumbers, long scmCommitTimestamp, long numberOfChanges, CommitType type) {
+    public SCM(String scmUrl,
+               String scmBranch,
+               String scmRevisionNumber,
+               String scmCommitLog,
+               String scmAuthor,
+               AuthorType scmAuthorType,
+               String scmAuthorLogin,
+               List<String> scmParentRevisionNumbers,
+               long scmCommitTimestamp,
+               long numberOfChanges,
+               CommitType type) {
+
         this.scmUrl = scmUrl;
         this.scmBranch = scmBranch;
         this.scmRevisionNumber = scmRevisionNumber;
         this.scmCommitLog = scmCommitLog;
         this.scmAuthor = scmAuthor;
+        this.scmAuthorType = scmAuthorType;
         this.scmAuthorLogin = scmAuthorLogin;
         this.scmParentRevisionNumbers = scmParentRevisionNumbers;
         this.scmCommitTimestamp = scmCommitTimestamp;
@@ -81,6 +95,10 @@ public class SCM {
 
     public void setScmAuthor(String scmAuthor) { this.scmAuthor = scmAuthor; }
 
+    public AuthorType getScmAuthorType() { return scmAuthorType; }
+
+    public void setScmAuthorType(AuthorType scmAuthorType) { this.scmAuthorType = scmAuthorType; }
+
     public String getScmAuthorLogin() { return scmAuthorLogin; }
 
     public void setScmAuthorLogin(String scmAuthorLogin) { this.scmAuthorLogin = scmAuthorLogin; }
@@ -88,9 +106,7 @@ public class SCM {
     // can return null
     public List<String> getScmParentRevisionNumbers() { return scmParentRevisionNumbers; }
     
-    public void setScmParentRevisionNumbers(List<String> scmParentRevisionNumbers) {
-    	this.scmParentRevisionNumbers = scmParentRevisionNumbers;
-    }
+    public void setScmParentRevisionNumbers(List<String> scmParentRevisionNumbers) { this.scmParentRevisionNumbers = scmParentRevisionNumbers; }
 
     public long getScmCommitTimestamp() { return scmCommitTimestamp; }
 
