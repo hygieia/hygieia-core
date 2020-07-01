@@ -13,7 +13,7 @@ public class SCM {
 	protected String scmRevisionNumber;
     protected String scmCommitLog;
     protected String scmAuthor;
-    protected AuthorType scmAuthorType;
+    protected String scmAuthorType;
     protected String scmAuthorLogin;
     protected String scmAuthorLDAPDN;
     protected String scmCommitter;
@@ -54,7 +54,7 @@ public class SCM {
                String scmRevisionNumber,
                String scmCommitLog,
                String scmAuthor,
-               AuthorType scmAuthorType,
+               String scmAuthorType,
                String scmAuthorLogin,
                List<String> scmParentRevisionNumbers,
                long scmCommitTimestamp,
@@ -95,9 +95,9 @@ public class SCM {
 
     public void setScmAuthor(String scmAuthor) { this.scmAuthor = scmAuthor; }
 
-    public AuthorType getScmAuthorType() { return scmAuthorType; }
+    public String getScmAuthorType() { return scmAuthorType; }
 
-    public void setScmAuthorType(AuthorType scmAuthorType) { this.scmAuthorType = scmAuthorType; }
+    public void setScmAuthorType(String scmAuthorType) { this.scmAuthorType = scmAuthorType; }
 
     public String getScmAuthorLogin() { return scmAuthorLogin; }
 
