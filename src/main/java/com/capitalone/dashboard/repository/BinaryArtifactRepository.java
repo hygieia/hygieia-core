@@ -18,6 +18,11 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
     @Query("{ 'artifactGroupId' : ?0, 'artifactModule' : ?1, 'artifactVersion' : ?2, 'artifactName' : ?3, 'artifactClassifier' : ?4, 'artifactExtension' : ?5 }")
     Iterable<BinaryArtifact> findByAttributes(String artifactGroupId, String artifactModule, String artifactVersion, String artifactName, String artifactClassifier, String artifactExtension);
 
+    @Query("{ 'artifactName' : ?0, 'artifactVersion' : ?1, 'path' : ?2, 'repo' : ?3 }")
+    Iterable<BinaryArtifact> findByAttributes(String artifactName, String artifactVersion, String path, String repo);
+
+    @Query("{ 'artifactName' : ?0, 'path' : ?1, 'repo' : ?2 }")
+    List<BinaryArtifact> findByArtifactNameAndPathAndRepoOrderByDescTimeStamp(String artifactName, String repo, String path, Sort sort);
 
     Iterable<BinaryArtifact> findByArtifactNameAndTimestampGreaterThan(String artifactName, Long timestamp);
     Iterable<BinaryArtifact> findByArtifactNameAndArtifactExtensionAndTimestampGreaterThan(String artifactName, String artifactExtension, Long timestamp);
