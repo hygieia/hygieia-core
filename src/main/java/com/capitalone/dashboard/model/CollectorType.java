@@ -33,7 +33,8 @@ public enum CollectorType {
     Log,
     AutoDiscover,
     InfrastructureAsCode,
-    Docker;
+    Docker,
+    Helm;
 
     public static CollectorType fromString(String value) {
         for (CollectorType collectorType : values()) {
