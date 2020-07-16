@@ -36,4 +36,6 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
 
     BinaryArtifact findBinaryArtifactByCollectorItemIdAndArtifactVersion(ObjectId collectorItemId, String artifactVersion);
 
+    BinaryArtifact findTopByCollectorItemIdAndArtifactVersionOrderByTimestampDesc(ObjectId collectorItemId, String artifactVersion);
+
 }
