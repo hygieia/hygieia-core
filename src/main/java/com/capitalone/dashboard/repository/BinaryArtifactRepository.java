@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.BinaryArtifact;
+import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.Query;
@@ -35,5 +36,7 @@ public interface BinaryArtifactRepository extends CrudRepository<BinaryArtifact,
     BinaryArtifact findTopByCollectorItemIdAndBuildInfosIsNotEmptyOrderByTimestampDesc(ObjectId collectorItemId, Sort sort);
 
     BinaryArtifact findBinaryArtifactByCollectorItemIdAndArtifactVersion(ObjectId collectorItemId, String artifactVersion);
+
+    BinaryArtifact findTopByCollectorItemIdAndArtifactVersionOrderByTimestampDesc(ObjectId collectorItemId, String artifactVersion);
 
 }
