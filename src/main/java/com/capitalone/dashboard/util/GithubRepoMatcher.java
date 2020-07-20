@@ -13,8 +13,8 @@ public class GithubRepoMatcher {
         try {
             GitHubParsed gitHubParsed = new GitHubParsed(url);
             String text = gitHubParsed.getRepoName().substring(0,1);
-            String alapRegex = "[a-zA-Z]";
-            Pattern pattern = Pattern.compile(alapRegex);
+            String alphaRegex = "[a-zA-Z]";
+            Pattern pattern = Pattern.compile(alphaRegex);
             Matcher matcher = pattern.matcher(text);
             // First repoName should be Alpha
             if(matcher.find()){
