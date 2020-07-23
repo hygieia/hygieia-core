@@ -34,6 +34,7 @@ public enum CollectorType {
     AutoDiscover,
     InfrastructureAsCode,
     Docker,
+    Api,
     Helm;
 
     public static CollectorType fromString(String value) {
