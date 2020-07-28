@@ -4,7 +4,8 @@ import com.capitalone.dashboard.auth.AuthenticationResultHandler;
 import com.capitalone.dashboard.auth.apitoken.ApiTokenAuthenticationProvider;
 import com.capitalone.dashboard.auth.apitoken.ApiTokenRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(apiTokenRequestFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint("Authorization"));
+                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
     }
 
     @Override
