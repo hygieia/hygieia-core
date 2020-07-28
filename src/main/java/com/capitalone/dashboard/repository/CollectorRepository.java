@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface CollectorRepository extends BaseCollectorRepository<Collector> {
 
-    List<Collector> findById(ObjectId id);
+    Collector findById(ObjectId id);
     List<Collector> findAllByCollectorType(CollectorType collectorType);
 }
