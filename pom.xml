@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.7.19</version>
+    <version>3.7.20</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -32,7 +32,7 @@
     <properties>
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
-        <guava.version>19</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <hamcrest.version>1.3</hamcrest.version>
         <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
@@ -155,9 +155,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.3.20.RELEASE</version>
+        </dependency>
  	    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>4.1.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -172,6 +193,22 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.25.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -184,7 +221,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- apache commons -->
@@ -218,18 +255,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-            <version>${spring.cloud.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bouncycastle</groupId>
-                    <artifactId>bcprov-jdk15on</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Query DSL -->
@@ -288,6 +313,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
+            <version>5.4.2.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>

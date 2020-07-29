@@ -1,6 +1,7 @@
 package com.capitalone.dashboard;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Streams;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -48,7 +50,7 @@ public class MarkdownTest {
     @Ignore
     @Test
     public void noAbsoluteLinksInMarkdown() throws Exception {
-        for (File file : Files.fileTreeTraverser().preOrderTraversal(root).filter(MARK_DOWN_PREDICATE)) {
+        for (File file : Streams.stream(Files.fileTraverser().depthFirstPreOrder(root)).filter(MARK_DOWN_PREDICATE).collect(Collectors.toList())) {
             String absolutePath = file.getAbsolutePath();
             if(absoluteLinkPattern.matcher(fromFile(absolutePath)).matches()){
                 fail(String.format(Locale.US, "Use relative links in markdown documents: [%s]", absolutePath));
