@@ -35,6 +35,7 @@ public enum CollectorType {
     InfrastructureAsCode,
     Docker,
     Api,
+    ApiAudit,
     Helm;
 
     public static CollectorType fromString(String value) {
