@@ -153,13 +153,16 @@ public class RestClient {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
-        HttpStatus status = null;
+        String status = null;
         try {
             HttpEntity entity = headers==null?null:new HttpEntity(headers);
             response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
-            status = response.getStatusCode();
+            status = response.getStatusCode().toString();
         } catch (HttpStatusCodeException e) {
-            status = e.getStatusCode();
+            status = e.getStatusCode().toString();
+            throw e;
+        } catch (Exception e) {
+            status = e.getClass().getCanonicalName();
             throw e;
         } finally {
             long end = System.currentTimeMillis();
