@@ -2,7 +2,6 @@ package com.capitalone.dashboard.client;
 
 import com.capitalone.dashboard.util.Encryption;
 import com.capitalone.dashboard.util.EncryptionException;
-import com.capitalone.dashboard.util.Supplier;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -32,8 +31,8 @@ public class RestClient {
     private final RestOperations restOperations;
 
     @Autowired
-    public RestClient(Supplier<RestOperations> restOperationsSupplier) {
-        this.restOperations = restOperationsSupplier.get();
+    public RestClient(RestOperationsSupplier restOperationsSupplier, RestClientSettings settings) {
+        this.restOperations = restOperationsSupplier.get(settings);
     }
 
     /**

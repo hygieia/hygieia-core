@@ -8,7 +8,7 @@ import org.springframework.web.client.RestOperations;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestRestOperations<T> extends RestOperationsSupplier {
+public class TestRestOperations<T> implements RestOperationsSupplier {
     TestRestTemplate<? extends T> template;
 
     private Map<String, TestResponse<T>> response;
