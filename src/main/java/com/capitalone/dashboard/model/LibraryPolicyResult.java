@@ -28,6 +28,7 @@ public class LibraryPolicyResult extends BaseModel {
     private String scanState;
     private String projectName;
     private String productName;
+    private String buildUrl;
 
     public static class Threat {
         LibraryPolicyThreatLevel level;
@@ -289,5 +290,13 @@ public class LibraryPolicyResult extends BaseModel {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
     }
 }
