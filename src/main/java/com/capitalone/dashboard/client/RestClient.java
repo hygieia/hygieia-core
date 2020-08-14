@@ -45,12 +45,12 @@ public class RestClient {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
-        HttpStatus status = null;
+        String status = null;
         try {
             response = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
-            status = response.getStatusCode();
+            status = response.getStatusCode().toString();
         } catch (HttpStatusCodeException e) {
-            status = e.getStatusCode();
+            status = e.getStatusCode().toString();
             LOG.info("status=" + status + ", requestBody=" + httpEntity.getBody());
             throw e;
         } finally {
