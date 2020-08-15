@@ -51,8 +51,8 @@
         <maven.project-info.version>3.0.0</maven.project-info.version>
         <maven.scm.publish.plugin.version>3.0.0</maven.scm.publish.plugin.version>
         <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
-        <mongo>3.0.2</mongo>
-        <mongodb.version>3.0.2</mongodb.version>
+        <mongo>3.6.4</mongo>
+        <mongodb.version>3.6.4</mongodb.version>
         <pmd.version>3.6</pmd.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <site.publish.url>https://github.com/Hygieia/hygieia-core</site.publish.url>
@@ -352,7 +352,7 @@
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
-            <version>2.0.3</version>
+            <version>2.2.0-RC2</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
