@@ -2,7 +2,6 @@ package com.capitalone.dashboard.client;
 
 import com.capitalone.dashboard.util.Encryption;
 import com.capitalone.dashboard.util.EncryptionException;
-import com.capitalone.dashboard.util.Supplier;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -32,8 +31,8 @@ public class RestClient {
     private final RestOperations restOperations;
 
     @Autowired
-    public RestClient(Supplier<RestOperations> restOperationsSupplier) {
-        this.restOperations = restOperationsSupplier.get();
+    public RestClient(RestOperationsSupplier restOperationsSupplier, RestClientSettings settings) {
+        this.restOperations = restOperationsSupplier.get(settings);
     }
 
     /**
@@ -46,12 +45,12 @@ public class RestClient {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
-        HttpStatus status = null;
+        String status = null;
         try {
             response = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
-            status = response.getStatusCode();
+            status = response.getStatusCode().toString();
         } catch (HttpStatusCodeException e) {
-            status = e.getStatusCode();
+            status = e.getStatusCode().toString();
             LOG.info("status=" + status + ", requestBody=" + httpEntity.getBody());
             throw e;
         } finally {
@@ -153,13 +152,16 @@ public class RestClient {
 
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
-        HttpStatus status = null;
+        String status = null;
         try {
             HttpEntity entity = headers==null?null:new HttpEntity(headers);
             response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
-            status = response.getStatusCode();
+            status = response.getStatusCode().toString();
         } catch (HttpStatusCodeException e) {
-            status = e.getStatusCode();
+            status = e.getStatusCode().toString();
+            throw e;
+        } catch (Exception e) {
+            status = e.getClass().getCanonicalName();
             throw e;
         } finally {
             long end = System.currentTimeMillis();
