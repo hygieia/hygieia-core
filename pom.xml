@@ -55,8 +55,7 @@
         <site.publish.url>https://github.com/Hygieia/hygieia-core</site.publish.url>
         <site.publish.checkout.directory>site-content</site.publish.checkout.directory>
         <spotbugs.plugin.version>3.1.11</spotbugs.plugin.version>
-        <spring-data-releasetrain.version>Gosling-SR6</spring-data-releasetrain.version>
-        <spring.cloud.version>1.3.1.RELEASE</spring.cloud.version>
+        <spring-data-releasetrain.version>Ingalls-SR23</spring-data-releasetrain.version>
         <spring-security.version>4.2.18.RELEASE</spring-security.version>
         <tomcat.version>8.5.55</tomcat.version>
     </properties>
@@ -210,6 +209,15 @@
         </dependency>
 
         <!-- Query DSL -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-mongodb</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.mysema.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
