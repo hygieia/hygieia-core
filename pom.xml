@@ -55,7 +55,6 @@
         <site.publish.url>https://github.com/Hygieia/hygieia-core</site.publish.url>
         <site.publish.checkout.directory>site-content</site.publish.checkout.directory>
         <spotbugs.plugin.version>3.1.11</spotbugs.plugin.version>
-        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
         <spring-data-releasetrain.version>Gosling-SR6</spring-data-releasetrain.version>
         <spring.cloud.version>1.3.1.RELEASE</spring.cloud.version>
         <spring-security.version>4.2.18.RELEASE</spring-security.version>
@@ -282,6 +281,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
