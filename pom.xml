@@ -37,6 +37,7 @@
         <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
+        <japicmp.skip>true</japicmp.skip>
         <java.compilation.source>1.8</java.compilation.source>
         <java.compilation.target>1.8</java.compilation.target>
         <jackson.version>2.10.3</jackson.version>
@@ -218,17 +219,6 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <scope>provided</scope>
-            <version>3.7.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mysema.querydsl</groupId>
-            <artifactId>querydsl-mongodb</artifactId>
-            <version>3.7.4</version>
-        </dependency>
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -334,6 +324,7 @@
                     <parameter>
                         <!-- see documentation -->
                     </parameter>
+                    <skip>${japicmp.skip}</skip>
                 </configuration>
                 <executions>
                     <execution>
