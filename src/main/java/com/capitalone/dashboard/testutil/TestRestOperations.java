@@ -1,13 +1,14 @@
 package com.capitalone.dashboard.testutil;
 
-import com.capitalone.dashboard.collector.RestOperationsSupplier;
+import com.capitalone.dashboard.client.RestClientSettings;
+import com.capitalone.dashboard.client.RestOperationsSupplier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestOperations;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestRestOperations<T> extends RestOperationsSupplier {
+public class TestRestOperations<T> implements RestOperationsSupplier {
     TestRestTemplate<? extends T> template;
 
     private Map<String, TestResponse<T>> response;
@@ -45,8 +46,12 @@ public class TestRestOperations<T> extends RestOperationsSupplier {
         this.template = template;
     }
 
-    @Override
     public RestOperations get() {
+        return get(null);
+    }
+
+    @Override
+    public RestOperations get(RestClientSettings settings) {
         if (template == null) {
             template = new TestRestTemplate<>(response);
         }
