@@ -1,8 +1,8 @@
 package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.CollectorItem;
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.types.path.PathBuilder;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.PathBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

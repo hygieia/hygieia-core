@@ -2,8 +2,8 @@ package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.types.path.PathBuilder;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.PathBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -49,7 +49,7 @@ public interface ComponentRepository extends CrudRepository<Component, ObjectId>
     default List<Component> findByCollectorTypeAndItemIdIn(CollectorType collectorType, List<ObjectId> collectorItemIds) {
         BooleanBuilder builder = new BooleanBuilder();
         PathBuilder<Component> path = new PathBuilder<>(Component.class, "components");
-        builder.and(path.get("collectorItems", Map.class).get(collectorType.toString(),List.class).get("id", ObjectId.class).in(collectorItemIds));
+        builder.and(path.get("collectorItems", Map.class).get(collectorType.toString(),List.class).get("_id", ObjectId.class).in(collectorItemIds));
         return (List<Component>) findAll(builder.getValue());
     }
 }
