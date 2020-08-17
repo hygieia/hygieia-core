@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.model;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class BinaryArtifact extends BaseModel {
     /**
      * CollectorItemId for the {@link Build} that produced the artifact
      */
+    @Indexed
     private ObjectId collectorItemId;
     private long timestamp;
 
