@@ -31,7 +31,13 @@
 
     <properties>
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-codec.version>1.14</commons-codec.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <commons-io.version>2.1</commons-io.version>
+        <commons-lang.version>3.10</commons-lang.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
+        <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>29.0-jre</guava.version>
         <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
         <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
@@ -41,6 +47,7 @@
         <java.compilation.source>1.8</java.compilation.source>
         <java.compilation.target>1.8</java.compilation.target>
         <jackson.version>2.10.3</jackson.version>
+        <jasypt.version>1.9</jasypt.version>
         <logback.version>1.2.3</logback.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
@@ -184,17 +191,16 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>${commons-lang.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.1</version>
+            <version>${commons-collections4.version}</version>
         </dependency>
 
         <!-- spring -->
@@ -229,13 +235,13 @@
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>1.9</version>
+            <version>${jasypt.version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
+            <version>${commons-beanutils.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>
@@ -247,7 +253,6 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
         </dependency>
 
         <dependency>
@@ -257,7 +262,7 @@
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
-            <version>2.2.0-RC2</version>
+            <version>${fongo.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -270,7 +275,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.1</version>
+            <version>${commons-io.version}</version>
         </dependency>
     </dependencies>
 
