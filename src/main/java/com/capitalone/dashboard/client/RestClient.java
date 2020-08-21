@@ -12,16 +12,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -31,8 +31,8 @@ public class RestClient {
     private final RestOperations restOperations;
 
     @Autowired
-    public RestClient(RestOperationsSupplier restOperationsSupplier, RestClientSettings settings) {
-        this.restOperations = restOperationsSupplier.get(settings);
+    public RestClient(RestOperationsSupplier restOperationsSupplier, RestClientSettings restClientSettings) {
+        this.restOperations = restOperationsSupplier.get(restClientSettings);
     }
 
     /**
