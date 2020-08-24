@@ -54,6 +54,11 @@ public class TestCollectorTaskWithGenericItem extends CollectorTaskWithGenericIt
     }
 
     @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
     public void collect(Collector collector) {
 
     }
