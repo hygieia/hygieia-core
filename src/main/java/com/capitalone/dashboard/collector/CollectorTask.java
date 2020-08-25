@@ -65,7 +65,7 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
             long end = System.currentTimeMillis();
             long duration = end - start;
             int count = getCount();
-            LOGGER.info("Finished running Collector={} timeTaken=" + duration + "collectorItems=" + count, collectorName);
+            LOGGER.info("Finished running Collector={} timeTaken=" + duration + " collectorItems=" + count, collectorName);
 
             // Update lastUpdate timestamp in Collector
             collector.setLastExecuted(end);
