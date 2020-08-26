@@ -30,25 +30,31 @@
     </organization>
 
     <properties>
-        <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <!-- Dependencies -->
+        <spring-security.version>4.2.18.RELEASE</spring-security.version>
+        <tomcat.version>8.5.57</tomcat.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>3.10</commons-lang.version>
-        <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
         <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>29.0-jre</guava.version>
         <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
+        <jackson.version>2.10.3</jackson.version>
+        <jasypt.version>1.9</jasypt.version>
+        <logback.version>1.2.3</logback.version>
+        <mongodb.version>3.6.4</mongodb.version>
+        <assertj.version>3.9.0</assertj.version>
+
+        <!-- Plugins -->
+        <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
+        <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
         <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
         <java.compilation.source>1.8</java.compilation.source>
         <java.compilation.target>1.8</java.compilation.target>
-        <jackson.version>2.10.3</jackson.version>
-        <jasypt.version>1.9</jasypt.version>
-        <logback.version>1.2.3</logback.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
@@ -57,15 +63,11 @@
         <maven.project-info.version>3.0.0</maven.project-info.version>
         <maven.scm.publish.plugin.version>3.0.0</maven.scm.publish.plugin.version>
         <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
-        <mongodb.version>3.6.4</mongodb.version>
         <pmd.version>3.6</pmd.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <site.publish.url>https://github.com/Hygieia/hygieia-core</site.publish.url>
         <site.publish.checkout.directory>site-content</site.publish.checkout.directory>
         <spotbugs.plugin.version>3.1.11</spotbugs.plugin.version>
-        <spring-data-releasetrain.version>Ingalls-SR23</spring-data-releasetrain.version>
-        <spring-security.version>4.2.18.RELEASE</spring-security.version>
-        <tomcat.version>8.5.55</tomcat.version>
     </properties>
 
     <parent>
@@ -277,15 +279,14 @@
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.4.11</version>
         </dependency>
     </dependencies>
 
