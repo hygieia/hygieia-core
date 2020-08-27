@@ -31,8 +31,8 @@ public class RestClient {
     private final RestOperations restOperations;
 
     @Autowired
-    public RestClient(RestOperationsSupplier restOperationsSupplier, RestClientSettings restClientSettings) {
-        this.restOperations = restOperationsSupplier.get(restClientSettings);
+    public RestClient(RestOperationsSupplier restOperationsSupplier) {
+        this.restOperations = restOperationsSupplier.get();
     }
 
     /**
