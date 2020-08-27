@@ -7,7 +7,6 @@ import org.springframework.web.client.RestOperations;
  */
 public interface RestOperationsSupplier {
 
-    public RestOperations get(RestClientSettings settings);
-
+    RestOperations get();
 
 }
