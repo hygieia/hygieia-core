@@ -61,10 +61,9 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
         if (collector.isEnabled()) {
             LOGGER.info("Starting Collector={}", collectorName);
             long start = System.currentTimeMillis();
-            collect(collector);
+            int count = collect(collector);
             long end = System.currentTimeMillis();
             long duration = end - start;
-            int count = getCount();
             LOGGER.info("Finished running Collector={} timeTaken=" + duration + " collectorItems=" + count, collectorName);
 
             // Update lastUpdate timestamp in Collector
@@ -92,10 +91,8 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
 
     public abstract String getCron();
 
-    public abstract void collect(T collector);
-
     // return total number of collector items collected during one run of the collect() method
-    public abstract int getCount();
+    public abstract int collect(T collector);
 
     private void setOnline(boolean online) {
         T collector = getCollectorRepository().findByName(collectorName);
