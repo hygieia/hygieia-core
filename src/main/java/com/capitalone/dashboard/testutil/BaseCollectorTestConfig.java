@@ -1,7 +1,5 @@
 package com.capitalone.dashboard.testutil;
 
-import com.capitalone.dashboard.client.DefaultRestClientSettings;
-import com.capitalone.dashboard.client.RestClientSettings;
 import com.capitalone.dashboard.client.RestOperationsSupplier;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +19,6 @@ public class BaseCollectorTestConfig {
     public RestOperationsSupplier restOperationsSupplier()  {
         Map<String, TestResponse<String>> responseMap = new HashMap<>();
         return new TestRestOperations(responseMap);
-    }
-
-    @Bean
-    public RestClientSettings restClientSettings() {
-        return new DefaultRestClientSettings();
     }
 
     @Bean
