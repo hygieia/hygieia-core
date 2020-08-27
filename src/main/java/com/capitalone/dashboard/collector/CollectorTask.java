@@ -1,7 +1,6 @@
 package com.capitalone.dashboard.collector;
 
 import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -10,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Base class for Collector task implementation which provides subclasses with
@@ -45,7 +41,7 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
 
     @Override
     public final void run() {
-        LOGGER.info("Running Collector: {}", collectorName);
+        LOGGER.info("Getting Collector: {}", collectorName);
         T collector = getCollectorRepository().findByName(collectorName);
         if (collector == null) {
             // Register new collector
@@ -63,16 +59,19 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
         }
 
         if (collector.isEnabled()) {
-            // Do collection run
-            if(CollectionUtils.isEmpty(getSelectedCollectorItems())) {
-                collect(collector);
-            } else {
-                collect(collector, getSelectedCollectorItems());
-            }
+            LOGGER.info("Starting Collector={}", collectorName);
+            long start = System.currentTimeMillis();
+            collect(collector);
+            long end = System.currentTimeMillis();
+            long duration = end - start;
+            int count = getCount();
+            LOGGER.info("Finished running Collector={} timeTaken=" + duration + " collectorItems=" + count, collectorName);
 
             // Update lastUpdate timestamp in Collector
-            collector.setLastExecuted(System.currentTimeMillis());
+            collector.setLastExecuted(end);
             getCollectorRepository().save(collector);
+        } else {
+            LOGGER.info("Collector is disabled, collectorName={}", collectorName);
         }
     }
 
@@ -95,12 +94,8 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
 
     public abstract void collect(T collector);
 
-    // default implementation that needs to be overridden in the collector.
-    public void collect(T collector, List<CollectorItem> collectorItems) {}
-
-    public List<CollectorItem> getSelectedCollectorItems() {
-        return new ArrayList<>();
-    }
+    // return total number of collector items collected during one run of the collect() method
+    public abstract int getCount();
 
     private void setOnline(boolean online) {
         T collector = getCollectorRepository().findByName(collectorName);
@@ -159,10 +154,10 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
         LOGGER.info(message);
     }
 
+    @Deprecated
     protected void logBanner(String instanceUrl) {
         LOGGER.info("-----------------------------------");
         LOGGER.info(instanceUrl);
         LOGGER.info("-----------------------------------");
     }
-
 }
