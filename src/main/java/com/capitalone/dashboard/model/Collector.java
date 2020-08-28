@@ -23,6 +23,7 @@ public class Collector extends BaseModel {
     private Map<String, Object> allFields = new HashMap<>();
 
     private long lastExecuted;
+    private long lastExecutionRecordCount;
     private List<String> searchFields = Arrays.asList("description");
     private Map<String, Object> properties = new HashMap<>(); //general purpose name-value properties
 
@@ -72,6 +73,14 @@ public class Collector extends BaseModel {
 
     public void setLastExecuted(long lastExecuted) {
         this.lastExecuted = lastExecuted;
+    }
+
+    public long getLastExecutionRecordCount() {
+        return lastExecutionRecordCount;
+    }
+
+    public void setLastExecutionRecordCount(long lastExecutionRecordCount) {
+        this.lastExecutionRecordCount = lastExecutionRecordCount;
     }
 
     public List<CollectionError> getErrors() {
