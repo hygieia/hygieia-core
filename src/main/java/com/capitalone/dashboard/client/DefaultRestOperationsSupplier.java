@@ -14,8 +14,8 @@ public class DefaultRestOperationsSupplier implements RestOperationsSupplier {
 
     public RestOperations get() {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(Integer.getInteger(System.getProperty(HygieiaRestConnection.REST_CONNECT_TIMEOUT), 5000));
-        requestFactory.setReadTimeout(Integer.getInteger(System.getProperty(HygieiaRestConnection.REST_READ_TIMEOUT), 60000));
+        requestFactory.setConnectTimeout(Integer.getInteger(HygieiaRestConnection.REST_CONNECT_TIMEOUT, 5000));
+        requestFactory.setReadTimeout(Integer.getInteger(HygieiaRestConnection.REST_READ_TIMEOUT, 60000));
         return new RestTemplate(requestFactory);
     }
 }
