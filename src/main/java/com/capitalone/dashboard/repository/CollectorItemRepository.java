@@ -54,6 +54,11 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
 
     List<CollectorItem> findByDescription(String description);
 
+    @Query("{'options.orgName' : ?0, 'options.projectName' : ?1, 'options.projectToken' : ?2}")
+    CollectorItem findByOrgNameAndProjectNameAndProjectToken(String var1, String var2, String var3);
+
+
+
     default Iterable<CollectorItem> findAllByOptionNameValue(String optionName, String optionValue) {
         PathBuilder<CollectorItem> path = new PathBuilder<>(CollectorItem.class, "collectorItem");
         BooleanBuilder builder = new BooleanBuilder();

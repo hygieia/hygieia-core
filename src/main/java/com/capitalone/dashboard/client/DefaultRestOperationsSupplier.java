@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.client;
 
+import com.capitalone.dashboard.util.HygieiaRestConnection;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
@@ -11,14 +12,10 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class DefaultRestOperationsSupplier implements RestOperationsSupplier {
 
-    public RestOperations get(RestClientSettings settings) {
-        if (settings==null) {
-            return new RestTemplate();
-        } else {
-            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-            requestFactory.setConnectTimeout(settings.getRequestConnectTimeout());
-            requestFactory.setReadTimeout(settings.getRequestReadTimeout());
-            return new RestTemplate(requestFactory);
-        }
+    public RestOperations get() {
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(Integer.getInteger(HygieiaRestConnection.REST_CONNECT_TIMEOUT, 5000));
+        requestFactory.setReadTimeout(Integer.getInteger(HygieiaRestConnection.REST_READ_TIMEOUT, 60000));
+        return new RestTemplate(requestFactory);
     }
 }
