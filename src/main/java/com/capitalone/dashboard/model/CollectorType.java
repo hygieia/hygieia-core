@@ -35,7 +35,7 @@ public enum CollectorType {
     InfrastructureAsCode,
     Docker,
     Helm,
-    GITWORKFLOW;
+    GitWorkflow;
 
     public static CollectorType fromString(String value) {
         for (CollectorType collectorType : values()) {

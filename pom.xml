@@ -18,7 +18,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <version>3.7.19-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
@@ -377,13 +377,13 @@
                     <target>${java.compilation.target}</target>
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>com.github.siom79.japicmp</groupId>
                 <artifactId>japicmp-maven-plugin</artifactId>
                 <version>0.13.1</version>
                 <configuration>
                     <parameter>
-                        <!-- see documentation -->
+                        see documentation
                     </parameter>
                 </configuration>
                 <executions>
@@ -394,7 +394,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -585,7 +585,7 @@
                     <excludes>**/*Test*.java</excludes>
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
@@ -601,7 +601,7 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

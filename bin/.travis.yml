@@ -1,0 +1,29 @@
+language: java
+jdk:
+  - openjdk8
+
+branches:
+  only:
+    - master
+
+install: true
+
+before_script:
+  - sudo chown -R $USER:$GROUP $TRAVIS_BUILD_DIR
+
+script:
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [[ "$TRAVIS_BRANCH" = "master" ]]; then cp ./src/devops/release.sh . && ./release.sh; fi
+
+notifications:
+  webhooks:
+    urls: https://webhooks.gitter.im/e/48597b0f75dd571734bc
+    on_success: always
+    on_failure: always
+    on_start: always
+  email:
+    recipients:
+      - tapabrata.pal@capitalone.com
+      - ragha.vema@capitalone.com
+      - hygieia2@capitalone.com
+    on_success: change
+    on_failure: always

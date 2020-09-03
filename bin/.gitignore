@@ -1,0 +1,32 @@
+# Mac artifacts
+.DS_Store
+
+# Eclipse artifacts
+.project
+.settings
+.classpath
+
+# Logs
+logs
+log
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.iml
+/target
+/.idea
+site-content
+
+# Distributable artifacts
+target
+
+# Maven Release temp files
+release.properties
+pom.xml.releaseBackup
+pom.xml.next
+
+# Specific project files
+jir-client.properties
