@@ -129,6 +129,6 @@ public class AuditRequestLog extends BaseModel {
     public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
 
     public String toString() {
-        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
+        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }
 }
