@@ -1,11 +1,16 @@
 package com.capitalone.dashboard.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Document(collection = "requests")
 public class RequestLog extends BaseModel {
+
+    @Indexed
+    private String apiUser;
     private String client;
+    @Indexed
     private String endpoint;
     private String method;
     private String parameter;
@@ -18,6 +23,10 @@ public class RequestLog extends BaseModel {
     private int responseCode;
     private long timestamp;
     private long responseTime;
+
+    public String getApiUser() { return apiUser; }
+
+    public void setApiUser(String apiUser) { this.apiUser = apiUser; }
 
     public String getClient() {
         return client;
@@ -120,6 +129,6 @@ public class RequestLog extends BaseModel {
     public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
 
     public String toString() {
-        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
+        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] + [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }
 }
