@@ -296,7 +296,8 @@ public class Cmdb extends BaseModel{
                 this.itemType,
                 this.configurationItemSubType,
                 this.configurationItemType,
-                this.legacyServiceManagerName);
+                this.legacyServiceManagerName,
+                this.commonName);
     }
     @Override
     public boolean equals(Object obj)
