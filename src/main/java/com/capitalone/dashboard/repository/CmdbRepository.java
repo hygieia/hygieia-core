@@ -16,6 +16,9 @@ public interface CmdbRepository extends CrudRepository<Cmdb, ObjectId>  {
 
     List<Cmdb> findAllByConfigurationItemContainingOrCommonNameContainingAllIgnoreCase(String configItemFilter, String commonNameFilter);
 
+    List<Cmdb> findAllByConfigurationItemContainingOrConfigurationKeyContainingOrLegacyServiceManagerNameContainingOrCommonNameContainingAllIgnoreCase(
+            String configItemFilter, String configKeyFilter, String legacyNameFilter, String commonNameFilter);
+
     Page<Cmdb> findAllByItemTypeAndValidConfigItemAndIdIn(String itemType, boolean valid, List<ObjectId> idList, Pageable pageable);
 
     Page<Cmdb> findAllByItemTypeAndConfigurationItemContainingIgnoreCaseAndValidConfigItem(String itemType, String configurationItem, Pageable pageable, boolean valid);
