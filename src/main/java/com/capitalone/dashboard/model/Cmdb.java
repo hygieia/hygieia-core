@@ -2,6 +2,7 @@ package com.capitalone.dashboard.model;
 
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -17,11 +18,13 @@ public class Cmdb extends BaseModel{
     /**
      * configurationItem unique system generated id
      */
+    @Indexed
     @NotNull
     private String configurationItem;
     /**
      * configurationItem unique key name
      */
+    @Indexed
     private String configurationKey;
     /**
      * configurationItemSubType SubType of the CI
@@ -34,6 +37,7 @@ public class Cmdb extends BaseModel{
     /**
      * configurationItem legacy hpsm name
      */
+    @Indexed
     private String legacyServiceManagerName;
     private String assignmentGroup;
     /**
@@ -79,6 +83,7 @@ public class Cmdb extends BaseModel{
     /**
      * commonName Human readable value of the configurationItem
      */
+    @Indexed
     @NotNull
     private String commonName;
     /**
