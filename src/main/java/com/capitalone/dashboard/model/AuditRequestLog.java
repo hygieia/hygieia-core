@@ -10,6 +10,8 @@ public class AuditRequestLog extends BaseModel {
     private String apiUser;
     private String client;
     @Indexed
+    private String clientReference;
+    @Indexed
     private String endpoint;
     private String method;
     private Object parameter;
@@ -35,6 +37,10 @@ public class AuditRequestLog extends BaseModel {
     public void setClient(String client) {
         this.client = client;
     }
+
+    public String getClientReference() { return clientReference; }
+
+    public void setClientReference(String clientReference) { this.clientReference = clientReference; }
 
     public String getEndpoint() {
         return endpoint;
@@ -129,6 +135,6 @@ public class AuditRequestLog extends BaseModel {
     public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
 
     public String toString() {
-        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
+        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [clientReference:" + clientReference + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }
 }
