@@ -201,6 +201,50 @@ public class LibraryPolicyResult extends BaseModel {
 
     }
 
+    public void addThreat(LibraryPolicyType type, LibraryPolicyThreatLevel level, LibraryPolicyThreatDisposition disposition, String dispositionStatus, String component,String age,String score, String policyName) {
+        Set<Threat> threatSet = threats.get(type);
+
+        if (CollectionUtils.isEmpty(threatSet)) {
+            Threat threat = new Threat(level, 1);
+            threat.getComponents().add(getComponentPlusDispositionPlusAgePlusPolicyName(component,disposition,dispositionStatus,age,score,policyName));
+            threat.addDispositionCount(disposition);
+            setCriticalAndHighVulAge(age, threat,disposition);
+            setCriticalAndHighVulScore(score,threat,disposition);
+            Set<Threat> set = new HashSet<>();
+            set.add(threat);
+            threats.put(type, set);
+        } else {
+            boolean found = false;
+            for (Threat t : threatSet) {
+                if (Objects.equals(t.getLevel(), level)) {
+                    t.setCount(t.getCount() + 1);
+                    t.addDispositionCount(disposition);
+                    setCriticalAndHighVulAge(age, t,disposition);
+                    setCriticalAndHighVulScore(score,t,disposition);
+                    if (!t.getComponents().contains(getComponentPlusDispositionPlusAgePlusPolicyName(component,disposition,dispositionStatus,age,score,policyName))) {
+                        t.getComponents().add(getComponentPlusDispositionPlusAgePlusPolicyName(component,disposition,dispositionStatus,age,score,policyName));
+                    }
+                    threatSet.add(t);
+                    threats.put(type, threatSet);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                Threat t = new Threat(level, 1);
+                if (!t.getComponents().contains(getComponentPlusDispositionPlusAgePlusPolicyName(component,disposition,dispositionStatus,age,score,policyName))) {
+                    t.getComponents().add(getComponentPlusDispositionPlusAgePlusPolicyName(component,disposition,dispositionStatus,age,score,policyName));
+                }
+                t.addDispositionCount(disposition);
+                setCriticalAndHighVulAge(age, t,disposition);
+                setCriticalAndHighVulScore(score,t,disposition);
+                threatSet.add(t);
+                threats.put(type, threatSet);
+            }
+        }
+
+    }
+
     private void setCriticalAndHighVulAge(String age, Threat threat, LibraryPolicyThreatDisposition disposition) {
         if (disposition.equals(LibraryPolicyThreatDisposition.Open)) {
             int currentValue = NumberUtils.toInt(age);
@@ -267,6 +311,9 @@ public class LibraryPolicyResult extends BaseModel {
         return String.format("%s##%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus,score);
     }
 
+    private String getComponentPlusDispositionPlusAgePlusPolicyName (String component, LibraryPolicyThreatDisposition disposition, String dispositionStatus,String age, String score, String policyName) {
+        return String.format("%s##%s##%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus,score,policyName);
+    }
 
     public ObjectId getBuildId() { return buildId; }
 
