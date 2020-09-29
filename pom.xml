@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.10.6</version>
+    <version>3.10.7</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -97,6 +97,7 @@
         <site>
             <id>hygieia.core.website</id>
             <name>Capital One Maven Plugins Site</name>
+            <!--suppress UnresolvedMavenProperty -->
             <url>scm:git:https://${github.username}@github.com/Hygieia/hygieia-core</url>
         </site>
     </distributionManagement>
@@ -180,7 +181,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.2.5.RELEASE</version>
+            <version>5.2.9.RELEASE</version>
         </dependency>
 
         <!-- Misc Deps -->
