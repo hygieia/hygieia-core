@@ -22,6 +22,9 @@ public class EnvironmentComponent extends BaseModel {
     private boolean deployed;
     private long deployTime;
     private long asOfDate;
+    private ObjectId buildId;
+    private String jobStageName;
+    private String jobStageStatus;
 
 
 	
@@ -113,4 +116,16 @@ public class EnvironmentComponent extends BaseModel {
     public void setDeployTime(long deployTime) {
         this.deployTime = deployTime;
     }
+
+    public ObjectId getBuildId() { return buildId; }
+
+    public void setBuildId(ObjectId buildId) { this.buildId = buildId; }
+
+    public String getJobStageName() { return jobStageName; }
+
+    public void setJobStageName(String jobStageName) { this.jobStageName = jobStageName; }
+
+    public String getJobStageStatus() { return jobStageStatus; }
+
+    public void setJobStageStatus(String jobStageStatus) { this.jobStageStatus = jobStageStatus; }
 }

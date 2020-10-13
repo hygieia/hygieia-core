@@ -31,7 +31,9 @@ public class DeployDataCreateRequest {
     private String startedBy;
     private String collectorName;
     private String niceName;
-
+    private String stageName;
+    private String stageStatus;
+    private String jobNumber;
 
     public String getExecutionId() {
         return executionId;
@@ -168,4 +170,16 @@ public class DeployDataCreateRequest {
     public void setNiceName(String niceName) {
         this.niceName = niceName;
     }
+
+    public String getStageName() { return stageName; }
+
+    public void setStageName(String stageName) { this.stageName = stageName; }
+
+    public String getStageStatus() { return stageStatus; }
+
+    public void setStageStatus(String stageStatus) { this.stageStatus = stageStatus; }
+
+    public String getJobNumber() { return jobNumber; }
+
+    public void setJobNumber(String jobNumber) { this.jobNumber = jobNumber; }
 }
