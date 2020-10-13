@@ -28,6 +28,7 @@ public class EnvironmentComponent extends BaseModel {
     private String jobStageStatus;
     private String applicationName;
     private String serviceName;
+    private String changeReference;
 
 
 	
@@ -143,4 +144,8 @@ public class EnvironmentComponent extends BaseModel {
     public String getServiceName() { return serviceName; }
 
     public void setServiceName(String serviceName) { this.serviceName = serviceName; }
+
+    public String getChangeReference() { return changeReference; }
+
+    public void setChangeReference(String changeReference) { this.changeReference = changeReference; }
 }
