@@ -9,12 +9,14 @@ public class DeployDataCreateRequest {
     private String jobUrl;
     @NotNull
     private String appName;
+    private String appServiceName;
     @NotNull
     private String envName;
     @NotNull
     private String artifactName;
     @NotNull
     private String artifactVersion;
+    private String artifactPath;
     @NotNull
     private String jobName;
     @NotNull
@@ -182,4 +184,12 @@ public class DeployDataCreateRequest {
     public String getJobNumber() { return jobNumber; }
 
     public void setJobNumber(String jobNumber) { this.jobNumber = jobNumber; }
+
+    public String getAppServiceName() { return appServiceName; }
+
+    public void setAppServiceName(String appServiceName) { this.appServiceName = appServiceName; }
+
+    public String getArtifactPath() { return artifactPath; }
+
+    public void setArtifactPath(String artifactPath) { this.artifactPath = artifactPath; }
 }

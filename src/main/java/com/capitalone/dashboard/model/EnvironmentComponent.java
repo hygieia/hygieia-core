@@ -18,6 +18,7 @@ public class EnvironmentComponent extends BaseModel {
     private String componentID;
 	private String componentName;
     private String componentVersion;
+    private String componentPath;
     private String jobUrl;
     private boolean deployed;
     private long deployTime;
@@ -25,6 +26,8 @@ public class EnvironmentComponent extends BaseModel {
     private ObjectId buildId;
     private String jobStageName;
     private String jobStageStatus;
+    private String applicationName;
+    private String serviceName;
 
 
 	
@@ -128,4 +131,16 @@ public class EnvironmentComponent extends BaseModel {
     public String getJobStageStatus() { return jobStageStatus; }
 
     public void setJobStageStatus(String jobStageStatus) { this.jobStageStatus = jobStageStatus; }
+
+    public String getComponentPath() { return componentPath; }
+
+    public void setComponentPath(String componentPath) { this.componentPath = componentPath; }
+
+    public String getApplicationName() { return applicationName; }
+
+    public void setApplicationName(String applicationName) { this.applicationName = applicationName; }
+
+    public String getServiceName() { return serviceName; }
+
+    public void setServiceName(String serviceName) { this.serviceName = serviceName; }
 }
