@@ -4,7 +4,7 @@ public enum FeatureStatus {
 	BACKLOG("Backlog"), GROOMING("Grooming"), WAITING("Waiting"), IN_PROGRESS("In Progress"), IMPEDED(
 			"Impeded"), DONE("Done"), ACCEPTED("Accepted");
 
-	private String status;
+	private final String status;
 
 	FeatureStatus(String status) {
 		this.status = status;
