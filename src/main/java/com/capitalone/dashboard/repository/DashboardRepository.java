@@ -53,6 +53,7 @@ public interface DashboardRepository extends PagingAndSortingRepository<Dashboar
 	List<Dashboard> findAllByConfigurationItemBusServNameContainingIgnoreCaseAndConfigurationItemBusAppNameContainingIgnoreCase(String appName, String compName);
 	List<Dashboard> findAllByTypeAndConfigurationItemBusServNameContainingIgnoreCaseAndConfigurationItemBusAppNameContainingIgnoreCase(DashboardType type, String appName, String compName);
 
+	@Override
 	Page<Dashboard> findAll(Pageable page);
 	Page<Dashboard> findAllByTypeContainingIgnoreCase(String type,Pageable pageable);
 
@@ -62,6 +63,7 @@ public interface DashboardRepository extends PagingAndSortingRepository<Dashboar
 	List<Dashboard> findAllByTitleContainingIgnoreCase(String name);
 	List<Dashboard> findAllByTypeContainingIgnoreCaseAndTitleContainingIgnoreCase(String type, String title);
 
+	@Override
 	long count();
 	long countByTypeContainingIgnoreCase(String type);
 
