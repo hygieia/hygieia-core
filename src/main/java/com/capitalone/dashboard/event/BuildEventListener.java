@@ -117,9 +117,9 @@ public class BuildEventListener extends HygieiaMongoEventListener<Build> {
                  */
                 Map<String, PipelineCommit> commitStageCommits = pipeline.getCommitsByEnvironmentName(PipelineStage.COMMIT.getName());
                 Map<String, PipelineCommit> buildStageCommits = pipeline.getCommitsByEnvironmentName(PipelineStage.BUILD.getName());
-                for (String rev : commitStageCommits.keySet()) {
-                    PipelineCommit commit = commitStageCommits.get(rev);
-                    if ((commit.getScmCommitTimestamp() < build.getStartTime()) && !buildStageCommits.containsKey(rev) && isMoveCommitToBuild(build, commit, commitRepository)) {
+                for (Map.Entry<String, PipelineCommit> e : commitStageCommits.entrySet()) {
+                    PipelineCommit commit = e.getValue();
+                    if ((commit.getScmCommitTimestamp() < build.getStartTime()) && !buildStageCommits.containsKey(e.getKey()) && isMoveCommitToBuild(build, commit, commitRepository)) {
                         pipeline.addCommit(PipelineStage.BUILD.getName(), commit);
                     }
                 }
