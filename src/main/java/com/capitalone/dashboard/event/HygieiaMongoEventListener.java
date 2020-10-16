@@ -42,6 +42,11 @@ public abstract class HygieiaMongoEventListener<T> extends AbstractMongoEventLis
      * @return
      */
     protected CollectorItem getTeamDashboardCollectorItem(Dashboard teamDashboard) {
+        Collector productCollector = getProductCollector();
+        if(productCollector == null) {
+            return null;
+        }
+        
         ObjectId productCollectorId = getProductCollector().getId();
         ObjectId dashboardId = teamDashboard.getId();
         return collectorItemRepository.findTeamDashboardCollectorItemsByCollectorIdAndDashboardId(productCollectorId, dashboardId.toString());
@@ -54,6 +59,10 @@ public abstract class HygieiaMongoEventListener<T> extends AbstractMongoEventLis
      */
     protected Pipeline getOrCreatePipeline(Dashboard teamDashboard) {
         CollectorItem teamDashboardCollectorItem = getTeamDashboardCollectorItem(teamDashboard);
+        if(teamDashboardCollectorItem == null) {
+            return null;
+        }
+        
         return getOrCreatePipeline(teamDashboardCollectorItem);
     }
 
