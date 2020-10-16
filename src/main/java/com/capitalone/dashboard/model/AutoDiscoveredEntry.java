@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import src.main.java.com.capitalone.dashboard.misc.HygieiaException;
+import com.capitalone.dashboard.misc.HygieiaException;
 
 /**
  * Entry class to hold the Auto Discovered entries: Jira project, github project, build job etc.

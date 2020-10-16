@@ -303,10 +303,6 @@ public class LibraryPolicyResult extends BaseModel {
         this.policyAlert = policyAlert;
     }
 
-    private String getComponentPlusDisposition (String component, LibraryPolicyThreatDisposition disposition) {
-        return String.format("%s##%s", component, disposition.toString());
-    }
-
     private String getComponentPlusDispositionPlusAge (String component, LibraryPolicyThreatDisposition disposition, String dispositionStatus,String age, String score) {
         return String.format("%s##%s##%s##%s##%s", component, disposition.toString(), age, dispositionStatus,score);
     }

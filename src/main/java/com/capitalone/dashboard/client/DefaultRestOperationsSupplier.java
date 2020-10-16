@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class DefaultRestOperationsSupplier implements RestOperationsSupplier {
 
+    @Override
     public RestOperations get() {
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setConnectTimeout(Integer.getInteger(HygieiaRestConnection.REST_CONNECT_TIMEOUT, 5000));

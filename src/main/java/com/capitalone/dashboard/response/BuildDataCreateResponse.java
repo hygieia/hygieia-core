@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.types.ObjectId;
 
-import src.main.java.com.capitalone.dashboard.model.BuildStatus;
+import com.capitalone.dashboard.model.BuildStatus;
 
 public class BuildDataCreateResponse {
     private ObjectId id;

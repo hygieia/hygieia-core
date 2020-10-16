@@ -35,9 +35,7 @@ public class PipelineCommit extends SCM{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof PipelineCommit))
 			return false;
 		PipelineCommit other = (PipelineCommit) obj;
 		if (scmRevisionNumber == null) {

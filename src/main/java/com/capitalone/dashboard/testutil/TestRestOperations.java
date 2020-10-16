@@ -45,6 +45,7 @@ public class TestRestOperations<T> implements RestOperationsSupplier {
         this.template = template;
     }
 
+    @Override
     public RestOperations get() {
         if (template == null) {
             template = new TestRestTemplate<>(response);

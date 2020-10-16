@@ -154,7 +154,7 @@ public class WhiteSourceChangeRequest extends BaseModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof WhiteSourceChangeRequest)) return false;
 
         WhiteSourceChangeRequest that = (WhiteSourceChangeRequest) o;
         return Objects.equals(getScopeName(), that.getScopeName());

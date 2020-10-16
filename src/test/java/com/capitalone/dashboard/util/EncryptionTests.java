@@ -16,7 +16,7 @@ public class EncryptionTests {
 	private final String A_LONG_KEY = "0ED1C7B771C9BBAB2583C364AFE8FB0C2F23A6FC8157EE3601ABB53D9CEA9893";
 	private final String A_SHORT_KEY = "F55CC56E8DB6056EB4085263";
 	private final String A_BAD_STRING_KEY = "c/t/nuBFwTgvB+lwzS/q5W0ZkQhhxCB1";
-	private static final String ALGO = "DESede";
+	private static final String ALGO = "AES";
 	private static final SecretKey GOOD_KEY = getKey();
 	private static final SecretKey BAD_KEY = getKey();
 

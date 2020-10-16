@@ -314,6 +314,7 @@ public class Cmdb extends BaseModel{
         final Cmdb other = (Cmdb) obj;
         return    Objects.equals(this.configurationItem, other.configurationItem)
                 && Objects.equals(this.configurationKey, other.configurationKey)
+                && Objects.equals(this.itemType, other.itemType)
                 && Objects.equals(this.assignmentGroup, other.assignmentGroup)
                 && Objects.equals(this.appServiceOwner, other.appServiceOwner)
                 && Objects.equals(this.businessOwner, other.businessOwner)

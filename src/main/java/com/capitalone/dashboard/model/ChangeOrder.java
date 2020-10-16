@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.model;
 
+import java.lang.StringBuilder;
 import java.util.Objects;
 
 import org.bson.types.ObjectId;

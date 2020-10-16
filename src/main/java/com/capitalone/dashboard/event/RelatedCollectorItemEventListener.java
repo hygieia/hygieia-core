@@ -34,7 +34,7 @@ public class RelatedCollectorItemEventListener extends HygieiaMongoEventListener
     public void onAfterSave(AfterSaveEvent<RelatedCollectorItem> event) {
         RelatedCollectorItem relatedCollectorItem = event.getSource();
         try {
-            syncDashboard.sync(relatedCollectorItem,!(Reason.ARTIFACT_REASON.getAction().equalsIgnoreCase(relatedCollectorItem.getReason())));
+            syncDashboard.sync(relatedCollectorItem,!Reason.ARTIFACT_REASON.getAction().equalsIgnoreCase(relatedCollectorItem.getReason()));
         } catch (SyncException e) {
             LOG.error("Error processing related collector item. ID = " + relatedCollectorItem.getId() + ". Reason " + e.getMessage());
         }

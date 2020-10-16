@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import src.main.java.com.capitalone.dashboard.model.NameValue;
+import com.capitalone.dashboard.model.NameValue;
 
 public class CloudVolumeCreateRequest {
     @Indexed
