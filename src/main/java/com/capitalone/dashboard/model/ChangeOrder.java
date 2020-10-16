@@ -205,11 +205,11 @@ public class ChangeOrder extends BaseModel{
     @Override
     public String toString() {
 
-        StringBuffer buf = new StringBuffer(210);
-        buf.append("changeID: ")
+        StringBuilder builder = new StringBuilder(210);
+        builder.append("changeID: ")
                 .append(changeID);
 
-        return buf.toString();
+        return builder.toString();
     }
 
     @Override
