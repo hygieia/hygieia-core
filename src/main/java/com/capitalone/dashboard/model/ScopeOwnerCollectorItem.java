@@ -70,7 +70,8 @@ public class ScopeOwnerCollectorItem extends CollectorItem {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ScopeOwnerCollectorItem))
+            return false;
 
         ScopeOwnerCollectorItem that = (ScopeOwnerCollectorItem) o;
         EqualsBuilder builder = new EqualsBuilder();

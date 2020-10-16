@@ -307,11 +307,7 @@ public class Cmdb extends BaseModel{
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof Cmdb))
         {
             return false;
         }

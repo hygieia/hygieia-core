@@ -1,11 +1,11 @@
 package com.capitalone.dashboard.model;
 
+import java.util.Objects;
+
 import org.bson.types.ObjectId;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection="changeorder")
 public class ChangeOrder extends BaseModel{
@@ -184,7 +184,7 @@ public class ChangeOrder extends BaseModel{
     public boolean equals(Object compareTo){
         boolean doesEqual = true;
 
-        if(compareTo == null || !compareTo.getClass().isAssignableFrom(Incident.class)){
+        if (!(compareTo instanceof Incident)) {
             doesEqual = false;
         }else {
             Incident newIncident = (Incident) compareTo;

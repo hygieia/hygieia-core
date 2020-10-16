@@ -131,7 +131,8 @@ public class CloudInstanceHistory extends BaseModel{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CloudInstanceHistory))
+            return false;
 
         CloudInstanceHistory that = (CloudInstanceHistory) o;
 

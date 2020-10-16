@@ -1,10 +1,11 @@
 package com.capitalone.dashboard.response;
 
-import com.capitalone.dashboard.model.BuildStatus;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.types.ObjectId;
+
+import src.main.java.com.capitalone.dashboard.model.BuildStatus;
 
 public class BuildDataCreateResponse {
     private ObjectId id;
@@ -120,7 +121,8 @@ public class BuildDataCreateResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BuildDataCreateResponse))
+            return false;
 
         BuildDataCreateResponse that = (BuildDataCreateResponse) o;
 

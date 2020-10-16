@@ -56,7 +56,8 @@ public class WhiteSourceComponent extends CollectorItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof WhiteSourceComponent))
+            return false;
 
         WhiteSourceComponent that = (WhiteSourceComponent) o;
         return Objects.equals(getProductName(), that.getProductName()) && Objects.equals(getProjectName(), that.getProjectName()) && Objects.equals(getOrgName(), that.getOrgName());
