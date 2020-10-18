@@ -31,6 +31,7 @@ public class ApiTokenAuthenticationToken extends AbstractAuthenticationToken {
 		return this.credentials;
 	}
 
+	@Override
 	public Object getPrincipal() {
 		return this.principal;
 	}
