@@ -76,7 +76,7 @@ public class ArtifactIdentifier {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof ArtifactIdentifier))
 			return false;
 		ArtifactIdentifier other = (ArtifactIdentifier) obj;
 		if (classifier == null) {
