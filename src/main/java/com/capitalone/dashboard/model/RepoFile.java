@@ -1,7 +1,5 @@
 package com.capitalone.dashboard.model;
 
-import java.util.List;
-
 public class RepoFile {
     private String filename = "";
     private String patch = "";
@@ -13,6 +11,24 @@ public class RepoFile {
     private String blob_url = "";
     private String raw_url = "";
     private String contents_url = "";
+
+    public RepoFile () {
+
+    }
+
+    public RepoFile (String filename, String patch, String sha, String status, int additions, int deletions, int changes,
+                    String blob_url, String raw_url, String contents_url) {
+        this.filename = filename;
+        this. patch = patch;
+        this.sha = sha;
+        this.status = status;
+        this.additions = additions;
+        this.deletions = deletions;
+        this.changes = changes;
+        this.blob_url = blob_url;
+        this.raw_url = raw_url;
+        this.contents_url = contents_url;
+    }
 
     public String getFilename() {
         return this.filename;
