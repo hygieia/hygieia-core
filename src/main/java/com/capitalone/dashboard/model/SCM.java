@@ -26,7 +26,7 @@ public class SCM {
     protected List<String> filesAdded;
     protected List<String> filesRemoved;
     protected List<String> filesModified;
-    protected List<Object> files;
+    protected List<RepoFile> files;
 
     public SCM(){
 
@@ -59,7 +59,7 @@ public class SCM {
                String scmAuthorType,
                String scmAuthorLogin,
                List<String> scmParentRevisionNumbers,
-               List<Object> files,
+               List<RepoFile> files,
                long scmCommitTimestamp,
                long numberOfChanges,
                CommitType type) {
@@ -164,9 +164,9 @@ public class SCM {
         this.filesModified = filesModified;
     }
 
-    public List<Object> getFiles() { return files; }
+    public List<RepoFile> getFiles() { return files; }
 
-    public void setFiles(List<Object> files) { this.files = files; }
+    public void setFiles(List<RepoFile> files) { this.files = files; }
 
     @Override
     public boolean equals(Object o) {

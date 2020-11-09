@@ -21,7 +21,6 @@ public class GitRequest  {
     private long scmCommitTimestamp;
     private String scmAuthor;
     private long numberOfChanges;
-    private List<Object> files;
     // fields added above are from SCM class that we are not extending anymore
 
     @Id
@@ -72,10 +71,6 @@ public class GitRequest  {
     public void setScmAuthor(String scmAuthor) {
         this.scmAuthor = scmAuthor;
     }
-
-    public List<Object> getFiles() { return files; }
-
-    public void setFiles(List<Object> files) { this.files = files; }
 
     public long getScmCommitTimestamp() {
         return scmCommitTimestamp;
