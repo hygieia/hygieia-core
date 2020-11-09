@@ -1,16 +1,16 @@
 package com.capitalone.dashboard.model;
 
 public class RepoFile {
-    private String filename = "";
-    private String patch = "";
-    private String sha = "";
-    private String status = "";
+    private String filename;
+    private String patch;
+    private String sha;
+    private String status;
     private int additions;
     private int deletions;
     private int changes;
-    private String blob_url = "";
-    private String raw_url = "";
-    private String contents_url = "";
+    private String blob_url;
+    private String raw_url;
+    private String contents_url;
 
     public RepoFile () {
 
