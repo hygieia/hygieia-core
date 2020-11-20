@@ -542,7 +542,7 @@ public class Feature extends BaseModel {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (!(o instanceof Feature))
+		if (o == null || !(o instanceof Feature))
 			return false;
 
 		Feature that = (Feature) o;

@@ -19,7 +19,7 @@ public class ScoreCollectorItem extends CollectorItem {
   public boolean equals(Object o) {
     if (this == o)
       return true;
-    if (!(o instanceof ScoreCollectorItem))
+    if (o == null || !(o instanceof ScoreCollectorItem))
       return false;
     ScoreCollectorItem that = (ScoreCollectorItem) o;
     return getDashboardId().equals(that.getDashboardId());

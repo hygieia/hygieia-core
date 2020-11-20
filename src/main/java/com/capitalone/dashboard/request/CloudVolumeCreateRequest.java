@@ -100,8 +100,7 @@ public class CloudVolumeCreateRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CloudVolumeCreateRequest))
-            return false;
+        if (o == null || !(o instanceof CloudVolumeCreateRequest)) return false;
 
         CloudVolumeCreateRequest that = (CloudVolumeCreateRequest) o;
 

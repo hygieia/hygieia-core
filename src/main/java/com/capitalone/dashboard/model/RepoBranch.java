@@ -83,7 +83,7 @@ public class RepoBranch {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RepoBranch)) return false;
+        if (o == null || !(o instanceof RepoBranch)) return false;
 
         RepoBranch that = (RepoBranch) o;
 

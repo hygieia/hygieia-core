@@ -143,7 +143,7 @@ public class Scope extends BaseModel {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-        if (!(obj instanceof Scope))
+		if (obj == null || !(obj instanceof Scope))
 			return false;
 
 		Scope that = (Scope) obj;

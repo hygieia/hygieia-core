@@ -95,8 +95,7 @@ public class AutoDiscoveredEntry {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof AutoDiscoveredEntry))
-            return false;
+        if (o == null || !(o instanceof AutoDiscoveredEntry)) return false;
 
         AutoDiscoveredEntry that = (AutoDiscoveredEntry) o;
 

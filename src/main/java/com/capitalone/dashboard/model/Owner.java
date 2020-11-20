@@ -36,7 +36,7 @@ public class Owner {
 		if (obj == this) {
 			return true;
 		}
-        if (!(obj instanceof Owner)) {
+		if (!(obj instanceof Owner)) {
 			return false;
 		}
 		

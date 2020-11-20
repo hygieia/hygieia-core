@@ -74,7 +74,9 @@ public class ArtifactIdentifier {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-        if (!(obj instanceof ArtifactIdentifier))
+		if (obj == null)
+			return false;
+		if (!(obj instanceof ArtifactIdentifier))
 			return false;
 		ArtifactIdentifier other = (ArtifactIdentifier) obj;
 		if (classifier == null) {

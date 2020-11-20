@@ -121,8 +121,7 @@ public class BuildDataCreateResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof BuildDataCreateResponse))
-            return false;
+        if (o == null || !(o instanceof BuildDataCreateResponse)) return false;
 
         BuildDataCreateResponse that = (BuildDataCreateResponse) o;
 

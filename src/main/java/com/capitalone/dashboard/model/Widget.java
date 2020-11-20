@@ -46,7 +46,7 @@ public class Widget {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Widget)) return false;
+        if (o == null || !(o instanceof Widget)) return false;
 
         Widget widget = (Widget) o;
 

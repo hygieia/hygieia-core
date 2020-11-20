@@ -343,7 +343,7 @@ public class BinaryArtifact extends BaseModel {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof BinaryArtifact))
+        if (obj == null || !(obj instanceof BinaryArtifact))
             return false;
 
         BinaryArtifact that = (BinaryArtifact) obj;

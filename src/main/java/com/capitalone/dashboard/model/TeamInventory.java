@@ -110,6 +110,8 @@ public class TeamInventory extends BaseModel {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
+        if (obj == null)
+            return false;
         if (!(obj instanceof TeamInventory))
             return false;
         TeamInventory other = (TeamInventory) obj;
