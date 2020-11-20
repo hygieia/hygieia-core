@@ -311,7 +311,7 @@ public class Cmdb extends BaseModel{
         {
             return false;
         }
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof Cmdb))
         {
             return false;
         }

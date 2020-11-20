@@ -39,7 +39,7 @@ public class Owner {
 		if (obj == this) {
 			return true;
 		}
-		if (obj.getClass() != getClass()) {
+		if (!(obj instanceof Owner)) {
 			return false;
 		}
 		

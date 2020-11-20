@@ -154,13 +154,4 @@ public class BuildEventListener extends HygieiaMongoEventListener<Build> {
         }
         return dashboards;
     }
-
-
-    private CollectorItem getCollectorItem(ObjectId id) {
-        return collectorItemRepository.findOne(id);
-    }
-
-    private Collector getCollector(ObjectId id) {
-        return collectorRepository.findOne(id);
-    }
 }
