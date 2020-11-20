@@ -128,6 +128,7 @@ public class RequestLog extends BaseModel {
 
     public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
 
+    @Override
     public String toString() {
         return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] + [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }

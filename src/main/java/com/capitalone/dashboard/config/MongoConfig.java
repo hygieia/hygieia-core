@@ -107,6 +107,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         return com.capitalone.dashboard.model.Application.class.getPackage().getName();
     }
 
+    @Override
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongo(), getDatabaseName());

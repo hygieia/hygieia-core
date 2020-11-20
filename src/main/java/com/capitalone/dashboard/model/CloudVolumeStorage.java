@@ -1,11 +1,11 @@
 package com.capitalone.dashboard.model;
 
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "cloud_volume")
 public class CloudVolumeStorage extends BaseModel{

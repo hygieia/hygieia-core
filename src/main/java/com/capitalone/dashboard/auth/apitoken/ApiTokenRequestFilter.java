@@ -22,6 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class ApiTokenRequestFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -61,8 +62,8 @@ public class ApiTokenRequestFilter extends AbstractAuthenticationProcessingFilte
     String authHeader = request.getHeader("Authorization");
 
     String encodedAuthStr = authHeader.substring(authHeader.indexOf(" "), authHeader.length());
-    byte[] encodedAuthbytes = encodedAuthStr.getBytes();
-    String decodedAuthStr = new String(Base64.decodeBase64(encodedAuthbytes));
+    byte[] encodedAuthbytes = encodedAuthStr.getBytes(StandardCharsets.UTF_8);
+    String decodedAuthStr = new String(Base64.decodeBase64(encodedAuthbytes), StandardCharsets.UTF_8);
     String decodedAuthJson = decodedAuthStr.substring(decodedAuthStr.indexOf(":") + 1, decodedAuthStr.length());
 
     JSONParser jsonParser = new JSONParser();

@@ -108,7 +108,7 @@ public class RepoBranch {
     }
 
     private String getGITNormalizedBranch (@NotNull String branch) {
-        String[] tokens = branch.split("/");
+        String[] tokens = branch.split("/", -1);
         return tokens[tokens.length-1];
     }
 

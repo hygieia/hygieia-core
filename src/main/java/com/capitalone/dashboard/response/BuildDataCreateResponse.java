@@ -1,10 +1,11 @@
 package com.capitalone.dashboard.response;
 
-import com.capitalone.dashboard.model.BuildStatus;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.types.ObjectId;
+
+import com.capitalone.dashboard.model.BuildStatus;
 
 public class BuildDataCreateResponse {
     private ObjectId id;
