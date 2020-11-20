@@ -188,9 +188,9 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
              */
             Map<String, PipelineCommit> commitStageCommits = pipeline.getCommitsByEnvironmentName(PipelineStage.COMMIT.getName());
             Map<String, PipelineCommit> envStageCommits = pipeline.getCommitsByEnvironmentName(pseudoEnvName);
-            for (String rev : commitStageCommits.keySet()) {
-                PipelineCommit commit = commitStageCommits.get(rev);
-                if ((commit.getScmCommitTimestamp() < build.getStartTime()) && !envStageCommits.containsKey(rev) && PipelineUtils.isMoveCommitToBuild(build, commit, commitRepository)) {
+            for (Map.Entry<String, PipelineCommit> e : commitStageCommits.entrySet()) {
+                PipelineCommit commit = e.getValue();
+                if ((commit.getScmCommitTimestamp() < build.getStartTime()) && !envStageCommits.containsKey(e.getKey()) && PipelineUtils.isMoveCommitToBuild(build, commit, commitRepository)) {
                     pipeline.addCommit(pseudoEnvName, commit);
                 }
             }

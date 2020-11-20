@@ -99,7 +99,9 @@ public final class PipelineUtils {
                 continue;
             }
 
-            mappingsMap.put(e.getKey().getName().toLowerCase(), e.getValue());
+            if (e.getKey() != null) {
+                mappingsMap.put(e.getKey().getName().toLowerCase(), e.getValue());
+            }
         }
 
         for(Widget widget : dashboard.getWidgets()) {
