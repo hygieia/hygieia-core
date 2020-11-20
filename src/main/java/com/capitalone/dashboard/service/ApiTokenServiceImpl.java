@@ -38,9 +38,10 @@ public class ApiTokenServiceImpl implements ApiTokenService {
         this.apiTokenRepository = apiTokenRepository;
     }
 
-	public Collection<ApiToken> getApiTokens() {
-		return Sets.newHashSet(apiTokenRepository.findAll());
-	}
+    @Override
+    public Collection<ApiToken> getApiTokens() {
+        return Sets.newHashSet(apiTokenRepository.findAll());
+    }
 
     @Override
     public String getApiToken(String apiUser, Long expirationDt) throws EncryptionException, HygieiaException {
