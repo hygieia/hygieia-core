@@ -59,12 +59,12 @@ public class WhiteSourceComponent extends CollectorItem {
         if (o == null || getClass() != o.getClass()) return false;
 
         WhiteSourceComponent that = (WhiteSourceComponent) o;
-        return Objects.equals(getProductName(), that.getProductName()) && Objects.equals(getProjectName(), that.getProjectName()) && Objects.equals(getOrgName(), that.getOrgName());
+        return Objects.equals(getOrgName(), that.getOrgName()) && Objects.equals(getProjectToken(), that.getProjectToken());
     }
 
     @Override
     public int hashCode() {
-        int result = 31 * getProductName().hashCode()+ getProjectName().hashCode()+ getOrgName().hashCode();
+        int result = 31 * getOrgName().hashCode()+ getProjectToken().hashCode();
         return result;
     }
 }
