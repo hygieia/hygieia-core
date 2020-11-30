@@ -36,6 +36,7 @@ public class DeployDataCreateRequest {
     private String stageName;
     private String stageStatus;
     private String jobNumber;
+    private String buildUrl;
 
     public String getExecutionId() {
         return executionId;
@@ -192,4 +193,8 @@ public class DeployDataCreateRequest {
     public String getArtifactPath() { return artifactPath; }
 
     public void setArtifactPath(String artifactPath) { this.artifactPath = artifactPath; }
+
+    public String getBuildUrl() { return buildUrl; }
+
+    public void setBuildUrl(String buildUrl) { this.buildUrl = buildUrl; }
 }

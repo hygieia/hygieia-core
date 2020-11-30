@@ -4,8 +4,10 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The result of a Continuous Integration build execution. Typically produces binary artifacts.
@@ -36,6 +38,7 @@ public class Build extends BaseModel {
     private List<RepoBranch> codeRepos = new ArrayList<>();
     private List<SCM> sourceChangeSet = new ArrayList<>();
     private List<BuildStage> stages = new LinkedList<>();
+    private Map<String, String> deployMetadata = new HashMap<>();
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -145,4 +148,7 @@ public class Build extends BaseModel {
         this.stages = stages;
     }
 
+    public Map<String, String> getDeployMetadata() { return deployMetadata; }
+
+    public void setDeployMetadata(Map<String, String> deployMetadata) { this.deployMetadata = deployMetadata; }
 }
