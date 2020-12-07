@@ -6,7 +6,6 @@ import java.util.Map;
  @Document(collection="whitelist_commit_types")
 public class WhitelistCommitType extends BaseModel{
 
-    //private String name;
     private String commitLogRegex;
     private boolean doContentCheck;
     private Map<String, String> contentPatterns;
