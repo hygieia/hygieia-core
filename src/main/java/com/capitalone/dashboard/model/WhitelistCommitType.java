@@ -10,6 +10,20 @@ public class WhitelistCommitType extends BaseModel{
     private boolean doContentCheck;
     private Map<String, String> contentPatterns;
 
+    /* Example
+    {
+        "commitLogRegex" : "(.)*(yourRegex)(.)*",
+        "doContentCheck" : false
+    },
+    {
+        "commitLogRegex" : "(.)*(yourRegex)(.)*",
+        "doContentCheck" : true,
+        "contentPatterns" : {
+            "somePattern" : "(.)*(somePattern)(.)*"
+        }
+    }
+     */
+
     public WhitelistCommitType(String commitLogRegex, boolean doContentCheck, Map<String, String> contentPatterns) {
         this.commitLogRegex = commitLogRegex;
         this.doContentCheck = doContentCheck;
