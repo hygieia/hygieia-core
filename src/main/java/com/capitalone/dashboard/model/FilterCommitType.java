@@ -3,8 +3,8 @@ package com.capitalone.dashboard.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Map;
 
- @Document(collection="whitelist_commit_types")
-public class WhitelistCommitType extends BaseModel{
+ @Document(collection="filter_commit_types")
+public class FilterCommitType extends BaseModel{
 
     private String commitLogRegex;
     private boolean doContentCheck;
@@ -24,7 +24,7 @@ public class WhitelistCommitType extends BaseModel{
     }
      */
 
-    public WhitelistCommitType(String commitLogRegex, boolean doContentCheck, Map<String, String> contentPatterns) {
+    public FilterCommitType(String commitLogRegex, boolean doContentCheck, Map<String, String> contentPatterns) {
         this.commitLogRegex = commitLogRegex;
         this.doContentCheck = doContentCheck;
         this.contentPatterns = contentPatterns;
