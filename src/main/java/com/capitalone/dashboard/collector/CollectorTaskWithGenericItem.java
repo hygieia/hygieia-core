@@ -64,7 +64,7 @@ public abstract class CollectorTaskWithGenericItem<T extends Collector> extends 
             gci.setProcessTime(System.currentTimeMillis());
             genericCollectorItemRepository.save(gci);
         });
-        return Collections.unmodifiableMap(collectorItemBuildIds);
+        return collectorItemBuildIds;
     }
 
     public abstract Map<String, Object> getGenericCollectorItemOptions(String serverUrl, GenericCollectorItem genericCollectorItem);
