@@ -241,7 +241,7 @@ public class SyncDashboard {
         //create a list of the repo collector items that are being built, most cases have only 1
         if (CollectionUtils.isEmpty(repos)) return;
         CollectionUtils.filter(repos, PredicateUtils.notNullPredicate());
-        repos.forEach((
+        repos.forEach(
                 repoBranch -> {
                     Map<String, Object> options = new HashMap<>();
                     options.put("url", repoBranch.getUrl());
@@ -250,7 +250,7 @@ public class SyncDashboard {
                     }
                     repoCollectorItemsInBuild.addAll(IterableUtils.toList(collectorItemRepository.findAllByOptionMapAndCollectorIdsIn(options, scmCollectorIds)));
 
-                }));
+                });
 
         repoCollectorItemsInBuild.forEach(rci->{
             rci.setEnabled(true);

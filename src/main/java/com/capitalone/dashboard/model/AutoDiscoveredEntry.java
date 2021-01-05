@@ -1,13 +1,15 @@
 package com.capitalone.dashboard.model;
 
-import com.capitalone.dashboard.misc.HygieiaException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.Map;
+import com.capitalone.dashboard.misc.HygieiaException;
 
 /**
  * Entry class to hold the Auto Discovered entries: Jira project, github project, build job etc.
@@ -93,7 +95,7 @@ public class AutoDiscoveredEntry {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof AutoDiscoveredEntry)) return false;
 
         AutoDiscoveredEntry that = (AutoDiscoveredEntry) o;
 

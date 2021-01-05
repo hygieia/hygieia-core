@@ -38,6 +38,7 @@ public class ApiTokenServiceImpl implements ApiTokenService {
         this.apiTokenRepository = apiTokenRepository;
     }
 
+    @Override
 	public Collection<ApiToken> getApiTokens() {
 		return Sets.newHashSet(apiTokenRepository.findAll());
 	}

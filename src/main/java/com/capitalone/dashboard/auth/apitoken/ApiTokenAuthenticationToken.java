@@ -27,14 +27,17 @@ public class ApiTokenAuthenticationToken extends AbstractAuthenticationToken {
 		super.setAuthenticated(true);
 	}
 
+	@Override
 	public Object getCredentials() {
 		return this.credentials;
 	}
 
+	@Override
 	public Object getPrincipal() {
 		return this.principal;
 	}
-
+	
+	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 		if (isAuthenticated) {
 			throw new IllegalArgumentException(

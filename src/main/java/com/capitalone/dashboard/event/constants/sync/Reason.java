@@ -5,7 +5,7 @@ public enum Reason {
     CODEQUALITY_TRIGGERED_REASON("Code scan triggered by build"),
     ARTIFACT_REASON ("Artifact pushed by build");
 
-    private String action;
+    private final String action;
 
     public String getAction() {
         return action;
