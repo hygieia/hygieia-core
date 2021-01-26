@@ -3,7 +3,6 @@ package hygieia.transformer;
 import com.capitalone.dashboard.model.TestCapability;
 import com.capitalone.dashboard.model.TestCase;
 import com.capitalone.dashboard.model.TestCaseStatus;
-import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.model.TestSuite;
 import com.capitalone.dashboard.model.TestSuiteType;
 import com.capitalone.dashboard.model.quality.JunitXmlReportV2;
