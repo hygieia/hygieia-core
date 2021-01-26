@@ -44,17 +44,17 @@ public class TestResultVisitor implements QualityVisitor<TestResult> {
     }
 
     @Override
+    public void visit(JunitXmlReportV2 junitXmlReportV2) {
+        // no impl... could expand
+    }
+    
+    @Override
     public void visit(FindBugsXmlReport findBugsXmlReport) {
         // no impl... could expand
     }
 
     @Override
     public void visit(JacocoXmlReport jacocoXmlReport) {
-        // no impl... could expand
-    }
-    
-    @Override
-    public void visit(JunitXmlReportV2 junitXmlReportV2) {
         // no impl... could expand
     }
 
