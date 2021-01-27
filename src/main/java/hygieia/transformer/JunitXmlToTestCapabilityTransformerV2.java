@@ -85,7 +85,7 @@ public class JunitXmlToTestCapabilityTransformerV2 {
         }
         if(scenarioElement.getError() != null){
             testStepFailCount++;
-        }else if (StringUtils.isNotBlank(scenarioElement.getSkipped()) && "0".equals(scenarioElement.getTime())){
+        }else if (StringUtils.isNotBlank(scenarioElement.getSkipped()) && scenarioElement.getTime().compareTo(BigDecimal.ZERO) == 0){
             testStepSkippedCount++;
         }else if(scenarioElement.getTime() != null && scenarioElement.getTime().doubleValue() > 0){
             testStepSuccessCount++;
