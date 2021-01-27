@@ -25,7 +25,9 @@ public class JunitXmlToTestCapabilityTransformerV2 {
 
         for (JunitXmlReportV2.TestSuite.Testcase testCase : testJunit.getTestcase()) {
             TestCase testCaseJunit = parseScenarioAsTestCase(testCase);
-            duration += testCase.getTime().longValue();
+            if (testCase.getTime() != null) {
+                duration += testCase.getTime().longValue();
+            }
 
             switch (testCaseJunit.getStatus()) {
                 case Success:
@@ -78,12 +80,14 @@ public class JunitXmlToTestCapabilityTransformerV2 {
         int testStepSuccessCount = 0, testStepFailCount = 0, testStepSkippedCount = 0, testStepUnknownCount = 0;
         long testDuration=0;
 
-        testDuration += scenarioElement.getTime().longValue();
+        if (scenarioElement.getTime() != null) {
+            testDuration += scenarioElement.getTime().longValue();
+        }
         if(scenarioElement.getError() != null){
             testStepFailCount++;
         }else if (StringUtils.isNotBlank(scenarioElement.getSkipped()) && "0".equals(scenarioElement.getTime())){
             testStepSkippedCount++;
-        }else if(scenarioElement.getTime().doubleValue() > 0){
+        }else if(scenarioElement.getTime() != null && scenarioElement.getTime().doubleValue() > 0){
             testStepSuccessCount++;
         }else {
             testStepUnknownCount++;
