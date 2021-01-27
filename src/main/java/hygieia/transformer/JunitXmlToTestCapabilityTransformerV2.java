@@ -8,6 +8,7 @@ import com.capitalone.dashboard.model.TestSuiteType;
 import com.capitalone.dashboard.model.quality.JunitXmlReportV2;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
