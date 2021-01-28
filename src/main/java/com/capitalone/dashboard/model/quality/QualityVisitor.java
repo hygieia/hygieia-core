@@ -6,6 +6,8 @@ public interface QualityVisitor<T> {
 
     void visit(JunitXmlReport junitXmlReport);
 
+    void visit(JunitXmlReportV2 junitXmlReportV2);
+    
     void visit(FindBugsXmlReport findBugsXmlReport);
 
     void visit(JacocoXmlReport jacocoXmlReport);
