@@ -32,7 +32,7 @@ public class MochaSpecToTestCapabilityTransformer {
             testSuites.add(testSuite);
         }
 
-        return buildCapability(testReport, testSuites);
+        return buildCapability(testSuites);
     }
 
     private TestSuite buildTestSuite(MochaJsSpecReport.Suite suite) {
@@ -102,7 +102,7 @@ public class MochaSpecToTestCapabilityTransformer {
     }
 
 
-    private TestCapability buildCapability(MochaJsSpecReport testReport, List<TestSuite> testSuites) {
+    private TestCapability buildCapability(List<TestSuite> testSuites) {
         TestCapability cap = new TestCapability();
         cap.setType(TestSuiteType.Functional);
 

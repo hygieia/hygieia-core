@@ -307,17 +307,16 @@ public class Cmdb extends BaseModel{
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null)
-        {
+        if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass())
-        {
+        if (!(obj instanceof Cmdb)) {
             return false;
         }
         final Cmdb other = (Cmdb) obj;
         return    Objects.equals(this.configurationItem, other.configurationItem)
                 && Objects.equals(this.configurationKey, other.configurationKey)
+                && Objects.equals(this.itemType, other.itemType)
                 && Objects.equals(this.assignmentGroup, other.assignmentGroup)
                 && Objects.equals(this.appServiceOwner, other.appServiceOwner)
                 && Objects.equals(this.businessOwner, other.businessOwner)

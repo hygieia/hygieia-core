@@ -76,7 +76,7 @@ public class ArtifactIdentifier {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof ArtifactIdentifier))
 			return false;
 		ArtifactIdentifier other = (ArtifactIdentifier) obj;
 		if (classifier == null) {
@@ -100,12 +100,9 @@ public class ArtifactIdentifier {
 		} else if (!name.equals(other.name))
 			return false;
 		if (version == null) {
-			if (other.version != null)
-				return false;
-		} else if (!version.equals(other.version))
-			return false;
-		return true;
-	}
+            return other.version == null;
+		} else return version.equals(other.version);
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

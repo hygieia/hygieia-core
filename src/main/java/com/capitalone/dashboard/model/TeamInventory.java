@@ -112,15 +112,12 @@ public class TeamInventory extends BaseModel {
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof TeamInventory))
             return false;
         TeamInventory other = (TeamInventory) obj;
         if (teamId == null) {
-            if (other.teamId != null)
-                return false;
-        } else if (!teamId.equals(other.teamId))
-            return false;
-        return true;
+            return other.teamId == null;
+        } else return teamId.equals(other.teamId);
     }
 
     /* (non-Javadoc)

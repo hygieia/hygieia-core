@@ -9,10 +9,10 @@ public enum ServiceStatus {
     Unauth(401, 401),
     Alert(0, 999);
 
-	private int low;
-	private int high;
+	private final int low;
+	private final int high;
 	
-	private ServiceStatus(int low, int high) {
+	ServiceStatus(int low, int high) {
 		this.low = low;
 		this.high = high;
 	}

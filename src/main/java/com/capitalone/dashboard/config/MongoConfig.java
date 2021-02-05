@@ -70,7 +70,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
             List<ServerAddress> serverAddressList = new ArrayList<>();
             for (String h : hostport) {
                 String myHost = h.substring(0, h.indexOf(":"));
-                int myPort = Integer.parseInt(h.substring(h.indexOf(":") + 1, h.length()));
+                int myPort = Integer.parseInt(h.substring(h.indexOf(":") + 1));
                 ServerAddress serverAddress = new ServerAddress(myHost, myPort);
                 serverAddressList.add(serverAddress);
             }
@@ -107,6 +107,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         return com.capitalone.dashboard.model.Application.class.getPackage().getName();
     }
 
+    @Override
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
         return new MongoTemplate(mongo(), getDatabaseName());

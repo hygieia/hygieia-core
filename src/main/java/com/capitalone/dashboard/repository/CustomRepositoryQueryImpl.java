@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 public class CustomRepositoryQueryImpl implements CustomRepositoryQuery {
 
     private final MongoTemplate template;
-    private static final String REGEX_ANY_STRING_INCLUDING_EMPTY = "^$|^.*";
 
     @Autowired
     public CustomRepositoryQueryImpl(MongoTemplate template) {
