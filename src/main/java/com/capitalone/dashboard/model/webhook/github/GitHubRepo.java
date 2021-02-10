@@ -51,7 +51,7 @@ public class GitHubRepo extends CollectorItem {
         if (this == o) {
         	return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || !(o instanceof GitHubRepo)) {
         	return false;
         }
 

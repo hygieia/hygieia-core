@@ -1,5 +1,8 @@
 package hygieia.transformer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.capitalone.dashboard.model.TestCapability;
 import com.capitalone.dashboard.model.TestCase;
 import com.capitalone.dashboard.model.TestCaseStatus;
@@ -7,9 +10,6 @@ import com.capitalone.dashboard.model.TestSuite;
 import com.capitalone.dashboard.model.TestSuiteType;
 import com.capitalone.dashboard.model.quality.MochaJsSpecReport;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Converts mocha report
@@ -32,7 +32,7 @@ public class MochaSpecToTestCapabilityTransformer {
             testSuites.add(testSuite);
         }
 
-        return buildCapability(testReport, testSuites);
+        return buildCapability(testSuites);
     }
 
     private TestSuite buildTestSuite(MochaJsSpecReport.Suite suite) {
@@ -102,7 +102,7 @@ public class MochaSpecToTestCapabilityTransformer {
     }
 
 
-    private TestCapability buildCapability(MochaJsSpecReport testReport, List<TestSuite> testSuites) {
+    private TestCapability buildCapability(List<TestSuite> testSuites) {
         TestCapability cap = new TestCapability();
         cap.setType(TestSuiteType.Functional);
 

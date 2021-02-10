@@ -1,11 +1,11 @@
 package com.capitalone.dashboard.model;
 
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "cloud_volume")
 public class CloudVolumeStorage extends BaseModel{
@@ -100,7 +100,7 @@ public class CloudVolumeStorage extends BaseModel{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof CloudVolumeStorage)) return false;
 
         CloudVolumeStorage that = (CloudVolumeStorage) o;
 

@@ -1,11 +1,12 @@
 package com.capitalone.dashboard.model;
 
+import java.lang.StringBuilder;
+import java.util.Objects;
+
 import org.bson.types.ObjectId;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection="incident")
 public class Incident extends BaseModel {
@@ -148,7 +149,7 @@ public class Incident extends BaseModel {
     public boolean equals(Object compareTo){
         boolean doesEqual = true;
 
-        if(compareTo == null || !compareTo.getClass().isAssignableFrom(Incident.class)){
+        if(!(compareTo instanceof Incident)){
             doesEqual = false;
         }else {
             Incident newIncident = (Incident) compareTo;
@@ -169,11 +170,11 @@ public class Incident extends BaseModel {
     @Override
     public String toString() {
 
-        StringBuffer buf = new StringBuffer(210);
-        buf.append("incidentID: ")
+        StringBuilder builder = new StringBuilder(210);
+        builder.append("incidentID: ")
                 .append(incidentID);
 
-        return buf.toString();
+        return builder.toString();
     }
 
     @Override

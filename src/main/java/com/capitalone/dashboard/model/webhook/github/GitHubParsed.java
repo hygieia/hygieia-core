@@ -37,7 +37,7 @@ public class GitHubParsed {
         String host = u.getHost();
         String protocol = u.getProtocol();
         String path = u.getPath();
-        String[] parts = path.split("/");
+        String[] parts = path.split("/" ,-1);
         if (parts.length < 3) {
             throw new HygieiaException("Bad github repo URL: " + url, HygieiaException.BAD_DATA);
         }

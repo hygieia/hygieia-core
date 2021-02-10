@@ -128,7 +128,7 @@ public class CloudConfig extends CollectorItem {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (o == null || !(o instanceof CloudConfig))
             return false;
 
         CloudConfig that = (CloudConfig) o;

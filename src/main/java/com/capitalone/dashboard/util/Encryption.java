@@ -1,18 +1,21 @@
 package com.capitalone.dashboard.util;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
 @SuppressWarnings("PMD.AvoidCatchingNPE") // TODO: Avoid catching NullPointerException; consider removing the cause of the NPE
 public final class Encryption {
 
-    private static final String ALGO = "DESede";
+    private static final String ALGO = "AES";
+    private static final String CIPHER_ALGO = "AES";
     private static final Logger LOGGER = LoggerFactory.getLogger(Encryption.class);
 
     private Encryption() {
@@ -43,9 +46,9 @@ public final class Encryption {
             throws EncryptionException {
         String encryptedMessage = "";
         try {
-            Cipher cipher = Cipher.getInstance(ALGO);
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            byte[] encryptedBytes = cipher.doFinal(message.getBytes());
+            byte[] encryptedBytes = cipher.doFinal(message.getBytes(StandardCharsets.UTF_8));
             encryptedMessage = Base64.encodeBase64String(encryptedBytes);
 
         } catch (IllegalBlockSizeException | BadPaddingException
@@ -61,11 +64,11 @@ public final class Encryption {
             throws EncryptionException {
         String decryptedMessage = "";
         try {
-            Cipher decipher = Cipher.getInstance(ALGO);
+            Cipher decipher = Cipher.getInstance(CIPHER_ALGO);
             decipher.init(Cipher.DECRYPT_MODE, key);
             byte[] messageToDecrypt = Base64.decodeBase64(encryptedMessage);
             byte[] decryptedBytes = decipher.doFinal(messageToDecrypt);
-            decryptedMessage = new String(decryptedBytes);
+            decryptedMessage = new String(decryptedBytes, StandardCharsets.UTF_8);
 
         } catch (NoSuchAlgorithmException | NoSuchPaddingException
                 | InvalidKeyException | IllegalBlockSizeException
@@ -84,7 +87,7 @@ public final class Encryption {
             byte[] encodedKey = Base64.decodeBase64(aKey);
             SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length,
                     ALGO);
-            Cipher cipher = Cipher.getInstance(ALGO);
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedBytes = cipher.doFinal(message.getBytes());
             encryptedMessage = Base64.encodeBase64String(encryptedBytes);
@@ -104,7 +107,7 @@ public final class Encryption {
             byte[] encodedKey = Base64.decodeBase64(aKey);
             SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length,
                     ALGO);
-            Cipher decipher = Cipher.getInstance(ALGO);
+            Cipher decipher = Cipher.getInstance(CIPHER_ALGO);
             decipher.init(Cipher.DECRYPT_MODE, key);
             byte[] messageToDecrypt = Base64.decodeBase64(encryptedMessage);
             byte[] decryptedBytes = decipher.doFinal(messageToDecrypt);

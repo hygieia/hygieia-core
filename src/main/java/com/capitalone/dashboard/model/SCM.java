@@ -10,7 +10,7 @@ import java.util.Objects;
 public class SCM {
     protected String scmUrl;
     protected String scmBranch; // For SCM that don't have branch in the url
-	protected String scmRevisionNumber;
+    protected String scmRevisionNumber;
     protected String scmCommitLog;
     protected String scmAuthor;
     protected String scmAuthorType;
@@ -26,11 +26,12 @@ public class SCM {
     protected List<String> filesAdded;
     protected List<String> filesRemoved;
     protected List<String> filesModified;
+    protected List<RepoFile> files;
 
     public SCM(){
 
     }
-    
+
     public SCM(SCM scm) {
         this.scmUrl = scm.scmUrl;
         this.scmBranch = scm.scmBranch;
@@ -46,6 +47,7 @@ public class SCM {
         this.filesAdded = scm.filesAdded;
         this.filesRemoved = scm.filesRemoved;
         this.filesModified = scm.filesModified;
+        this.files = scm.files;
     }
 
     @SuppressWarnings({"PMD.ExcessiveParameterList"})
@@ -57,6 +59,7 @@ public class SCM {
                String scmAuthorType,
                String scmAuthorLogin,
                List<String> scmParentRevisionNumbers,
+               List<RepoFile> files,
                long scmCommitTimestamp,
                long numberOfChanges,
                CommitType type) {
@@ -72,6 +75,7 @@ public class SCM {
         this.scmCommitTimestamp = scmCommitTimestamp;
         this.numberOfChanges = numberOfChanges;
         this.type = type;
+        this.files = files;
 
     }
 
@@ -81,7 +85,7 @@ public class SCM {
 
     public String getScmBranch() { return scmBranch; }
 
-	public void setScmBranch(String scmBranch) { this.scmBranch = scmBranch; }
+    public void setScmBranch(String scmBranch) { this.scmBranch = scmBranch; }
 
     public String getScmRevisionNumber() { return scmRevisionNumber; }
 
@@ -102,10 +106,10 @@ public class SCM {
     public String getScmAuthorLogin() { return scmAuthorLogin; }
 
     public void setScmAuthorLogin(String scmAuthorLogin) { this.scmAuthorLogin = scmAuthorLogin; }
-    
+
     // can return null
     public List<String> getScmParentRevisionNumbers() { return scmParentRevisionNumbers; }
-    
+
     public void setScmParentRevisionNumbers(List<String> scmParentRevisionNumbers) { this.scmParentRevisionNumbers = scmParentRevisionNumbers; }
 
     public long getScmCommitTimestamp() { return scmCommitTimestamp; }
@@ -160,6 +164,9 @@ public class SCM {
         this.filesModified = filesModified;
     }
 
+    public List<RepoFile> getFiles() { return files; }
+
+    public void setFiles(List<RepoFile> files) { this.files = files; }
 
     @Override
     public boolean equals(Object o) {

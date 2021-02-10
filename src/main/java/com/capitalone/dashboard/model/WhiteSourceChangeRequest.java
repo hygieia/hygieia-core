@@ -16,7 +16,7 @@ public class WhiteSourceChangeRequest extends BaseModel {
     private String projectName;
     private long lastUpdated;
     private String scopeName;
-    private long changeScopeId;
+    private Long changeScopeId;
     private List<String> beforeChange;
     private List<String> afterChange;
     private String operator;
@@ -103,11 +103,11 @@ public class WhiteSourceChangeRequest extends BaseModel {
         this.scopeName = scopeName;
     }
 
-    public long getChangeScopeId() {
+    public Long getChangeScopeId() {
         return changeScopeId;
     }
 
-    public void setChangeScopeId(long changeScopeId) {
+    public void setChangeScopeId(Long changeScopeId) {
         this.changeScopeId = changeScopeId;
     }
 
@@ -154,7 +154,7 @@ public class WhiteSourceChangeRequest extends BaseModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof WhiteSourceChangeRequest)) return false;
 
         WhiteSourceChangeRequest that = (WhiteSourceChangeRequest) o;
         return Objects.equals(getScopeName(), that.getScopeName());
