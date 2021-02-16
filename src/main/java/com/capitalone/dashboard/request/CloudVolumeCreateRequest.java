@@ -1,12 +1,11 @@
 package com.capitalone.dashboard.request;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.capitalone.dashboard.model.NameValue;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import com.capitalone.dashboard.model.NameValue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CloudVolumeCreateRequest {
     @Indexed

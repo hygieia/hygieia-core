@@ -41,7 +41,7 @@ public class GitBranchSpec {
         String expandedName = name;
         // use regex syntax directly if name starts with colon
         if ((expandedName.charAt(0) == ':') && (expandedName.length() > 1)) {
-            String regexSubstring = expandedName.substring(1, expandedName.length());
+            String regexSubstring = expandedName.substring(1);
             return Pattern.compile(regexSubstring);
         }
         // build a pattern into this builder

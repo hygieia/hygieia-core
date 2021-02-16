@@ -1,10 +1,5 @@
 package com.capitalone.dashboard.event;
 
-import java.util.List;
-
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
-
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
@@ -14,6 +9,10 @@ import com.capitalone.dashboard.model.Pipeline;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+
+import java.util.List;
 
 public abstract class HygieiaMongoEventListener<T> extends AbstractMongoEventListener<T> {
 

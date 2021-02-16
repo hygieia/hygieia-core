@@ -1,8 +1,5 @@
 package hygieia.transformer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.capitalone.dashboard.model.TestCapability;
 import com.capitalone.dashboard.model.TestCase;
 import com.capitalone.dashboard.model.TestCaseStatus;
@@ -10,6 +7,9 @@ import com.capitalone.dashboard.model.TestSuite;
 import com.capitalone.dashboard.model.TestSuiteType;
 import com.capitalone.dashboard.model.quality.MochaJsSpecReport;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Converts mocha report

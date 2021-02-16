@@ -77,6 +77,7 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
 
             // Update lastUpdate timestamp in Collector
             collector.setLastExecuted(end);
+            collector.setLastExecutedSeconds(duration);
             getCollectorRepository().save(collector);
         } else {
             LOGGER.info("Collector is disabled, collectorName={}", collectorName);

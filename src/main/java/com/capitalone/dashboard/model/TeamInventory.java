@@ -1,11 +1,11 @@
 package com.capitalone.dashboard.model;
 
-import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 
 @Document(collection="teamInventory")
@@ -116,11 +116,8 @@ public class TeamInventory extends BaseModel {
             return false;
         TeamInventory other = (TeamInventory) obj;
         if (teamId == null) {
-            if (other.teamId != null)
-                return false;
-        } else if (!teamId.equals(other.teamId))
-            return false;
-        return true;
+            return other.teamId == null;
+        } else return teamId.equals(other.teamId);
     }
 
     /* (non-Javadoc)

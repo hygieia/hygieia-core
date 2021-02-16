@@ -1,12 +1,11 @@
 package com.capitalone.dashboard.model;
 
-import java.lang.StringBuilder;
-import java.util.Objects;
-
 import org.bson.types.ObjectId;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Objects;
 
 @Document(collection="incident")
 public class Incident extends BaseModel {

@@ -59,10 +59,8 @@ public final class PipelineStage {
 				return false;
 		} else if (!name.equalsIgnoreCase(other.name))
 			return false;
-		if (type != other.type)
-			return false;
-		return true;
-	}
+        return type == other.type;
+    }
 	
 	@Override
 	public String toString() {

@@ -135,11 +135,8 @@ public class Team extends BaseModel {
             return false;
         Team other = (Team) obj;
         if (teamId == null) {
-            if (other.teamId != null)
-                return false;
-        } else if (!teamId.equals(other.teamId))
-            return false;
-        return true;
+            return other.teamId == null;
+        } else return teamId.equals(other.teamId);
     }
 
     /* (non-Javadoc)

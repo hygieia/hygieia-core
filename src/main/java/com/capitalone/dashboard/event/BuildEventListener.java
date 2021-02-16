@@ -4,7 +4,6 @@ import com.capitalone.dashboard.event.sync.SyncDashboard;
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.BuildStatus;
-import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;

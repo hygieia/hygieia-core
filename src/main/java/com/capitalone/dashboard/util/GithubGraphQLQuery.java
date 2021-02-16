@@ -271,4 +271,30 @@ public class GithubGraphQLQuery {
 
     public static final String QUERY_RATE_LIMIT = "query {rateLimit {limit remaining resetAt}}";
 
+    public static final String QUERY_REPO_METADATA = "query ($owner: String!, $name: String!) {\n" +
+            "  repository(owner: $owner, name: $name) {\n" +
+            "    url\n" +
+            "    defaultBranchRef {\n" +
+            "        name\n" +
+            "    }\n" +
+            "    primaryLanguage {\n" +
+            "        name\n" +
+            "    }\n" +
+            "    isPrivate\n" +
+            "    isArchived\n" +
+            "    isDisabled\n" +
+            "    forkCount\n" +
+            "        mentionableUsers(first: 10) {\n" +
+            "            nodes {\n" +
+            "            name\n" +
+            "            }\n" +
+            "        }\n" +
+            "        languages(first: 5) {\n" +
+            "            nodes {\n" +
+            "            name\n" +
+            "            }\n" +
+            "        }\n" +
+            "    }\n" +
+            "}\n";
+
 }

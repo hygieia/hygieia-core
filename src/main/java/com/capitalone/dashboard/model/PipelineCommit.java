@@ -41,12 +41,9 @@ public class PipelineCommit extends SCM{
 			return false;
 		PipelineCommit other = (PipelineCommit) obj;
 		if (scmRevisionNumber == null) {
-			if (other.scmRevisionNumber != null)
-				return false;
-		} else if (!scmRevisionNumber.equals(other.scmRevisionNumber))
-			return false;
-		return true;
-	}
+            return other.scmRevisionNumber == null;
+		} else return scmRevisionNumber.equals(other.scmRevisionNumber);
+    }
     
     
 }

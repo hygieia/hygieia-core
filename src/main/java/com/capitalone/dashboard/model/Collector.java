@@ -24,6 +24,7 @@ public class Collector extends BaseModel {
 
     private long lastExecuted;
     private long lastExecutionRecordCount;
+    private long lastExecutedSeconds;
     private List<String> searchFields = Arrays.asList("description");
     private Map<String, Object> properties = new HashMap<>(); //general purpose name-value properties
 
@@ -78,6 +79,10 @@ public class Collector extends BaseModel {
     public long getLastExecutionRecordCount() {
         return lastExecutionRecordCount;
     }
+
+    public long getLastExecutedSeconds() { return lastExecutedSeconds; }
+
+    public void setLastExecutedSeconds(long lastExecutedSeconds) { this.lastExecutedSeconds = lastExecutedSeconds; }
 
     public void setLastExecutionRecordCount(long lastExecutionRecordCount) {
         this.lastExecutionRecordCount = lastExecutionRecordCount;

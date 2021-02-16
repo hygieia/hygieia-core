@@ -1,15 +1,19 @@
 package com.capitalone.dashboard.util;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @SuppressWarnings("PMD.AvoidCatchingNPE") // TODO: Avoid catching NullPointerException; consider removing the cause of the NPE
 public final class Encryption {

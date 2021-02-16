@@ -1,15 +1,13 @@
 package com.capitalone.dashboard.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.validation.constraints.NotNull;
-
+import com.capitalone.dashboard.misc.HygieiaException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.capitalone.dashboard.misc.HygieiaException;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Entry class to hold the Auto Discovered entries: Jira project, github project, build job etc.
