@@ -7,10 +7,12 @@ import com.capitalone.dashboard.model.CollectorItem;
  */
 public class GitHubRepo extends CollectorItem {
     public static final String REPO_URL = "url"; // http://github.company.com/jack/somejavacode
-    public static final String BRANCH = "branch"; // master, development etc.
+    public static final String BRANCH = "branch"; // main, development, release  etc.
     public static final String USER_ID = "userID";
     public static final String PASSWORD = "password";
     public static final String PERSONAL_ACCESS_TOKEN = "personalAccessToken";
+    public static final String TYPE = "type"; // SOURCE, BUILD, INFRA, TEST etc
+
 
     public String getUserId() {
         return (String) getOptions().get(USER_ID);
@@ -28,7 +30,7 @@ public class GitHubRepo extends CollectorItem {
     public void setRepoUrl(String instanceUrl) {
         getOptions().put(REPO_URL, instanceUrl);
     }
-    
+
     public String getBranch() {
         return (String) getOptions().get(BRANCH);
     }
@@ -37,8 +39,12 @@ public class GitHubRepo extends CollectorItem {
         getOptions().put(BRANCH, branch);
     }
 
+    public String getType() { return (String) getOptions().get(TYPE); }
+
+    public void setType(String type) { getOptions().put(TYPE, type); }
+
     public String getPersonalAccessToken() {
-        return String.valueOf(getOptions().get(PERSONAL_ACCESS_TOKEN));
+        return (String) getOptions().get(PERSONAL_ACCESS_TOKEN);
     }
 
     public void setPersonalAccessToken(String personalAccessToken) {
@@ -49,10 +55,10 @@ public class GitHubRepo extends CollectorItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) {
-        	return true;
+            return true;
         }
-        if (o == null || !(o instanceof GitHubRepo)) {
-        	return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
         }
 
         GitHubRepo gitHubRepo = (GitHubRepo) o;
