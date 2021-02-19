@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,9 +49,33 @@ public class CollectorItemMetadata extends BaseModel {
 
     public Date getLastUpdatedTime() {
 
-        return this.lastUpdated == 0 ? new Date(System.currentTimeMillis()) : new Date(this.lastUpdated);
+        return lastUpdatedTime == null ? new Date(System.currentTimeMillis()) : lastUpdatedTime ;
     }
 
     public void setLastUpdatedTime(Date lastUpdatedTime) { this.lastUpdatedTime = lastUpdatedTime; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CollectorItemMetadata that = (CollectorItemMetadata) o;
+
+        return new EqualsBuilder()
+                .append(collectorId, that.collectorId)
+                .append(collectorItemId, that.collectorItemId)
+                .append(collectorType, that.collectorType)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(collectorId)
+                .append(collectorItemId)
+                .append(collectorType)
+                .toHashCode();
+    }
 
 }

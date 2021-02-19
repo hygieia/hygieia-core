@@ -1,19 +1,11 @@
 package com.capitalone.dashboard.model;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 
 @Document(collection = "library_reference")
@@ -27,6 +19,7 @@ public class LibraryPolicyReference extends BaseModel {
     private List<WhiteSourceComponent> projectReferences = new ArrayList<>();
     private long lastUpdated;
     private String orgName;
+    private String language;
 
     public String getLibraryName() {
         return libraryName;
@@ -83,4 +76,8 @@ public class LibraryPolicyReference extends BaseModel {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

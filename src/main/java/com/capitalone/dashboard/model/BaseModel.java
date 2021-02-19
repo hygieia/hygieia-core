@@ -2,13 +2,24 @@ package com.capitalone.dashboard.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * Base class for all Mongo model classes that has an id property.
  */
 public class BaseModel {
+
+    public BaseModel() {
+        upsertTime = new Date(System.currentTimeMillis());
+    }
+
     @Id
     private ObjectId id;
+
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    private Date upsertTime;
 
     public ObjectId getId() {
         return id;
@@ -17,6 +28,10 @@ public class BaseModel {
     public void setId(ObjectId id) {
         this.id = id;
     }
+
+    public Date getUpsertTime() { return upsertTime; }
+
+    public void setUpsertTime(Date upsertTime) { this.upsertTime = upsertTime; }
 
     /*
      * Note:
