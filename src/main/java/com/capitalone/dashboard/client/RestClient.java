@@ -46,16 +46,19 @@ public class RestClient {
         long start = System.currentTimeMillis();
         ResponseEntity<String> response;
         String status = null;
+        String status_phrase = null;
         try {
             response = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
             status = response.getStatusCode().toString();
+            status_phrase = response.getStatusCode().getReasonPhrase();
         } catch (HttpStatusCodeException e) {
             status = e.getStatusCode().toString();
-            LOG.info("status=" + status + ", requestBody=" + httpEntity.getBody());
+            status_phrase = e.getStatusCode().getReasonPhrase();
+            LOG.info("makeRestCall http_method=POST http_status=" + status + " http_status_phrase=" +status_phrase+" http_request_body=" + httpEntity.getBody());
             throw e;
         } finally {
             long end = System.currentTimeMillis();
-            LOG.info("makeRestCall op=POST url=" + url + ", status=" + status + " duration=" + (end - start));
+            LOG.info("makeRestCall http_method=POST http_url=" + url + " http_status=" + status + " http_status_phrase="+status_phrase+" http_duration=" + (end - start));
         }
 
         return response;
@@ -165,7 +168,7 @@ public class RestClient {
             throw e;
         } finally {
             long end = System.currentTimeMillis();
-            LOG.info("makeRestCall op=GET url=" + url + " status=" + status + " duration=" + (end - start));
+            LOG.info("makeRestCall http_method=GET http_url=" + url + " http_status=" + status + " http_duration=" + (end - start));
         }
         return response;
     }
