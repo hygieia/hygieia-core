@@ -73,14 +73,14 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
             long count = collector.getLastExecutionRecordCount();
             long end = System.currentTimeMillis();
             long duration = end - start;
-            LOGGER.info("Finished running Collector={} timeTaken=" + duration + " collectorItems=" + count, collectorName);
+            LOGGER.info("Finished running collector_name={} collector_run_duration=" + duration/1000 + " collector_items_count=" + count, collectorName);
 
             // Update lastUpdate timestamp in Collector
             collector.setLastExecuted(end);
-            collector.setLastExecutedSeconds(duration);
+            collector.setLastExecutedSeconds(duration/1000);
             getCollectorRepository().save(collector);
         } else {
-            LOGGER.info("Collector is disabled, collectorName={}", collectorName);
+            LOGGER.info("Collector is disabled, collector_name={}", collectorName);
         }
     }
 
@@ -131,7 +131,7 @@ public abstract class CollectorTask<T extends Collector> implements Runnable {
             if (timeElapsed <= requestRateLimitTimeWindow) {
                 long timeToWait = (timeElapsed < requestRateLimitTimeWindow)? ((requestRateLimitTimeWindow - timeElapsed) + waitTime) : waitTime;
 
-                LOGGER.debug("Rates limit exceeded: timeElapsed = " +timeElapsed+ "; Rate Count = "+requestCount+ "; waiting for " + timeToWait + " milliseconds");
+                LOGGER.debug("Rates limit exceeded: rate_limit_time_elapsed=" +timeElapsed+ " current_rate_count="+requestCount+ " waiting for " + timeToWait + " milliseconds");
                 sleep (timeToWait);
             }
         }
