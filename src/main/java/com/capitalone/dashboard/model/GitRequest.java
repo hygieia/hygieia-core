@@ -53,6 +53,9 @@ public class GitRequest  {
     private String headSha;
     private String baseSha;
     private String requestType;
+    private long changedFiles;
+    private long deletions;
+    private long additions;
     private List<Commit> commits;
 
 
@@ -348,4 +351,29 @@ public class GitRequest  {
     public void setMergeAuthorLDAPDN(String mergeAuthorLDAPDN) {
         this.mergeAuthorLDAPDN = mergeAuthorLDAPDN;
     }
+
+    public long getChangedFiles() {
+        return changedFiles;
+    }
+
+    public void setChangedFiles(long changedFiles) {
+        this.changedFiles = changedFiles;
+    }
+
+    public long getDeletions() {
+        return deletions;
+    }
+
+    public void setDeletions(long deletions) {
+        this.deletions = deletions;
+    }
+
+    public long getAdditions() {
+        return additions;
+    }
+
+    public void setAdditions(long additions) {
+        this.additions = additions;
+    }
+
 }
