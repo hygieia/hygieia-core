@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A collection of widgets, collectors and application components that represent a software
@@ -61,11 +63,13 @@ public class Dashboard extends BaseModel {
     @Transient
     int errorCode;
 
+    Map<String,String> properties = new HashMap<>();
+
     Dashboard() {
     }
 
     public Dashboard(String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
-        this(false, template, title, application, owners, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay);
+        this(false, template, title, application, owners, type,configurationItemBusServName, configurationItemBusAppName,activeWidgets, scoreEnabled, scoreDisplay, new HashMap<>());
     }
 
     public Dashboard(boolean remoteCreated, String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
@@ -80,6 +84,22 @@ public class Dashboard extends BaseModel {
         this.scoreEnabled = scoreEnabled;
         this.scoreDisplay = scoreDisplay;
         this.createdAt = System.currentTimeMillis();
+    }
+
+    //TODO:need to refactor this need impact analysis before refactoring
+    public Dashboard(boolean remoteCreated, String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName,List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay, Map<String,String> properties) {
+        this.template = template;
+        this.title = title;
+        this.configurationItemBusServName = configurationItemBusServName;
+        this.configurationItemBusAppName = configurationItemBusAppName;
+        this.application = application;
+        this.type = type;
+        this.owners = owners;
+        this.activeWidgets = activeWidgets;
+        this.scoreEnabled = scoreEnabled;
+        this.scoreDisplay = scoreDisplay;
+        this.createdAt = System.currentTimeMillis();
+        this.properties = properties;
     }
 
     public String getTemplate() {
@@ -229,4 +249,8 @@ public class Dashboard extends BaseModel {
     public void setCreatedAt(long timeStamp) {
         this.createdAt = timeStamp;
     }
+
+    public Map<String, String> getProperties() { return properties; }
+
+    public void setProperties(Map<String, String> properties) { this.properties = properties; }
 }
