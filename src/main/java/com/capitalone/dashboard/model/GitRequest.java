@@ -53,9 +53,9 @@ public class GitRequest  {
     private String headSha;
     private String baseSha;
     private String requestType;
-    private long changedFiles;
-    private long deletions;
-    private long additions;
+    private long countFilesChanged;
+    private long lineDeletions;
+    private long lineAdditions;
     private List<Commit> commits;
 
 
@@ -352,28 +352,28 @@ public class GitRequest  {
         this.mergeAuthorLDAPDN = mergeAuthorLDAPDN;
     }
 
-    public long getChangedFiles() {
-        return changedFiles;
+    public long getCountFilesChanged() {
+        return countFilesChanged;
     }
 
-    public void setChangedFiles(long changedFiles) {
-        this.changedFiles = changedFiles;
+    public void setCountFilesChanged(long countFilesChanged) {
+        this.countFilesChanged = countFilesChanged;
     }
 
-    public long getDeletions() {
-        return deletions;
+    public long getLineDeletions() {
+        return lineDeletions;
     }
 
-    public void setDeletions(long deletions) {
-        this.deletions = deletions;
+    public void setLineDeletions(long lineDeletions) {
+        this.lineDeletions = lineDeletions;
     }
 
-    public long getAdditions() {
-        return additions;
+    public long getLineAdditions() {
+        return lineAdditions;
     }
 
-    public void setAdditions(long additions) {
-        this.additions = additions;
+    public void setLineAdditions(long lineAdditions) {
+        this.lineAdditions = lineAdditions;
     }
 
 }
