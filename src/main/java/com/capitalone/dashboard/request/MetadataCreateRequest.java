@@ -2,7 +2,7 @@ package com.capitalone.dashboard.request;
 
 import javax.validation.constraints.NotNull;
 
-public class MetadataCreateRequest {
+public class MetadataCreateRequest extends BaseRequest {
 
     @NotNull
     private String key;

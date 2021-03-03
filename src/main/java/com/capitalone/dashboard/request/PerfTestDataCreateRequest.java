@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PerfTestDataCreateRequest {
+public class PerfTestDataCreateRequest extends BaseRequest {
 
 
 

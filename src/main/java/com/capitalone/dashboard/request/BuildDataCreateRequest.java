@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class BuildDataCreateRequest {
+public class BuildDataCreateRequest extends BaseRequest {
 
     @NotNull
     private String number;

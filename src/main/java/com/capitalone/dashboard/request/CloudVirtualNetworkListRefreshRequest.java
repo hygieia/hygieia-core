@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class CloudVirtualNetworkListRefreshRequest {
+public class CloudVirtualNetworkListRefreshRequest extends BaseRequest {
 
     @NotNull
     private String accountNumber;

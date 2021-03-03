@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class CloudInstanceListRefreshRequest {
+public class CloudInstanceListRefreshRequest extends BaseRequest {
 
     @NotNull
     private String accountNumber;
