@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class TestDataCreateRequest {
+public class TestDataCreateRequest extends BaseRequest {
 
     /**
      * ID of job

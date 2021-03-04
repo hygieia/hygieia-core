@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CloudSubnetCreateRequest {
+public class CloudSubnetCreateRequest extends BaseRequest {
     @NotNull
     private String subnetId;
     private String accountNumber;

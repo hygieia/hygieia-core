@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CloudInstanceCreateRequest {
+public class CloudInstanceCreateRequest extends BaseRequest {
     @NotNull
     private String instanceId;
     @NotNull

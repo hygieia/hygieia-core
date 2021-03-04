@@ -2,7 +2,7 @@ package com.capitalone.dashboard.request;
 
 import javax.validation.constraints.NotNull;
 
-public class DeployDataCreateRequest {
+public class DeployDataCreateRequest extends BaseRequest {
     @NotNull
     private String executionId;
     @NotNull

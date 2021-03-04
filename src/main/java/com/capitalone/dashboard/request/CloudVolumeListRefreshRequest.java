@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class CloudVolumeListRefreshRequest {
+public class CloudVolumeListRefreshRequest extends BaseRequest {
 
     @NotNull
     private String accountNumber;

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.types.ObjectId;
 
-public class BuildDataCreateResponse {
+public class BuildDataCreateResponse extends BaseResponse {
     private ObjectId id;
     private ObjectId collectorItemId;
     private ObjectId dashboardId;

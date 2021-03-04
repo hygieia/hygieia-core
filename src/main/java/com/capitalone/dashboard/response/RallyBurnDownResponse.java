@@ -2,7 +2,7 @@ package com.capitalone.dashboard.response;
 
 import java.util.List;
 
-public class RallyBurnDownResponse {
+public class RallyBurnDownResponse extends BaseResponse {
 	private List<String> iterationDates;
 	private List<String> toDoHours;
 	private List<Double> acceptedPoints;

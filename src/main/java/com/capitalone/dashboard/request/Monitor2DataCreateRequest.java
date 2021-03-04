@@ -2,7 +2,7 @@ package com.capitalone.dashboard.request;
 
 import javax.validation.constraints.NotNull;
 
-public class Monitor2DataCreateRequest {
+public class Monitor2DataCreateRequest extends BaseRequest {
     @NotNull
     private String name;
     private String url;

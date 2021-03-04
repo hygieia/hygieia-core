@@ -7,6 +7,12 @@ public class GitRequestCreateRequest extends SCM {
 
     private long timestamp;
 
+    private String clientReference;
+
+    public String getClientReference() { return clientReference; }
+
+    public void setClientReference(String clientReference) { this.clientReference = clientReference; }
+
     public String getHygieiaId() {
         return hygieiaId;
     }
