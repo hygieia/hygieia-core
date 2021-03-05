@@ -21,6 +21,6 @@ public enum AutoDiscoverAuditType {
                 return auditType;
             }
         }
-        throw new IllegalArgumentException(value + " is not a Audit Type");
+        throw new IllegalArgumentException(value + " is not a AutoDiscover Audit Type");
     }
 }
