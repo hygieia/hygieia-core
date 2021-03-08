@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.response;
 
-public class CloudVolumeAggregatedResponse {
+public class CloudVolumeAggregatedResponse extends BaseResponse {
     private int nonEncryptedCount;
     private int noAttachmentCount;
     private int noAccountCount;

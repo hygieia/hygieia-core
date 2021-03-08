@@ -111,6 +111,9 @@ public class GithubGraphQLQuery {
                     "          createdAt\n" +
                     "          updatedAt\n" +
                     "          mergedAt\n" +
+                    "          changedFiles\n" +
+                    "          deletions\n" +
+                    "          additions\n" +
                     "          baseRef {\n" +
                     "            target {\n" +
                     "                oid\n" +

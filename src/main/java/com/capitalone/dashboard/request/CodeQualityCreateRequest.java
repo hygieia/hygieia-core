@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodeQualityCreateRequest {
+public class CodeQualityCreateRequest extends BaseRequest {
     private String hygieiaId;
     @NotNull
     private long timestamp;

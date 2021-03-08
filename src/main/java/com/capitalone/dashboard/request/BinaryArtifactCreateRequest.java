@@ -12,7 +12,7 @@ import java.util.Map;
  * A request to create a BinaryArtifact.
  *
  */
-public class BinaryArtifactCreateRequest {
+public class BinaryArtifactCreateRequest extends BaseRequest {
 
     @NotNull
     private String artifactName;

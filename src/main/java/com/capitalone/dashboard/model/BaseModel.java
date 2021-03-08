@@ -21,6 +21,8 @@ public class BaseModel {
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
     private Date upsertTime;
 
+    private String clientReference;
+
     public ObjectId getId() {
         return id;
     }
@@ -32,6 +34,10 @@ public class BaseModel {
     public Date getUpsertTime() { return upsertTime; }
 
     public void setUpsertTime(Date upsertTime) { this.upsertTime = upsertTime; }
+
+    public String getClientReference() { return clientReference; }
+
+    public void setClientReference(String clientReference) { this.clientReference = clientReference; }
 
     /*
      * Note:

@@ -1,5 +1,5 @@
 package com.capitalone.dashboard.response;
 
-public class CloudSubNetworkAggregatedResponse {
+public class CloudSubNetworkAggregatedResponse extends BaseResponse {
     
 }

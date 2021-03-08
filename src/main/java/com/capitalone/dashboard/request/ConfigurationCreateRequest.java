@@ -1,14 +1,14 @@
 package com.capitalone.dashboard.request;
 
+import com.capitalone.dashboard.model.Configuration;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.capitalone.dashboard.model.Configuration;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ConfigurationCreateRequest {
+public class ConfigurationCreateRequest extends BaseRequest {
 	
 	private String collectorName;
 	private Set<Map<String,String>> info = new HashSet<>();

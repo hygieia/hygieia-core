@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PerformanceCreateRequest {
+public class PerformanceCreateRequest extends BaseRequest {
     private String hygieiaId;
     @NotNull
     private long timestamp;

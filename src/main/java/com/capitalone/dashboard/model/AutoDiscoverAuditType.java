@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.model;
 
-public enum AuditType {
+public enum AutoDiscoverAuditType {
 
     ALL,
     CODE_REVIEW,
@@ -15,12 +15,12 @@ public enum AuditType {
     AUTO_DISCOVER;
 
 
-    public static AuditType fromString(String value) {
-        for (AuditType auditType : values()) {
+    public static AutoDiscoverAuditType fromString(String value) {
+        for (AutoDiscoverAuditType auditType : values()) {
             if (auditType.toString().equalsIgnoreCase(value)) {
                 return auditType;
             }
         }
-        throw new IllegalArgumentException(value + " is not a Audit Type");
+        throw new IllegalArgumentException(value + " is not a AutoDiscover Audit Type");
     }
 }

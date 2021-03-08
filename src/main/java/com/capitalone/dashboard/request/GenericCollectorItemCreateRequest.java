@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
  * A request to create a Generic Collector Item.
  *
  */
-public class GenericCollectorItemCreateRequest {
+public class GenericCollectorItemCreateRequest extends BaseRequest {
     private String buildId;
     @NotNull
     private String relatedCollectorItemId;
