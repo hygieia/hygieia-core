@@ -2,12 +2,15 @@ package com.capitalone.dashboard.service;
 
 import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.ApiToken;
+import com.capitalone.dashboard.model.UserInfo;
 import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.repository.ApiTokenRepository;
+import com.capitalone.dashboard.repository.UserInfoRepository;
 import com.capitalone.dashboard.util.Encryption;
 import com.capitalone.dashboard.util.EncryptionException;
 import com.capitalone.dashboard.util.UnsafeDeleteException;
 import com.google.common.collect.Sets;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class ApiTokenServiceImpl implements ApiTokenService {
@@ -33,20 +35,22 @@ public class ApiTokenServiceImpl implements ApiTokenService {
 
     private ApiTokenRepository apiTokenRepository;
 
+    private UserInfoRepository userInfoRepository;
+
     @Autowired
-    public ApiTokenServiceImpl(ApiTokenRepository apiTokenRepository) {
+    public ApiTokenServiceImpl(ApiTokenRepository apiTokenRepository,UserInfoRepository userInfoRepository) {
         this.apiTokenRepository = apiTokenRepository;
+        this.userInfoRepository = userInfoRepository;
     }
 
-    @Override
-	public Collection<ApiToken> getApiTokens() {
-		return Sets.newHashSet(apiTokenRepository.findAll());
-	}
+    public Collection<ApiToken> getApiTokens() {
+        return Sets.newHashSet(apiTokenRepository.findAll());
+    }
 
     @Override
     public String getApiToken(String apiUser, Long expirationDt) throws EncryptionException, HygieiaException {
         ApiToken apiToken = apiTokenRepository.findByApiUserAndExpirationDt(apiUser, expirationDt);
-        String apiKey;
+        String apiKey = "";
         if(apiToken == null) {
             apiKey = Encryption.getStringKey();
             apiToken = new ApiToken(apiUser, apiKey, expirationDt);
@@ -63,6 +67,7 @@ public class ApiTokenServiceImpl implements ApiTokenService {
     @Override
     public org.springframework.security.core.Authentication authenticate(String username, String password) {
         List<ApiToken> apiTokens = apiTokenRepository.findByApiUser(username);
+        UserInfo user = userInfoRepository.findByUsername(username);
         for(ApiToken apiToken : apiTokens) {
             if (username.equalsIgnoreCase(apiToken.getApiUser())) {
                 if (apiToken.checkApiKey(password)) {
@@ -72,9 +77,10 @@ public class ApiTokenServiceImpl implements ApiTokenService {
 
                         Collection<UserRole> roles = new ArrayList<>();
                         roles.add(UserRole.ROLE_API);
-
+                        if(isUserAdmin(user))
+                            roles.add(UserRole.ROLE_ADMIN);
                         return new UsernamePasswordAuthenticationToken(username,
-                            password, createAuthorities(roles));
+                                password, createAuthorities(roles));
                     }
                 }
             }
@@ -82,12 +88,19 @@ public class ApiTokenServiceImpl implements ApiTokenService {
 
         throw new BadCredentialsException("Login Failed: Invalid credentials for user " + username);
     }
+
+    private boolean isUserAdmin(UserInfo user) {
+        if(user==null) return false;
+        if(CollectionUtils.isEmpty(user.getAuthorities())) return false;
+        return user.getAuthorities().stream().anyMatch(userRole -> userRole.equals(UserRole.ROLE_ADMIN));
+    }
+
     @Override
     public void deleteToken(ObjectId id) {
         ApiToken apiToken = apiTokenRepository.findOne(id);
 
         if(apiToken == null) {
-            throw new UnsafeDeleteException("Cannot delete token " + Objects.requireNonNull(apiToken).getApiUser());
+            throw new UnsafeDeleteException("Cannot delete token ");
         }else{
             apiTokenRepository .delete(apiToken);
         }
@@ -96,7 +109,7 @@ public class ApiTokenServiceImpl implements ApiTokenService {
     public String updateToken(Long expirationDt, ObjectId id) throws HygieiaException{
         ApiToken apiToken = apiTokenRepository.findOne(id);
         if(apiToken == null) {
-            throw new HygieiaException("Cannot find token for " + Objects.requireNonNull(apiToken).getApiUser(), HygieiaException.BAD_DATA);
+            throw new HygieiaException("Cannot find token ", HygieiaException.BAD_DATA);
         }else{
 
             apiToken.setExpirationDt(expirationDt);
@@ -108,7 +121,6 @@ public class ApiTokenServiceImpl implements ApiTokenService {
     private Collection<? extends GrantedAuthority> createAuthorities(Collection<UserRole> authorities) {
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
         authorities.forEach(authority -> grantedAuthorities.add(new SimpleGrantedAuthority(authority.name())));
-
         return grantedAuthorities;
     }
 
@@ -127,10 +139,13 @@ public class ApiTokenServiceImpl implements ApiTokenService {
         int retVal = -1;
         try {
             retVal = argA.compareTo(argB);
-            //if dates are equal.
-            //if argA is before argument.
-            //if argA is after argument.
-            return Integer.compare(retVal, 0);
+            if (retVal == 0) { //if dates are equal.
+                return 0;
+            } else if (retVal < 0) { //if argA is before argument.
+                return -1;
+            } else { //if argA is after argument.
+                return 1;
+            }
         } catch (Exception e) {
             LOGGER.warn("Unable to compare dates", e);
         }
