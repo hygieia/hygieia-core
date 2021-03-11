@@ -43,7 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String correlation_id = request.getHeader(CommonConstants.HEADER_CLIENT_CORRELATION_ID);
         apiUser = (StringUtils.isEmpty(apiUser)? "API_USER" : apiUser);
         correlation_id = (StringUtils.isEmpty(correlation_id)) ? "NULL" : correlation_id;
-        response.addHeader(CommonConstants.HEADER_CLIENT_CORRELATION_ID, correlation_id);
+        if(response != null)
+            response.addHeader(CommonConstants.HEADER_CLIENT_CORRELATION_ID, correlation_id);
         /*
          * apiToken based authentication
          */
