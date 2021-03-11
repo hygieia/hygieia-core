@@ -17,8 +17,8 @@ import java.util.HashSet;
 @Component
 public class DefaultAuthenticationResponseService implements AuthenticationResponseService {
 
-    @Override
-    public void handle(HttpServletResponse response, Authentication authentication) {
+	@Override
+	public void handle(HttpServletResponse response, Authentication authentication) {
 
         AuthType authType = (AuthType)authentication.getDetails();
         if (authType == AuthType.APIKEY) {
@@ -30,7 +30,7 @@ public class DefaultAuthenticationResponseService implements AuthenticationRespo
             authenticationWithAuthorities.setDetails(authentication.getDetails());
         }
 
-    }
+	}
 
     private Collection<? extends GrantedAuthority> createAuthorities(Collection<UserRole> authorities) {
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
