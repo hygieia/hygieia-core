@@ -33,6 +33,7 @@ public class BuildDataCreateRequest extends BaseRequest {
     private long duration;
     private String startedBy;
     private String log;
+    private String requester;
     private List<RepoBranch> codeRepos = new ArrayList<>();
     private List<SCM> sourceChangeSet = new ArrayList<>();
 
@@ -158,4 +159,8 @@ public class BuildDataCreateRequest extends BaseRequest {
     public void setStages(List<BuildStage> stages) {
         this.stages = stages;
     }
+
+    public String getRequester() { return requester; }
+
+    public void setRequester(String requester) { this.requester = requester; }
 }

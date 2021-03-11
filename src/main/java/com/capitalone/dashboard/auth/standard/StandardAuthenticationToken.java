@@ -1,17 +1,19 @@
-package com.capitalone.dashboard.auth.apitoken;
+package com.capitalone.dashboard.auth.standard;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class ApiTokenAuthenticationToken extends AbstractAuthenticationToken {
+public class StandardAuthenticationToken extends AbstractAuthenticationToken {
 
+	private static final long serialVersionUID = 7187799207155545385L;
+	
 	private final Object principal;
 	private Object credentials;
 
 	@SuppressWarnings("PMD")
-	public ApiTokenAuthenticationToken(Object principal, Object credentials) {
+	public StandardAuthenticationToken(Object principal, Object credentials) {
 		super(null);
 		this.principal = principal;
 		this.credentials = credentials;
@@ -19,8 +21,8 @@ public class ApiTokenAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	@SuppressWarnings("PMD")
-	public ApiTokenAuthenticationToken(Object principal, Object credentials,
-									   Collection<? extends GrantedAuthority> authorities) {
+	public StandardAuthenticationToken(Object principal, Object credentials,
+			Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
 		this.credentials = credentials;
