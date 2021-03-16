@@ -23,6 +23,7 @@ public class RequestLog extends BaseModel {
     private int responseCode;
     private long timestamp;
     private long responseTime;
+    private String source;
 
     public String getApiUser() { return apiUser; }
 
@@ -127,6 +128,14 @@ public class RequestLog extends BaseModel {
     public long getResponseTime() { return responseTime; }
 
     public void setResponseTime(long responseTime) { this.responseTime = responseTime; }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     @Override
     public String toString() {
