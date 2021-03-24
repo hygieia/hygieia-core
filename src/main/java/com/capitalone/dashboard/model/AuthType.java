@@ -4,6 +4,7 @@ public enum AuthType {
 
 	STANDARD,
 	LDAP,
-	APIKEY;
+	APIKEY,
+	OPENID;
 	
 }
