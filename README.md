@@ -8,7 +8,7 @@
 [![Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 <br>
 <br>
-Core components for the project Hygieia (model, repositories, utilities, etc)
+Core components for Hygieia (model, repositories, utilities etc)
 <br>
 <br>
 The README is in the [gh-pages](https://github.com/capitalone/Hygieia/blob/gh-pages/pages/hygieia/core/core.md) branch. Please update it there.
