@@ -1,0 +1,19 @@
+[
+  {
+  "_id" : "5df13f7d4f2e1a169f909679",
+  "_class" : "com.capitalone.dashboard.model.FeatureFlag",
+  "name" : "auto_discover",
+  "description" : "this is feature flag to mark flags processed by hygieia-relateditems-collector",
+    "flags" : {
+      "agiletool" : true,
+      "artifact" : true,
+      "build" : true,
+      "codequality" : true,
+      "deployment" : true,
+      "librarypolicy" : true,
+      "scm" : false,
+      "staticsecurityscan" : true,
+      "test" : true
+    }
+  }
+]
