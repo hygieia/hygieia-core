@@ -99,6 +99,7 @@ public class SyncDashboardTest {
         LoadTestData.loadLibraryPolicy(libraryPolicyResultsRepository);
         LoadTestData.loadTestResults(testResultsRepository);
         LoadTestData.loadCodeQuality(codeQualityRepository);
+        LoadTestData.loadFeatureFlags(featureFlagRepository);
     }
 
 
@@ -217,12 +218,7 @@ public class SyncDashboardTest {
 
         testSubject = dashboardRepository.findOne(new ObjectId("5baa458b0be2d337e3885815"));
         widget = syncDashboard().getWidget("codeanalysis", testSubject);
-        assertTrue(widget != null);
+        assertTrue(widget == null);
 
-        Component component = componentRepository.findOne(widget.getComponentId());
-        assertTrue(component != null);
-        CollectorItem si = component.getCollectorItems(CollectorType.CodeQuality).get(0);
-
-        assertTrue(si != null);
     }
 }
