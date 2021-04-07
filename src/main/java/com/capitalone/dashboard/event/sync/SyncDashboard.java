@@ -224,8 +224,7 @@ public class SyncDashboard {
 
         // if feature flags for build and codequality are set to false, do not auto sync with dashboard.
         FeatureFlag featureFlag = featureFlagRepository.findByName(FeatureFlagsEnum.auto_discover.toString());
-        if(HygieiaUtils.allowSync(featureFlag, CollectorType.Build)) return;
-        if(HygieiaUtils.allowSync(featureFlag, CollectorType.CodeQuality)) return;
+        if(!HygieiaUtils.allowSync(featureFlag, CollectorType.Build)) return;
 
         // Find the collectorItem of build
         CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());
@@ -271,6 +270,10 @@ public class SyncDashboard {
      * @param codeQuality
      */
     public void sync(CodeQuality codeQuality) {
+
+        // if feature flags for build and codequality are set to false, do not auto sync with dashboard.
+        FeatureFlag featureFlag = featureFlagRepository.findByName(FeatureFlagsEnum.auto_discover.toString());
+        if(!HygieiaUtils.allowSync(featureFlag, CollectorType.CodeQuality)) return;
         ObjectId buildId = codeQuality.getBuildId();
         if (buildId == null) return;
         Build build = buildRepository.findOne(buildId);
