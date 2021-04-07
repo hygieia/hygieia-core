@@ -12,11 +12,14 @@ import org.jboss.logging.Logger;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class HygieiaUtils {
 	private static final Logger LOGGER = Logger.getLogger(HygieiaUtils.class);
+	public static final String NUMERIC_REGEX= "-?\\d+(\\.\\d+)?";
+	public static final String SLASH = "/";
 
-    public static void mergeObjects(Object dest, Object source) throws IllegalAccessException, InvocationTargetException {
+	public static void mergeObjects(Object dest, Object source) throws IllegalAccessException, InvocationTargetException {
         new BeanUtilsBean() {
             @Override
             public void copyProperty(Object dest, String name, Object value)
@@ -165,4 +168,36 @@ public class HygieiaUtils {
 		return BooleanUtils.toBoolean(featureFlag.getFlags().get(StringUtils.lowerCase(collectorType.toString())));
 	}
 
+	/*
+	 * normalize build url by removing build number
+	 * Eg: Input : https://jenkins.com/job/test/job/youseeme/job/Reference/job/master/228/
+	 * Output : https://jenkins.com/job/test/job/youseeme/job/Reference/job/master/
+	 *
+	 */
+	public static String normalizeJobUrl(String buildUrl) {
+		if (Objects.isNull(buildUrl)) return null;
+		int endIndex = buildUrl.lastIndexOf(SLASH);
+		if (endIndex != -1) {
+			if (endIndex == buildUrl.length() - 1) {
+				String trailedUrl = buildUrl.substring(0, endIndex);
+				String last = trailedUrl.substring(trailedUrl.lastIndexOf(SLASH)+1);
+				int tempIndex = trailedUrl.lastIndexOf(SLASH);
+				if(isNumeric(last)){
+					return trailedUrl.substring(0, tempIndex+1);
+				}else{
+					return buildUrl;
+				}
+			}
+		}
+		return buildUrl;
+	}
+
+
+	public static  boolean isNumeric(String strNum) {
+		Pattern pattern = Pattern.compile(NUMERIC_REGEX);
+		if (strNum == null) {
+			return false;
+		}
+		return pattern.matcher(strNum).matches();
+	}
 }

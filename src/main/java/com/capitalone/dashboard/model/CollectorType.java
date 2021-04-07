@@ -36,7 +36,8 @@ public enum CollectorType {
     Docker,
     Api,
     ApiAudit,
-    Helm;
+    Helm,
+    InfrastructureScan;
 
     public static CollectorType fromString(String value) {
         for (CollectorType collectorType : values()) {
