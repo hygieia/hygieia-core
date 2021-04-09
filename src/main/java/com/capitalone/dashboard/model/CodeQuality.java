@@ -28,6 +28,9 @@ public class CodeQuality extends BaseModel {
     private CodeQualityType type;
     private String version;
     private  ObjectId buildId;
+    private String scanType;
+    private String reportUrl;
+
 
     private Set<CodeQualityMetric> metrics = new HashSet<>();
 
@@ -93,5 +96,21 @@ public class CodeQuality extends BaseModel {
 
     public void addMetric(CodeQualityMetric metric) {
         this.metrics.add(metric);
+    }
+
+    public String getScanType() {
+        return scanType;
+    }
+
+    public void setScanType(String scanType) {
+        this.scanType = scanType;
+    }
+
+    public String getReportUrl() {
+        return reportUrl;
+    }
+
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
     }
 }

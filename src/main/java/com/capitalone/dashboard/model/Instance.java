@@ -8,6 +8,9 @@ public class Instance {
     private String status;
     private long updated;
     private String path;
+    private String language;
+    private String sourceCodeLink;
+    private String vulnDescription;
 
     public String getDisposition() {
         return disposition;
@@ -63,5 +66,29 @@ public class Instance {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getSourceCodeLink() {
+        return sourceCodeLink;
+    }
+
+    public void setSourceCodeLink(String sourceCodeLink) {
+        this.sourceCodeLink = sourceCodeLink;
+    }
+
+    public String getVulnDescription() {
+        return vulnDescription;
+    }
+
+    public void setVulnDescription(String vulnDescription) {
+        this.vulnDescription = vulnDescription;
     }
 }
