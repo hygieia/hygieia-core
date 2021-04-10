@@ -4,6 +4,7 @@ import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorType;
 import org.bson.types.ObjectId;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @param <T> Class that extends {@link Collector}
  */
-public interface BaseCollectorRepository<T extends Collector> extends CrudRepository<T, ObjectId> {
+public interface BaseCollectorRepository<T extends Collector> extends PagingAndSortingRepository<T, ObjectId> {
 
     /**
      * Finds a {@link Collector} by its name.
