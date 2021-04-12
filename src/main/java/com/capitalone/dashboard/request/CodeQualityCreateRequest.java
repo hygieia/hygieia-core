@@ -28,9 +28,9 @@ public class CodeQualityCreateRequest extends BaseRequest {
 
     private String niceName;
 
+    private String buildUrl;
+
     private List<CodeQualityMetric> metrics = new ArrayList<>();
-
-
 
     public long getTimestamp() {
         return timestamp;
@@ -116,4 +116,8 @@ public class CodeQualityCreateRequest extends BaseRequest {
     public void setToolName(String toolName) {
         this.toolName = toolName;
     }
+
+    public String getBuildUrl() { return buildUrl; }
+
+    public void setBuildUrl(String buildUrl) { this.buildUrl = buildUrl; }
 }
