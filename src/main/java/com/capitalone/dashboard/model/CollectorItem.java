@@ -37,6 +37,7 @@ public class CollectorItem extends BaseModel {
     private ObjectId collectorId;
     private long lastUpdated;
     private Map<String,Object> options = new HashMap<>();
+    private String refreshLink;
 
     @Transient
     private Collector collector;
@@ -117,6 +118,10 @@ public class CollectorItem extends BaseModel {
     public int getErrorCount() {
         return errors.size();
     }
+
+    public String getRefreshLink() { return refreshLink; }
+
+    public void setRefreshLink(String refreshLink) { this.refreshLink = refreshLink; }
 
     /**
      * Checks for collector items error threshold and resets it if window is met
