@@ -7,14 +7,15 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Objects;
 
 public class HygieiaUtils {
-	private static final Logger LOGGER = Logger.getLogger(HygieiaUtils.class);
+	private static final Log LOGGER = LogFactory.getLog(HygieiaUtils.class);
 
     public static void mergeObjects(Object dest, Object source) throws IllegalAccessException, InvocationTargetException {
         new BeanUtilsBean() {

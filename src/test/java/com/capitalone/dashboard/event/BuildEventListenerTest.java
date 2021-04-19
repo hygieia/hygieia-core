@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.capitalone.dashboard.util.TestUtils.createBuild;
@@ -127,7 +128,7 @@ public class BuildEventListenerTest {
         List<Component> components = Collections.singletonList(dashboard.getApplication().getComponents().get(0));
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         commitCollectorItem.setId(build.getCollectorItemId());
-        when(collectorItemRepository.findOne(build.getCollectorItemId())).thenReturn(commitCollectorItem);
+        when(collectorItemRepository.findById(build.getCollectorItemId())).thenReturn(Optional.of(commitCollectorItem));
         when(componentRepository.findByBuildCollectorItemId(commitCollectorItem.getId())).thenReturn(components);
         when(dashboardRepository.findByApplicationComponentIdsIn(componentIds)).thenReturn(Collections.singletonList(dashboard));
     }

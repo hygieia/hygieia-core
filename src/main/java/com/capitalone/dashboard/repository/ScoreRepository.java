@@ -2,7 +2,7 @@ package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.score.ScoreMetric;
 import org.bson.types.ObjectId;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import com.capitalone.dashboard.model.CodeQuality;
@@ -10,7 +10,7 @@ import com.capitalone.dashboard.model.CodeQuality;
 /**
  * Repository for {@link CodeQuality} data.
  */
-public interface ScoreRepository extends CrudRepository<ScoreMetric, ObjectId>, QueryDslPredicateExecutor<ScoreMetric> {
+public interface ScoreRepository extends CrudRepository<ScoreMetric, ObjectId>, QuerydslPredicateExecutor<ScoreMetric> {
 
     /**
      * Finds the {@link ScoreMetric} data point at the given timestamp for a specific

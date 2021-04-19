@@ -29,6 +29,7 @@ import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -88,7 +89,7 @@ public class TestResultEventListenerTest {
     }
 
     private void setupData() {
-        when(collectorItemRepository.findOne(Matchers.any(ObjectId.class))).thenReturn(getTestResultCollectorItem());
+        when(collectorItemRepository.findById(Matchers.any(ObjectId.class))).thenReturn(Optional.of(getTestResultCollectorItem()));
         when(collectorRepository.save(Matchers.any(Collector.class))).thenReturn(getPerfToolsCollector());
         when(collectorItemRepository.save(Matchers.any(CollectorItem.class))).thenReturn(getNewPerfCollectorItem(getPerfToolsCollector()));
         when(performanceRepository.save(Matchers.any(Performance.class))).thenReturn(getPerformanceDoc());

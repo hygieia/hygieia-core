@@ -6,7 +6,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.PathBuilder;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * {@link Component} repository.
  */
-public interface ComponentRepository extends CrudRepository<Component, ObjectId>,QueryDslPredicateExecutor<Component> {
+public interface ComponentRepository extends CrudRepository<Component, ObjectId>,QuerydslPredicateExecutor<Component> {
 
 
     @Query(value = "{'collectorItems.SCM._id': ?0}")

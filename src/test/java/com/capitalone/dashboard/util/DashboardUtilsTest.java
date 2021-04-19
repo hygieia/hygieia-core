@@ -1,5 +1,15 @@
 package com.capitalone.dashboard.util;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.bson.types.ObjectId;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
@@ -7,17 +17,9 @@ import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
-import com.capitalone.dashboard.repository.FongoBaseRepositoryTest;
-import org.bson.types.ObjectId;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+//import com.capitalone.dashboard.repository.FongoBaseRepositoryTest;
 
-import java.util.Arrays;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
-public class DashboardUtilsTest extends FongoBaseRepositoryTest{
+public class DashboardUtilsTest { //extends FongoBaseRepositoryTest{
 
     @Autowired
     private ComponentRepository componentRepository;
@@ -47,7 +49,11 @@ public class DashboardUtilsTest extends FongoBaseRepositoryTest{
         Component component3 = getComponent("TestComponent2");
         component3.addCollectorItem(collector11.getCollectorType(), collectorItem2);
 
-        componentRepository.save(Arrays.asList(component1,component2,component3));
+        List<Component> components = new ArrayList<Component>();
+        components.add(component1);
+        components.add(component2);
+        components.add(component3);
+        componentRepository.saveAll( components);
 
 
         Set<ObjectId> uniqueIds = DashboardUtils.getUniqueCollectorItemIDsFromAllComponents(componentRepository,collector1);

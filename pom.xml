@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.14.8</version>
+    <version>4.0.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -31,7 +31,7 @@
 
     <properties>
         <!-- Dependencies -->
-        <spring-security.version>4.2.18.RELEASE</spring-security.version>
+        <spring-security.version>5.4.5</spring-security.version>
         <tomcat.version>8.5.57</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.14</commons-codec.version>
@@ -41,10 +41,10 @@
         <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>29.0-jre</guava.version>
         <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
-        <jackson.version>2.10.3</jackson.version>
+        <jackson.version>2.11.4</jackson.version>
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.3</logback.version>
-        <mongodb.version>3.6.4</mongodb.version>
+        <mongodb.version>4.2.2</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
 
         <!-- Plugins -->
@@ -54,8 +54,8 @@
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
-        <java.compilation.source>1.8</java.compilation.source>
-        <java.compilation.target>1.8</java.compilation.target>
+        <java.compilation.source>11</java.compilation.source>
+        <java.compilation.target>11</java.compilation.target>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
@@ -74,7 +74,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.22.RELEASE</version>
+        <version>2.4.4</version>
     </parent>
 
     <scm>
@@ -104,54 +104,14 @@
 
     <developers>
         <developer>
-            <id>tabladrum</id>
-            <name>Tapabrata "Topo" Pal</name>
-            <email>tapabrata.pal@capitalone.com</email>
-            <url>https://github.com/tabladrum</url>
+            <id>erictice</id>
+            <name>Eric Tice</name>
+            <email>eric.tice@wipro.com</email>
+            <url>https://github.com/erictice</url>
             <roles>
                 <role>maintainer</role>
             </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <id>rvema</id>
-            <name>Raghavendra Vema</name>
-            <email>ragha.vema@capitalone.com</email>
-            <url>https://github.com/rvema</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <id>nireeshT</id>
-            <name>Nireesh Thiruveedula</name>
-            <email>nireesh.thiruveedula@capitalone.com</email>
-            <url>https://github.com/nireesht</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <id>sbrenthughes</id>
-            <name>Stephen Hughes</name>
-            <email>stephen.hughes@capitalone.com</email>
-            <url>https://github.com/sbrenthughes</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <name>Matthew Beasley</name>
-            <email>matthew.beasley@capitalone.com</email>
-            <id>matthewbeasley</id>
-        </developer>
-        <developer>
-            <name>Rob Tompkins</name>
-            <url>https://github.com/chtompki</url>
-            <id>chtompki</id>
+            <timezone>America/Chicago</timezone>
         </developer>
     </developers>
 
@@ -171,6 +131,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+             <version>2.4.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.tomcat.embed</groupId>
@@ -181,7 +142,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.2.9.RELEASE</version>
+            <version>5.3.5</version>
         </dependency>
 
         <!-- Misc Deps -->
@@ -211,12 +172,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+             <version>2.4.4</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+             <version>2.4.4</version>
         </dependency>
 
         <!-- Query DSL -->
@@ -224,15 +187,18 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
             <scope>provided</scope>
+            <version>4.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- jasypt spring boot -->
@@ -245,6 +211,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>
@@ -256,6 +223,7 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
         </dependency>
 
         <dependency>
@@ -274,6 +242,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+            <version>2.3</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -294,6 +263,18 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.2.12</version>
         </dependency>
+        <dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.eclipse.dirigible/dirigible-engine-javascript-graalvm -->
+<dependency>
+    <groupId>org.eclipse.dirigible</groupId>
+    <artifactId>dirigible-engine-javascript-graalvm</artifactId>
+    <version>5.8.4</version>
+    <scope>test</scope>
+</dependency>
     </dependencies>
 
     <build>
@@ -823,8 +804,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.5.1</version>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>1.11</source>
+                            <target>1.11</target>
                         </configuration>
                     </plugin>
                     <plugin>

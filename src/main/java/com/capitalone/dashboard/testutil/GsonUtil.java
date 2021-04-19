@@ -20,7 +20,8 @@ public class GsonUtil {
     private static ObjectId deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
         if (json instanceof JsonObject) {
             JsonObject jo = (JsonObject) json;
-            return new ObjectId(jo.get("timestamp").getAsInt(), jo.get("machineIdentifier").getAsInt(), jo.get("processIdentifier").getAsShort(), jo.get("counter").getAsInt());
+            
+            return new ObjectId(jo.get("timestamp").getAsInt(), jo.get("counter").getAsInt());
         }
         return new ObjectId(json.getAsString());
     }

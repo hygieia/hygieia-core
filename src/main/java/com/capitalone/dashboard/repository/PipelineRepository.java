@@ -2,12 +2,12 @@ package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.Pipeline;
 import org.bson.types.ObjectId;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface PipelineRepository extends CrudRepository<Pipeline, ObjectId>, QueryDslPredicateExecutor<Pipeline> {
+public interface PipelineRepository extends CrudRepository<Pipeline, ObjectId>, QuerydslPredicateExecutor<Pipeline> {
 
     Pipeline findByCollectorItemId(ObjectId collectorItemId);
 
