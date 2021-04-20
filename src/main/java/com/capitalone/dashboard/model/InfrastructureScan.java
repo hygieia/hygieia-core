@@ -12,21 +12,14 @@ public class InfrastructureScan extends BaseModel{
     private ObjectId collectorItemId;
     private String businessService;
     private String businessApplication;
-    private String clusterId;
-    private String hostName;
-    private Map<String, String> containerAttributes = new HashMap<>();
     private String instanceId;
     private String ipAddress;
-    private String operatingSystem;
-    private String region;
     private String createdTimeStamp;
-    private Labels labels;
-    private String artifactSha;
+    private List<Labels> labels;
     private RepositoryDigest repositoryDigest;
     private String ownerDept;
     private String ownerSubDept;
-    private String businessApplicationName;
-    private String engineeringLeadId;
+    private String developmentOwner;
     private String ownerEmailAddress;
     private String applicationOwnerFullName;
     private List<Vulnerability> vulnerabilities;
@@ -34,6 +27,7 @@ public class InfrastructureScan extends BaseModel{
     private String nextRecordKey;
     private long timestamp;
     private ObjectId buildId;
+    private String buildUrl;
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -59,30 +53,6 @@ public class InfrastructureScan extends BaseModel{
         this.businessApplication = businessApplication;
     }
 
-    public String getClusterId() {
-        return clusterId;
-    }
-
-    public void setClusterId(String clusterId) {
-        this.clusterId = clusterId;
-    }
-
-    public String getHostName() {
-        return hostName;
-    }
-
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
-    }
-
-    public Map<String, String> getContainerAttributes() {
-        return containerAttributes;
-    }
-
-    public void setContainerAttributes(Map<String, String> containerAttributes) {
-        this.containerAttributes = containerAttributes;
-    }
-
     public String getInstanceId() {
         return instanceId;
     }
@@ -99,22 +69,6 @@ public class InfrastructureScan extends BaseModel{
         this.ipAddress = ipAddress;
     }
 
-    public String getOperatingSystem() {
-        return operatingSystem;
-    }
-
-    public void setOperatingSystem(String operatingSystem) {
-        this.operatingSystem = operatingSystem;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
     public String getCreatedTimeStamp() {
         return createdTimeStamp;
     }
@@ -123,20 +77,12 @@ public class InfrastructureScan extends BaseModel{
         this.createdTimeStamp = createdTimeStamp;
     }
 
-    public Labels getLabels() {
+    public List<Labels> getLabels() {
         return labels;
     }
 
-    public void setLabels(Labels labels) {
+    public void setLabels(List<Labels> labels) {
         this.labels = labels;
-    }
-
-    public String getArtifactSha() {
-        return artifactSha;
-    }
-
-    public void setArtifactSha(String artifactSha) {
-        this.artifactSha = artifactSha;
     }
 
     public RepositoryDigest getRepositoryDigest() {
@@ -163,20 +109,12 @@ public class InfrastructureScan extends BaseModel{
         this.ownerSubDept = ownerSubDept;
     }
 
-    public String getBusinessApplicationName() {
-        return businessApplicationName;
+    public String getDevelopmentOwner() {
+        return developmentOwner;
     }
 
-    public void setBusinessApplicationName(String businessApplicationName) {
-        this.businessApplicationName = businessApplicationName;
-    }
-
-    public String getEngineeringLeadId() {
-        return engineeringLeadId;
-    }
-
-    public void setEngineeringLeadId(String engineeringLeadId) {
-        this.engineeringLeadId = engineeringLeadId;
+    public void setDevelopmentOwner(String developmentOwner) {
+        this.developmentOwner = developmentOwner;
     }
 
     public String getOwnerEmailAddress() {
@@ -233,5 +171,13 @@ public class InfrastructureScan extends BaseModel{
 
     public void setBuildId(ObjectId buildId) {
         this.buildId = buildId;
+    }
+
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
     }
 }
