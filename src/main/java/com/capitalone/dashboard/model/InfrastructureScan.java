@@ -3,38 +3,45 @@ package com.capitalone.dashboard.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "infrastructure_scan")
 public class InfrastructureScan extends BaseModel{
     private ObjectId collectorItemId;
     private String businessService;
     private String businessApplication;
-    private String accountId;
+    private String clusterId;
     private String hostName;
+    private Map<String, String> containerAttributes = new HashMap<>();
     private String instanceId;
     private String ipAddress;
     private String operatingSystem;
     private String region;
-    private  String imageId;
-    private String containerId;
-    private String createDTimeStamp;
-    private  String containerName;
-    private Labels labels; // create object
-    private String artifactorySha;
-    private RepositoryDigest repositoryDigest; // create Object
-    private String technologyDivision;
-    private String technologySubdivision;
-    private String asvName;
+    private String createdTimeStamp;
+    private Labels labels;
+    private String artifactSha;
+    private RepositoryDigest repositoryDigest;
+    private String ownerDept;
+    private String ownerSubDept;
     private String businessApplicationName;
-    private String engineeringLeadEid;
+    private String engineeringLeadId;
     private String ownerEmailAddress;
     private String applicationOwnerFullName;
-    private List<Vulnerability> vulnerabilities; //create object
+    private List<Vulnerability> vulnerabilities;
     private int limit;
     private String nextRecordKey;
     private long timestamp;
     private ObjectId buildId;
+
+    public ObjectId getCollectorItemId() {
+        return collectorItemId;
+    }
+
+    public void setCollectorItemId(ObjectId collectorItemId) {
+        this.collectorItemId = collectorItemId;
+    }
 
     public String getBusinessService() {
         return businessService;
@@ -52,20 +59,12 @@ public class InfrastructureScan extends BaseModel{
         this.businessApplication = businessApplication;
     }
 
-    public ObjectId getCollectorItemId() {
-        return collectorItemId;
+    public String getClusterId() {
+        return clusterId;
     }
 
-    public void setCollectorItemId(ObjectId collectorItemId) {
-        this.collectorItemId = collectorItemId;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setClusterId(String clusterId) {
+        this.clusterId = clusterId;
     }
 
     public String getHostName() {
@@ -74,6 +73,14 @@ public class InfrastructureScan extends BaseModel{
 
     public void setHostName(String hostName) {
         this.hostName = hostName;
+    }
+
+    public Map<String, String> getContainerAttributes() {
+        return containerAttributes;
+    }
+
+    public void setContainerAttributes(Map<String, String> containerAttributes) {
+        this.containerAttributes = containerAttributes;
     }
 
     public String getInstanceId() {
@@ -108,36 +115,12 @@ public class InfrastructureScan extends BaseModel{
         this.region = region;
     }
 
-    public String getImageId() {
-        return imageId;
+    public String getCreatedTimeStamp() {
+        return createdTimeStamp;
     }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public String getContainerId() {
-        return containerId;
-    }
-
-    public void setContainerId(String containerId) {
-        this.containerId = containerId;
-    }
-
-    public String getCreateDTimeStamp() {
-        return createDTimeStamp;
-    }
-
-    public void setCreateDTimeStamp(String createDTimeStamp) {
-        this.createDTimeStamp = createDTimeStamp;
-    }
-
-    public String getContainerName() {
-        return containerName;
-    }
-
-    public void setContainerName(String containerName) {
-        this.containerName = containerName;
+    public void setCreatedTimeStamp(String createdTimeStamp) {
+        this.createdTimeStamp = createdTimeStamp;
     }
 
     public Labels getLabels() {
@@ -148,12 +131,12 @@ public class InfrastructureScan extends BaseModel{
         this.labels = labels;
     }
 
-    public String getArtifactorySha() {
-        return artifactorySha;
+    public String getArtifactSha() {
+        return artifactSha;
     }
 
-    public void setArtifactorySha(String artifactorySha) {
-        this.artifactorySha = artifactorySha;
+    public void setArtifactSha(String artifactSha) {
+        this.artifactSha = artifactSha;
     }
 
     public RepositoryDigest getRepositoryDigest() {
@@ -164,28 +147,20 @@ public class InfrastructureScan extends BaseModel{
         this.repositoryDigest = repositoryDigest;
     }
 
-    public String getTechnologyDivision() {
-        return technologyDivision;
+    public String getOwnerDept() {
+        return ownerDept;
     }
 
-    public void setTechnologyDivision(String technologyDivision) {
-        this.technologyDivision = technologyDivision;
+    public void setOwnerDept(String ownerDept) {
+        this.ownerDept = ownerDept;
     }
 
-    public String getTechnologySubdivision() {
-        return technologySubdivision;
+    public String getOwnerSubDept() {
+        return ownerSubDept;
     }
 
-    public void setTechnologySubdivision(String technologySubdivision) {
-        this.technologySubdivision = technologySubdivision;
-    }
-
-    public String getAsvName() {
-        return asvName;
-    }
-
-    public void setAsvName(String asvName) {
-        this.asvName = asvName;
+    public void setOwnerSubDept(String ownerSubDept) {
+        this.ownerSubDept = ownerSubDept;
     }
 
     public String getBusinessApplicationName() {
@@ -196,12 +171,12 @@ public class InfrastructureScan extends BaseModel{
         this.businessApplicationName = businessApplicationName;
     }
 
-    public String getEngineeringLeadEid() {
-        return engineeringLeadEid;
+    public String getEngineeringLeadId() {
+        return engineeringLeadId;
     }
 
-    public void setEngineeringLeadEid(String engineeringLeadEid) {
-        this.engineeringLeadEid = engineeringLeadEid;
+    public void setEngineeringLeadId(String engineeringLeadId) {
+        this.engineeringLeadId = engineeringLeadId;
     }
 
     public String getOwnerEmailAddress() {
