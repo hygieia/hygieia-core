@@ -12,7 +12,8 @@ public enum AuditType {
     PERF_TEST,
     ARTIFACT,
     DEPLOY,
-    AUTO_DISCOVER;
+    AUTO_DISCOVER,
+    INFRASTRUCTURE_SCAN;
 
 
     public static AuditType fromString(String value) {

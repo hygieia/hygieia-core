@@ -1,0 +1,13 @@
+package com.capitalone.dashboard.status;
+
+public enum InfrastructureAuditStatus {
+    INFRA_SCAN_EC2_COMP_OK,
+    INFRA_SCAN_EC2_COMP_HIGH,
+    INFRA_SCAN_EC2_COMP_CRITICAL,
+    INFRA_SEC_SCAN_BA_OK,
+    INFRA_SEC_SCAN_BA_CRITICAL,
+    INFRA_SEC_SCAN_BA_HIGH,
+    INFRA_SEC_SCAN_EC2_COMP_NOT_FOUND,
+    INFRA_SEC_SCAN_BA_NOT_FOUND,
+    UNAVAILABLE;
+}
