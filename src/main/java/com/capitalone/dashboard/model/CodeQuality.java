@@ -30,6 +30,9 @@ public class CodeQuality extends BaseModel {
     private  ObjectId buildId;
     private String scanType;
     private String reportUrl;
+    private long highSeverityCount;
+    private long mediumSeverityCount;
+    private long lowSeverityCount;
 
 
     private Set<CodeQualityMetric> metrics = new HashSet<>();
@@ -112,5 +115,30 @@ public class CodeQuality extends BaseModel {
 
     public void setReportUrl(String reportUrl) {
         this.reportUrl = reportUrl;
+    }
+
+
+    public long getHighSeverityCount() {
+        return highSeverityCount;
+    }
+
+    public void setHighSeverityCount(long highSeverityCount) {
+        this.highSeverityCount = highSeverityCount;
+    }
+
+    public long getMediumSeverityCount() {
+        return mediumSeverityCount;
+    }
+
+    public void setMediumSeverityCount(long mediumSeverityCount) {
+        this.mediumSeverityCount = mediumSeverityCount;
+    }
+
+    public long getLowSeverityCount() {
+        return lowSeverityCount;
+    }
+
+    public void setLowSeverityCount(long lowSeverityCount) {
+        this.lowSeverityCount = lowSeverityCount;
     }
 }
