@@ -31,20 +31,20 @@
 
     <properties>
         <!-- Dependencies -->
-        <spring-security.version>5.4.5</spring-security.version>
+        <spring-security.version>5.4.5</spring-security.version>  
         <tomcat.version>8.5.57</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <commons-codec.version>1.14</commons-codec.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <commons-io.version>2.4</commons-io.version>
-        <commons-lang.version>3.11</commons-lang.version>
+        <commons-lang.version>3.12</commons-lang.version>
         <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>29.0-jre</guava.version>
         <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
         <jackson.version>2.11.4</jackson.version>
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.3</logback.version>
-        <mongodb.version>4.2.2</mongodb.version>
+        <mongodb.version>4.0.0</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
 
         <!-- Plugins -->
@@ -112,6 +112,56 @@
                 <role>maintainer</role>
             </roles>
             <timezone>America/Chicago</timezone>
+        </developer>
+        <developer>
+            <id>tabladrum</id>
+            <name>Tapabrata "Topo" Pal</name>
+            <email>tapabrata.pal@capitalone.com</email>
+            <url>https://github.com/tabladrum</url>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+        <developer>
+            <id>rvema</id>
+            <name>Raghavendra Vema</name>
+            <email>ragha.vema@capitalone.com</email>
+            <url>https://github.com/rvema</url>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+        <developer>
+            <id>nireeshT</id>
+            <name>Nireesh Thiruveedula</name>
+            <email>nireesh.thiruveedula@capitalone.com</email>
+            <url>https://github.com/nireesht</url>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+        <developer>
+            <id>sbrenthughes</id>
+            <name>Stephen Hughes</name>
+            <email>stephen.hughes@capitalone.com</email>
+            <url>https://github.com/sbrenthughes</url>
+            <roles>
+                <role>maintainer</role>
+            </roles>
+            <timezone>America/New_York</timezone>
+        </developer>
+        <developer>
+            <name>Matthew Beasley</name>
+            <email>matthew.beasley@capitalone.com</email>
+            <id>matthewbeasley</id>
+        </developer>
+        <developer>
+            <name>Rob Tompkins</name>
+            <url>https://github.com/chtompki</url>
+            <id>chtompki</id>
         </developer>
     </developers>
 
@@ -192,7 +242,7 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
-            <version>4.4.0</version>
+            <version>4.0.0</version>
         </dependency>
 
         <dependency>
@@ -343,7 +393,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
-                <skip>true</skip>
                     <configLocation>src/devops/checkstyle.xml</configLocation>
                     <suppressionsLocation>src/devops/checkstyle-suppressions.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
