@@ -38,7 +38,6 @@ public class CollectorItem extends BaseModel {
     private long lastUpdated;
     private Map<String,Object> options = new HashMap<>();
     private String refreshLink;
-    private String altIdentifier;
 
     @Transient
     private Collector collector;
@@ -124,13 +123,6 @@ public class CollectorItem extends BaseModel {
 
     public void setRefreshLink(String refreshLink) { this.refreshLink = refreshLink; }
 
-    public String getAltIdentifier() {
-        return altIdentifier;
-    }
-
-    public void setAltIdentifier(String altIdentifier) {
-        this.altIdentifier = altIdentifier;
-    }
 
     /**
      * Checks for collector items error threshold and resets it if window is met
