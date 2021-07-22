@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.model;
 
+import org.json.simple.JSONObject;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "audit_reports")
@@ -10,7 +11,7 @@ public class AuditReport extends BaseModel {
     private String identifierName;
     private String identifierVersion;
     private String identifierUrl;
-    private Object auditResponse;
+    private JSONObject auditResponse;
     private String auditRequest;
     private String businessService;
     private String businessApplication;
@@ -63,7 +64,7 @@ public class AuditReport extends BaseModel {
         return auditResponse;
     }
 
-    public void setAuditResponse(Object auditResponse) {
+    public void setAuditResponse(JSONObject auditResponse) {
         this.auditResponse = auditResponse;
     }
 
