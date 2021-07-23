@@ -32,15 +32,15 @@
     <properties>
         <!-- Dependencies -->
         <spring-security.version>5.4.5</spring-security.version>  
-        <tomcat.version>8.5.57</tomcat.version>
+        <tomcat.version>10.1.0-M2</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
         <commons-io.version>2.4</commons-io.version>
-        <commons-lang.version>3.12</commons-lang.version>
+        <commons-lang.version>3.12.0</commons-lang.version>
         <fongo.version>2.2.0-RC2</fongo.version>
-        <guava.version>29.0-jre</guava.version>
-        <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
+        <guava.version>30.1.1-jre</guava.version>
+        <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
         <jackson.version>2.11.4</jackson.version>
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.3</logback.version>
@@ -181,18 +181,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-             <version>2.5.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-websocket</artifactId>
-                </exclusion>
-            </exclusions>
+             <version>2.5.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.3.7</version>
+            <version>5.5.1</version>
         </dependency>
 
         <!-- Misc Deps -->
@@ -231,6 +225,12 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
              <version>2.5.0</version>
         </dependency>
+        
+        <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>${hibernate-validator.version}</version>
+</dependency>
 
         <!-- Query DSL -->
         <dependency>
@@ -288,6 +288,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <version>3.11.2</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
