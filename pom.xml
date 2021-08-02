@@ -186,6 +186,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+             <version>5.3.9</version>
         </dependency>
 
         <!-- Misc Deps -->
@@ -249,7 +250,7 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
-            <version>4.0.0</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
