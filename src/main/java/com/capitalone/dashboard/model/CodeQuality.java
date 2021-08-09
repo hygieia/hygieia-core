@@ -29,12 +29,11 @@ public class CodeQuality extends BaseModel {
     private String version;
     private  ObjectId buildId;
     private String scanType;
+    private long scanDuration;
     private String reportUrl;
     private long highSeverityCount;
     private long mediumSeverityCount;
     private long lowSeverityCount;
-
-
     private Set<CodeQualityMetric> metrics = new HashSet<>();
 
     public ObjectId getCollectorItemId() {
@@ -107,6 +106,14 @@ public class CodeQuality extends BaseModel {
 
     public void setScanType(String scanType) {
         this.scanType = scanType;
+    }
+
+    public long getScanDuration() {
+        return scanDuration;
+    }
+
+    public void setScanDuration(long scanDuration) {
+        this.scanDuration = scanDuration;
     }
 
     public String getReportUrl() {
