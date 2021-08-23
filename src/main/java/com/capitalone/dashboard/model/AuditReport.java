@@ -16,8 +16,10 @@ public class AuditReport extends BaseModel {
     private String businessService;
     private String businessApplication;
     private String source;
+    private String buildUrl;
     private long lastReleaseTimestamp;
     private long timestamp;
+    private String sourceIdentifier;
 
     public AuditReport() { }
 
@@ -101,6 +103,14 @@ public class AuditReport extends BaseModel {
         this.source = source;
     }
 
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
+    }
+
     public long getLastReleaseTimestamp() {
         return lastReleaseTimestamp;
     }
@@ -115,5 +125,13 @@ public class AuditReport extends BaseModel {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getSourceIdentifier() {
+        return sourceIdentifier;
+    }
+
+    public void setSourceIdentifier(String sourceIdentifier) {
+        this.sourceIdentifier = sourceIdentifier;
     }
 }
