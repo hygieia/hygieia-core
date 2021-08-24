@@ -31,6 +31,7 @@ public class CodeQuality extends BaseModel {
     private String scanType;
     private long scanDuration;
     private String reportUrl;
+    private long criticalSeverityCount;
     private long highSeverityCount;
     private long mediumSeverityCount;
     private long lowSeverityCount;
@@ -124,6 +125,13 @@ public class CodeQuality extends BaseModel {
         this.reportUrl = reportUrl;
     }
 
+    public long getCriticalSeverityCount() {
+        return criticalSeverityCount;
+    }
+
+    public void setCriticalSeverityCount(long criticalSeverityCount) {
+        this.criticalSeverityCount = criticalSeverityCount;
+    }
 
     public long getHighSeverityCount() {
         return highSeverityCount;
