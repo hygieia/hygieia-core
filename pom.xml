@@ -50,12 +50,12 @@
         <!-- Plugins -->
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
-        <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
+        <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
-        <java.compilation.source>11</java.compilation.source>
-        <java.compilation.target>11</java.compilation.target>
+        <java.compilation.source>14</java.compilation.source>
+        <java.compilation.target>14</java.compilation.target>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
@@ -347,7 +347,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <skip>true</skip>
+                            <classifier>exec</classifier>
                         </configuration>
                     </execution>
                 </executions>
@@ -381,7 +381,7 @@
             <plugin>
                 <groupId>com.github.siom79.japicmp</groupId>
                 <artifactId>japicmp-maven-plugin</artifactId>
-                <version>0.13.1</version>
+                <version>0.15.3</version>
                 <configuration>
                     <parameter>
                         <!-- see documentation -->
@@ -567,6 +567,24 @@
                     <stagingProfileId>26a9600c05a6d3</stagingProfileId>
                 </configuration>
             </plugin>
+            <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <configuration>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+    <executions>
+        <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
         </plugins>
         <testResources>
             <testResource>
