@@ -58,8 +58,8 @@
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
-        <java.compilation.source>14</java.compilation.source>
-        <java.compilation.target>14</java.compilation.target>
+        <java.compilation.source>11</java.compilation.source>
+        <java.compilation.target>11</java.compilation.target>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
