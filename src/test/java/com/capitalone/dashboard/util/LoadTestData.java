@@ -6,6 +6,7 @@ import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.FeatureFlag;
 import com.capitalone.dashboard.model.LibraryPolicyResult;
 import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.repository.BuildRepository;
@@ -14,6 +15,7 @@ import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
+import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
 import com.capitalone.dashboard.repository.TestResultRepository;
 import com.capitalone.dashboard.testutil.GsonUtil;
@@ -88,4 +90,12 @@ public class LoadTestData {
         List<Build> builds = gson.fromJson(json, new TypeToken<List<Build>>(){}.getType());
         buildRepository.saveAll(builds);
     }
+
+    public static void loadFeatureFlags(FeatureFlagRepository featureFlagRepository) throws IOException {
+        Gson gson = GsonUtil.getGson();
+        String json = IOUtils.toString(Resources.getResource("./feature_flags/feature_flags.json"));
+        List<FeatureFlag> featureFlags = gson.fromJson(json, new TypeToken<List<FeatureFlag>>(){}.getType());
+        featureFlagRepository.save(featureFlags);
+    }
+
 }

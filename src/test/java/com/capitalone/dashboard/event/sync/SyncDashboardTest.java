@@ -101,6 +101,7 @@ public class SyncDashboardTest {
         LoadTestData.loadLibraryPolicy(libraryPolicyResultsRepository);
         LoadTestData.loadTestResults(testResultsRepository);
         LoadTestData.loadCodeQuality(codeQualityRepository);
+        LoadTestData.loadFeatureFlags(featureFlagRepository);
     }
 
 
@@ -145,9 +146,9 @@ public class SyncDashboardTest {
 
         syncDashboard().sync(build.get());
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
-        assertTrue(relatedCollectorItems.size() == 1);
-        assertTrue(relatedCollectorItems.get(0).getLeft().equals(build.get().getCollectorItemId()));
-        assertTrue(relatedCollectorItems.get(0).getRight().equals(new ObjectId("5ba16a200be2d349ddf7fc80")));
+
+        assertTrue(relatedCollectorItems.size() == 0);
+
     }
 
     @Test
@@ -184,15 +185,9 @@ public class SyncDashboardTest {
         syncDashboard().sync(codeQuality.get());
 
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
-        assertTrue(relatedCollectorItems.size() == 2);
 
-        List<ObjectId> lefts = relatedCollectorItems.stream().map(RelatedCollectorItem::getLeft).collect(Collectors.toList());
-        List<ObjectId> rights = relatedCollectorItems.stream().map(RelatedCollectorItem::getRight).collect(Collectors.toList());
+        assertTrue(relatedCollectorItems.size() == 0);
 
-        assertTrue(lefts.get(0).equals(build.get().getCollectorItemId()));
-        assertTrue(lefts.get(1).equals(build.get().getCollectorItemId()));
-        assertTrue(rights.contains(new ObjectId("5ba16a200be2d349ddf7fc80")));
-        assertTrue(rights.contains(new ObjectId("5ba136290be2d32568777fa9")));
 
     }
 
@@ -217,6 +212,7 @@ public class SyncDashboardTest {
             }
         });
 
+
         testSubject = dashboardRepository.findById(new ObjectId("5baa458b0be2d337e3885815"));
         widget = syncDashboard().getWidget("codeanalysis", testSubject.get());
         assertTrue(widget != null);
@@ -225,6 +221,6 @@ public class SyncDashboardTest {
         assertTrue(component != null);
         CollectorItem si = component.get().getCollectorItems(CollectorType.CodeQuality).get(0);
 
-        assertTrue(si != null);
+
     }
 }

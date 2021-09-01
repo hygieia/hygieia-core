@@ -15,9 +15,10 @@ public class AutoDiscoveryRemoteRequest extends AutoDiscovery {
                                       List<AutoDiscoveredEntry> deploymentEntries, List<AutoDiscoveredEntry> libraryScanEntries,
                                       List<AutoDiscoveredEntry> functionalTestEntries, List<AutoDiscoveredEntry> artifactEntries,
                                       List<AutoDiscoveredEntry> staticCodeEntries, List<AutoDiscoveredEntry> featureEntries,
-                                      List<AutoDiscoveredEntry> performanceTestEntries, String autoDiscoveryId) {
+                                      List<AutoDiscoveredEntry> performanceTestEntries, List<AutoDiscoveredEntry> infraStructureScanEntries,
+                                      String autoDiscoveryId) {
         super(metaData, codeRepoEntries, buildEntries, securityScanEntries, deploymentEntries, libraryScanEntries,
-                functionalTestEntries, artifactEntries, staticCodeEntries, featureEntries,performanceTestEntries);
+                functionalTestEntries, artifactEntries, staticCodeEntries, featureEntries,performanceTestEntries, infraStructureScanEntries);
         setAutoDiscoveryId(autoDiscoveryId);
     }
 
