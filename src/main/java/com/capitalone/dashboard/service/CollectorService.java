@@ -16,6 +16,13 @@ import java.util.Set;
 public interface CollectorService {
 
     /**
+     * Fetches all collectors, sorted by name
+     *
+     * @return all collectors
+     */
+     Iterable<Collector> all();
+
+    /**
      * Finds all Collectors of a given type.
      *
      * @param collectorType collector type

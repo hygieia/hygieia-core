@@ -47,6 +47,9 @@ public class AutoDiscovery extends BaseModel {
     @Valid
     private List<AutoDiscoveredEntry> performanceTestEntries = new ArrayList<>();
 
+    @Valid
+    private List<AutoDiscoveredEntry> infraStructureScanEntries = new ArrayList<>();
+
     private long createdTimestamp;
 
     private long modifiedTimestamp;
@@ -56,7 +59,8 @@ public class AutoDiscovery extends BaseModel {
     }
     public AutoDiscovery(AutoDiscoveryMetaData metaData, List<AutoDiscoveredEntry> codeRepoEntries, List<AutoDiscoveredEntry> buildEntries, List<AutoDiscoveredEntry> securityScanEntries,
                          List<AutoDiscoveredEntry> deploymentEntries, List<AutoDiscoveredEntry> libraryScanEntries, List<AutoDiscoveredEntry> functionalTestEntries,
-                         List<AutoDiscoveredEntry> artifactEntries, List<AutoDiscoveredEntry> staticCodeEntries, List<AutoDiscoveredEntry> featureEntries,List<AutoDiscoveredEntry> performanceTestEntries) {
+                         List<AutoDiscoveredEntry> artifactEntries, List<AutoDiscoveredEntry> staticCodeEntries, List<AutoDiscoveredEntry> featureEntries,List<AutoDiscoveredEntry> performanceTestEntries,
+                         List<AutoDiscoveredEntry> infraStructureScanEntries) {
         setMetaData(metaData);
         setCodeRepoEntries(codeRepoEntries);
         setBuildEntries(buildEntries);
@@ -68,6 +72,7 @@ public class AutoDiscovery extends BaseModel {
         setStaticCodeEntries(staticCodeEntries);
         setFeatureEntries(featureEntries);
         setPerformanceTestEntries(performanceTestEntries);
+        setInfraStructureScanEntries(infraStructureScanEntries);
     }
 
 
@@ -171,6 +176,14 @@ public class AutoDiscovery extends BaseModel {
         this.featureEntries = featureEntries;
     }
 
+    public List<AutoDiscoveredEntry> getInfraStructureScanEntries() {
+        return infraStructureScanEntries;
+    }
+
+    public void setInfraStructureScanEntries(List<AutoDiscoveredEntry> infraStructureScanEntries) {
+        this.infraStructureScanEntries = infraStructureScanEntries;
+    }
+
     public List<AutoDiscoveredEntry> getAllEntries() {
         List<AutoDiscoveredEntry> all = new ArrayList<>();
         all.addAll(buildEntries);
@@ -183,6 +196,7 @@ public class AutoDiscovery extends BaseModel {
         all.addAll(featureEntries);
         all.addAll(artifactEntries);
         all.addAll(performanceTestEntries);
+        all.addAll(infraStructureScanEntries);
         return all;
     }
 }
