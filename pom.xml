@@ -32,7 +32,7 @@
     <properties>
         <!-- Dependencies -->
         <spring-security.version>4.2.18.RELEASE</spring-security.version>
-        <tomcat.version>8.5.57</tomcat.version>
+        <tomcat.version>9.0.48</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
