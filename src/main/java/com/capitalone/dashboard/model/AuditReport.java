@@ -11,6 +11,7 @@ public class AuditReport extends BaseModel {
     private String identifierName;
     private String identifierVersion;
     private String identifierUrl;
+    private String identifierSubtype;
     private JSONObject auditResponse;
     private String auditRequest;
     private String businessService;
@@ -61,6 +62,14 @@ public class AuditReport extends BaseModel {
 
     public void setIdentifierUrl(String identifierUrl) {
         this.identifierUrl = identifierUrl;
+    }
+
+    public String getIdentifierSubtype() {
+        return identifierSubtype;
+    }
+
+    public void setIdentifierSubtype(String identifierSubtype) {
+        this.identifierSubtype = identifierSubtype;
     }
 
     public Object getAuditResponse() {
