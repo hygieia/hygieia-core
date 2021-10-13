@@ -46,6 +46,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private int dbConnectTimeout;
     @Value("${dbsockettimeout:900000}")
     private int dbSocketTimeout;
+    @Value("${dbreadpreference:primary}")
+    private String readPreference;
 
     @Override
     protected String getDatabaseName() {
@@ -62,10 +64,10 @@ public class MongoConfig extends AbstractMongoConfiguration {
         MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
         builder.maxConnectionIdleTime(60000);
         builder.sslEnabled(Boolean.parseBoolean(dbssl));
-        builder.serverSelectionTimeout(30000);                        // MongoDB default 30 seconds
-        builder.connectTimeout(dbConnectTimeout);                     // MongoDB default varies, may be 10 seconds
-        builder.socketTimeout(dbSocketTimeout);                       // MongoDB default is 0, means no timeout
-        builder.readPreference(ReadPreference.secondaryPreferred());  // MongoDB clients route read operations to the members of a replica set
+        builder.serverSelectionTimeout(30000);                           // MongoDB default 30 seconds
+        builder.connectTimeout(dbConnectTimeout);                        // MongoDB default varies, may be 10 seconds
+        builder.socketTimeout(dbSocketTimeout);                          // MongoDB default is 0, means no timeout
+        builder.readPreference(ReadPreference.valueOf(readPreference));  // MongoDB clients route read operations to the members of a replica set
         MongoClientOptions opts = builder.build();
 
         if (Boolean.parseBoolean(dbreplicaset)) {
