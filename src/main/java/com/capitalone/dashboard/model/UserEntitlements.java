@@ -55,6 +55,7 @@ public class UserEntitlements extends BaseModel {
         return new EqualsBuilder()
                 .append(username, that.username)
                 .append(authType, that.authType)
+                .append(entitlementType, that.entitlementType)
                 .isEquals();
     }
 
@@ -63,6 +64,7 @@ public class UserEntitlements extends BaseModel {
         return new HashCodeBuilder(17, 37)
                 .append(username)
                 .append(authType)
+                .append(entitlementType)
                 .toHashCode();
     }
 }
