@@ -77,6 +77,7 @@ public class GithubGraphQLQuery {
                     "                  name\n" +
                     "                  user {\n" +
                     "                    login\n" +
+                    "                    name\n" +
                     "                  }\n" +
                     "                  email\n" +
                     "                  date\n" +
@@ -162,6 +163,7 @@ public class GithubGraphQLQuery {
                     "                  date\n" +
                     "                  user {\n" +
                     "                    login\n" +
+                    "                    name\n" +
                     "                  }\n" +
                     "                }" +
                     "              }\n" +
