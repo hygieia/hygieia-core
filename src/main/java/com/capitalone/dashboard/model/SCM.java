@@ -13,6 +13,7 @@ public class SCM {
     protected String scmRevisionNumber;
     protected String scmCommitLog;
     protected String scmAuthor;
+    protected String scmAuthorName;
     protected String scmAuthorType;
     protected String scmAuthorLogin;
     protected String scmAuthorLDAPDN;
@@ -167,6 +168,10 @@ public class SCM {
     public List<RepoFile> getFiles() { return files; }
 
     public void setFiles(List<RepoFile> files) { this.files = files; }
+
+    public String getScmAuthorName() { return scmAuthorName; }
+
+    public void setScmAuthorName(String scmAuthorName) { this.scmAuthorName = scmAuthorName; }
 
     @Override
     public boolean equals(Object o) {
