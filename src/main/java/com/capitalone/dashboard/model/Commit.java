@@ -75,4 +75,20 @@ public class Commit extends SCM {
     public void setFirstEverCommit(boolean firstEverCommit) {
         this.firstEverCommit = firstEverCommit;
     }
+
+    public Date getUpsertTime() {
+        return upsertTime;
+    }
+
+    public void setUpsertTime(Date upsertTime) {
+        this.upsertTime = upsertTime;
+    }
+
+    public String getClientReference() {
+        return clientReference;
+    }
+
+    public void setClientReference(String clientReference) {
+        this.clientReference = clientReference;
+    }
 }
