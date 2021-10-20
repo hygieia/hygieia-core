@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * A specific commit in a version control repository.
@@ -29,8 +32,17 @@ public class Commit extends SCM {
     @Indexed
     private ObjectId collectorItemId;
     private long timestamp;
-
     private boolean firstEverCommit;
+
+    public Commit() {
+        super();
+        upsertTime = new Date(System.currentTimeMillis());
+    }
+
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    private Date upsertTime;
+
+    private String clientReference;
 
     public ObjectId getId() {
         return id;
