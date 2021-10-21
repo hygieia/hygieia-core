@@ -4,7 +4,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -57,7 +59,14 @@ public class GitRequest  {
     private long lineDeletions;
     private long lineAdditions;
     private List<Commit> commits;
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    private Date upsertTime;
+    private String clientReference;
 
+    public GitRequest() {
+        super();
+        upsertTime = new Date(System.currentTimeMillis());
+    }
 
     public long getNumberOfChanges() {
         return numberOfChanges;
@@ -376,4 +385,11 @@ public class GitRequest  {
         this.lineAdditions = lineAdditions;
     }
 
+    public Date getUpsertTime() { return upsertTime; }
+
+    public void setUpsertTime(Date upsertTime) { this.upsertTime = upsertTime; }
+
+    public String getClientReference() { return clientReference; }
+
+    public void setClientReference(String clientReference) { this.clientReference = clientReference; }
 }
