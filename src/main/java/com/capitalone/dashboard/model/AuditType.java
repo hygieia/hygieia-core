@@ -13,7 +13,8 @@ public enum AuditType {
     ARTIFACT,
     DEPLOY,
     AUTO_DISCOVER,
-    INFRASTRUCTURE_SCAN;
+    INFRASTRUCTURE_SCAN,
+    CONTAINER_SCAN;
 
 
     public static AuditType fromString(String value) {
