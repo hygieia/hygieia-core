@@ -25,7 +25,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -61,6 +63,12 @@ public class CollectorServiceImpl implements CollectorService {
         this.dashboardRepository = dashboardRepository;
         this.customRepositoryQuery = customRepositoryQuery;
         this.cmdbRepository = cmdbRepository;
+    }
+
+    @Override
+    public Iterable<Collector> all() {
+        Iterable<Collector> collectors = collectorRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
+        return collectors;
     }
 
     @Override
@@ -220,6 +228,9 @@ public class CollectorServiceImpl implements CollectorService {
         if (!CollectionUtils.isEmpty(existing)) {
             CollectorItem existingItem = existing.get(0);
             existingItem.getOptions().putAll(item.getOptions());
+            if(StringUtils.isNotEmpty(item.getAltIdentifier())){
+                existingItem.setAltIdentifier(item.getAltIdentifier());
+            }
             return collectorItemRepository.save(existingItem);
         }
         return collectorItemRepository.save(item);

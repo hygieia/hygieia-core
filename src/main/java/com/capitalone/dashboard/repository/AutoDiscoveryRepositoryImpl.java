@@ -31,7 +31,8 @@ public class AutoDiscoveryRepositoryImpl {
                 Criteria.where("securityScanEntries.status").is(AutoDiscoveryStatusType.NEW),
                 Criteria.where("functionalTestEntries.status").is(AutoDiscoveryStatusType.NEW),
                 Criteria.where("featureEntries.status").is(AutoDiscoveryStatusType.NEW),
-                Criteria.where("deploymentEntries.status").is(AutoDiscoveryStatusType.NEW));
+                Criteria.where("deploymentEntries.status").is(AutoDiscoveryStatusType.NEW),
+                Criteria.where("infraStructureScanEntries.status").is(AutoDiscoveryStatusType.NEW));
         List<AutoDiscovery> items =  template.find(new Query(cd), AutoDiscovery.class);
         return items;
     }

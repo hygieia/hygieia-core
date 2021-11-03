@@ -28,7 +28,13 @@ public class CodeQuality extends BaseModel {
     private CodeQualityType type;
     private String version;
     private  ObjectId buildId;
-
+    private String scanType;
+    private long scanDuration;
+    private String reportUrl;
+    private long criticalSeverityCount;
+    private long highSeverityCount;
+    private long mediumSeverityCount;
+    private long lowSeverityCount;
     private Set<CodeQualityMetric> metrics = new HashSet<>();
 
     public ObjectId getCollectorItemId() {
@@ -93,5 +99,61 @@ public class CodeQuality extends BaseModel {
 
     public void addMetric(CodeQualityMetric metric) {
         this.metrics.add(metric);
+    }
+
+    public String getScanType() {
+        return scanType;
+    }
+
+    public void setScanType(String scanType) {
+        this.scanType = scanType;
+    }
+
+    public long getScanDuration() {
+        return scanDuration;
+    }
+
+    public void setScanDuration(long scanDuration) {
+        this.scanDuration = scanDuration;
+    }
+
+    public String getReportUrl() {
+        return reportUrl;
+    }
+
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
+    }
+
+    public long getCriticalSeverityCount() {
+        return criticalSeverityCount;
+    }
+
+    public void setCriticalSeverityCount(long criticalSeverityCount) {
+        this.criticalSeverityCount = criticalSeverityCount;
+    }
+
+    public long getHighSeverityCount() {
+        return highSeverityCount;
+    }
+
+    public void setHighSeverityCount(long highSeverityCount) {
+        this.highSeverityCount = highSeverityCount;
+    }
+
+    public long getMediumSeverityCount() {
+        return mediumSeverityCount;
+    }
+
+    public void setMediumSeverityCount(long mediumSeverityCount) {
+        this.mediumSeverityCount = mediumSeverityCount;
+    }
+
+    public long getLowSeverityCount() {
+        return lowSeverityCount;
+    }
+
+    public void setLowSeverityCount(long lowSeverityCount) {
+        this.lowSeverityCount = lowSeverityCount;
     }
 }

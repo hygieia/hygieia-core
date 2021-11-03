@@ -19,6 +19,7 @@ public class GenericCollectorItemCreateRequest extends BaseRequest {
 
     private String pattern;
 
+    private String buildUrl;
 
     public String getBuildId() {
         return buildId;
@@ -67,5 +68,7 @@ public class GenericCollectorItemCreateRequest extends BaseRequest {
         this.pattern = pattern;
     }
 
+    public String getBuildUrl() { return buildUrl; }
 
+    public void setBuildUrl(String buildUrl) { this.buildUrl = buildUrl; }
 }

@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.14.8</version>
+    <version>3.15.22</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/Hygieia/hygieia-core</url>
@@ -32,20 +32,21 @@
     <properties>
         <!-- Dependencies -->
         <spring-security.version>4.2.18.RELEASE</spring-security.version>
-        <tomcat.version>8.5.57</tomcat.version>
+        <tomcat.version>9.0.48</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.14</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang.version>3.11</commons-lang.version>
         <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>29.0-jre</guava.version>
-        <hibernate-validator.version>5.4.2.Final</hibernate-validator.version>
         <jackson.version>2.10.3</jackson.version>
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.3</logback.version>
         <mongodb.version>3.6.4</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
+        <springweb.version>5.2.9.RELEASE</springweb.version>
+        <jaxbapi.version>2.2.12</jaxbapi.version>
 
         <!-- Plugins -->
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
@@ -181,7 +182,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.2.9.RELEASE</version>
+            <version>${springweb.version}</version>
         </dependency>
 
         <!-- Misc Deps -->
@@ -292,7 +293,7 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.2.12</version>
+            <version>${jaxbapi.version}</version>
         </dependency>
     </dependencies>
 
