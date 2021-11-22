@@ -29,6 +29,8 @@ public class EnvironmentComponent extends BaseModel {
     private String applicationName;
     private String serviceName;
     private String changeReference;
+    private String scmIdentifier;
+    private String scmRepo;
 
 
 	
