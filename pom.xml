@@ -45,7 +45,7 @@
         <logback.version>1.2.3</logback.version>
         <mongodb.version>3.6.4</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
-        <springweb.version>5.2.9.RELEASE</springweb.version>
+        <springweb.version>5.2.18.RELEASE</springweb.version>
         <jaxbapi.version>2.2.12</jaxbapi.version>
 
         <!-- Plugins -->
