@@ -46,12 +46,13 @@
         <mongodb.version>3.6.4</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
         <springweb.version>5.2.9.RELEASE</springweb.version>
-        <jaxbapi.version>2.2.12</jaxbapi.version>
+        <jaxbapi.version>2.3.0</jaxbapi.version>
+        <activation.version>1.2.0</activation.version>
 
         <!-- Plugins -->
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
-        <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
+        <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
         <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
@@ -295,6 +296,21 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>${jaxbapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>${jaxbapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxbapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>${activation.version}</version>
         </dependency>
     </dependencies>
 
