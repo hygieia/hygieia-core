@@ -27,6 +27,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Value("${dbname:dashboarddb}")
     private String databaseName;
+    @Value("${authsource:admin}")
+    private String authSource;    
     @Value("${dbhost:localhost}")
     private String host;
     @Value("${dbport:27017}")
@@ -83,7 +85,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
                 client = new MongoClient(serverAddressList);
             } else {
                 MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
-                        userName, databaseName, password.toCharArray());
+                        userName, authSource, password.toCharArray());
                 client = new MongoClient(serverAddressList, Collections.singletonList(mongoCredential), opts);
             }
         } else {
