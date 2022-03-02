@@ -21,6 +21,7 @@ public class AuditReport extends BaseModel {
     private long lastReleaseTimestamp;
     private long timestamp;
     private String sourceIdentifier;
+    private String testResultsUrl;
 
     public AuditReport() { }
 
@@ -142,5 +143,11 @@ public class AuditReport extends BaseModel {
 
     public void setSourceIdentifier(String sourceIdentifier) {
         this.sourceIdentifier = sourceIdentifier;
+    }
+
+    public String getTestResultsUrl() { return testResultsUrl; }
+
+    public void setTestResultsUrl(String testResultsUrl) {
+        this.testResultsUrl = testResultsUrl;
     }
 }
