@@ -42,7 +42,7 @@
         <guava.version>29.0-jre</guava.version>
         <jackson.version>2.10.3</jackson.version>
         <jasypt.version>1.18</jasypt.version>
-        <logback.version>1.2.3</logback.version>
+        <logback.version>1.2.9</logback.version>
         <mongodb.version>3.6.4</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
         <springweb.version>5.2.9.RELEASE</springweb.version>
