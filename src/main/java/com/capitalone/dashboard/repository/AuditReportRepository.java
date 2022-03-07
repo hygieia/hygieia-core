@@ -13,4 +13,5 @@ public interface AuditReportRepository extends CrudRepository<AuditReport, Objec
     List<AuditReport> findByBusinessApplicationAndBusinessServiceAndAuditTypeAndIdentifierNameAndIdentifierVersionAndIdentifierUrl(String businessApplication, String businessService, AuditType auditType, String identifierName, String identifierVersion, String identifierUrl);
     List<AuditReport> findByAuditTypeAndIdentifierNameAndIdentifierVersionAndIdentifierUrl(AuditType auditType, String identifierName, String identifierVersion, String identifierUrl);
     List<AuditReport> findByAuditTypeAndAuditResponseIsNull(AuditType auditType);
+    List<AuditReport> findByTimestampIsAfterAndAuditTypeAndTestResultsUrlIsNotNull(Long timestamp, AuditType auditType);
 }
