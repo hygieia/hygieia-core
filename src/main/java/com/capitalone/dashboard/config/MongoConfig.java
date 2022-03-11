@@ -45,6 +45,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private int dbConnectTimeout;
     @Value("${dbsockettimeout:900000}")
     private int dbSocketTimeout;
+    @Value("${sslInvalidHostNameAllowed:false}")
+    private String sslInvalidHostNameAllowed;
 
     @Override
     protected String getDatabaseName() {
@@ -64,6 +66,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         builder.serverSelectionTimeout(30000);          // MongoDB default 30 seconds
         builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
         builder.socketTimeout(dbSocketTimeout);         // MongoDB default is 0, means no timeout
+        builder.sslInvalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
         MongoClientOptions opts = builder.build();
 
         if (Boolean.parseBoolean(dbreplicaset)) {
