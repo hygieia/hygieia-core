@@ -1,0 +1,19 @@
+[
+  {
+    "_id" : "6234fee7299d661eb6b30012",
+    "_class" : "com.capitalone.dashboard.model.AuditReport",
+    "auditType" : "CONTAINER_SCAN",
+    "identifierType" : "artifact",
+    "identifierName" : "jenkins-4.zip",
+    "identifierVersion" : "0.1.4",
+    "identifierUrl" : "https://artifactory.com/test/test-project/test-4.zip",
+    "auditResponse" : {},
+    "businessService" : "testBussServ",
+    "businessApplication" : "testBussApp",
+    "source" : "https://github.com/Hygieia/tree/matser",
+    "buildUrl" : "https://jenkins.com/release/test/job/master/4/",
+    "lastReleaseTimestamp" : 1628860660000,
+    "timestamp" : 1647640295279,
+    "upsertTime" : "2022-03-18T21:51:35.279Z"
+  }
+]
