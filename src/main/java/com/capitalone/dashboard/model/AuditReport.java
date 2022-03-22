@@ -22,6 +22,7 @@ public class AuditReport extends BaseModel {
     private long timestamp;
     private String sourceIdentifier;
     private String testResultsUrl;
+    private EvaluationStatus evaluationStatus;
 
     public AuditReport() { }
 
@@ -149,5 +150,13 @@ public class AuditReport extends BaseModel {
 
     public void setTestResultsUrl(String testResultsUrl) {
         this.testResultsUrl = testResultsUrl;
+    }
+
+    public EvaluationStatus getEvaluationStatus() {
+        return evaluationStatus;
+    }
+
+    public void setEvaluationStatus(EvaluationStatus evaluationStatus) {
+        this.evaluationStatus = evaluationStatus;
     }
 }
