@@ -16,7 +16,5 @@ public interface AuditReportRepository extends CrudRepository<AuditReport, Objec
     List<AuditReport> findByAuditTypeAndIdentifierNameAndIdentifierVersionAndIdentifierUrl(AuditType auditType, String identifierName, String identifierVersion, String identifierUrl);
     List<AuditReport> findByAuditTypeAndAuditResponseIsNull(AuditType auditType);
     List<AuditReport> findByTimestampIsAfterAndAuditTypeAndTestResultsUrlIsNotNull(Long timestamp, AuditType auditType);
-    @Query(value = "{ 'auditType' : ?0, auditResponse.httpStatusCode : {$exists:?1} } ")
-    List<AuditReport> findByAuditTypeAndAuditResponseHttpStatusCode(AuditType auditType, boolean exists);
     List<AuditReport> findByAuditTypeAndEvaluationStatus(AuditType auditType, EvaluationStatus evaluationStatus);
 }

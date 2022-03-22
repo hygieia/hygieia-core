@@ -32,15 +32,6 @@ public class AuditReportRepositoryTest {
     private AuditReportRepository auditReportRepository;
 
     @Test
-    public void findByAuditTypeAndAuditResponseHttpStatus() throws IOException {
-        auditReportRepository.deleteAll();
-        LoadTestData.loadAuditReports(auditReportRepository);
-        Iterable<AuditReport> items = auditReportRepository.findByAuditTypeAndAuditResponseHttpStatusCode(AuditType.CONTAINER_SCAN, false);
-        List<AuditReport> itemList = Lists.newArrayList(items);
-        assertEquals(itemList.size(),1);
-    }
-
-    @Test
     public void findByAuditTypeAndEvaluationStatus() throws IOException {
         auditReportRepository.deleteAll();
         LoadTestData.loadAuditReports(auditReportRepository);
