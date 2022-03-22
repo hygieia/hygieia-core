@@ -2,6 +2,7 @@ package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.AuditReport;
 import com.capitalone.dashboard.model.AuditType;
+import com.capitalone.dashboard.model.EvaluationStatus;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,4 +18,5 @@ public interface AuditReportRepository extends CrudRepository<AuditReport, Objec
     List<AuditReport> findByTimestampIsAfterAndAuditTypeAndTestResultsUrlIsNotNull(Long timestamp, AuditType auditType);
     @Query(value = "{ 'auditType' : ?0, auditResponse.httpStatusCode : {$exists:?1} } ")
     List<AuditReport> findByAuditTypeAndAuditResponseHttpStatusCode(AuditType auditType, boolean exists);
+    List<AuditReport> findByAuditTypeAndEvaluationStatus(AuditType auditType, EvaluationStatus evaluationStatus);
 }

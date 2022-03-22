@@ -2,6 +2,7 @@ package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.AuditReport;
 import com.capitalone.dashboard.model.AuditType;
+import com.capitalone.dashboard.model.EvaluationStatus;
 import com.capitalone.dashboard.testutil.FongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
 import com.github.fakemongo.junit.FongoRule;
@@ -31,12 +32,22 @@ public class AuditReportRepositoryTest {
     private AuditReportRepository auditReportRepository;
 
     @Test
-    public void findAllByOptionNameValueAndCollectorIdsInReturns0() throws IOException {
+    public void findByAuditTypeAndAuditResponseHttpStatus() throws IOException {
         auditReportRepository.deleteAll();
         LoadTestData.loadAuditReports(auditReportRepository);
         Iterable<AuditReport> items = auditReportRepository.findByAuditTypeAndAuditResponseHttpStatusCode(AuditType.CONTAINER_SCAN, false);
         List<AuditReport> itemList = Lists.newArrayList(items);
         assertEquals(itemList.size(),1);
     }
+
+    @Test
+    public void findByAuditTypeAndEvaluationStatus() throws IOException {
+        auditReportRepository.deleteAll();
+        LoadTestData.loadAuditReports(auditReportRepository);
+        Iterable<AuditReport> items = auditReportRepository.findByAuditTypeAndEvaluationStatus(AuditType.CONTAINER_SCAN, EvaluationStatus.PENDING);
+        List<AuditReport> itemList = Lists.newArrayList(items);
+        assertEquals(itemList.size(),1);
+    }
+
 
 }

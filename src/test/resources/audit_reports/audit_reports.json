@@ -3,6 +3,7 @@
     "_id" : "6234fee7299d661eb6b30012",
     "_class" : "com.capitalone.dashboard.model.AuditReport",
     "auditType" : "CONTAINER_SCAN",
+    "evaluationStatus" : "PENDING",
     "identifierType" : "artifact",
     "identifierName" : "jenkins-4.zip",
     "identifierVersion" : "0.1.4",
