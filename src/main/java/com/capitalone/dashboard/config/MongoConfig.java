@@ -70,6 +70,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
          * matches the hostname(s) provided when constructing a MongoClient().
          * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.
          * To toggle, add sslInvalidHostNameAllowed=true in application.properties
+         *
          */
         builder.sslInvalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
         MongoClientOptions opts = builder.build();
