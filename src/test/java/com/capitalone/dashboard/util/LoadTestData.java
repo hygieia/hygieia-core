@@ -1,23 +1,7 @@
 package com.capitalone.dashboard.util;
 
-import com.capitalone.dashboard.model.Build;
-import com.capitalone.dashboard.model.CodeQuality;
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.Component;
-import com.capitalone.dashboard.model.Dashboard;
-import com.capitalone.dashboard.model.FeatureFlag;
-import com.capitalone.dashboard.model.LibraryPolicyResult;
-import com.capitalone.dashboard.model.TestResult;
-import com.capitalone.dashboard.repository.BuildRepository;
-import com.capitalone.dashboard.repository.CodeQualityRepository;
-import com.capitalone.dashboard.repository.CollectorItemRepository;
-import com.capitalone.dashboard.repository.CollectorRepository;
-import com.capitalone.dashboard.repository.ComponentRepository;
-import com.capitalone.dashboard.repository.DashboardRepository;
-import com.capitalone.dashboard.repository.FeatureFlagRepository;
-import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
-import com.capitalone.dashboard.repository.TestResultRepository;
+import com.capitalone.dashboard.model.*;
+import com.capitalone.dashboard.repository.*;
 import com.capitalone.dashboard.testutil.GsonUtil;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
@@ -55,6 +39,13 @@ public class LoadTestData {
         String json = IOUtils.toString(Resources.getResource("./collector_items/items.json"));
         List<CollectorItem> collectorItem = gson.fromJson(json, new TypeToken<List<CollectorItem>>(){}.getType());
         collectorItemRepository.save(collectorItem);
+    }
+
+    public static void loadAuditReports(AuditReportRepository auditReportRepository) throws IOException {
+        Gson gson = GsonUtil.getGson();
+        String json = IOUtils.toString(Resources.getResource("./audit_reports/audit_reports.json"));
+        List<AuditReport> auditReports = gson.fromJson(json, new TypeToken<List<AuditReport>>(){}.getType());
+        auditReportRepository.save(auditReports);
     }
 
     public static void loadSSCRequests(CodeQualityRepository codeQualityRepository) throws IOException {
