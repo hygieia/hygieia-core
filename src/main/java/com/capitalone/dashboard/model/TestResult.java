@@ -111,6 +111,37 @@ public class TestResult extends BaseModel {
      */
     private Collection<TestCapability> testCapabilities = new ArrayList<>();
 
+    /**
+     * Name of artifact
+     *
+     */
+    private String identifierName;
+
+    /**
+     * Version of artifact
+     *
+     */
+    private String identifierVersion;
+
+    /**
+     * Location of artifact
+     *
+     */
+    private String identifierUrl;
+
+    /**
+     * Location of test results zip file
+     *
+     */
+    private String testResultsUrl;
+
+    /**
+     * Path to test result within zip file
+     *
+     */
+    private String testFilePath;
+
+
     public ObjectId getCollectorItemId() {
         return collectorItemId;
     }
@@ -278,4 +309,43 @@ public class TestResult extends BaseModel {
         this.perfRisk = perfRisk;
     }
 
+    public String getIdentifierName() {
+        return identifierName;
+    }
+
+    public void setIdentifierName(String identifierName) {
+        this.identifierName = identifierName;
+    }
+
+    public String getIdentifierVersion() {
+        return identifierVersion;
+    }
+
+    public void setIdentifierVersion(String identifierVersion) {
+        this.identifierVersion = identifierVersion;
+    }
+
+    public String getIdentifierUrl() {
+        return identifierUrl;
+    }
+
+    public void setIdentifierUrl(String identifierUrl) {
+        this.identifierUrl = identifierUrl;
+    }
+
+    public String getTestResultsUrl() {
+        return testResultsUrl;
+    }
+
+    public void setTestResultsUrl(String testResultsUrl) {
+        this.testResultsUrl = testResultsUrl;
+    }
+
+    public String getTestFilePath() {
+        return testFilePath;
+    }
+
+    public void setTestFilePath(String testFilePath) {
+        this.testFilePath = testFilePath;
+    }
 }
