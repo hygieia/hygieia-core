@@ -84,10 +84,10 @@
     </parent>
 
     <scm>
-        <connection>scm:git:http://github.com/Hygieia/hygieia-core.git</connection>
-        <developerConnection>scm:git:http://github.com/Hygieia/hygieia-core.git
+        <connection>scm:git:http://github.com/erictice/hygieia-core.git</connection>
+        <developerConnection>scm:git:http://github.com/erictice/hygieia-core.git
         </developerConnection>
-        <url>http://github.com/Hygieia/hygieia-core</url>
+        <url>http://github.com/erictice/hygieia-core</url>
         <tag>HEAD</tag>
     </scm>
 
