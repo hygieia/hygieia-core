@@ -232,7 +232,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-             <version>2.5.3</version>
+             <version>2.5.12</version>
             <scope>test</scope>
         </dependency>
 
@@ -354,10 +354,27 @@
 
     <build>
         <plugins>
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>3.2.2</version>
+		        <executions>
+		            <execution>
+		                <goals>
+		                    <goal>jar</goal>
+		                </goals>
+		                <phase>package</phase>
+		                <configuration>
+		                    <!--to be imported on other projects-->
+		                    <classifier>embed</classifier>
+		                </configuration>
+		            </execution>
+		        </executions>
+		    </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
+               <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
@@ -366,7 +383,7 @@
                             <classifier>exec</classifier>
                         </configuration>
                     </execution>
-                </executions>
+                </executions> 
             </plugin>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
@@ -878,8 +895,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.5.1</version>
                         <configuration>
-                            <source>1.11</source>
-                            <target>1.11</target>
+                            <source>${java.compilation.source}</source>
+                    		<target>${java.compilation.target}</target>
                         </configuration>
                     </plugin>
                     <plugin>
