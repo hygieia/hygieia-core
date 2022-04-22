@@ -27,6 +27,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Value("${dbname:dashboarddb}")
     private String databaseName;
+    @Value("${authsource}")
+    private String authSource;    
     @Value("${dbhost:localhost}")
     private String host;
     @Value("${dbport:27017}")
@@ -74,6 +76,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
         builder.sslInvalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
         MongoClientOptions opts = builder.build();
 
+        if (StringUtils.isEmpty(authSource)) {
+          authSource = databaseName;
+        }
         if (Boolean.parseBoolean(dbreplicaset)) {
             List<ServerAddress> serverAddressList = new ArrayList<>();
             for (String h : hostport) {
@@ -90,8 +95,9 @@ public class MongoConfig extends AbstractMongoConfiguration {
             if (StringUtils.isEmpty(userName)) {
                 client = new MongoClient(serverAddressList);
             } else {
+
                 MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
-                        userName, databaseName, password.toCharArray());
+                        userName, authSource, password.toCharArray());
                 client = new MongoClient(serverAddressList, Collections.singletonList(mongoCredential), opts);
             }
         } else {
@@ -101,7 +107,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
                 client = new MongoClient(serverAddr);
             } else {
                 MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
-                        userName, databaseName, password.toCharArray());
+                        userName, authSource, password.toCharArray());
                 client = new MongoClient(serverAddr, Collections.singletonList(mongoCredential), opts);
             }
 
