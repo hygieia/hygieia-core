@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AutoDiscovery Metadata
@@ -39,6 +41,8 @@ public class AutoDiscoveryMetaData {
 
     //@Ignore
     private List<Owner> owners;
+
+    private Map<String, String> properties = new HashMap<>();
 
     public String getTemplate() {
         return template;
@@ -105,4 +109,12 @@ public class AutoDiscoveryMetaData {
     public void setOwners(List<Owner> owners) { this.owners = owners; }
 
     public AutoDiscoveryMetaData(){ }
+
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 }

@@ -9,11 +9,13 @@ public enum AuditType {
     STATIC_SECURITY_ANALYSIS,
     LIBRARY_POLICY,
     TEST_RESULT,
+    FEATURE_TEST,
     PERF_TEST,
     ARTIFACT,
     DEPLOY,
     AUTO_DISCOVER,
-    INFRASTRUCTURE_SCAN;
+    INFRASTRUCTURE_SCAN,
+    CONTAINER_SCAN;
 
 
     public static AuditType fromString(String value) {

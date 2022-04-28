@@ -29,6 +29,8 @@ public class EnvironmentComponent extends BaseModel {
     private String applicationName;
     private String serviceName;
     private String changeReference;
+    private String scmIdentifier;
+    private String scmRepo;
 
 
 	
@@ -148,4 +150,20 @@ public class EnvironmentComponent extends BaseModel {
     public String getChangeReference() { return changeReference; }
 
     public void setChangeReference(String changeReference) { this.changeReference = changeReference; }
+
+    public String getScmIdentifier() {
+        return scmIdentifier;
+    }
+
+    public void setScmIdentifier(String scmIdentifier) {
+        this.scmIdentifier = scmIdentifier;
+    }
+
+    public String getScmRepo() {
+        return scmRepo;
+    }
+
+    public void setScmRepo(String scmRepo) {
+        this.scmRepo = scmRepo;
+    }
 }
