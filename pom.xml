@@ -34,7 +34,7 @@
         <spring-security.version>5.5.4</spring-security.version>  
         <springweb.version>5.3.19</springweb.version>
         <springbeans.version>5.3.19</springbeans.version>
-        <tomcat.version>10.1.0-M2</tomcat.version>
+        <tomcat.version>10.1.0-M10</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
@@ -55,7 +55,7 @@
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
         <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
-        <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
+        <jacoco.coverage.percentage.minimum>0.100</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
         <java.compilation.source>11</java.compilation.source>
@@ -259,12 +259,13 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
             <scope>provided</scope>
-            <version>4.4.0</version>
+            <version>5.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
-            <version>4.4.0</version>
+            <version>5.0.0</version>
         </dependency>
 
         <dependency>
