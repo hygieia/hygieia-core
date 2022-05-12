@@ -7,7 +7,8 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -15,7 +16,9 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class HygieiaUtils {
-	private static final Logger LOGGER = Logger.getLogger(HygieiaUtils.class);
+
+	private static final Log LOGGER = LogFactory.getLog(HygieiaUtils.class);
+
 	public static final String NUMERIC_REGEX= "-?\\d+(\\.\\d+)?";
 	public static final String SLASH = "/";
 

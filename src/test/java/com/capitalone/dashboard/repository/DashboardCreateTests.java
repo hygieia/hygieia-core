@@ -1,17 +1,26 @@
 
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.*;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
-public class DashboardCreateTests extends FongoBaseRepositoryTest {
+import com.capitalone.dashboard.model.Application;
+import com.capitalone.dashboard.model.AuthType;
+import com.capitalone.dashboard.model.Cmdb;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.Owner;
+import com.capitalone.dashboard.model.ScoreDisplayType;
+import com.capitalone.dashboard.model.Widget;
+
+public class DashboardCreateTests {  //extends FongoBaseRepositoryTest {
 
     @Autowired
     private DashboardRepository dashboardRepository;
@@ -65,7 +74,7 @@ public class DashboardCreateTests extends FongoBaseRepositoryTest {
 
 
 
-        for (Dashboard d : dashboardRepository.findAll(new Sort(Sort.Direction.ASC, "title"))) {
+        for (Dashboard d : dashboardRepository.findAll(Sort.by(Sort.Direction.ASC, "title"))) {
             System.out.println(d.getTitle());
             assertEquals(d.getTitle(), "Jays's Dashboard");
         }

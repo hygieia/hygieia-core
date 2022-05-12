@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -207,7 +208,7 @@ public class CommitEventListenerTest {
         List<Component> components = Collections.singletonList(dashboard.getApplication().getComponents().get(0));
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         commitCollectorItem.setId(commit.getCollectorItemId());
-        when(collectorItemRepository.findOne(commit.getCollectorItemId())).thenReturn(commitCollectorItem);
+        when(collectorItemRepository.findById(commit.getCollectorItemId())).thenReturn(Optional.of(commitCollectorItem));
         when(componentRepository.findBySCMCollectorItemId(commitCollectorItem.getId())).thenReturn(components);
         when(dashboardRepository.findByApplicationComponentIdsIn(componentIds)).thenReturn(Collections.singletonList(dashboard));
     }

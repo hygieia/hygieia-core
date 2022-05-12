@@ -26,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.capitalone.dashboard.util.PipelineUtils.isMoveCommitToBuild;
@@ -142,9 +143,9 @@ public class BuildEventListener extends HygieiaMongoEventListener<Build> {
             //return an empty list if the build is not associated with a Dashboard
             return dashboards;
         }
-        CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());
+        Optional<CollectorItem> buildCollectorItem = collectorItemRepository.findById(build.getCollectorItemId());
         if(buildCollectorItem != null) {
-            List<Component> components = componentRepository.findByBuildCollectorItemId(buildCollectorItem.getId());
+            List<Component> components = componentRepository.findByBuildCollectorItemId(buildCollectorItem.get().getId());
             if (!components.isEmpty()) {
                 //return an empty list if the build is not associated with a Dashboard
                 List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());

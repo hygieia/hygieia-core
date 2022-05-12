@@ -1,7 +1,8 @@
 package com.capitalone.dashboard.model;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
+//import jdk.nashorn.internal.ir.annotations.Ignore;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -35,10 +36,10 @@ public class AutoDiscoveryMetaData {
 
     private String businessApplication;
 
-    @Ignore
+   //@Ignore
     private Owner owner;
 
-    @Ignore
+    //@Ignore
     private List<Owner> owners;
 
     private Map<String, String> properties = new HashMap<>();

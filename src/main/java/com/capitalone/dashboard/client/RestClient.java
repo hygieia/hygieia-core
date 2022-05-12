@@ -36,10 +36,11 @@ public class RestClient {
     }
 
     /**
-     * The most general version of POST call
-     * @param url
-     * @param httpEntity HTTP headers and body
-     * @return
+     * The most general version of POST call.
+     * 
+     * @param url        The Rest URL that is being called.
+     * @param httpEntity HTTP headers and body.
+     * @return ResponseEntity<String>
      */
     private <T> ResponseEntity<String> makeRestCallPost(String url, HttpEntity<T> httpEntity) {
 
@@ -48,17 +49,19 @@ public class RestClient {
         String status = null;
         String status_phrase = null;
         try {
-            response = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
-            status = response.getStatusCode().toString();
+            response      = restOperations.exchange(url, HttpMethod.POST, httpEntity, String.class);
+            status        = response.getStatusCode().toString();
             status_phrase = response.getStatusCode().getReasonPhrase();
         } catch (HttpStatusCodeException e) {
-            status = e.getStatusCode().toString();
+            status        = e.getStatusCode().toString();
             status_phrase = e.getStatusCode().getReasonPhrase();
-            LOG.info("makeRestCall http_method=POST http_status=" + status + " http_status_phrase=" +status_phrase+" http_request_body=" + httpEntity.getBody());
+            LOG.info("makeRestCall http_method=POST http_status=" + status + " http_status_phrase=" + status_phrase
+                    + " http_request_body=" + httpEntity.getBody());
             throw e;
         } finally {
             long end = System.currentTimeMillis();
-            LOG.info("makeRestCall http_method=POST http_url=" + url + " http_status=" + status + " http_status_phrase="+status_phrase+" http_duration=" + (end - start));
+            LOG.info("makeRestCall http_method=POST http_url=" + url + " http_status=" + status + " http_status_phrase="
+                    + status_phrase + " http_duration=" + (end - start));
         }
 
         return response;
@@ -66,47 +69,53 @@ public class RestClient {
 
     /**
      * The general POST call taking a JSONObject as the body
-     * @param url
+     * 
+     * @param url     The Rest URL that is being called.
      * @param headers HTTP headers, can be null
-     * @param body Cannot be null
+     * @param body    Cannot be null
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, JSONObject body) {
-	if (headers==null) headers = new HttpHeaders();
-	headers.setContentType(MediaType.APPLICATION_JSON);
-	HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
-	return this.makeRestCallPost(url, httpEntity);
+        if (headers == null)
+            headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
+        return this.makeRestCallPost(url, httpEntity);
     }
 
     /**
-     * The general POST call taking a String as the body, for non-json data
-     * @param url
+     * The general POST call taking a String as the body, for non-json data.
+     * 
+     * @param url     The Rest URL that is being called.
      * @param headers HTTP headers, can be null
-     * @param body Cannot be null
+     * @param body    Cannot be null
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, HttpHeaders headers, String body) {
-	HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
-	return this.makeRestCallPost(url, httpEntity);
+        HttpEntity httpEntity = new HttpEntity<Object>(body, headers);
+        return this.makeRestCallPost(url, httpEntity);
     }
 
     /**
-     * Make a POST call with no HTTP headers and a Json body
+     * Make a POST call with no HTTP headers and a Json body.
      *
-     * @param url
+     * @param url  The Rest URL that is being called.
      * @param body Cannot be null
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, JSONObject body) {
-        if (restOperations == null) { return null; }
+        if (restOperations == null) {
+            return null;
+        }
 
-        return this.makeRestCallPost(url, (HttpHeaders)null, body);
+        return this.makeRestCallPost(url, (HttpHeaders) null, body);
     }
 
     /**
-     * Make a POST call with a single header, Authorization, which has the value "[headerKey] [token]".
-     * E.g. Authorization: token xxxxxxxxxxx
-     * When either headerKey or token is null, no header is added
+     * Make a POST call with a single header, Authorization, which has the value
+     * "[headerKey] [token]". E.g. Authorization: token xxxxxxxxxxx When either
+     * headerKey or token is null, no header is added
+     * 
      * @param url
      * @param headerKey
      * @param token
@@ -114,7 +123,9 @@ public class RestClient {
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, String headerKey, String token, JSONObject body) {
-        if (restOperations == null) { return null; }
+        if (restOperations == null) {
+            return null;
+        }
 
         HttpHeaders headers = null;
         if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
@@ -125,16 +136,19 @@ public class RestClient {
     }
 
     /**
-     * Make a POST call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
-     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
-     * When userInfo is null, no header is added
+     * Make a POST call with a single header, Authorization, which has the value
+     * "Basic " plus base64 encoded userId:passCode. E.g. Authorization: Basic
+     * base64EncodedUserIdAndPassCode When userInfo is null, no header is added
+     * 
      * @param url
      * @param userInfo
      * @param body
      * @return
      */
     public ResponseEntity<String> makeRestCallPost(String url, RestUserInfo userInfo, JSONObject body) {
-        if (restOperations == null) { return null; }
+        if (restOperations == null) {
+            return null;
+        }
 
         HttpHeaders headers = null;
         if ((userInfo != null)) {
@@ -146,6 +160,7 @@ public class RestClient {
 
     /**
      * The most general form of GET calls.
+     * 
      * @param url
      * @param headers Can be null if no header is needed
      * @return
@@ -157,9 +172,9 @@ public class RestClient {
         ResponseEntity<String> response;
         String status = null;
         try {
-            HttpEntity entity = headers==null?null:new HttpEntity(headers);
+            HttpEntity entity = headers == null ? null : new HttpEntity(headers);
             response = restOperations.exchange(url, HttpMethod.GET, entity, String.class);
-            status = response.getStatusCode().toString();
+            status   = response.getStatusCode().toString();
         } catch (HttpStatusCodeException e) {
             status = e.getStatusCode().toString();
             throw e;
@@ -168,36 +183,43 @@ public class RestClient {
             throw e;
         } finally {
             long end = System.currentTimeMillis();
-            LOG.info("makeRestCall http_method=GET http_url=" + url + " http_status=" + status + " http_duration=" + (end - start));
+            LOG.info("makeRestCall http_method=GET http_url=" + url + " http_status=" + status + " http_duration="
+                    + (end - start));
         }
         return response;
     }
 
-
     /**
      * Make a GET call without headers
+     * 
      * @param url
      * @return
      * @throws RestClientException
      */
     public ResponseEntity<String> makeRestCallGet(String url) throws RestClientException {
-        if (restOperations == null) { return null; }
+        if (restOperations == null) {
+            return null;
+        }
 
-        return this.makeRestCallGet(url, (HttpHeaders)null);
+        return this.makeRestCallGet(url, (HttpHeaders) null);
     }
 
     /**
-     * Make a GET call with a single header, Authorization, which has the value "[headerKey] [token]".
-     * E.g. Authorization: token xxxxxxxxxxx
-     * When either headerKey or token is null, no header is added
+     * Make a GET call with a single header, Authorization, which has the value
+     * "[headerKey] [token]". E.g. Authorization: token xxxxxxxxxxx When either
+     * headerKey or token is null, no header is added
+     * 
      * @param url
      * @param headerKey
      * @param token
      * @return
      * @throws RestClientException
      */
-    public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token) throws RestClientException {
-        if (restOperations == null) { return null; }
+    public ResponseEntity<String> makeRestCallGet(String url, String headerKey, String token)
+            throws RestClientException {
+        if (restOperations == null) {
+            return null;
+        }
 
         HttpHeaders headers = null;
         if (StringUtils.isNotEmpty(headerKey) && StringUtils.isNotEmpty(token)) {
@@ -209,16 +231,19 @@ public class RestClient {
     }
 
     /**
-     * Make a GET call with a single header, Authorization, which has the value "Basic " plus base64 encoded userId:passCode.
-     * E.g. Authorization: Basic base64EncodedUserIdAndPassCode
-     * When userInfo is null, no header is added
+     * Make a GET call with a single header, Authorization, which has the value
+     * "Basic " plus base64 encoded userId:passCode. E.g. Authorization: Basic
+     * base64EncodedUserIdAndPassCode When userInfo is null, no header is added
+     * 
      * @param url
      * @param userInfo
      * @return
      * @throws RestClientException
      */
     public ResponseEntity<String> makeRestCallGet(String url, RestUserInfo userInfo) throws RestClientException {
-        if (restOperations == null) { return null; }
+        if (restOperations == null) {
+            return null;
+        }
 
         HttpHeaders headers = null;
         if (userInfo != null && StringUtils.isNotEmpty(userInfo.getFormattedString())) {
@@ -247,7 +272,9 @@ public class RestClient {
     }
 
     public JSONObject parseAsObject(ResponseEntity<String> response) throws ParseException {
-        if (response == null) { return new JSONObject(); }
+        if (response == null) {
+            return new JSONObject();
+        }
 
         return (JSONObject) new JSONParser().parse(response.getBody());
     }
@@ -257,13 +284,16 @@ public class RestClient {
     }
 
     public JSONArray getArray(JSONObject json, String key) {
-        if (json == null) return new JSONArray();
-        if (json.get(key) == null) return new JSONArray();
+        if (json == null)
+            return new JSONArray();
+        if (json.get(key) == null)
+            return new JSONArray();
         return (JSONArray) json.get(key);
     }
 
     public String getString(Object obj, String key) {
-        if (obj == null) return "";
+        if (obj == null)
+            return "";
 
         if (obj instanceof Map) {
             Map map = (Map) obj;
@@ -277,12 +307,13 @@ public class RestClient {
         return "";
     }
 
-    public Integer getInteger(Object obj, String key) throws NumberFormatException{
+    public Integer getInteger(Object obj, String key) throws NumberFormatException {
         return NumberUtils.toInt(getString(obj, key));
     }
 
     public Object getAsObject(Object obj, String key) {
-        if (obj == null) return null;
+        if (obj == null)
+            return null;
 
         if (obj instanceof Map) {
             Map map = (Map) obj;
@@ -296,8 +327,12 @@ public class RestClient {
     }
 
     public boolean getBoolean(Object obj, String key) {
-        if (obj == null) return false;
-
+        if (obj == null)
+        {
+            return false;
+        
+        }
+        
         if (obj instanceof Map) {
             Map map = (Map) obj;
             return (Boolean) map.get(key);
@@ -309,7 +344,7 @@ public class RestClient {
         return false;
     }
 
-    public Long getLong(Object obj, String key) throws NumberFormatException{
+    public Long getLong(Object obj, String key) throws NumberFormatException {
         return NumberUtils.toLong(getString(obj, key));
     }
 
@@ -321,7 +356,9 @@ public class RestClient {
      * @return String
      */
     public static String decryptString(String string, String key) {
-        if (StringUtils.isEmpty(string)) { return ""; }
+        if (StringUtils.isEmpty(string)) {
+            return "";
+        }
 
         String result = "";
         try {

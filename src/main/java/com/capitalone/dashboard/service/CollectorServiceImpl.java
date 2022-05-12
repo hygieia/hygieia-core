@@ -67,7 +67,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public Iterable<Collector> all() {
-        Iterable<Collector> collectors = collectorRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
+        Iterable<Collector> collectors = collectorRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return collectors;
     }
 
@@ -78,7 +78,9 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public List<Collector> collectorsById(ObjectId id) {
-        return collectorRepository.findById(id);
+    	List<ObjectId> ids = new ArrayList<ObjectId>();
+    	ids.add(id);
+        return (List<Collector>) collectorRepository.findAllById(ids);
     }
 
     @Override
@@ -158,11 +160,15 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public CollectorItem getCollectorItem(ObjectId id) throws HygieiaException {
-        CollectorItem item = collectorItemRepository.findOne(id);
-        if(item == null){
+        Optional<CollectorItem> optItem = collectorItemRepository.findById(id);
+        CollectorItem item = null;
+        if(optItem == null){
             throw new HygieiaException("Failed to find collectorItem by Id.", HygieiaException.BAD_DATA);
+        } else {
+        	item = optItem.get();
         }
-        item.setCollector(collectorRepository.findOne(item.getCollectorId()));
+      
+        item.setCollector(collectorRepository.findById(item.getCollectorId()).get());
         return item;
     }
 
@@ -186,9 +192,12 @@ public class CollectorServiceImpl implements CollectorService {
         if (collectorItem==null){
             return Collections.emptyList();
         }
-        Collector collector = collectorRepository.findOne(collectorItem.getCollectorId());
-        if (collector == null){
+        Optional<Collector> optCollector = collectorRepository.findById(collectorItem.getCollectorId());
+        Collector collector = null;
+        if (optCollector == null){
             return Collections.emptyList();
+        } else {
+        	collector = optCollector.get();
         }
         Map<String, Object> uniqueOptions = collector.getUniqueFields()
                 .keySet()
@@ -206,7 +215,9 @@ public class CollectorServiceImpl implements CollectorService {
     // just update the new credentials.
     @Override
     public CollectorItem createCollectorItemSelectOptions(CollectorItem item, Map<String, Object> allOptions, Map<String, Object> uniqueOptions) {
-        Collector collector =  collectorRepository.findOne(item.getCollectorId());
+        Optional<Collector> optCollector =  collectorRepository.findById(item.getCollectorId());
+        Collector collector = optCollector.get();
+        
         Map<String,Object> uniqueFieldsFromCollector = collector.getUniqueFields();
         List<CollectorItem> existing = customRepositoryQuery.findCollectorItemsBySubsetOptions(
                 item.getCollectorId(), allOptions, uniqueOptions,uniqueFieldsFromCollector);
@@ -292,7 +303,7 @@ public class CollectorServiceImpl implements CollectorService {
     public List<CollectorItem> getCollectorItemForComponent(String id, String type) {
         ObjectId oid = new ObjectId(id);
         CollectorType ctype = CollectorType.fromString(type);
-        Component component = componentRepository.findOne(oid);
+        Component component = componentRepository.findById(oid).get();
 
         List<CollectorItem> items = component.getCollectorItems(ctype);
 
@@ -302,13 +313,14 @@ public class CollectorServiceImpl implements CollectorService {
         for (CollectorItem item : items) {
             ids.add(item.getId());
         }
-        return (List<CollectorItem>) collectorItemRepository.findAll(ids);
+        return (List<CollectorItem>) collectorItemRepository.findAllById(ids);
     }
 
     @Override
     public void deletePropertiesInCollectorById(String id) {
         ObjectId objectId = new ObjectId(id);
-        Collector collectorById = collectorRepository.findOne(objectId);
+        Optional<Collector> optCollectorById = collectorRepository.findById(objectId);
+        Collector collectorById = optCollectorById.get();
         Map<String, Object> blankMap = new HashMap<>();
 
         if(collectorById.getProperties().size() > 0) {
@@ -345,7 +357,7 @@ public class CollectorServiceImpl implements CollectorService {
         }
 
         //delete the collector item.
-        collectorItemRepository.delete(objectId);
+        collectorItemRepository.deleteById(objectId);
     }
 
     private Collector collectorById(ObjectId collectorId, List<Collector> collectors) {

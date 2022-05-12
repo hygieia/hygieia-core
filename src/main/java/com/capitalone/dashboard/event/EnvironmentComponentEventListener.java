@@ -1,5 +1,19 @@
 package com.capitalone.dashboard.event;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.BinaryArtifact;
 import com.capitalone.dashboard.model.Build;
@@ -27,18 +41,6 @@ import com.capitalone.dashboard.util.PipelineUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections4.CollectionUtils;
-import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Component
 public class EnvironmentComponentEventListener extends HygieiaMongoEventListener<EnvironmentComponent> {
@@ -258,7 +260,8 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
      * @return
      */
     private List<Dashboard> findTeamDashboardsForEnvironmentComponent(EnvironmentComponent environmentComponent){
-        CollectorItem deploymentCollectorItem = collectorItemRepository.findOne(environmentComponent.getCollectorItemId());
+        Optional<CollectorItem> optDeploymentCollectorItem = collectorItemRepository.findById(environmentComponent.getCollectorItemId());
+        CollectorItem deploymentCollectorItem = optDeploymentCollectorItem.get();
         List<Component> components = componentRepository.findByDeployCollectorItemId(deploymentCollectorItem.getId());
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         return dashboardRepository.findByApplicationComponentIdsIn(componentIds);

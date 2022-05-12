@@ -3,9 +3,12 @@ package com.capitalone.dashboard.model;
 import com.capitalone.dashboard.misc.HygieiaException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
+//import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +16,7 @@ import java.util.Map;
  * Entry class to hold the Auto Discovered entries: Jira project, github project, build job etc.
  */
 public class AutoDiscoveredEntry {
-    @NotNull
+	@Nonnull
     private AutoDiscoveryStatusType status;
 
     @NotNull

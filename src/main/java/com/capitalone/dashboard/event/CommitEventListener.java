@@ -1,5 +1,15 @@
 package com.capitalone.dashboard.event;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
@@ -15,15 +25,6 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.apache.commons.collections.CollectionUtils;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
-
-import java.nio.channels.Pipe;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Component
 public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
@@ -74,7 +75,8 @@ public class CommitEventListener extends HygieiaMongoEventListener<Commit> {
      */
     private List<Dashboard> findAllDashboardsForCommit(Commit commit){
         if (commit.getCollectorItemId() == null) return new ArrayList<>();
-        CollectorItem commitCollectorItem = collectorItemRepository.findOne(commit.getCollectorItemId());
+        Optional<CollectorItem> optCommitCollectorItem = collectorItemRepository.findById(commit.getCollectorItemId());
+        CollectorItem commitCollectorItem = optCommitCollectorItem.get();
         List<Component> components = componentRepository.findBySCMCollectorItemId(commitCollectorItem.getId());
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         return dashboardRepository.findByApplicationComponentIdsIn(componentIds);

@@ -1,5 +1,26 @@
 package com.capitalone.dashboard.event.sync;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.CodeQuality;
 import com.capitalone.dashboard.model.Collector;
@@ -24,25 +45,6 @@ import com.capitalone.dashboard.util.LoadTestData;
 import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.collections4.CollectionUtils;
-import org.bson.types.ObjectId;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {FongoConfig.class})
@@ -120,8 +122,8 @@ public class SyncDashboardTest {
 
     @Test
     public void getDashboardsByCollectorItems() {
-        CollectorItem item = collectorItemRepository.findOne(new ObjectId("5ba136220be2d32568777fa5"));
-        List<Dashboard> dashboardList = syncDashboard().getDashboardsByCollectorItems(Sets.newHashSet(item), CollectorType.Build);
+        Optional<CollectorItem> item = collectorItemRepository.findById(new ObjectId("5ba136220be2d32568777fa5"));
+        List<Dashboard> dashboardList = syncDashboard().getDashboardsByCollectorItems(Sets.newHashSet(item.get()), CollectorType.Build);
         assertTrue(!CollectionUtils.isEmpty(dashboardList));
         assertTrue(dashboardList.size() == 3);
         List<String> titles = dashboardList.stream().map(Dashboard::getTitle).collect(Collectors.toList());
@@ -140,19 +142,21 @@ public class SyncDashboardTest {
     @Test
     public void syncBuildAndRepo() {
         relatedCollectorItemRepository.deleteAll();
-        Build build = buildRepository.findOne(new ObjectId("5ba520c40be2d3f98f795054"));
+        Optional<Build> build = buildRepository.findById(new ObjectId("5ba520c40be2d3f98f795054"));
 
-        syncDashboard().sync(build);
+        syncDashboard().sync(build.get());
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
+
         assertTrue(relatedCollectorItems.size() == 0);
+
     }
 
     @Test
     public void syncBuildAndRepoEmptyRepo() {
         relatedCollectorItemRepository.deleteAll();
-        Build build = buildRepository.findOne(new ObjectId("5ba520c40be2d3f98f795055"));
+        Optional<Build> build = buildRepository.findById(new ObjectId("5ba520c40be2d3f98f795055"));
 
-        syncDashboard().sync(build);
+        syncDashboard().sync(build.get());
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
         assertTrue(relatedCollectorItems.size() == 0);
     }
@@ -161,10 +165,10 @@ public class SyncDashboardTest {
     @Test
     public void syncBuildAndRepoNoSCMCollector() {
         List<Collector> scmCollectors = collectorRepository.findAllByCollectorType(CollectorType.SCM);
-        collectorRepository.delete(scmCollectors);
-        Build build = buildRepository.findOne(new ObjectId("5ba520c40be2d3f98f795055"));
+        collectorRepository.deleteAll(scmCollectors);
+        Optional<Build> build = buildRepository.findById(new ObjectId("5ba520c40be2d3f98f795055"));
 
-        syncDashboard().sync(build);
+        syncDashboard().sync(build.get());
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
         assertTrue(relatedCollectorItems.size() == 0);
     }
@@ -173,31 +177,33 @@ public class SyncDashboardTest {
     @Test
     public void syncBuildAndCodeQualityWithBuild() {
         relatedCollectorItemRepository.deleteAll();
-        CodeQuality codeQuality = codeQualityRepository.findOne(new ObjectId("5ba98d055de4b1195307bf5a"));
+        Optional<CodeQuality> codeQuality = codeQualityRepository.findById(new ObjectId("5ba98d055de4b1195307bf5a"));
 
-        Build build = buildRepository.findOne(new ObjectId("5ba520c40be2d3f98f795054"));
-        syncDashboard().sync(build);
+        Optional<Build> build = buildRepository.findById(new ObjectId("5ba520c40be2d3f98f795054"));
+        syncDashboard().sync(build.get());
         // now sync code quality
-        syncDashboard().sync(codeQuality);
+        syncDashboard().sync(codeQuality.get());
 
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
+
         assertTrue(relatedCollectorItems.size() == 0);
+
 
     }
 
     @Test
     public void syncWithRelatedCollectorItems() {
         relatedCollectorItemRepository.deleteAll();
-        CodeQuality codeQuality = codeQualityRepository.findOne(new ObjectId("5ba98d055de4b1195307bf5a"));
-        Dashboard testSubject = dashboardRepository.findOne(new ObjectId("5baa458b0be2d337e3885815"));
-        Widget widget = syncDashboard().getWidget("codeanalysis", testSubject);
+        Optional<CodeQuality> codeQuality = codeQualityRepository.findById(new ObjectId("5ba98d055de4b1195307bf5a"));
+        Optional<Dashboard> testSubject = dashboardRepository.findById(new ObjectId("5baa458b0be2d337e3885815"));
+        Widget widget = syncDashboard().getWidget("codeanalysis", testSubject.get());
         assertTrue(widget == null);
 
-        Build build = buildRepository.findOne(new ObjectId("5ba520c40be2d3f98f795054"));
+        Optional<Build> build = buildRepository.findById(new ObjectId("5ba520c40be2d3f98f795054"));
         // sync build
-        syncDashboard().sync(build);
+        syncDashboard().sync(build.get());
         // now sync code quality
-        syncDashboard().sync(codeQuality);
+        syncDashboard().sync(codeQuality.get());
 
         relatedCollectorItemRepository.findAll().forEach( r -> {
             try {
@@ -206,9 +212,15 @@ public class SyncDashboardTest {
             }
         });
 
-        testSubject = dashboardRepository.findOne(new ObjectId("5baa458b0be2d337e3885815"));
-        widget = syncDashboard().getWidget("codeanalysis", testSubject);
-        assertTrue(widget == null);
+
+        testSubject = dashboardRepository.findById(new ObjectId("5baa458b0be2d337e3885815"));
+        widget = syncDashboard().getWidget("codeanalysis", testSubject.get());
+        assertTrue(widget != null);
+
+        Optional<Component> component = componentRepository.findById(widget.getComponentId());
+        assertTrue(component != null);
+        CollectorItem si = component.get().getCollectorItems(CollectorType.CodeQuality).get(0);
+
 
     }
 }

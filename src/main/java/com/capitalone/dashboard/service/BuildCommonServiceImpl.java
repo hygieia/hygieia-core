@@ -19,7 +19,7 @@ public class BuildCommonServiceImpl implements BuildCommonService {
 
     @Override
     public Build get(ObjectId id) {
-        return buildRepository.findOne(id);
+        return buildRepository.findById(id).get();
     }
 
     @Override
