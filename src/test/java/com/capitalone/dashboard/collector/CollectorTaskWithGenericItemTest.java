@@ -1,5 +1,22 @@
 package com.capitalone.dashboard.collector;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.bson.types.ObjectId;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.GenericCollectorItem;
 import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
@@ -12,26 +29,10 @@ import com.capitalone.dashboard.testutil.FongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
 import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
-import org.bson.types.ObjectId;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {FongoConfig.class, BaseCollectorTestConfig.class})
-public class CollectorTaskWithGenericItemTest {
+public class CollectorTaskWithGenericItemTest<TestCollectorTaskTwoWithGenericItem> {
 
     @Rule
     public FongoRule fongoRule = new FongoRule();
@@ -46,7 +47,7 @@ public class CollectorTaskWithGenericItemTest {
     RelatedCollectorItemRepository relatedCollectorItemRepository;
 
     @Autowired
-    TestCollectorTaskWithGenericItem testCollectorTaskWithGenericItem;
+    CollectorTaskWithGenericItem testCollectorTaskWithGenericItem;
 
     @Autowired
     TestCollectorTaskTwoWithGenericItem testCollectorTaskTwoWithGenericItem;
@@ -157,7 +158,7 @@ public class CollectorTaskWithGenericItemTest {
         LoadTestData.loadCollectorItems(collectorItemRepository);
         GenericCollectorItem gci = createGenericItem("Sonar", "C1 Custom Env Var Inject", "some source", "5ca136290be2d32568777fa8", "5ba136290be2d32568777fa8", "5bae541b099739600663ef9a");
         genericCollectorItemRepository.save(gci);
-        Map<ObjectId, Set<ObjectId>> objectIdSetMap = testCollectorTaskTwoWithGenericItem.processGenericItems(Lists.newArrayList("http://localhost:9000"));
+        Map<ObjectId, Set<ObjectId>> objectIdSetMap = testCollectorTaskWithGenericItem.processGenericItems(Lists.newArrayList("http://localhost:9000"));
         List<RelatedCollectorItem> relatedCollectorItems = Lists.newArrayList(relatedCollectorItemRepository.findAll());
         assertEquals(0, objectIdSetMap.size());
         assertEquals(0, relatedCollectorItems.size());

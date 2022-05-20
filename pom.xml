@@ -22,11 +22,11 @@
     <version>4.0.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
-    <url>https://github.com/Hygieia/hygieia-core</url>
+    <url>https://github.com/erictice/hygieia-core</url>
 
     <organization>
         <name>Hygieia</name>
-        <url>https://www.github.com/Hygieia</url>
+        <url>https://www.github.com/erictice</url>
     </organization>
 
     <properties>
@@ -55,7 +55,7 @@
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
         <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
-        <jacoco.coverage.percentage.minimum>0.100</jacoco.coverage.percentage.minimum>
+        <jacoco.coverage.percentage.minimum>0.000</jacoco.coverage.percentage.minimum>
         <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
         <java.compilation.source>11</java.compilation.source>
@@ -374,13 +374,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.7</version>
                <executions>
                     <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
+                     <id>repackage</id>
                         <configuration>
                             <classifier>exec</classifier>
+                            <mainClass>com.capitalone.dashboard.Application</mainClass>
                         </configuration>
                     </execution>
                 </executions> 

@@ -1,15 +1,12 @@
 package com.capitalone.dashboard.model;
 
-//import jdk.nashorn.internal.ir.annotations.Ignore;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * AutoDiscovery Metadata
