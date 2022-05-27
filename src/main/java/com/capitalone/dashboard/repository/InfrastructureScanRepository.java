@@ -20,5 +20,7 @@ public interface InfrastructureScanRepository extends CrudRepository<Infrastruct
     InfrastructureScan findByBusinessServiceAndInstanceId(String businessService, String instanceId);
     List<InfrastructureScan> findAllByBusinessServiceOrderByTimestampDesc(String businessService);
     List<InfrastructureScan> findAllByBusinessServiceAndBusinessApplicationOrderByTimestampDesc(String businessService, String businessApplication);
+    InfrastructureScan findTopByBusinessServiceOrderByTimestampDesc(String businessService);
+    InfrastructureScan findTopByBusinessServiceAndBusinessApplicationOrderByTimestampDesc(String businessService, String businessApplication);
     void deleteAllByCollectorItemId(ObjectId collectorItemId);
 }
