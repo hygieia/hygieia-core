@@ -18,5 +18,9 @@ public interface InfrastructureScanRepository extends CrudRepository<Infrastruct
     List<InfrastructureScan> findByCollectorItemIdAndTimestampIsBetweenOrderByTimestampDesc(ObjectId collectorItemId, long beginDate, long endDate);
     InfrastructureScan findTopByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
     InfrastructureScan findByBusinessServiceAndInstanceId(String businessService, String instanceId);
+    InfrastructureScan findTopByBusinessServiceOrderByTimestampDesc(String businessService);
+    InfrastructureScan findTopByBusinessServiceAndBusinessApplicationOrderByTimestampDesc(String businessService, String businessApplication);
+    List<InfrastructureScan> findAllByBusinessServiceOrderByTimestampDesc(String businessService);
+    List<InfrastructureScan> findAllByBusinessServiceAndBusinessApplicationOrderByTimestampDesc(String businessService, String businessApplication);
     void deleteAllByCollectorItemId(ObjectId collectorItemId);
 }
