@@ -9,6 +9,7 @@ public enum AuditType {
     STATIC_SECURITY_ANALYSIS,
     LIBRARY_POLICY,
     TEST_RESULT,
+    FEATURE_TEST,
     PERF_TEST,
     ARTIFACT,
     DEPLOY,
