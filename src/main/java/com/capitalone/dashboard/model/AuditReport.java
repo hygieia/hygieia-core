@@ -26,6 +26,7 @@ public class AuditReport extends BaseModel {
     private long lastRefreshTimestamp;
     private long entryTimestamp;
     private long refreshEndTimestamp;
+    private String imageId;
 
     public AuditReport() { }
 
@@ -185,5 +186,13 @@ public class AuditReport extends BaseModel {
 
     public void setRefreshEndTimestamp(long refreshEndTimestamp) {
         this.refreshEndTimestamp = refreshEndTimestamp;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 }
