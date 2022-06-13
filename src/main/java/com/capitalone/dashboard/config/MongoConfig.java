@@ -5,6 +5,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.ReadPreference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,6 +67,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         builder.serverSelectionTimeout(30000);          // MongoDB default 30 seconds
         builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
         builder.socketTimeout(dbSocketTimeout);         // MongoDB default is 0, means no timeout
+        builder.readPreference(ReadPreference.secondaryPreferred());    // Will read from secondary if available
         /* By default, the driver ensures that the hostname included in the server’s SSL certificate(s)
          * matches the hostname(s) provided when constructing a MongoClient().
          * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.
