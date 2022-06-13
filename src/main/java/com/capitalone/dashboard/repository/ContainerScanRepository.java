@@ -17,5 +17,6 @@ public interface ContainerScanRepository extends CrudRepository<ContainerScan, O
     List<ContainerScan> findByBusinessService(String businessService);
     List<ContainerScan> findByBusinessApplication(String businessApplication);
     List<ContainerScan> findByBusinessServiceAndBusinessApplication(String businessService, String businessApplication);
+    List<ContainerScan> findByImageId(String imageId);
 
 }
