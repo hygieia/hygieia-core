@@ -6,6 +6,7 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
+import com.mongodb.ReadPreference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,7 +74,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
          * readPreference property helps to toggle the reading between nodes, assigned primary by default.
          * MongoDB clients route read operations to the members of a replica set
          */
-        builder.readPreference(ReadPreference.valueOf(readPreference));  // 
+        builder.readPreference(ReadPreference.valueOf(readPreference));
         /* By default, the driver ensures that the hostname included in the server’s SSL certificate(s)
          * matches the hostname(s) provided when constructing a MongoClient().
          * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.

@@ -20,6 +20,33 @@ public class ContainerScan extends BaseModel{
     private String message;
     private List<Vulnerability> vulnerabilities;
     private String buildUrl;
+    private String imageId;
+    private String artifactorySha;
+    private String createdTimestamp;
+    private String errorDescription;
+    private String lastScannedTimestamp;
+    private Integer vulnerabilityCount;
+    private String applicationServiceName;
+    private String lineOfBusiness;
+    private String engineeringLeadFullName;
+    private String ownerEmailAddress;
+    private String technologyDivision;
+    private String technologySubdivision;
+    private String technologyExecutiveFullName;
+    private String businessExecutiveFullName;
+    private String businessApplicationName;
+    private String environment;
+    private String instanceId;
+    private String hostName;
+    private boolean isLabelCompliant;
+    private boolean isGoldenImageCompliant;
+    private boolean isRootCompliant;
+    private boolean isOverallCompliant;
+    private List<Labels> labels;
+    private String digest;
+    private String repository;
+    private String registry;
+
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -123,5 +150,213 @@ public class ContainerScan extends BaseModel{
 
     public void setBuildUrl(String buildUrl) {
         this.buildUrl = buildUrl;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getArtifactorySha() {
+        return artifactorySha;
+    }
+
+    public void setArtifactorySha(String artifactorySha) {
+        this.artifactorySha = artifactorySha;
+    }
+
+    public String getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(String createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public String getLastScannedTimestamp() {
+        return lastScannedTimestamp;
+    }
+
+    public void setLastScannedTimestamp(String lastScannedTimestamp) {
+        this.lastScannedTimestamp = lastScannedTimestamp;
+    }
+
+    public Integer getVulnerabilityCount() {
+        return vulnerabilityCount;
+    }
+
+    public void setVulnerabilityCount(Integer vulnerabilityCount) {
+        this.vulnerabilityCount = vulnerabilityCount;
+    }
+
+    public String getApplicationServiceName() {
+        return applicationServiceName;
+    }
+
+    public void setApplicationServiceName(String applicationServiceName) {
+        this.applicationServiceName = applicationServiceName;
+    }
+
+    public String getLineOfBusiness() {
+        return lineOfBusiness;
+    }
+
+    public void setLineOfBusiness(String lineOfBusiness) {
+        this.lineOfBusiness = lineOfBusiness;
+    }
+
+    public String getEngineeringLeadFullName() {
+        return engineeringLeadFullName;
+    }
+
+    public void setEngineeringLeadFullName(String engineeringLeadFullName) {
+        this.engineeringLeadFullName = engineeringLeadFullName;
+    }
+
+    public String getOwnerEmailAddress() {
+        return ownerEmailAddress;
+    }
+
+    public void setOwnerEmailAddress(String ownerEmailAddress) {
+        this.ownerEmailAddress = ownerEmailAddress;
+    }
+
+    public String getTechnologyDivision() {
+        return technologyDivision;
+    }
+
+    public void setTechnologyDivision(String technologyDivision) {
+        this.technologyDivision = technologyDivision;
+    }
+
+    public String getTechnologySubdivision() {
+        return technologySubdivision;
+    }
+
+    public void setTechnologySubdivision(String technologySubdivision) {
+        this.technologySubdivision = technologySubdivision;
+    }
+
+    public String getTechnologyExecutiveFullName() {
+        return technologyExecutiveFullName;
+    }
+
+    public void setTechnologyExecutiveFullName(String technologyExecutiveFullName) {
+        this.technologyExecutiveFullName = technologyExecutiveFullName;
+    }
+
+    public String getBusinessExecutiveFullName() {
+        return businessExecutiveFullName;
+    }
+
+    public void setBusinessExecutiveFullName(String businessExecutiveFullName) {
+        this.businessExecutiveFullName = businessExecutiveFullName;
+    }
+
+    public String getBusinessApplicationName() {
+        return businessApplicationName;
+    }
+
+    public void setBusinessApplicationName(String businessApplicationName) {
+        this.businessApplicationName = businessApplicationName;
+    }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public String getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
+    }
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
+
+    public boolean isLabelCompliant() {
+        return isLabelCompliant;
+    }
+
+    public void setLabelCompliant(boolean labelCompliant) {
+        isLabelCompliant = labelCompliant;
+    }
+
+    public boolean isGoldenImageCompliant() {
+        return isGoldenImageCompliant;
+    }
+
+    public void setGoldenImageCompliant(boolean goldenImageCompliant) {
+        isGoldenImageCompliant = goldenImageCompliant;
+    }
+
+    public boolean isRootCompliant() {
+        return isRootCompliant;
+    }
+
+    public void setRootCompliant(boolean rootCompliant) {
+        isRootCompliant = rootCompliant;
+    }
+
+    public boolean isOverallCompliant() {
+        return isOverallCompliant;
+    }
+
+    public void setOverallCompliant(boolean overallCompliant) {
+        isOverallCompliant = overallCompliant;
+    }
+
+    public List<Labels> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<Labels> labels) {
+        this.labels = labels;
+    }
+
+    public String getDigest() {
+        return digest;
+    }
+
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
+
+    public String getRepository() {
+        return repository;
+    }
+
+    public void setRepository(String repository) {
+        this.repository = repository;
+    }
+
+    public String getRegistry() {
+        return registry;
+    }
+
+    public void setRegistry(String registry) {
+        this.registry = registry;
     }
 }
