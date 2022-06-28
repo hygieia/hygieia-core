@@ -11,12 +11,15 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Scope;
 
-public class ScopeRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+public class ScopeRepositoryTest  {
 	private static Scope mockV1Scope;
 	private static Scope mockJiraScope;
 	private static Scope mockJiraScope2;

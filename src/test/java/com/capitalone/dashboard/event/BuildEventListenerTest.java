@@ -1,5 +1,24 @@
 package com.capitalone.dashboard.event;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 import com.capitalone.dashboard.event.sync.SyncDashboard;
 import com.capitalone.dashboard.model.Application;
 import com.capitalone.dashboard.model.AuthType;
@@ -23,30 +42,10 @@ import com.capitalone.dashboard.repository.CommitRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.bson.types.ObjectId;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static com.capitalone.dashboard.util.TestUtils.createBuild;
-import static com.capitalone.dashboard.util.TestUtils.createCommit;
-import static com.capitalone.dashboard.util.TestUtils.createPipelineCommit;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.capitalone.dashboard.util.TestUtils;
 
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class BuildEventListenerTest {
 
     @Mock
@@ -77,7 +76,7 @@ public class BuildEventListenerTest {
 
     @Test
     public void buildSaved_addedToPipeline() {
-        Build build = createBuild();
+        Build build = TestUtils.createBuild();
         CollectorItem productCI = collectorItem();
         Dashboard dashboard = createDashboard(HAS_BUILD_COLLECTOR, productCI);
         Pipeline pipeline = new Pipeline();
@@ -91,15 +90,15 @@ public class BuildEventListenerTest {
 
     @Test
     public void buildSaved_addedToPipeline_commitStage() {
-        Build build = createBuild();
+        Build build = TestUtils.createBuild();
         CollectorItem productCI = collectorItem();
         Dashboard dashboard = createDashboard(HAS_BUILD_COLLECTOR, productCI);
         Pipeline pipeline = new Pipeline();
-        pipeline.addCommit(PipelineStage.COMMIT.getName(), createPipelineCommit("scmRev3"));
+        pipeline.addCommit(PipelineStage.COMMIT.getName(), TestUtils.createPipelineCommit("scmRev3"));
         setupFindDashboards(build, dashboard);
         setupGetOrCreatePipeline(dashboard, pipeline, productCI);
         List<Commit> commits = new ArrayList<>();
-       commits.add(createCommit("scmRev3","http://github.com/scmurl"));
+       commits.add(TestUtils.createCommit("scmRev3","http://github.com/scmurl"));
         when(commitRepository.findByScmRevisionNumber("scmRev3")).thenReturn(commits);
         eventListener.onAfterSave(new AfterSaveEvent<>(build, null, ""));
         Map<String,EnvironmentStage> pipelineMap = pipeline.getEnvironmentStageMap();

@@ -4,7 +4,11 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Streams;
 import com.google.common.io.Files;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.Ignore;
 
 import javax.annotation.Nullable;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+@ExtendWith(MockitoExtension.class)
 public class MarkdownTest {
 
     private Pattern absoluteLinkPattern = Pattern.compile(".*github.com/capitalone/Hygieia.*", Pattern.DOTALL);

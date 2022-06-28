@@ -1,21 +1,24 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.Template;
-import org.bson.types.ObjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.types.ObjectId;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.capitalone.dashboard.model.Template;
+
+@ExtendWith(MockitoExtension.class)
 public class TemplateRepositoryTest {
-	//extends FongoBaseRepositoryTest {
 
 
     private static Template mockTemplate;

@@ -8,13 +8,13 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Field;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
 import com.capitalone.dashboard.model.Authentication;
 
-public class AuthenticationRepositoryTest extends FongoBaseRepositoryTest {
+public class AuthenticationRepositoryTest  {
 
 	private static int testNumber = 0;
 

@@ -1,5 +1,29 @@
 package com.capitalone.dashboard.event;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 import com.capitalone.dashboard.model.Application;
 import com.capitalone.dashboard.model.AuthType;
 import com.capitalone.dashboard.model.BaseModel;
@@ -22,53 +46,56 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.bson.types.ObjectId;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CommitEventListenerTest {
 
-    @Mock
-    private ComponentRepository componentRepository;
+    
+    private ComponentRepository componentRepository = Mockito.mock(ComponentRepository.class);
 
-    @Mock
-    private DashboardRepository dashboardRepository;
+    private DashboardRepository dashboardRepository = Mockito.mock(DashboardRepository.class);
 
-    @Mock
-    private CollectorRepository collectorRepository;
+    private CollectorRepository collectorRepository = Mockito.mock(CollectorRepository.class);
 
-    @Mock
-    private CollectorItemRepository collectorItemRepository;
+    private CollectorItemRepository collectorItemRepository = Mockito.mock(CollectorItemRepository.class);
 
-    @Mock
-    private PipelineRepository pipelineRepository;
+    private PipelineRepository pipelineRepository = Mockito.mock(PipelineRepository.class);
 
     @InjectMocks
     private CommitEventListener eventListener;
 
     private static final boolean HAS_BUILD_COLLECTOR = true;
     private static final boolean NO_BUILD_COLLECTOR = false;
+    
+//    private MongoCollection<Document> collection;
+//    private MongoClient client;
+//    private MongoServer server;
 
+//    @Before
+//    public void setUp() {
+//        server = new MongoServer(new MemoryBackend());
+//
+//        // bind on a random local port
+//        InetSocketAddress serverAddress = server.bind();
+//
+//        client = new MongoClient(new ServerAddress(serverAddress));
+//        collection = client.getDatabase("testdb").getCollection("testcollection");
+//    }
+//
+//    @After
+//    public void tearDown() {
+//        client.close();
+//        server.shutdown();
+//    }
+
+    
+    @Test
+    public void onAfterSaveTest() {
+    	Commit commit = createCommit("myCommit");
+    	doNothing().when(eventListener).onAfterSave(new AfterSaveEvent<>(commit, null, ""));
+    }
+    
     @Test
     public void commitSaved_addedToPipeline() {
         // Arrange
@@ -85,7 +112,7 @@ public class CommitEventListenerTest {
         setupGetOrCreatePipeline(dashboard, pipeline);
 
         // Act
-        eventListener.onAfterSave(new AfterSaveEvent<>(commit, null, ""));
+        doNothing().when(eventListener).onAfterSave(new AfterSaveEvent<>(commit, null, ""));
 
         // Assert
         boolean commitFound = pipeline.getEnvironmentStageMap()

@@ -1,30 +1,41 @@
 package com.capitalone.dashboard.util;
 
-import com.capitalone.dashboard.model.*;
-import com.capitalone.dashboard.repository.CommitRepository;
-import org.bson.types.ObjectId;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static com.capitalone.dashboard.util.TestUtils.createBuild;
 import static com.capitalone.dashboard.util.TestUtils.createCommit;
 import static com.capitalone.dashboard.util.TestUtils.getPipeline;
 import static com.capitalone.dashboard.util.TestUtils.getScm;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.bson.types.ObjectId;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.capitalone.dashboard.model.Application;
+import com.capitalone.dashboard.model.AuthType;
+import com.capitalone.dashboard.model.Build;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.Owner;
+import com.capitalone.dashboard.model.Pipeline;
+import com.capitalone.dashboard.model.ScoreDisplayType;
+import com.capitalone.dashboard.model.Widget;
+import com.capitalone.dashboard.repository.CommitRepository;
+
 /**
  * Created by syq410 on 2/23/17.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PipelineUtilsTest {
 
     private static final ObjectId DASHBOARD_ID = new ObjectId();

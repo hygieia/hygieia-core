@@ -11,8 +11,10 @@ import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,15 +29,12 @@ import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.testutil.BaseCollectorTestConfig;
 import com.capitalone.dashboard.testutil.FongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
+//import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class, BaseCollectorTestConfig.class})
+@ExtendWith(MockitoExtension.class)
 public class CollectorTaskWithGenericItemTest<TestCollectorTaskTwoWithGenericItem> {
 
-    @Rule
-    public FongoRule fongoRule = new FongoRule();
 
     @Autowired
     private CollectorItemRepository collectorItemRepository;

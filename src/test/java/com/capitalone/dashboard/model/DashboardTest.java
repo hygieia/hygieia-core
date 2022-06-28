@@ -1,19 +1,20 @@
 package com.capitalone.dashboard.model;
 
-import com.capitalone.dashboard.misc.HygieiaException;
-import com.capitalone.dashboard.util.PipelineUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+import com.capitalone.dashboard.misc.HygieiaException;
+import com.capitalone.dashboard.util.PipelineUtils;
+
+@ExtendWith(MockitoExtension.class)
 public class DashboardTest {
 
     @Test

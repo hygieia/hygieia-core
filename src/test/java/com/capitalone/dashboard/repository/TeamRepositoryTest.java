@@ -6,7 +6,9 @@ import com.capitalone.dashboard.model.Team;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
@@ -19,7 +21,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class TeamRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+public class TeamRepositoryTest {
     private static Team mockV1Team;
     private static Team mockJiraTeam;
     private static Team mockJiraTeam2;

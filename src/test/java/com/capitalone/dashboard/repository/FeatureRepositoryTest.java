@@ -13,12 +13,15 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Feature;
 
-public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+public class FeatureRepositoryTest  {
 	private static Feature mockV1Feature;
 	private static Feature mockJiraFeature;
 	private static Feature mockJiraFeature2;

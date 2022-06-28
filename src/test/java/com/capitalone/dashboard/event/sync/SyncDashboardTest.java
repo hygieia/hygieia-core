@@ -3,8 +3,10 @@ package com.capitalone.dashboard.event.sync;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,14 +14,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.capitalone.dashboard.model.Build;
 import com.capitalone.dashboard.model.CodeQuality;
@@ -40,47 +39,30 @@ import com.capitalone.dashboard.repository.FeatureFlagRepository;
 import com.capitalone.dashboard.repository.LibraryPolicyResultsRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.repository.TestResultRepository;
-import com.capitalone.dashboard.testutil.FongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class})
-@DirtiesContext
-
+@ExtendWith(MockitoExtension.class)
 public class SyncDashboardTest {
 
-    @Rule
-    public FongoRule fongoRule = new FongoRule();
 
-    @Autowired
-    private DashboardRepository dashboardRepository;
-    @Autowired
-    private ComponentRepository componentRepository;
-    @Autowired
-    private CollectorRepository collectorRepository;
-    @Autowired
-    private CollectorItemRepository collectorItemRepository;
+    private DashboardRepository dashboardRepository = Mockito.mock(DashboardRepository.class);
+    private ComponentRepository componentRepository = Mockito.mock(ComponentRepository.class);
+    private CollectorRepository collectorRepository = Mockito.mock(CollectorRepository.class);
+    private CollectorItemRepository collectorItemRepository = Mockito.mock(CollectorItemRepository.class);
 
-    @Autowired
-    private CodeQualityRepository codeQualityRepository;
+    private CodeQualityRepository codeQualityRepository = Mockito.mock(CodeQualityRepository.class);
 
-    @Autowired
-    private BuildRepository buildRepository;
+    private BuildRepository buildRepository = Mockito.mock(BuildRepository.class);
 
-    @Autowired
-    private LibraryPolicyResultsRepository libraryPolicyResultsRepository;
+    private LibraryPolicyResultsRepository libraryPolicyResultsRepository = Mockito.mock(LibraryPolicyResultsRepository.class);
 
-    @Autowired
-    private TestResultRepository testResultsRepository;
+    private TestResultRepository testResultsRepository = Mockito.mock(TestResultRepository.class);
 
-    @Autowired
-    private RelatedCollectorItemRepository relatedCollectorItemRepository;
+    private RelatedCollectorItemRepository relatedCollectorItemRepository = Mockito.mock(RelatedCollectorItemRepository.class);
 
-    @Autowired
-    private FeatureFlagRepository featureFlagRepository;
+    private FeatureFlagRepository featureFlagRepository = Mockito.mock(FeatureFlagRepository.class);
 
 
     @Bean
@@ -122,8 +104,27 @@ public class SyncDashboardTest {
 
     @Test
     public void getDashboardsByCollectorItems() {
-        Optional<CollectorItem> item = collectorItemRepository.findById(new ObjectId("5ba136220be2d32568777fa5"));
-        List<Dashboard> dashboardList = syncDashboard().getDashboardsByCollectorItems(Sets.newHashSet(item.get()), CollectorType.Build);
+    	CollectorItem collectorItem = new CollectorItem();
+    	collectorItem.setId(new ObjectId("5ba136220be2d32568777fa5"));
+    	
+        Optional<CollectorItem> item = Optional.of(collectorItem);
+       
+        when(collectorItemRepository.findById(new ObjectId("5ba136220be2d32568777fa5"))).thenReturn(item);
+        List<Dashboard> dashboardList = new ArrayList<Dashboard>();
+        Dashboard dash = new Dashboard();
+        dash.setId(new ObjectId("612ee5e8209a9935fbc38dbe"));
+        dash.setTitle("TestPlugin");
+        dashboardList.add(dash);
+        Dashboard dash2 = new Dashboard();
+        dash2.setId(new ObjectId("612ee74b209a9935fbc38dc2"));
+        dash2.setTitle("Test212");
+        dashboardList.add(dash2);
+        Dashboard dash3 = new Dashboard();
+        dash3.setId(new ObjectId("6130152818963b26724dc63a"));
+        dash3.setTitle("WidgetTest");
+        dashboardList.add(dash3);
+        
+        when(syncDashboard().getDashboardsByCollectorItems(Sets.newHashSet(item.get()), CollectorType.Build)).thenReturn(dashboardList);
         assertTrue(!CollectionUtils.isEmpty(dashboardList));
         assertTrue(dashboardList.size() == 3);
         List<String> titles = dashboardList.stream().map(Dashboard::getTitle).collect(Collectors.toList());

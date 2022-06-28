@@ -1,7 +1,6 @@
 package com.capitalone.dashboard.testutil;
 
 import com.capitalone.dashboard.client.RestOperationsSupplier;
-import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
@@ -23,6 +22,7 @@ public class BaseCollectorTestConfig {
 
     @Bean
     public TaskScheduler taskScheduler() {
-        return Mockito.mock(TaskScheduler.class);
+    	return null;
+      //  return Mockito.mock(TaskScheduler.class);
     }
 }

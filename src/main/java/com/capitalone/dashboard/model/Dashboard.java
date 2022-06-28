@@ -65,7 +65,7 @@ public class Dashboard extends BaseModel {
 
     Map<String,String> properties = new HashMap<>();
 
-    Dashboard() {
+    public Dashboard() {
     }
 
     public Dashboard(String template, String title, Application application, List<Owner> owners, DashboardType type, String configurationItemBusServName, String configurationItemBusAppName, List<String> activeWidgets, boolean scoreEnabled, ScoreDisplayType scoreDisplay) {
