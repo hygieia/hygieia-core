@@ -17,4 +17,5 @@ public interface AuditReportRepository extends CrudRepository<AuditReport, Objec
     List<AuditReport> findByAuditTypeAndAuditResponseIsNull(AuditType auditType);
     List<AuditReport> findByTimestampIsAfterAndAuditTypeAndTestResultsUrlIsNotNull(Long timestamp, AuditType auditType);
     List<AuditReport> findByAuditTypeAndEvaluationStatus(AuditType auditType, EvaluationStatus evaluationStatus);
+    AuditReport findByImageId(String imageId);
 }
