@@ -68,6 +68,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
         builder.socketTimeout(dbSocketTimeout);         // MongoDB default is 0, means no timeout
         builder.readPreference(ReadPreference.secondaryPreferred());    // Will read from secondary if available
+        builder.retryWrites(false);
         /* By default, the driver ensures that the hostname included in the server’s SSL certificate(s)
          * matches the hostname(s) provided when constructing a MongoClient().
          * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.
