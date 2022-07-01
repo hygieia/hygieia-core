@@ -190,7 +190,7 @@ public class ScopeOwnerRepositoryTest {
 						.toString());
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void testGetTeamIdById_IndexOutOfBoundsException() {
 		String testValue = "This does not exist";
 		assertEquals("Something returned that was not an IndexOutOfBoundsException", testValue,

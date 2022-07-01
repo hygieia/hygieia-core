@@ -154,7 +154,7 @@ public class TeamRepositoryTest {
                 teamRepo.findByTeamId(mockJiraTeam2.getTeamId()).getTeamId());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testGetTeamIdById_IndexOutOfBoundsException() {
         String testValue = "This does not exist";
         assertEquals("Something returned that was not an NullPointerException", testValue,

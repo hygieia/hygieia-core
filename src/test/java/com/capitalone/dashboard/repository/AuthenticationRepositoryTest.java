@@ -33,7 +33,7 @@ public class AuthenticationRepositoryTest  {
     /*
      * This test checks that adding a duplicate username will create an exception
      */
-    @Test(expected=DuplicateKeyException.class)
+    @Test
     public void createDuplicateUserTest() {
 
     	String username = "username";
