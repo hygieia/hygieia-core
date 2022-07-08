@@ -81,12 +81,10 @@ public class JunitXmlToTestCapabilityTransformer {
               testDuration += scenarioElement.getTime().longValue();
         if(scenarioElement.getError() != null){
             testStepFailCount++;
-        }else if (StringUtils.isNotBlank(scenarioElement.getSkipped()) && "0".equals(scenarioElement.getTime())){
+        }else if (StringUtils.isNotBlank(scenarioElement.getSkipped())){
             testStepSkippedCount++;
-        }else if(scenarioElement.getTime().doubleValue() > 0){
+        }else{
             testStepSuccessCount++;
-        }else {
-            testStepUnknownCount++;
         }
         // Set Duration
         testCase.setDuration(testDuration);
