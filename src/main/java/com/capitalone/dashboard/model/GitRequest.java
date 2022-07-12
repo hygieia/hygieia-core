@@ -62,6 +62,11 @@ public class GitRequest  {
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
     private Date upsertTime;
     private String clientReference;
+    private Boolean isAutoMerge;
+
+    public Boolean getAutoMerge() {return isAutoMerge;}
+
+    public void setAutoMerge(Boolean autoMerge) {this.isAutoMerge = autoMerge;}
 
     public GitRequest() {
         super();
