@@ -63,6 +63,9 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     @Query("{'collectorId' : ?0, 'options.jobUrl' : ?1}")
     CollectorItem findByJobUrl(ObjectId collectorId , String jobUrl);
 
+    @Query("{'options.artifactName' : ?0, 'options.artifactVersion' : ?1, 'options.testResultsUrl' : ?2}")
+    CollectorItem findByArtifactNameAndArtifactVersionAndTestResultsUrl(String artifactName, String artifactVersion, String testResultsUrl);
+
     default Iterable<CollectorItem> findAllByOptionNameValue(String optionName, String optionValue) {
         PathBuilder<CollectorItem> path = new PathBuilder<>(CollectorItem.class, "collectorItem");
         BooleanBuilder builder = new BooleanBuilder();
