@@ -10,6 +10,7 @@ public class RequestLog extends BaseModel {
     @Indexed
     private String apiUser;
     private String client;
+    private String XForwardedFor;
     @Indexed
     private String endpoint;
     private String method;
@@ -36,6 +37,10 @@ public class RequestLog extends BaseModel {
     public void setClient(String client) {
         this.client = client;
     }
+
+    public String getXForwardedFor() { return XForwardedFor;   }
+
+    public void setXForwardedFor(String XForwardedFor) { this.XForwardedFor = XForwardedFor;    }
 
     public String getEndpoint() {
         return endpoint;
@@ -139,6 +144,6 @@ public class RequestLog extends BaseModel {
 
     @Override
     public String toString() {
-        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] + [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [clientReference:" + getClientReference() + "]  [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
+        return "REST Request - " + "[" + this.method + "] [PARAMETERS:" + parameter + "] + [APIUSER:" + apiUser + "] [BODY:" + requestBody + "] [REMOTE:" + client + "] [X-forwarded-for:" + XForwardedFor + "] [clientReference:" + getClientReference() + "]  [STATUS:" + responseCode + "] [RESPONSE TIME:" + responseTime + "]";
     }
 }
