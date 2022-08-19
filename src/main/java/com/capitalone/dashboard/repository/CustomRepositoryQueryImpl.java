@@ -32,7 +32,6 @@ public class CustomRepositoryQueryImpl implements CustomRepositoryQuery {
     @Override
     public List<CollectorItem> findCollectorItemsBySubsetOptions(ObjectId id, Map<String, Object> allOptions, Map<String, Object> uniqueOptions,Map<String, Object> uniqueOptionsFromCollector) {
         Criteria c = Criteria.where("collectorId").is(id);
-        uniqueOptions.values().removeIf(d-> d.equals(null) || ((d instanceof String) && StringUtils.isEmpty((String) d)));
         for (Map.Entry<String, Object> e : allOptions.entrySet()) {
             if (uniqueOptionsFromCollector.containsKey(e.getKey())) {
                 c = getCriteria(uniqueOptions, c, e);
