@@ -1,9 +1,9 @@
 package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.testutil.FongoConfig;
+import com.capitalone.dashboard.testutil.EmbeddedMongoConfig;
+import com.capitalone.dashboard.testutil.EmbeddedMongoRule;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 import org.junit.Rule;
@@ -24,12 +24,13 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class})
+@ContextConfiguration(classes = {EmbeddedMongoConfig.class})
 @DirtiesContext
 public class CollectorItemRepositoryTest {
 
+    @Autowired
     @Rule
-    public FongoRule fongoRule = new FongoRule();
+    public EmbeddedMongoRule embeddedMongoRule;
 
     @Autowired
     private CollectorItemRepository collectorItemRepository;

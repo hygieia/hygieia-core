@@ -1,5 +1,24 @@
 package com.capitalone.dashboard.service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
+
 import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.ApiToken;
 import com.capitalone.dashboard.model.UserInfo;
@@ -10,28 +29,11 @@ import com.capitalone.dashboard.util.Encryption;
 import com.capitalone.dashboard.util.EncryptionException;
 import com.capitalone.dashboard.util.UnsafeDeleteException;
 import com.google.common.collect.Sets;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.log4j.Logger;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 @Component
 public class ApiTokenServiceImpl implements ApiTokenService {
 
-    private static final Logger LOGGER = Logger.getLogger(ApiTokenServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiTokenServiceImpl.class);
 
     private ApiTokenRepository apiTokenRepository;
 
@@ -97,27 +99,23 @@ public class ApiTokenServiceImpl implements ApiTokenService {
 
     @Override
     public void deleteToken(ObjectId id) {
-        ApiToken apiToken = apiTokenRepository.findOne(id);
-
-        if(apiToken == null) {
-            throw new UnsafeDeleteException("Cannot delete token ");
-        }else{
-            apiTokenRepository .delete(apiToken);
-        }
+        ApiToken apiToken = apiTokenRepository.findById(id)
+            .orElseThrow(() -> new UnsafeDeleteException("Cannot delete token "));
+        
+        apiTokenRepository.delete(apiToken);
     }
+
     @Override
     public String updateToken(Long expirationDt, ObjectId id) throws HygieiaException{
-        ApiToken apiToken = apiTokenRepository.findOne(id);
-        if(apiToken == null) {
-            throw new HygieiaException("Cannot find token ", HygieiaException.BAD_DATA);
-        }else{
-
-            apiToken.setExpirationDt(expirationDt);
-            apiTokenRepository.save(apiToken);
-        }
+        ApiToken apiToken = apiTokenRepository.findById(id)
+            .orElseThrow(() -> new HygieiaException("Cannot find token ", HygieiaException.BAD_DATA));
+        
+        apiToken.setExpirationDt(expirationDt);
+        apiTokenRepository.save(apiToken);
 
         return apiToken.getId().toString();
     }
+    
     private Collection<? extends GrantedAuthority> createAuthorities(Collection<UserRole> authorities) {
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>();
         authorities.forEach(authority -> grantedAuthorities.add(new SimpleGrantedAuthority(authority.name())));

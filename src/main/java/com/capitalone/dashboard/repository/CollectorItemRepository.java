@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  * A {@link CollectorItem} repository
  */
-public interface CollectorItemRepository extends BaseCollectorItemRepository<CollectorItem>, QueryDslPredicateExecutor<CollectorItem> {
+public interface CollectorItemRepository extends BaseCollectorItemRepository<CollectorItem>, QuerydslPredicateExecutor<CollectorItem> {
 
     //// FIXME: 1/20/16 I really hate this dashboard specific method in the collectoritem repository, should we move the dashboardcollectoritem repository into core?
     @Query(value="{'options.dashboardId': ?1, 'collectorId': ?0 }")

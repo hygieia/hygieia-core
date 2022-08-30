@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import com.capitalone.dashboard.model.Feature;
@@ -29,7 +29,7 @@ import com.capitalone.dashboard.model.Feature;
  * Repository for {@link Feature}.
  */
 public interface FeatureRepository extends CrudRepository<Feature, ObjectId>,
-		QueryDslPredicateExecutor<Feature>, FeatureRepositoryCustom {
+		QuerydslPredicateExecutor<Feature>, FeatureRepositoryCustom {
 	/**
 	 * This essentially returns the max change date from the collection, based
 	 * on the last change date (or default delta change date property) available

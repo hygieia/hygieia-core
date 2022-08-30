@@ -1,29 +1,29 @@
 package com.capitalone.dashboard.config;
 
-import com.capitalone.dashboard.repository.RepositoryPackage;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
-import com.mongodb.ReadPreference;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.capitalone.dashboard.repository.RepositoryPackage;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
+import com.mongodb.ReadPreference;
+import com.mongodb.WriteConcern;
 
 @Component
+
 @EnableMongoRepositories(basePackageClasses = RepositoryPackage.class)
-public class MongoConfig extends AbstractMongoConfiguration {
+public class MongoConfig extends AbstractMongoClientConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoConfig.class);
 
     @Value("${dbname:dashboarddb}")
@@ -55,72 +55,49 @@ public class MongoConfig extends AbstractMongoConfiguration {
     }
 
     @Override
-    @Bean
-    public MongoClient mongo() throws Exception {
+    protected boolean autoIndexCreation() {
+		return true;
+	}
 
-        MongoClient client;
+    @Override
+    @Bean
+    protected MongoClientSettings mongoClientSettings() {
         LOGGER.info("ReplicaSet" + dbreplicaset);
 
-        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
-        builder.maxConnectionIdleTime(60000);
-        builder.sslEnabled(Boolean.parseBoolean(dbssl));
-        builder.serverSelectionTimeout(30000);          // MongoDB default 30 seconds
-        builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
-        builder.socketTimeout(dbSocketTimeout);         // MongoDB default is 0, means no timeout
-        builder.readPreference(ReadPreference.secondaryPreferred());    // Will read from secondary if available
-        /* By default, the driver ensures that the hostname included in the server’s SSL certificate(s)
-         * matches the hostname(s) provided when constructing a MongoClient().
-         * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.
-         * To toggle, add sslInvalidHostNameAllowed=true in application.properties
-         */
-        builder.sslInvalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
-        MongoClientOptions opts = builder.build();
+        String connectionString = Boolean.parseBoolean(dbreplicaset)
+            ? String.format("mongodb://%s", String.join(",", hostport))
+            : String.format("mongodb://%s:%s", host, port);
 
-        if (Boolean.parseBoolean(dbreplicaset)) {
-            List<ServerAddress> serverAddressList = new ArrayList<>();
-            for (String h : hostport) {
-                String myHost = h.substring(0, h.indexOf(":"));
-                int myPort = Integer.parseInt(h.substring(h.indexOf(":") + 1));
-                ServerAddress serverAddress = new ServerAddress(myHost, myPort);
-                serverAddressList.add(serverAddress);
-            }
+        MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder()
+            .applyConnectionString(new ConnectionString(connectionString))
+            .readPreference(ReadPreference.secondaryPreferred())
+            .applyToSslSettings(sslSettings -> {
+                sslSettings.enabled(Boolean.parseBoolean(dbssl));
+                sslSettings.invalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
+            })
+            .applyToSocketSettings(socketSettings -> {
+                socketSettings.connectTimeout(dbConnectTimeout, TimeUnit.MILLISECONDS);
+                socketSettings.readTimeout(dbSocketTimeout, TimeUnit.MILLISECONDS);
+            })
+            .applyToConnectionPoolSettings(connectionPoolSettings -> {
+                connectionPoolSettings.maxConnectionIdleTime(60000, TimeUnit.MILLISECONDS);
+            })
+            .applyToClusterSettings(clusterSettings -> {
+                clusterSettings.serverSelectionTimeout(30000, TimeUnit.MILLISECONDS);
+            });
 
-            for (ServerAddress s : serverAddressList) {
-                LOGGER.info("Initializing Mongo Client server ReplicaSet at: {}", s);
-            }
-
-            if (StringUtils.isEmpty(userName)) {
-                client = new MongoClient(serverAddressList);
-            } else {
-                MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
-                        userName, databaseName, password.toCharArray());
-                client = new MongoClient(serverAddressList, Collections.singletonList(mongoCredential), opts);
-            }
-        } else {
-            ServerAddress serverAddr = new ServerAddress(host, port);
-            LOGGER.info("Initializing Mongo Client server at: {}", serverAddr);
-            if (StringUtils.isEmpty(userName)) {
-                client = new MongoClient(serverAddr);
-            } else {
-                MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
-                        userName, databaseName, password.toCharArray());
-                client = new MongoClient(serverAddr, Collections.singletonList(mongoCredential), opts);
-            }
-
+        if (!StringUtils.isEmpty(userName)) {
+            settingsBuilder.credential(
+                MongoCredential.createScramSha1Credential(userName, databaseName, password.toCharArray())
+            );
         }
-        LOGGER.info("Connecting to Mongo: {}", client);
-        return client;
+
+        return settingsBuilder.build();
     }
 
     @Override
     protected String getMappingBasePackage() {
         return com.capitalone.dashboard.model.Application.class.getPackage().getName();
-    }
-
-    @Override
-    @Bean
-    public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(mongo(), getDatabaseName());
     }
 
     @Bean

@@ -19,7 +19,7 @@ import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.ScopeOwnerCollectorItem;
 
-public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
+public class ScopeOwnerRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
 	private static ScopeOwnerCollectorItem mockV1ScopeOwner;
 	private static ScopeOwnerCollectorItem mockJiraScopeOwner;
 	private static ScopeOwnerCollectorItem mockJiraScopeOwner2;

@@ -5,13 +5,13 @@ import com.capitalone.dashboard.model.TestResult;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  * Repository for {@link TestResult} data.
  */
-public interface TestResultRepository extends CrudRepository<TestResult, ObjectId>, QueryDslPredicateExecutor<TestResult> {
+public interface TestResultRepository extends CrudRepository<TestResult, ObjectId>, QuerydslPredicateExecutor<TestResult> {
 
     /**
      * Finds the {@link TestResult} with the given execution ID for a specific

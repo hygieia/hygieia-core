@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.testutil;
 
 import com.capitalone.dashboard.client.RestOperationsSupplier;
+
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

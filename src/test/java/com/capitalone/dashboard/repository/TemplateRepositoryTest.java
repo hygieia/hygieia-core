@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public class TemplateRepositoryTest extends FongoBaseRepositoryTest {
+public class TemplateRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
 
     private static Template mockTemplate;
 
@@ -52,7 +52,7 @@ public class TemplateRepositoryTest extends FongoBaseRepositoryTest {
         ObjectId templateId = ObjectId.get();
         mockTemplate.setId(templateId);
         templateRepository.save(mockTemplate);
-        templateRepository.delete(templateId);
+        templateRepository.delete(mockTemplate);
         Template actual = templateRepository.findByTemplate("template1");
         assertNull(actual);
     }

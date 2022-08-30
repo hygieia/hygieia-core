@@ -14,7 +14,6 @@ import com.capitalone.dashboard.model.SCM;
 import org.bson.types.ObjectId;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;

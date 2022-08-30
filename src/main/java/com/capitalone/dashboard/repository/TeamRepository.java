@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * Repository for {@link Team}.
  */
 public interface TeamRepository extends CrudRepository<Team, ObjectId>,
-        QueryDslPredicateExecutor<Team> {
+        QuerydslPredicateExecutor<Team> {
 
     Team findByTeamId(String teamId);
 

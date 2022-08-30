@@ -19,7 +19,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class TeamRepositoryTest extends FongoBaseRepositoryTest {
+public class TeamRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
     private static Team mockV1Team;
     private static Team mockJiraTeam;
     private static Team mockJiraTeam2;

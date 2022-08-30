@@ -258,7 +258,7 @@ public class EnvironmentComponentEventListener extends HygieiaMongoEventListener
      * @return
      */
     private List<Dashboard> findTeamDashboardsForEnvironmentComponent(EnvironmentComponent environmentComponent){
-        CollectorItem deploymentCollectorItem = collectorItemRepository.findOne(environmentComponent.getCollectorItemId());
+        CollectorItem deploymentCollectorItem = collectorItemRepository.findById(environmentComponent.getCollectorItemId()).orElse(null);
         List<Component> components = componentRepository.findByDeployCollectorItemId(deploymentCollectorItem.getId());
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         return dashboardRepository.findByApplicationComponentIdsIn(componentIds);

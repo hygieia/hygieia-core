@@ -8,9 +8,8 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.GenericCollectorItemRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.testutil.BaseCollectorTestConfig;
-import com.capitalone.dashboard.testutil.FongoConfig;
+import com.capitalone.dashboard.testutil.EmbeddedMongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 import org.junit.Rule;
@@ -30,11 +29,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class, BaseCollectorTestConfig.class})
+@ContextConfiguration(classes = {EmbeddedMongoConfig.class, BaseCollectorTestConfig.class})
 public class CollectorTaskWithGenericItemTest {
-
-    @Rule
-    public FongoRule fongoRule = new FongoRule();
 
     @Autowired
     private CollectorItemRepository collectorItemRepository;

@@ -1,5 +1,18 @@
 package com.capitalone.dashboard.event;
 
+import static com.capitalone.dashboard.util.PipelineUtils.isMoveCommitToBuild;
+import static com.capitalone.dashboard.util.PipelineUtils.processPreviousFailedBuilds;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+import org.springframework.util.CollectionUtils;
+
 import com.capitalone.dashboard.event.sync.SyncDashboard;
 import com.capitalone.dashboard.model.BaseModel;
 import com.capitalone.dashboard.model.Build;
@@ -18,18 +31,6 @@ import com.capitalone.dashboard.repository.CommitRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
-import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import static com.capitalone.dashboard.util.PipelineUtils.isMoveCommitToBuild;
-import static com.capitalone.dashboard.util.PipelineUtils.processPreviousFailedBuilds;
 
 @org.springframework.stereotype.Component
 public class BuildEventListener extends HygieiaMongoEventListener<Build> {
@@ -142,8 +143,8 @@ public class BuildEventListener extends HygieiaMongoEventListener<Build> {
             //return an empty list if the build is not associated with a Dashboard
             return dashboards;
         }
-        CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());
-        if(buildCollectorItem != null) {
+        CollectorItem buildCollectorItem = collectorItemRepository.findById(build.getCollectorItemId()).orElse(null);
+        if (buildCollectorItem != null) {
             List<Component> components = componentRepository.findByBuildCollectorItemId(buildCollectorItem.getId());
             if (!components.isEmpty()) {
                 //return an empty list if the build is not associated with a Dashboard

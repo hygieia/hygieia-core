@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DashboardCreateTests extends FongoBaseRepositoryTest {
+public class DashboardCreateTests extends EmbeddedMongoBaseRepositoryTest {
 
     @Autowired
     private DashboardRepository dashboardRepository;
@@ -65,7 +65,7 @@ public class DashboardCreateTests extends FongoBaseRepositoryTest {
 
 
 
-        for (Dashboard d : dashboardRepository.findAll(new Sort(Sort.Direction.ASC, "title"))) {
+        for (Dashboard d : dashboardRepository.findAll(Sort.by(Sort.Direction.ASC, "title"))) {
             System.out.println(d.getTitle());
             assertEquals(d.getTitle(), "Jays's Dashboard");
         }

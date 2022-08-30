@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Scope;
 
-public class ScopeRepositoryTest extends FongoBaseRepositoryTest {
+public class ScopeRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
 	private static Scope mockV1Scope;
 	private static Scope mockJiraScope;
 	private static Scope mockJiraScope2;

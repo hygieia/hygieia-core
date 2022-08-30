@@ -1,14 +1,13 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.CollectorType;
-import com.capitalone.dashboard.model.Component;
-import com.capitalone.dashboard.testutil.FongoConfig;
-import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
-import com.google.common.collect.Lists;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
+
+import java.io.IOException;
+import java.util.List;
+
 import org.bson.types.ObjectId;
-import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,22 +16,21 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.testutil.EmbeddedMongoConfig;
+import com.capitalone.dashboard.testutil.EmbeddedMongoRule;
+import com.capitalone.dashboard.util.LoadTestData;
+import com.google.common.collect.Lists;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class})
+@ContextConfiguration(classes = {EmbeddedMongoConfig.class})
 @DirtiesContext
 public class ComponentRepositoryTest {
 
+    @Autowired
     @Rule
-    public FongoRule fongoRule = new FongoRule();
+    public EmbeddedMongoRule embeddedMongoRule;
 
     @Autowired
     private ComponentRepository componentRepository;

@@ -7,7 +7,7 @@ import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.repository.CollectorItemRepository;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
-import com.capitalone.dashboard.repository.FongoBaseRepositoryTest;
+import com.capitalone.dashboard.repository.EmbeddedMongoBaseRepositoryTest;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class DashboardUtilsTest extends FongoBaseRepositoryTest{
+public class DashboardUtilsTest extends EmbeddedMongoBaseRepositoryTest {
 
     @Autowired
     private ComponentRepository componentRepository;
@@ -47,7 +47,7 @@ public class DashboardUtilsTest extends FongoBaseRepositoryTest{
         Component component3 = getComponent("TestComponent2");
         component3.addCollectorItem(collector11.getCollectorType(), collectorItem2);
 
-        componentRepository.save(Arrays.asList(component1,component2,component3));
+        componentRepository.saveAll(Arrays.asList(component1,component2,component3));
 
 
         Set<ObjectId> uniqueIds = DashboardUtils.getUniqueCollectorItemIDsFromAllComponents(componentRepository,collector1);

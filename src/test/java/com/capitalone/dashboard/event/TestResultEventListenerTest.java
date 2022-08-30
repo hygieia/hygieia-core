@@ -19,19 +19,19 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -88,10 +88,10 @@ public class TestResultEventListenerTest {
     }
 
     private void setupData() {
-        when(collectorItemRepository.findOne(Matchers.any(ObjectId.class))).thenReturn(getTestResultCollectorItem());
-        when(collectorRepository.save(Matchers.any(Collector.class))).thenReturn(getPerfToolsCollector());
-        when(collectorItemRepository.save(Matchers.any(CollectorItem.class))).thenReturn(getNewPerfCollectorItem(getPerfToolsCollector()));
-        when(performanceRepository.save(Matchers.any(Performance.class))).thenReturn(getPerformanceDoc());
+        when(collectorItemRepository.findById(any(ObjectId.class))).thenReturn(Optional.of(getTestResultCollectorItem()));
+        when(collectorRepository.save(any(Collector.class))).thenReturn(getPerfToolsCollector());
+        when(collectorItemRepository.save(any(CollectorItem.class))).thenReturn(getNewPerfCollectorItem(getPerfToolsCollector()));
+        when(performanceRepository.save(any(Performance.class))).thenReturn(getPerformanceDoc());
     }
 
     public CollectorItem getNewPerfCollectorItem(Collector perfToolsCollector) {
