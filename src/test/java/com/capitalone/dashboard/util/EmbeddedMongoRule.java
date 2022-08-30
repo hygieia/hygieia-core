@@ -1,4 +1,4 @@
-package com.capitalone.dashboard.testutil;
+package com.capitalone.dashboard.util;
 
 import org.junit.rules.ExternalResource;
 import org.springframework.data.mongodb.core.MongoTemplate;

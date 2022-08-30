@@ -49,6 +49,7 @@
         <jaxbimpl.version>2.3.6</jaxbimpl.version>
         <joda-time.version>2.11.1</joda-time.version>
         <mongo-java-server.version>1.41.0</mongo-java-server.version>
+        <netty.version>4.1.80.Final</netty.version>
 
         <!-- Plugins -->
         <apache.rat.plugin.version>0.14</apache.rat.plugin.version>
@@ -282,16 +283,21 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+
+        <!-- Mongo Java Server -->
         <dependency>
             <groupId>de.bwaldvogel</groupId>
             <artifactId>mongo-java-server</artifactId>
-            <version>${mongo-java-server.version}</version>            
-        </dependency>
+            <version>${mongo-java-server.version}</version>
+            <scope>test</scope>
+        </dependency>        
         <dependency>
             <groupId>de.bwaldvogel</groupId>
             <artifactId>mongo-java-server-memory-backend</artifactId>
             <version>${mongo-java-server.version}</version>            
+            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>

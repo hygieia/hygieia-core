@@ -1,8 +1,8 @@
 package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.testutil.EmbeddedMongoConfig;
-import com.capitalone.dashboard.testutil.EmbeddedMongoRule;
+import com.capitalone.dashboard.util.EmbeddedMongoConfig;
+import com.capitalone.dashboard.util.EmbeddedMongoRule;
 import com.capitalone.dashboard.util.LoadTestData;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;

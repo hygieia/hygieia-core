@@ -18,8 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Component;
-import com.capitalone.dashboard.testutil.EmbeddedMongoConfig;
-import com.capitalone.dashboard.testutil.EmbeddedMongoRule;
+import com.capitalone.dashboard.util.EmbeddedMongoConfig;
+import com.capitalone.dashboard.util.EmbeddedMongoRule;
 import com.capitalone.dashboard.util.LoadTestData;
 import com.google.common.collect.Lists;
 

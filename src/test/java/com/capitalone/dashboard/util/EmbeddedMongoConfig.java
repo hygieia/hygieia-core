@@ -1,4 +1,4 @@
-package com.capitalone.dashboard.testutil;
+package com.capitalone.dashboard.util;
 
 import java.net.InetSocketAddress;
 
