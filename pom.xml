@@ -31,7 +31,6 @@
 
     <properties>
         <!-- Dependencies -->
-        <spring-security.version>4.2.20.RELEASE</spring-security.version>
         <tomcat.version>9.0.65</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.15</commons-codec.version>
