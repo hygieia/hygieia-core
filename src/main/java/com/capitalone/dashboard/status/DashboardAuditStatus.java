@@ -29,8 +29,8 @@ public enum DashboardAuditStatus {
     DASHBOARD_DEPLOYMENT_SCRIPTS_CONFIGURED,
     DASHBOARD_AUTO_DISCOVERED_EVIDENCES_FOUND,
     DASHBOARD_INFRASTRUCTURE_EVIDENCES_FOUND,
-    //Statuses for invalid component/BA information in lookup request
+    //Statuses for invalid component/BA information
     DASHBOARD_COMPONENT_BA_MISMATCH, DASHBOARD_INVALID_COMPONENT, DASHBOARD_INVALID_BA,
-    // Fallback default status for when no data is found in lookup call
+    // Fallback default status for when no data is found
     DASHBOARD_AUDIT_NO_DATA
 }
