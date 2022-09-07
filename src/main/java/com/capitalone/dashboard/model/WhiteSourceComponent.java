@@ -11,7 +11,7 @@ public class WhiteSourceComponent extends CollectorItem {
     public static final String ORG_NAME = "orgName";
     public static final String LOCAL_CONFIG = "localConfig";
 
-    public boolean getLocalConfig(){return (Boolean) getOptions().get(LOCAL_CONFIG);}
+    public Boolean getLocalConfig(){return (Boolean) getOptions().get(LOCAL_CONFIG);}
     public void setLocalConfig(Boolean b){getOptions().put(LOCAL_CONFIG, b);}
 
     public String getOrgName() {
