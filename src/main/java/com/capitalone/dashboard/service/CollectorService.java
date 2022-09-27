@@ -140,5 +140,5 @@ public interface CollectorService {
      *  Removing CollectorItems that are not connected
      *  to a Dashboard
      * */
-     Integer deleteDisconnectedItems(String collectorName);
+     Integer deleteDisconnectedItems(CollectorType collectorType, String collectorName, long gracePeriod);
 }

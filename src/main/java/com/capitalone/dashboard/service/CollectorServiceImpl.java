@@ -419,17 +419,17 @@ public class CollectorServiceImpl implements CollectorService {
         throw new HygieiaException("invalid collectorName or projectName", HygieiaException.NOTHING_TO_UPDATE);
     }
 
-    public Integer deleteDisconnectedItems(String collectorName) {
+    public Integer deleteDisconnectedItems( CollectorType collectorType, String collectorName, long endDate) {
         // db cleaning metrics
         long startTime = System.currentTimeMillis();
         int count = 0;
 
-        Collector collector = collectorRepository.findByName(collectorName);
-        if (Objects.isNull(collector)) {
+        Optional<Collector> collector = collectorRepository.findByCollectorTypeAndName(collectorType, collectorName).stream().findFirst();
+        if (!collector.isPresent()) {
             return -1;
         }
-
-        List<CollectorItem> collectorItems = collectorItemRepository.findByCollectorId(collector.getId());
+        System.out.println("endate: " + endDate);
+        List<CollectorItem> collectorItems = collectorItemRepository.findByCollectorIdAndLastUpdatedBetween(collector.get().getId(), 0l, endDate);
         LOG.info(String.format("deleteDisconnectedItems :: found %d enabled projects to verify", collectorItems.size()));
 
         // iterate through enabled items and check if they are connected to a dashboard
