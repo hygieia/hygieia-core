@@ -429,14 +429,14 @@ public class CollectorServiceImpl implements CollectorService {
             return -1;
         }
 
-        List<CollectorItem> enabledItems = collectorItemRepository.findByCollectorIdAndEnabled(collector.getId(), true);
-        LOG.info(String.format("deleteDisconnectedItems :: found %d enabled projects to verify", enabledItems.size()));
+        List<CollectorItem> collectorItems = collectorItemRepository.findByCollectorId(collector.getId());
+        LOG.info(String.format("deleteDisconnectedItems :: found %d enabled projects to verify", collectorItems.size()));
 
         // iterate through enabled items and check if they are connected to a dashboard
-        for (CollectorItem collectorItem : enabledItems) {
+        for (CollectorItem collectorItem : collectorItems) {
             List<com.capitalone.dashboard.model.Component> component = componentRepository.findByLibraryPolicyCollectorItems(collectorItem.getId());
             if (component.isEmpty() || Objects.isNull(component)) {
-                LOG.info(String.format("findOldCollectorItems :: Removing (#%d of %d):: could not find a dashboard for collectorItemID: %s", enabledItems.indexOf(collectorItem), enabledItems.size(), collectorItem.getId().toString()));
+                LOG.info(String.format("findOldCollectorItems :: Removing (#%d of %d):: could not find a dashboard for collectorItemID: %s", collectorItems.indexOf(collectorItem)+1, collectorItems.size(), collectorItem.getId().toString()));
                 collectorItemRepository.delete(collectorItem.getId());
                 count++;
             }

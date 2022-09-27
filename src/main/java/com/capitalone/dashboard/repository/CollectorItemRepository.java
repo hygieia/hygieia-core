@@ -43,8 +43,8 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     @Query(value="{ 'collectorId': { $in: ?0 }, ?1 : {$regex : '.*?2.*', $options: 'i'} ,  ?3 : {$regex : '.*?4.*', $options: 'i'}}")
     Page<CollectorItem> findByCollectorIdAndSearchFields(List<ObjectId> collectorId,String searchField1, String searchFieldValue1, String searchField2,String searchFieldValue2,  Pageable pageable);
 
-    @Query(value = "{collectorId: ?0, enabled: ?1}")
-    List<CollectorItem> findByCollectorIdAndEnabled(ObjectId collectorId, Boolean enabled);
+    @Query(value = "{collectorId: ?0}")
+    List<CollectorItem> findByCollectorId(ObjectId collectorId);
 
     @Query(value="{'options.teamId' : ?0}")
     CollectorItem findByJiraTeamId(String teamId);
