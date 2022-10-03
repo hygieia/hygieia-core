@@ -21,9 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.bson.types.ObjectId;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,7 +51,6 @@ public class CollectorServiceImpl implements CollectorService {
     private final DashboardRepository dashboardRepository;
     private final CustomRepositoryQuery customRepositoryQuery;
     private final CmdbRepository cmdbRepository;
-    private final Logger LOG = LoggerFactory.getLogger(CollectorServiceImpl.class);
 
     @Autowired
     public CollectorServiceImpl(CollectorRepository collectorRepository,
@@ -419,29 +416,4 @@ public class CollectorServiceImpl implements CollectorService {
         throw new HygieiaException("invalid collectorName or projectName", HygieiaException.NOTHING_TO_UPDATE);
     }
 
-    public Integer deleteDisconnectedItems( CollectorType collectorType, String collectorName, long endDate) {
-        // db cleaning metrics
-        long startTime = System.currentTimeMillis();
-        int count = 0;
-
-        Optional<Collector> collector = collectorRepository.findByCollectorTypeAndName(collectorType, collectorName).stream().findFirst();
-        if (!collector.isPresent()) {
-            return -1;
-        }
-        System.out.println("endate: " + endDate);
-        List<CollectorItem> collectorItems = collectorItemRepository.findByCollectorIdAndLastUpdatedBetween(collector.get().getId(), 0l, endDate);
-        LOG.info(String.format("deleteDisconnectedItems :: found %d enabled projects to verify", collectorItems.size()));
-
-        // iterate through enabled items and check if they are connected to a dashboard
-        for (CollectorItem collectorItem : collectorItems) {
-            List<com.capitalone.dashboard.model.Component> component = componentRepository.findByLibraryPolicyCollectorItems(collectorItem.getId());
-            if (component.isEmpty() || Objects.isNull(component)) {
-                LOG.info(String.format("findOldCollectorItems :: Removing (#%d of %d):: could not find a dashboard for collectorItemID: %s", collectorItems.indexOf(collectorItem)+1, collectorItems.size(), collectorItem.getId().toString()));
-                collectorItemRepository.delete(collectorItem.getId());
-                count++;
-            }
-        }
-        LOG.info(String.format("deleteDisconnectedItems :: Finished (duration=%s) :: Found %d items with no corresponding dashboard.", System.currentTimeMillis() - startTime, count));
-        return count;
-    }
 }
