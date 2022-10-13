@@ -4,6 +4,7 @@ import com.capitalone.dashboard.repository.RepositoryPackage;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
+import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.ReadPreference;
 import org.slf4j.Logger;
@@ -46,6 +47,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
     private int dbConnectTimeout;
     @Value("${dbsockettimeout:900000}")
     private int dbSocketTimeout;
+    @Value("${dbreadpreference:primary}")
+    private String readPreference;
     @Value("${sslInvalidHostNameAllowed:false}")
     private String sslInvalidHostNameAllowed;
 
@@ -64,16 +67,21 @@ public class MongoConfig extends AbstractMongoConfiguration {
         MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
         builder.maxConnectionIdleTime(60000);
         builder.sslEnabled(Boolean.parseBoolean(dbssl));
-        builder.serverSelectionTimeout(30000);          // MongoDB default 30 seconds
-        builder.connectTimeout(dbConnectTimeout);       // MongoDB default varies, may be 10 seconds
-        builder.socketTimeout(dbSocketTimeout);         // MongoDB default is 0, means no timeout
-        builder.readPreference(ReadPreference.secondaryPreferred());    // Will read from secondary if available
+        builder.serverSelectionTimeout(30000);                           // MongoDB default 30 seconds
+        builder.connectTimeout(dbConnectTimeout);                        // MongoDB default varies, may be 10 seconds
+        builder.socketTimeout(dbSocketTimeout);                          // MongoDB default is 0, means no timeout
+        /* By default, the driver uses the primary node's read preference
+         * readPreference property helps to toggle the reading between nodes, assigned primary by default.
+         * MongoDB clients route read operations to the members of a replica set
+         */
+        builder.readPreference(ReadPreference.valueOf(readPreference));
         /* By default, the driver ensures that the hostname included in the server’s SSL certificate(s)
          * matches the hostname(s) provided when constructing a MongoClient().
          * sslInvalidHostNameAllowed property helps to toggle the hostname verification, assigned false by default.
          * To toggle, add sslInvalidHostNameAllowed=true in application.properties
          */
         builder.sslInvalidHostNameAllowed(Boolean.parseBoolean(sslInvalidHostNameAllowed));
+
         MongoClientOptions opts = builder.build();
 
         if (Boolean.parseBoolean(dbreplicaset)) {
