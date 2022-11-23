@@ -3,9 +3,9 @@ package com.capitalone.dashboard.repository;
 import com.capitalone.dashboard.model.AuditReport;
 import com.capitalone.dashboard.model.AuditType;
 import com.capitalone.dashboard.model.EvaluationStatus;
-import com.capitalone.dashboard.testutil.FongoConfig;
+import com.capitalone.dashboard.util.EmbeddedMongoConfig;
+import com.capitalone.dashboard.util.EmbeddedMongoRule;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,12 +21,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class})
+@ContextConfiguration(classes = {EmbeddedMongoConfig.class})
 @DirtiesContext
 public class AuditReportRepositoryTest {
 
+    @Autowired
     @Rule
-    public FongoRule fongoRule = new FongoRule();
+    public EmbeddedMongoRule embeddedMongoRule;
 
     @Autowired
     private AuditReportRepository auditReportRepository;

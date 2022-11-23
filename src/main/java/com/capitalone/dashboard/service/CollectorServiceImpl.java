@@ -1,5 +1,30 @@
 package com.capitalone.dashboard.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.Cmdb;
 import com.capitalone.dashboard.model.Collector;
@@ -15,32 +40,9 @@ import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.CustomRepositoryQuery;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.IterableUtils;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class CollectorServiceImpl implements CollectorService {
@@ -67,7 +69,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public Iterable<Collector> all() {
-        Iterable<Collector> collectors = collectorRepository.findAll(new Sort(Sort.Direction.ASC, "name"));
+        Iterable<Collector> collectors = collectorRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return collectors;
     }
 
@@ -78,7 +80,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public List<Collector> collectorsById(ObjectId id) {
-        return collectorRepository.findById(id);
+        return collectorRepository.findAllById(id);
     }
 
     @Override
@@ -158,11 +160,13 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public CollectorItem getCollectorItem(ObjectId id) throws HygieiaException {
-        CollectorItem item = collectorItemRepository.findOne(id);
-        if(item == null){
-            throw new HygieiaException("Failed to find collectorItem by Id.", HygieiaException.BAD_DATA);
-        }
-        item.setCollector(collectorRepository.findOne(item.getCollectorId()));
+        CollectorItem item = collectorItemRepository.findById(id)
+            .orElseThrow(() -> new HygieiaException("Failed to find collectorItem by Id.", HygieiaException.BAD_DATA));
+
+        collectorRepository.findById(item.getCollectorId()).ifPresent(collector -> {
+            item.setCollector(collector);
+        });
+
         return item;
     }
 
@@ -186,8 +190,9 @@ public class CollectorServiceImpl implements CollectorService {
         if (collectorItem==null){
             return Collections.emptyList();
         }
-        Collector collector = collectorRepository.findOne(collectorItem.getCollectorId());
-        if (collector == null){
+
+        Collector collector = collectorRepository.findById(collectorItem.getCollectorId()).orElse(null);
+        if (collector != null) {
             return Collections.emptyList();
         }
         Map<String, Object> uniqueOptions = collector.getUniqueFields()
@@ -206,7 +211,7 @@ public class CollectorServiceImpl implements CollectorService {
     // just update the new credentials.
     @Override
     public CollectorItem createCollectorItemSelectOptions(CollectorItem item, Map<String, Object> allOptions, Map<String, Object> uniqueOptions) {
-        Collector collector =  collectorRepository.findOne(item.getCollectorId());
+        Collector collector =  collectorRepository.findById(item.getCollectorId()).orElse(null);
         Map<String,Object> uniqueFieldsFromCollector = collector.getUniqueFields();
         List<CollectorItem> existing = customRepositoryQuery.findCollectorItemsBySubsetOptions(
                 item.getCollectorId(), allOptions, uniqueOptions,uniqueFieldsFromCollector);
@@ -292,7 +297,7 @@ public class CollectorServiceImpl implements CollectorService {
     public List<CollectorItem> getCollectorItemForComponent(String id, String type) {
         ObjectId oid = new ObjectId(id);
         CollectorType ctype = CollectorType.fromString(type);
-        Component component = componentRepository.findOne(oid);
+        Component component = componentRepository.findById(oid).orElse(null);
 
         List<CollectorItem> items = component.getCollectorItems(ctype);
 
@@ -302,13 +307,13 @@ public class CollectorServiceImpl implements CollectorService {
         for (CollectorItem item : items) {
             ids.add(item.getId());
         }
-        return (List<CollectorItem>) collectorItemRepository.findAll(ids);
+        return (List<CollectorItem>) collectorItemRepository.findAllById(ids);
     }
 
     @Override
     public void deletePropertiesInCollectorById(String id) {
         ObjectId objectId = new ObjectId(id);
-        Collector collectorById = collectorRepository.findOne(objectId);
+        Collector collectorById = collectorRepository.findById(objectId).orElse(null);
         Map<String, Object> blankMap = new HashMap<>();
 
         if(collectorById.getProperties().size() > 0) {
@@ -345,7 +350,7 @@ public class CollectorServiceImpl implements CollectorService {
         }
 
         //delete the collector item.
-        collectorItemRepository.delete(objectId);
+        collectorItemRepository.delete(ci);
     }
 
     private Collector collectorById(ObjectId collectorId, List<Collector> collectors) {

@@ -1,5 +1,21 @@
 package com.capitalone.dashboard.collector;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.bson.types.ObjectId;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.GenericCollectorItem;
 import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
@@ -8,33 +24,13 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.GenericCollectorItemRepository;
 import com.capitalone.dashboard.repository.RelatedCollectorItemRepository;
 import com.capitalone.dashboard.testutil.BaseCollectorTestConfig;
-import com.capitalone.dashboard.testutil.FongoConfig;
+import com.capitalone.dashboard.util.EmbeddedMongoConfig;
 import com.capitalone.dashboard.util.LoadTestData;
-import com.github.fakemongo.junit.FongoRule;
 import com.google.common.collect.Lists;
-import org.bson.types.ObjectId;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {FongoConfig.class, BaseCollectorTestConfig.class})
+@ContextConfiguration(classes = {EmbeddedMongoConfig.class, BaseCollectorTestConfig.class})
 public class CollectorTaskWithGenericItemTest {
-
-    @Rule
-    public FongoRule fongoRule = new FongoRule();
 
     @Autowired
     private CollectorItemRepository collectorItemRepository;

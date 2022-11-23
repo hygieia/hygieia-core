@@ -1,25 +1,22 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
-import com.capitalone.dashboard.testutil.FongoConfig;
-import com.google.common.collect.Lists;
-import org.apache.commons.collections4.CollectionUtils;
-import org.bson.types.ObjectId;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.capitalone.dashboard.model.relation.RelatedCollectorItem;
+import com.google.common.collect.Lists;
 
 
-public class RelatedCollectorItemRepositoryTest extends FongoBaseRepositoryTest {
+public class RelatedCollectorItemRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
 
     @Autowired
     private RelatedCollectorItemRepository relatedCollectorItemRepository;

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Feature;
 
-public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
+public class FeatureRepositoryTest extends EmbeddedMongoBaseRepositoryTest {
 	private static Feature mockV1Feature;
 	private static Feature mockJiraFeature;
 	private static Feature mockJiraFeature2;

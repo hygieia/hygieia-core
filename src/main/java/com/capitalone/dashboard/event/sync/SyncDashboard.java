@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -109,7 +110,8 @@ public class SyncDashboard {
             ObjectId componentId = dashboard.getApplication().getComponents().get(0).getId();
             if (componentId == null) continue;
             StandardWidget standardWidget = new StandardWidget(collectorType, componentId);
-            Component component = componentRepository.findOne(componentId);
+
+            Component component = componentRepository.findById(componentId).orElse(null);
             if (component == null) continue;
 
             // if the additional association logic does not comply do not associate
@@ -168,7 +170,7 @@ public class SyncDashboard {
         CodeQuality entity = codeQualityRepository.findTop1ByCollectorItemIdOrderByTimestampDesc(collectorItem.getId());
         if(entity == null || entity.getBuildId() == null) return false;
 
-        Build build = buildRepository.findOne(entity.getBuildId());
+        Build build = buildRepository.findById(entity.getBuildId()).orElse(null);
         if(build == null || CollectionUtils.isEmpty(build.getCodeRepos())) return false;
 
         Set<RepoBranch> validRepoBranchSet = buildValidRepoBranches(component, getRepoType(build));
@@ -227,7 +229,7 @@ public class SyncDashboard {
         if(!HygieiaUtils.allowSync(featureFlag, CollectorType.Build)) return;
 
         // Find the collectorItem of build
-        CollectorItem buildCollectorItem = collectorItemRepository.findOne(build.getCollectorItemId());
+        CollectorItem buildCollectorItem = collectorItemRepository.findById(build.getCollectorItemId()).orElse(null);
 
         //Find possible collectors and then the collector ids for SCM
         List<Collector> scmCollectors = collectorRepository.findAllByCollectorType(CollectorType.SCM);
@@ -276,9 +278,11 @@ public class SyncDashboard {
         if(!HygieiaUtils.allowSync(featureFlag, CollectorType.CodeQuality)) return;
         ObjectId buildId = codeQuality.getBuildId();
         if (buildId == null) return;
-        Build build = buildRepository.findOne(buildId);
-        if (build == null) return;
-        relatedCollectorItemRepository.saveRelatedItems(build.getCollectorItemId(), codeQuality.getCollectorItemId(), this.getClass().toString(), Reason.CODEQUALITY_TRIGGERED_REASON.getAction());
+
+        Build build = buildRepository.findById(buildId).orElse(null);
+        if (build != null) {       
+            relatedCollectorItemRepository.saveRelatedItems(build.getCollectorItemId(), codeQuality.getCollectorItemId(), this.getClass().toString(), Reason.CODEQUALITY_TRIGGERED_REASON.getAction());
+        }
     }
 
 
@@ -291,17 +295,15 @@ public class SyncDashboard {
     public void sync(RelatedCollectorItem relatedCollectorItem,boolean addWidget) throws SyncException{
         ObjectId left = relatedCollectorItem.getLeft();
         ObjectId right = relatedCollectorItem.getRight();
-        CollectorItem leftItem = collectorItemRepository.findOne(left);
-        CollectorItem rightItem = collectorItemRepository.findOne(right);
+        CollectorItem leftItem = collectorItemRepository.findById(left)
+            .orElseThrow(() -> new SyncException("Missing left collector item"));
+        CollectorItem rightItem = collectorItemRepository.findById(right)
+            .orElseThrow(() -> new SyncException("Missing right collector item"));
 
-        if (leftItem == null) throw new SyncException("Missing left collector item");
-        if (rightItem == null) throw new SyncException("Missing right collector item");
-
-        Collector leftCollector = collectorRepository.findOne(leftItem.getCollectorId());
-        Collector rightCollector = collectorRepository.findOne(rightItem.getCollectorId());
-
-        if (leftCollector == null) throw new SyncException("Missing left collector");
-        if (rightCollector == null) throw new SyncException("Missing right collector");
+        Collector leftCollector = collectorRepository.findById(leftItem.getCollectorId())
+            .orElseThrow(() -> new SyncException("Missing left collector"));
+        Collector rightCollector = collectorRepository.findById(rightItem.getCollectorId())
+            .orElseThrow(() -> new SyncException("Missing right collector"));
 
         List<Dashboard> dashboardsWithLeft = getDashboardsByCollectorItems(Sets.newHashSet(leftItem), leftCollector.getCollectorType());
         List<Dashboard> dashboardsWithRight = getDashboardsByCollectorItems(Sets.newHashSet(rightItem), rightCollector.getCollectorType());

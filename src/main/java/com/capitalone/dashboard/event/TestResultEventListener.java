@@ -192,7 +192,7 @@ public class TestResultEventListener extends AbstractMongoEventListener<TestResu
      */
     public CollectorItem getPerfCollectorItem(TestResult testResult) {
 
-        CollectorItem testResultCollItem = collectorItemRepository.findOne(testResult.getCollectorItemId());
+        CollectorItem testResultCollItem = collectorItemRepository.findById(testResult.getCollectorItemId()).orElse(null);
         String description = testResultCollItem.getDescription();
         String niceName = testResultCollItem.getNiceName();
         Optional<Map<String, Object>> optOptions = Optional.ofNullable(testResultCollItem.getOptions());

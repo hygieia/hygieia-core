@@ -1,16 +1,18 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorType;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
-import java.util.List;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorType;
 
 /**
  * A {@link Collector} repository
  */
 public interface CollectorRepository extends BaseCollectorRepository<Collector> {
 
-    List<Collector> findById(ObjectId id);
+    List<Collector> findAllById(ObjectId id);
     List<Collector> findAllByCollectorType(CollectorType collectorType);
+
 }

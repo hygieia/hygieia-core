@@ -1,18 +1,19 @@
 package com.capitalone.dashboard.event;
 
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.Dashboard;
-import com.capitalone.dashboard.model.DashboardType;
-import com.capitalone.dashboard.repository.CollectorItemRepository;
-import com.capitalone.dashboard.repository.CollectorRepository;
-import com.mongodb.DBObject;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.AfterDeleteEvent;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import org.springframework.stereotype.Component;
+
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.repository.CollectorItemRepository;
+import com.capitalone.dashboard.repository.CollectorRepository;
 
 /**
  * Listens for Dashboard lifecycle events to create and delete Product collector CollectorItems
@@ -66,8 +67,8 @@ public class DashboardEventListener extends AbstractMongoEventListener<Dashboard
      */
     @Override
     public void onAfterDelete(AfterDeleteEvent<Dashboard> event) {
-        DBObject dbo = event.getDBObject();
-        String dashboardId = dbo.get("id").toString();
+        Document doc = event.getSource();
+        String dashboardId = doc.get("id").toString();
 
         CollectorItem item = getDashboardCollectorItem(dashboardId, getProductCollector().getId());
         if (item != null) {

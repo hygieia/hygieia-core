@@ -3,7 +3,6 @@ package com.capitalone.dashboard.repository;
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorType;
 import org.bson.types.ObjectId;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
