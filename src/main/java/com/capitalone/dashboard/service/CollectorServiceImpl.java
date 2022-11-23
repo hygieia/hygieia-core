@@ -420,4 +420,5 @@ public class CollectorServiceImpl implements CollectorService {
         }
         throw new HygieiaException("invalid collectorName or projectName", HygieiaException.NOTHING_TO_UPDATE);
     }
+
 }
