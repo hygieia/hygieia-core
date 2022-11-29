@@ -34,7 +34,7 @@
         <spring-security.version>5.5.7</spring-security.version>
         <springweb.version>5.3.20</springweb.version>
         <springbeans.version>5.3.20</springbeans.version>        
-        <tomcat.version>10.1.0-M10</tomcat.version>
+        <tomcat.version>10.1.0-M14</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
@@ -44,7 +44,7 @@
         <fongo.version>2.2.0-RC2</fongo.version>
         <guava.version>31.1-jre</guava.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
-        <jackson.version>2.11.4</jackson.version>
+        <jackson.version>2.14.0</jackson.version>
 
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.9</logback.version>
@@ -161,6 +161,12 @@
             </exclusions>
         </dependency>
         <dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-core</artifactId>
+		    <version>${tomcat.version}</version>
+		</dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
              <version>${springweb.version}</version>
@@ -237,18 +243,17 @@
         </dependency>
         
         <dependency>
-    <groupId>org.hibernate.validator</groupId>
-    <artifactId>hibernate-validator</artifactId>
-    <version>${hibernate-validator.version}</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>${hibernate-validator.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.1</version>
+		    <scope>provided</scope>
+		</dependency>
 
         <!-- Query DSL -->
         <dependency>
@@ -316,12 +321,11 @@
             <artifactId>mockito-core</artifactId>
             <version>4.6.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
-<dependency>
-    <groupId>net.bytebuddy</groupId>
-    <artifactId>byte-buddy</artifactId>
-    <version>1.12.12</version>
-</dependency>
+		<dependency>
+		    <groupId>net.bytebuddy</groupId>
+		    <artifactId>byte-buddy</artifactId>
+		    <version>1.12.12</version>
+		</dependency>
        <dependency>
 		    <groupId>org.junit.jupiter</groupId>
 		    <artifactId>junit-jupiter-engine</artifactId>
@@ -364,6 +368,16 @@
             <artifactId>jaxb-api</artifactId>
             <version>${jaxbapi.version}</version>
         </dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
