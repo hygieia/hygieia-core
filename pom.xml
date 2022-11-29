@@ -444,7 +444,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <release>11</release>
                     <source>${java.compilation.source}</source>
                     <target>${java.compilation.source}</target>
                 </configuration>
