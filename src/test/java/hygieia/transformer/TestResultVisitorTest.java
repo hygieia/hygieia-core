@@ -6,12 +6,12 @@ import com.capitalone.dashboard.model.quality.MochaJsSpecReport;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -25,7 +25,7 @@ public class TestResultVisitorTest {
     private CucumberJsonReport cucumberTestReport;
     private MochaJsSpecReport mochaTestReport;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();

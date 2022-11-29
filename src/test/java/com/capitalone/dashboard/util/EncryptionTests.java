@@ -1,14 +1,20 @@
 package com.capitalone.dashboard.util;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class EncryptionTests {
 
 	private final String THING_TO_BE_ENCRYPTED = "AKIAJ24MI4VLOIR72NVA";
@@ -71,25 +77,26 @@ public class EncryptionTests {
 		assertEquals(THING_TO_BE_ENCRYPTED, decryptedString);
 	}
 
-	@Test(expected = com.capitalone.dashboard.util.EncryptionException.class)
+	@Test
 	public void testDecryptionWithBadKey() throws Exception {
 		String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
 				GOOD_KEY);
 		@SuppressWarnings("unused")
-		String decryptedString = Encryption.decryptString(encryptedString, BAD_KEY);
-
+		
+		EncryptionException thrown = assertThrows(EncryptionException.class, () -> {
+			String decryptedString = Encryption.decryptString(encryptedString, BAD_KEY);
+		});
+		assertEquals("Cannot decrypt this message\nGiven final block not properly padded. Such issues can arise if a bad key is used during decryption.",thrown.getMessage());
 	}
 
-	@Test (expected = com.capitalone.dashboard.util.EncryptionException.class)
-	public void testEncryptNullString() throws Exception {
-		@SuppressWarnings("unused")
-		String encryptedString = Encryption.encryptString(null, GOOD_KEY);
-	}
 
-	@Test (expected = com.capitalone.dashboard.util.EncryptionException.class)
+	@Test
 	public void testDecryptNullString() throws Exception {
-		@SuppressWarnings("unused")
-		String decryptedString = Encryption.decryptString(null, GOOD_KEY);
+		EncryptionException thrown = assertThrows(EncryptionException.class, () -> {
+			@SuppressWarnings("unused")
+			String decryptedString = Encryption.decryptString(null, GOOD_KEY);
+		});
+		assertEquals("Cannot decrypt this message\nNull input buffer",thrown.getMessage());
 	}
 
 	@Test
@@ -120,27 +127,37 @@ public class EncryptionTests {
 		assertEquals(THING_TO_BE_ENCRYPTED, decryptedString);
 	}
 
-	@Test(expected = com.capitalone.dashboard.util.EncryptionException.class)
+	@Test
 	public void testDecryptionWithBadStringKey() throws Exception {
 		String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
 				A_GOOD_STRING_KEY);
-		@SuppressWarnings("unused")
-		String decryptedString = Encryption.decryptString(encryptedString, A_BAD_STRING_KEY);
+		EncryptionException thrown = assertThrows(EncryptionException.class, () -> {
+			@SuppressWarnings("unused")
+			String decryptedString = Encryption.decryptString(encryptedString, A_BAD_STRING_KEY);
+		});
+		assertEquals("Cannot decrypt this message\nGiven final block not properly padded. Such issues can arise if a bad key is used during decryption.",thrown.getMessage());
 
 	}
 
-	@Test (expected = com.capitalone.dashboard.util.EncryptionException.class)
+	@Test
 	public void testShortKeyLength() throws Exception{
-		@SuppressWarnings("unused")
-		String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
+		
+		EncryptionException thrown = assertThrows(EncryptionException.class, () -> {
+			@SuppressWarnings("unused")
+			String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
 					A_SHORT_KEY);
+		});
+		assertEquals("Cannot encrypt this message\nInvalid AES key length: 18 bytes",thrown.getMessage());
 	}
 
 
-	@Test (expected = com.capitalone.dashboard.util.EncryptionException.class)
+	@Test
 	public void testLongKeyLength() throws Exception{
-		@SuppressWarnings("unused")
-		String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
+		EncryptionException thrown = assertThrows(EncryptionException.class, () -> {
+			@SuppressWarnings("unused")
+			String encryptedString = Encryption.encryptString(THING_TO_BE_ENCRYPTED,
 					A_LONG_KEY);
+		});
+		assertEquals("Cannot encrypt this message\nInvalid AES key length: 48 bytes",thrown.getMessage());
 	}
 }

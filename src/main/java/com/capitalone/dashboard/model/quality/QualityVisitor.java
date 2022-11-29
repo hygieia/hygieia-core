@@ -19,4 +19,6 @@ public interface QualityVisitor<T> {
     void visit(MochaJsSpecReport mochaJsSpecReport);
 
     void visit(CucumberJsonReport cucumberJsonReport);
+
+    void visit(CustomFeatureTestReport customFeatureTestReport);
 }

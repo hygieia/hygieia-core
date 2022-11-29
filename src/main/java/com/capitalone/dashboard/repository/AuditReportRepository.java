@@ -20,5 +20,7 @@ public interface AuditReportRepository extends CrudRepository<AuditReport, Objec
     List<AuditReport> findByAuditTypeAndEvaluationStatus(AuditType auditType, EvaluationStatus evaluationStatus);
     List<AuditReport> findByAuditTypeAndImageIdExists(AuditType auditType, boolean exists);
     AuditReport findByImageId(String imageId);
-    
+
+    AuditReport findTopByIdentifierUrlAndAuditType(String identifierUrl, AuditType auditType);
+
 }

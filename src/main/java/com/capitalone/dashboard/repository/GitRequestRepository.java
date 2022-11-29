@@ -3,7 +3,7 @@ package com.capitalone.dashboard.repository;
 import com.capitalone.dashboard.model.GitRequest;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Repository for {@link GitRequest} data.
  */
-public interface GitRequestRepository  extends CrudRepository<GitRequest, ObjectId>, QueryDslPredicateExecutor<GitRequest> {
+public interface GitRequestRepository  extends CrudRepository<GitRequest, ObjectId>, QuerydslPredicateExecutor<GitRequest> {
 
 
     List<GitRequest> findByCollectorItemIdAndRequestType(ObjectId collectorItemId, String requestType);
@@ -26,6 +26,7 @@ public interface GitRequestRepository  extends CrudRepository<GitRequest, Object
     List<GitRequest> findRequestNumberAndLastUpdated(ObjectId collectorItemId);
 
     GitRequest findByCollectorItemIdAndScmRevisionNumber(ObjectId collectorItemId, String revisionNumber);
+    List<GitRequest> findAllByCollectorItemIdAndScmRevisionNumber(ObjectId collectorItemId, String revisionNumber);
 
     GitRequest findByCollectorItemIdAndNumberAndRequestType(ObjectId collectorItemId, String number, String requestType);
 
@@ -34,6 +35,8 @@ public interface GitRequestRepository  extends CrudRepository<GitRequest, Object
                                                           Long scmCommitTimestampThreshold);
 
     GitRequest findByCollectorItemIdAndNumber(ObjectId collectorItemId, String number);
+
+    List<GitRequest> findAllByCollectorItemIdAndNumberOrderByTimestampDesc(ObjectId collectorItemId, String number);
 
     List<GitRequest> findByScmUrlIgnoreCaseAndScmBranchIgnoreCaseAndCreatedAtGreaterThanEqualAndMergedAtLessThanEqual(String scmUrl, String scmBranch, long beginDt, long endDt);
 
@@ -45,11 +48,21 @@ public interface GitRequestRepository  extends CrudRepository<GitRequest, Object
 
     GitRequest findByScmUrlIgnoreCaseAndScmBranchIgnoreCaseAndNumberAndRequestTypeIgnoreCase(String scmUrl, String scmBranch, String number, String requestType);
 
+    List<GitRequest> findAllByScmUrlIgnoreCaseAndScmBranchIgnoreCaseAndNumberAndRequestTypeIgnoreCase(String scmUrl, String scmBranch, String number, String requestType);
+
     @Query(value="{'$or':[{'scmRevisionNumber' : ?0}, {'scmMergeEventRevisionNumber' : ?0}]}")
     GitRequest findByScmRevisionNumberOrScmMergeEventRevisionNumber(String revisionNumber);
+
+    @Query("{'$or':[{'scmRevisionNumber' : ?0}, {'scmMergeEventRevisionNumber' : ?0}]}")
+    List<GitRequest> findAllByScmRevisionNumberOrScmMergeEventRevisionNumberOrderByTimestampDesc(String revisionNumber);
 
     @Query(value="{'commits.scmRevisionNumber' : ?0}")
     GitRequest findByCommitScmRevisionNumber(String revisionNumber);
 
+    @Query("{'commits.scmRevisionNumber' : ?0}")
+    List<GitRequest> findAllByCommitScmRevisionNumberOrderByTimestampDesc(String revisionNumber);
+
     GitRequest findTopByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
+
+    List<GitRequest> findAllByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
 }

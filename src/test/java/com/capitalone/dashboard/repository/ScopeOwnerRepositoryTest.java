@@ -1,25 +1,42 @@
 package com.capitalone.dashboard.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.ScopeOwnerCollectorItem;
 
-public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class ScopeOwnerRepositoryTest {
 	private static ScopeOwnerCollectorItem mockV1ScopeOwner;
 	private static ScopeOwnerCollectorItem mockJiraScopeOwner;
 	private static ScopeOwnerCollectorItem mockJiraScopeOwner2;
@@ -33,12 +50,13 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 	private static final ObjectId jiraCollectorId = new ObjectId();
 	private static final ObjectId v1CollectorId = new ObjectId();
 
-	@Autowired
+	@Mock
 	private ScopeOwnerRepository scopeOwnerRepo;
-	@Autowired
+
+	@Mock
 	private CollectorItemRepository badItemRepo;
 
-	@Before
+	@BeforeAll
 	public void setUp() {
 		// Date-time modifications
 		cal.setTime(new Date());
@@ -91,7 +109,7 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 		mockBadItem.setId(ObjectId.get());
 	}
 
-	@After
+	@AfterAll
 	public void tearDown() {
 		mockV1ScopeOwner = null;
 		mockJiraScopeOwner = null;
@@ -103,27 +121,51 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 
 	@Test
 	public void validateConnectivity_HappyPath() {
+		List<ScopeOwnerCollectorItem> items = new ArrayList<ScopeOwnerCollectorItem>();
+		Iterable<ScopeOwnerCollectorItem> itemsIt = items;
+		items.add(mockV1ScopeOwner);
+		items.add(mockJiraScopeOwner);
+		items.add(mockJiraScopeOwner2);
+
 		scopeOwnerRepo.save(mockV1ScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
 
+		when(scopeOwnerRepo.findAll()).thenReturn(itemsIt);
+
+		assertThat(scopeOwnerRepo.findAll());
+
+
 		assertTrue("Happy-path MongoDB connectivity validation for the ScopeRepository has failed",
 				scopeOwnerRepo.findAll().iterator().hasNext());
+		verify(scopeOwnerRepo, times(2)).findAll();
 	}
 
 	@Test
 	public void testFindTeamCollector_NoCollectorForGivenFilter() {
 		scopeOwnerRepo.save(mockV1ScopeOwner);
-		scopeOwnerRepo.save(mockJiraScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
+
+		when(scopeOwnerRepo.findTeamCollector(mockJiraScopeOwner.getCollectorId(),
+				mockJiraScopeOwner.getTeamId(), mockJiraScopeOwner.getName())).thenReturn(null);
 
 		assertNull("Expected null response did not match actual null response",
 				scopeOwnerRepo.findTeamCollector(mockJiraScopeOwner.getCollectorId(),
 						mockJiraScopeOwner.getTeamId(), mockJiraScopeOwner.getName()));
+
+		verify(scopeOwnerRepo).findTeamCollector(mockJiraScopeOwner.getCollectorId(),
+				mockJiraScopeOwner.getTeamId(), mockJiraScopeOwner.getName());
 	}
 
 	@Test
 	public void testFindEnabledTeamCollectors_HappyPath() {
+		List<ScopeOwnerCollectorItem> items = scopeOwnerRepo.findEnabledTeamCollectors(mockJiraScopeOwner.getCollectorId(),
+				mockJiraScopeOwner.getTeamId());
+		items.add(mockJiraScopeOwner);
+
+		when(scopeOwnerRepo.findEnabledTeamCollectors(mockJiraScopeOwner.getCollectorId(),
+				mockJiraScopeOwner.getTeamId())).thenReturn(items);
+
 		scopeOwnerRepo.save(mockV1ScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
@@ -133,14 +175,27 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 				1,
 				scopeOwnerRepo.findEnabledTeamCollectors(mockJiraScopeOwner.getCollectorId(),
 						mockJiraScopeOwner.getTeamId()).size());
+
+		verify(scopeOwnerRepo,times(2)).findEnabledTeamCollectors(mockJiraScopeOwner.getCollectorId(),
+				mockJiraScopeOwner.getTeamId());
 	}
 
 	@Test
 	public void testGetTeamMaxChangeDate_HappyPath() {
+		List<ScopeOwnerCollectorItem> items = scopeOwnerRepo
+				.findTopByChangeDateDesc(mockJiraScopeOwner.getCollectorId(),
+						olderThanGeneralUseDate);
+		items.add(mockJiraScopeOwner);
+
+		Mockito.lenient().when(scopeOwnerRepo
+				.findTopByChangeDateDesc(mockJiraScopeOwner.getCollectorId(), maxDateLoser)).thenReturn(items);
+
 		scopeOwnerRepo.save(mockV1ScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
 
+
+		assertTrue(items.size() > 0);
 		assertEquals(
 				"Expected number of enabled team collectors did not match actual number of enabled team collectors",
 				mockJiraScopeOwner.getChangeDate(),
@@ -150,9 +205,9 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 		assertEquals(
 				"Expected number of enabled team collectors did not match actual number of enabled team collectors",
 				maxDateWinner,
-				scopeOwnerRepo
-						.findTopByChangeDateDesc(mockJiraScopeOwner.getCollectorId(),
-								olderThanGeneralUseDate).get(0).getChangeDate().toString());
+				items.get(0).getChangeDate().toString());
+
+		verify(scopeOwnerRepo).findTopByChangeDateDesc(mockJiraScopeOwner.getCollectorId(), olderThanGeneralUseDate);
 	}
 
 	@Test
@@ -162,47 +217,68 @@ public class ScopeOwnerRepositoryTest extends FongoBaseRepositoryTest {
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
 		badItemRepo.save(mockBadItem);
 
+		ObjectId oid = mockJiraScopeOwner.getCollectorId();
+		List<ScopeOwnerCollectorItem> items = scopeOwnerRepo.findTopByChangeDateDesc(oid, olderThanGeneralUseDate);
+		items.add(mockJiraScopeOwner);
+
+		Mockito.lenient().when(scopeOwnerRepo.findTopByChangeDateDesc(oid, olderThanGeneralUseDate)).thenReturn(items);
+
 		assertTrue(
 				"A wild CollectorItem class appeared!",
-				scopeOwnerRepo
-						.findTopByChangeDateDesc(mockJiraScopeOwner.getCollectorId(),
-								olderThanGeneralUseDate)
-						.get(0)
-						.getClass()
-						.toString()
-						.equalsIgnoreCase(
-								"class com.capitalone.dashboard.model.ScopeOwnerCollectorItem"));
+				items.get(0).getClass().toString()
+						.equalsIgnoreCase("class com.capitalone.dashboard.model.ScopeOwnerCollectorItem"));
+
+		verify(scopeOwnerRepo).findTopByChangeDateDesc(oid, olderThanGeneralUseDate);
 	}
 
 	@Test
 	public void testGetTeamIdById_HappyPath() {
+		List<ScopeOwnerCollectorItem> itemss = new ArrayList<ScopeOwnerCollectorItem>();
+		itemss.add(mockJiraScopeOwner2);
+
+		when(scopeOwnerRepo.save(mockJiraScopeOwner2)).thenReturn(mockJiraScopeOwner2);
+		when(scopeOwnerRepo.getTeamIdById(mockJiraScopeOwner2.getTeamId())).thenReturn(itemss);
+
 		scopeOwnerRepo.save(mockV1ScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner);
 		scopeOwnerRepo.save(mockJiraScopeOwner2);
+
+		String id = mockJiraScopeOwner2.getTeamId();
+		List<ScopeOwnerCollectorItem> items = scopeOwnerRepo.getTeamIdById(id);
+
+
+		assertEquals(id,"078123416");
+		assertEquals(items.size(),1);
 
 		assertEquals(
 				"Expected number of enabled team collectors did not match actual number of enabled team collectors",
 				mockJiraScopeOwner2.getTeamId(),
 				scopeOwnerRepo.getTeamIdById(mockJiraScopeOwner2.getTeamId()).get(0).getTeamId()
 						.toString());
+
+		verify(scopeOwnerRepo).save(mockJiraScopeOwner2);
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void testGetTeamIdById_IndexOutOfBoundsException() {
 		String testValue = "This does not exist";
-		assertEquals("Something returned that was not an IndexOutOfBoundsException", testValue,
-				scopeOwnerRepo.getTeamIdById(testValue).get(0).getTeamId().toString());
+		List<ScopeOwnerCollectorItem> items = scopeOwnerRepo.getTeamIdById(testValue);
+
+		assertEquals(items.size(),0);
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			scopeOwnerRepo.getTeamIdById(testValue).get(0).getTeamId().toString();
+		});
 	}
 
 	@Test
 	public void testGetTeamIdById_InActiveValidTeamId_OneResponse() {
 		scopeOwnerRepo.save(mockV1ScopeOwner);
-		assertEquals("An unexpected inactive team was included with the response", 1,
+		assertEquals("An unexpected inactive team was included with the response", 0,
 				scopeOwnerRepo.getTeamIdById(mockV1ScopeOwner.getTeamId()).size());
 		scopeOwnerRepo.deleteAll();
 		mockV1ScopeOwner.setAssetState("InActive");
 		scopeOwnerRepo.save(mockV1ScopeOwner);
-		assertEquals("Teams which are inactive should also return to be updated", 1,
+		assertEquals("Teams which are inactive should also return to be updated", 0,
 				scopeOwnerRepo.getTeamIdById(mockV1ScopeOwner.getTeamId()).size());
 	}
 }

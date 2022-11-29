@@ -1,15 +1,18 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.AuditResult;
-import com.capitalone.dashboard.model.AuditType;
+import java.util.Optional;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import com.capitalone.dashboard.model.AuditResult;
+import com.capitalone.dashboard.model.AuditType;
+
 public interface AuditResultRepository extends PagingAndSortingRepository<AuditResult, ObjectId> {
 
-    AuditResult findById(ObjectId id);
+    Optional<AuditResult> findById(ObjectId id);
     Page<AuditResult> findByAuditType(AuditType auditType, Pageable pageable);
     Iterable<AuditResult> findByDashboardTitle(String dashboardTitle);
     Iterable<AuditResult> findByDashboardTitleAndAuditType(String dashboardTitle, AuditType auditType);

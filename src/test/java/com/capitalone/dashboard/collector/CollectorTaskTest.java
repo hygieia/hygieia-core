@@ -3,12 +3,12 @@ package com.capitalone.dashboard.collector;
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.scheduling.TaskScheduler;
 
 import static org.junit.Assert.assertEquals;
@@ -17,16 +17,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CollectorTaskTest {
     @Mock private TaskScheduler taskScheduler;
 
     private static final String COLLECTOR_NAME = "Test Collector";
     private CollectorTask<Collector> collector;
 
-    @Before
+    @BeforeEach
     public void init() {
         collector = new CollectorTaskTest.TestCollectorTask();
+        System.out.println(collector);
     }
 
     @Test
@@ -144,7 +145,7 @@ public class CollectorTaskTest {
         }
 
         @Override
-        public Collector getCollector() { return null; }
+        public Collector getCollector() { return new Collector(); }
 
         @Override
         public BaseCollectorRepository<Collector> getCollectorRepository() { return null; }

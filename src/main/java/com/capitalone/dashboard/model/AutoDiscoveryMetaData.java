@@ -1,14 +1,12 @@
 package com.capitalone.dashboard.model;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * AutoDiscovery Metadata
@@ -35,10 +33,10 @@ public class AutoDiscoveryMetaData {
 
     private String businessApplication;
 
-    @Ignore
+   //@Ignore
     private Owner owner;
 
-    @Ignore
+    //@Ignore
     private List<Owner> owners;
 
     private Map<String, String> properties = new HashMap<>();

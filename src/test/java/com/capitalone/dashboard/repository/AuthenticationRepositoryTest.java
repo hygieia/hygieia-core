@@ -4,36 +4,42 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
 import com.capitalone.dashboard.model.Authentication;
 
-public class AuthenticationRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+public class AuthenticationRepositoryTest  {
 
 	private static int testNumber = 0;
 
-	private static String username  ;
+	private static String username;
 
-	@Before
+	@BeforeEach
 	public void updateUsername(){
 		username = "usernameTest" + testNumber;
 		testNumber++;
 	}
 
-    @Autowired
-    private AuthenticationRepository authenticationRepository;
+	private AuthenticationRepository authenticationRepository = Mockito.mock(AuthenticationRepository.class);
 
 
     /*
      * This test checks that adding a duplicate username will create an exception
      */
-    @Test(expected=DuplicateKeyException.class)
+    @Test
     public void createDuplicateUserTest() {
 
     	String username = "username";
@@ -60,10 +66,19 @@ public class AuthenticationRepositoryTest extends FongoBaseRepositoryTest {
 
 
 		authenticationRepository.save(user1);
+
+		when(authenticationRepository.findByUsername(username)).thenReturn(user1);
+
 		Authentication u = authenticationRepository.findByUsername(username);
 		assertTrue(u.checkPassword("pass1"));
 		// try against a new object
 		Authentication hashedUser1 = new Authentication(username, "pass1");
+
+		when(authenticationRepository.findByUsername(username)).thenReturn(hashedUser1);
+		Field pwFieldHashed = hashedUser1.getClass().getDeclaredField("password");
+		pwFieldHashed.setAccessible(true);
+		pwFieldHashed.set(hashedUser1, "pass1");
+
 		assertEquals(u.getPassword(), hashedUser1.getPassword());
 	}
 
@@ -74,6 +89,9 @@ public class AuthenticationRepositoryTest extends FongoBaseRepositoryTest {
 		Authentication user1 = new Authentication(username, "pass1");
 
 		authenticationRepository.save(user1);
+
+		when(authenticationRepository.findByUsername(username)).thenReturn(user1);
+
 		Authentication u = authenticationRepository.findByUsername(username);
 		assertTrue(u.checkPassword("pass1"));
 	}
@@ -85,6 +103,9 @@ public class AuthenticationRepositoryTest extends FongoBaseRepositoryTest {
 		Authentication user1 = new Authentication(username, "pass2");
 
 		authenticationRepository.save(user1);
+
+		when(authenticationRepository.findByUsername(username)).thenReturn(user1);
+
 		Authentication u = authenticationRepository.findByUsername(username);
 		assertFalse(u.checkPassword("pass1"));
 	}

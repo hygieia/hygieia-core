@@ -27,6 +27,14 @@ public class GithubGraphQLQuery {
     public static final String QUERY_BASE_COMMIT_AND_PULL_AFTER = "query ($owner: String!, $name: String!, $branch: String!, $afterPull : String!, $afterCommit : String!, $since: GitTimestamp!, $fetchCount: Int!) {\n" +
             "  repository(owner: $owner, name: $name) {\n";
 
+    public static final String QUERY_BASE_COMMENT_AFTER = "query ($owner: String!, $name: String!, $afterComment : String!, $prNumber: Int!) {\n" +
+            "  repository(owner: $owner, name: $name) {\n";
+
+    public static final String QUERY_BASE_REVIEW_AFTER = "query ($owner: String!, $name: String!, $afterReview : String!, $prNumber: Int!) {\n" +
+            "  repository(owner: $owner, name: $name) {\n";
+
+    public static final String QUERY_BASE_COMMENT_AND_REVIEW_AFTER = "query ($owner: String!, $name: String!, $afterComment : String!, $afterReview: String!, $prNumber: Int!) {\n" +
+            "  repository(owner: $owner, name: $name) {\n";
 
     public static final String QUERY_COMMIT_HEADER_FIRST = "  ref(qualifiedName: $branch) {\n" +
             "    target {\n" +
@@ -43,13 +51,15 @@ public class GithubGraphQLQuery {
 
     public static final String QUERY_PULL_HEADER_AFTER = "    pullRequests(first: $fetchCount, after : $afterPull, baseRefName: $branch, orderBy: {field: UPDATED_AT, direction: DESC}) {\n";
 
+    public static final String QUERY_PULL_HEADER_BY_ID = "    pullRequest(number: $prNumber) {\n";
+
     public static final String QUERY_ISSUES_HEADER_FIRST = "    issues(first: $fetchCount, orderBy: {field: UPDATED_AT, direction: DESC}) {\n";
 
     public static final String QUERY_ISSUES_HEADER_AFTER = "    issues(first: $fetchCount, after : $afterIssue, orderBy: {field: UPDATED_AT, direction: DESC}) {\n";
 
 
     public static final String QUERY_COMMIT_MAIN =
-            "          pageInfo {\n" +
+                    "          pageInfo {\n" +
                     "            endCursor\n" +
                     "            hasNextPage\n" +
                     "          }\n" +
@@ -98,7 +108,7 @@ public class GithubGraphQLQuery {
 
 
     public static final String QUERY_PULL_MAIN =
-            "      totalCount \n" +
+                    "      totalCount \n" +
                     "      pageInfo {\n" +
                     "        endCursor\n" +
                     "        hasNextPage\n" +
@@ -189,8 +199,12 @@ public class GithubGraphQLQuery {
                     "              }\n" +
                     "            }\n" +
                     "          }\n" +
-                    "          comments(first: 100) {\n" +
+                    "          comments(first: 50) {\n" +
                     "            totalCount\n" +
+                    "            pageInfo {\n" +
+                    "              endCursor\n" +
+                    "              hasNextPage\n" +
+                    "            }\n" +
                     "            nodes {\n" +
                     "              bodyText\n" +
                     "                author {\n" +
@@ -200,8 +214,12 @@ public class GithubGraphQLQuery {
                     "              updatedAt \n" +
                     "            }\n" +
                     "          }\n" +
-                    "          reviews(last: 100) {\n" +
+                    "          reviews(first: 50) {\n" +
                     "            totalCount\n" +
+                    "            pageInfo {\n" +
+                    "              endCursor\n" +
+                    "              hasNextPage\n" +
+                    "            }\n" +
                     "            nodes {\n" +
                     "              id\n" +
                     "              bodyText\n" +
@@ -217,6 +235,47 @@ public class GithubGraphQLQuery {
                     "      }\n" +
                     "    }\n";
 
+    public static final String QUERY_COMMENTS =
+                    "      comments(first: 100 after: $afterComment) {\n" +
+                    "        totalCount\n" +
+                    "        pageInfo {\n" +
+                    "          endCursor\n" +
+                    "          hasNextPage\n" +
+                    "        }\n" +
+                    "        nodes {\n" +
+                    "          bodyText\n" +
+                    "            author {\n" +
+                    "              login\n" +
+                    "            }\n" +
+                    "          createdAt \n" +
+                    "          updatedAt \n" +
+                    "        }\n" +
+                    "      }\n";
+
+
+    public static final String QUERY_REVIEWS =
+                    "      reviews(last: 100 after: $afterReview) {\n" +
+                    "        totalCount\n" +
+                    "        pageInfo {\n" +
+                    "          endCursor\n" +
+                    "          hasNextPage\n" +
+                    "        }\n" +
+                    "        nodes {\n" +
+                    "          id\n" +
+                    "          bodyText\n" +
+                    "          state\n" +
+                    "            author {\n" +
+                    "              login\n" +
+                    "            }\n" +
+                    "          createdAt \n" +
+                    "          updatedAt \n" +
+                    "        }\n" +
+                    "      }\n";
+
+    public static final String QUERY_PR_END =
+                    "    }\n" +
+                    "  }\n" +
+                    "}\n";
 
     public static final String QUERY_ISSUE_MAIN =
             "      totalCount \n" +

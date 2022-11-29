@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - openjdk8
+  - openjdk11
 
 branches:
   only:
@@ -22,8 +22,6 @@ notifications:
     on_start: always
   email:
     recipients:
-      - tapabrata.pal@capitalone.com
-      - ragha.vema@capitalone.com
       - hygieia2@capitalone.com
     on_success: change
     on_failure: always

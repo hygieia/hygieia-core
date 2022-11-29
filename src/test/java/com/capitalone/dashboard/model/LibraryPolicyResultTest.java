@@ -1,6 +1,6 @@
 package com.capitalone.dashboard.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 import java.util.Set;

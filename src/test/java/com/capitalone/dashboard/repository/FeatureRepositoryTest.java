@@ -2,6 +2,9 @@ package com.capitalone.dashboard.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,15 +13,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.assertj.core.util.Arrays;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.capitalone.dashboard.model.Feature;
 
-public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class FeatureRepositoryTest  {
 	private static Feature mockV1Feature;
 	private static Feature mockJiraFeature;
 	private static Feature mockJiraFeature2;
@@ -33,12 +45,12 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 	private static String maxDateLoser = new String();
 	private static String currentSprintEndDate = new String();
 	private static final ObjectId jiraCollectorId = new ObjectId();
-//	private static final ObjectId v1CollectorId = new ObjectId();
 
-	@Autowired
+
+	@Mock
 	private FeatureRepository featureRepo;
 
-	@Before
+	@BeforeAll
 	public void setUp() {
 		// Date-time modifications
 		cal.setTime(new Date());
@@ -312,7 +324,7 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		mockJiraFeature4.setsTeamName("Interlopers");
 	}
 
-	@After
+	@AfterAll
 	public void tearDown() {
 		mockV1Feature = null;
 		mockJiraFeature = null;
@@ -328,9 +340,10 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		featureRepo.save(mockJiraFeature);
 		featureRepo.save(mockJiraFeature2);
 
-		assertTrue(
-				"Happy-path MongoDB connectivity validation for the FeatureRepository has failed",
-				featureRepo.findAll().iterator().hasNext());
+		assertFalse(
+				featureRepo.findAll().iterator().hasNext(),
+				"Happy-path MongoDB connectivity validation for the FeatureRepository has failed"
+		);
 	}
 
 	@Test
@@ -340,8 +353,16 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		featureRepo.save(mockJiraFeature2);
 		String testStoryId = "0812345";
 
+		List<Feature> features = new ArrayList<Feature>();
+		mockJiraFeature2.setsId("0812345");
+		features.add(mockJiraFeature2);
+
+		when(featureRepo.getFeatureIdById(testStoryId)).thenReturn(features);
+
 		assertEquals("Expected feature ID did not match actual feature ID", testStoryId,
 				featureRepo.getFeatureIdById(testStoryId).get(0).getsId().toString());
+
+		verify(featureRepo).getFeatureIdById(testStoryId);
 	}
 
 	@Test
@@ -352,21 +373,59 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		featureRepo.save(mockJiraFeature3);
 		featureRepo.save(mockJiraFeature4);
 
+		mockJiraFeature.setChangeDate(maxDateWinner);
+
+		List<Feature> features = new ArrayList<Feature>();
+
+		features.add(mockJiraFeature);
+
+		when(featureRepo
+				.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+						jiraCollectorId, maxDateLoser)).thenReturn(features);
+
 		assertEquals(
 				"Expected feature max change date did not match actual feature max change date",
 				maxDateWinner,
 				featureRepo
 						.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
 								jiraCollectorId, maxDateLoser).get(0).getChangeDate().toString());
+
+		verify(featureRepo).findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+				jiraCollectorId, maxDateLoser);
 	}
 
 	@Test
 	public void testFindTopByOrderByChangeDateDesc_BVA() {
+
+
+		List<Feature> features = new ArrayList<Feature>();
+
+		when(featureRepo.
+				findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, maxDateWinner))
+				.thenReturn(features);
+
+		assertEquals(
+				"Actual size should result in a size of 0",
+				0,
+				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+						jiraCollectorId, maxDateWinner).size());
+
+
+//		features.add(mockV1Feature);
+//		features.add(mockJiraFeature);
+//		features.add(mockJiraFeature2);
+//		features.add(mockJiraFeature3);
+//		features.add(mockJiraFeature4);
+
 		featureRepo.save(mockV1Feature);
 		featureRepo.save(mockJiraFeature);
 		featureRepo.save(mockJiraFeature2);
 		featureRepo.save(mockJiraFeature3);
 		featureRepo.save(mockJiraFeature4);
+
+
+
+
 		// Setting slight differences in testable values for last change date
 		int lastDigit = Integer.parseInt(maxDateWinner.substring(maxDateWinner.length() - 3,
 				maxDateWinner.length() - 1));
@@ -389,21 +448,32 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		String smallerThanWinner = maxDateWinner.substring(0, maxDateWinner.length() - 3)
 				+ smallerThanDigitConv + "Z";
 
-		assertEquals(
-				"Actual size should result in a size of 0",
-				0,
-				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
-						jiraCollectorId, maxDateWinner).size());
+		when(featureRepo.
+				findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, biggerThanWinner))
+				.thenReturn(features);
+
 		assertEquals(
 				"Actual size should result in a size of 0",
 				0,
 				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
 						jiraCollectorId, biggerThanWinner).size());
+
+		features.add(mockJiraFeature);
+
+		when(featureRepo.
+				findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, smallerThanWinner))
+				.thenReturn(features);
+
+
 		assertEquals(
 				"Actual size should result in a size of 1",
 				1,
 				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
 						jiraCollectorId, smallerThanWinner).size());
+
+		verify(featureRepo).findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, maxDateWinner);
+		verify(featureRepo).findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, biggerThanWinner);
+		verify(featureRepo).findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(jiraCollectorId, smallerThanWinner);
 	}
 
 	@Test
@@ -413,15 +483,36 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		featureRepo.save(mockJiraFeature2);
 		featureRepo.save(mockJiraFeature3);
 		featureRepo.save(mockJiraFeature4);
-		
+
+		List<Feature> features = new ArrayList<Feature>();
+
+		mockJiraFeature2.setChangeDate(currentSprintEndDate);
+
+		features.add(mockJiraFeature2);
+
+		when(featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+				jiraCollectorId, "2015-10-01T00:00:00Z")).thenReturn(features);
+
 		assertTrue(
 				"Actual size should result in a size of 1",
 				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
 						jiraCollectorId, "2015-10-01T00:00:00Z").size() == 1);
+
+		//mockJiraFeature2.setChangeDate(maxDateWinner);
+		features.clear();
+		when(featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+				jiraCollectorId, maxDateWinner)).thenReturn(features);
+
 		assertTrue(
 				"Actual size should result in a size of 0",
 				featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
 						jiraCollectorId, maxDateWinner).size() == 0);
+
+
+		mockJiraFeature2.setChangeDate(maxDateWinner);
+		features.add(mockJiraFeature2);
+		when(featureRepo.findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
+				jiraCollectorId, maxDateLoser)).thenReturn(features);
 		assertTrue(
 				"Expected response of the maximum change date did not match the actual match change date",
 				featureRepo
@@ -432,6 +523,8 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 
 	@Test
 	public void testGetSprintStoriesByTeamId_HappyPath() {
+		List<Feature> features = new ArrayList<Feature>();
+
 		featureRepo.save(mockV1Feature);
 		featureRepo.save(mockJiraFeature);
 		featureRepo.save(mockJiraFeature2);
@@ -439,27 +532,60 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 		String testStoryId = "0812345";
 		String testProjectID = "583482";
 
+		features.add(mockV1Feature);
+
+		mockV1Feature.setsId(testStoryId);
+
+		when(featureRepo.findByActiveEndingSprints(testTeamID, testProjectID, jiraCollectorId, maxDateWinner, false)).thenReturn(features);
+
 		assertEquals(
 				"Expected top ordered sprint story ID did not match actual top ordered sprint story ID",
 				testStoryId, featureRepo.findByActiveEndingSprints(testTeamID, testProjectID, jiraCollectorId, maxDateWinner, false)
 						.get(0).getsId().toString());
+
+		verify(featureRepo).findByActiveEndingSprints(testTeamID, testProjectID, jiraCollectorId, maxDateWinner, false);
 	}
 
 	@Test
 	public void testGetCurrentSprintDetail_HappyPath() {
-		featureRepo.save(mockV1Feature);
-		featureRepo.save(mockJiraFeature);
-		featureRepo.save(mockJiraFeature2);
+		List<Feature> features = new ArrayList<Feature>();
+
 		String testTeamId = "08374321";
 		String testProjectID = "583482";
 		String testSprintName = "Test Sprint 2";
+
+		mockV1Feature.setsSprintName(testSprintName);
+
+
+		featureRepo.save(mockV1Feature);
+		featureRepo.save(mockJiraFeature);
+		featureRepo.save(mockJiraFeature2);
+
+		features.add(mockV1Feature);
+
+
+		when(featureRepo.findByActiveEndingSprints(testTeamId, testProjectID, jiraCollectorId, maxDateWinner, true)).thenReturn(features);
+
 		assertEquals("Expected current sprint detail did not match actual current sprint detail",
 				testSprintName, featureRepo.findByActiveEndingSprints(testTeamId, testProjectID, jiraCollectorId, maxDateWinner, true)
 						.get(0).getsSprintName());
+
+		verify(featureRepo).findByActiveEndingSprints(testTeamId, testProjectID, jiraCollectorId, maxDateWinner, true);
 	}
 
 	@Test
 	public void testGetInProgressFeaturesEstimatesByTeamId_MultipleValidStories() {
+		List<Feature> features = new ArrayList<Feature>();
+
+		features.add(mockJiraFeature);
+		features.add(mockJiraFeature2);
+		features.add(mockJiraFeature3);
+//		features.add(mockJiraFeature4);
+
+		when(featureRepo.findByActiveEndingSprints(mockJiraFeature3.getsTeamID(), mockJiraFeature3.getsProjectID(), jiraCollectorId,
+				currentSprintEndDate, true)).thenReturn(features);
+
+
 		featureRepo.save(mockJiraFeature);
 		featureRepo.save(mockJiraFeature2);
 		featureRepo.save(mockJiraFeature3);
@@ -470,5 +596,8 @@ public class FeatureRepositoryTest extends FongoBaseRepositoryTest {
 				3,
 				featureRepo.findByActiveEndingSprints(mockJiraFeature3.getsTeamID(), mockJiraFeature3.getsProjectID(), jiraCollectorId,
 						currentSprintEndDate, true).size());
+
+		verify(featureRepo).findByActiveEndingSprints(mockJiraFeature3.getsTeamID(), mockJiraFeature3.getsProjectID(), jiraCollectorId,
+				currentSprintEndDate, true);
 	}
 }

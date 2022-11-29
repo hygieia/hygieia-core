@@ -1,14 +1,16 @@
 package com.capitalone.dashboard.model;
 
-import org.bson.types.ObjectId;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class ComponentTest {
 
     @Test
@@ -98,7 +100,7 @@ public class ComponentTest {
 
     private Component createComponent(long lastUpdated) {
         Component component = new Component();
-        component.getCollectorItems().put(CollectorType.SCM, new ArrayList(Collections.singleton(makeCollectorItem(lastUpdated))));
+        component.getCollectorItems().put(CollectorType.SCM, new ArrayList<CollectorItem>(Collections.singleton(makeCollectorItem(lastUpdated))));
         return component;
     }
 }

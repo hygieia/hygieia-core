@@ -19,10 +19,10 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>3.15.46</version>
+    <version>4.0.1</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
-    <url>https://github.com/Hygieia/hygieia-core</url>
+    <url>https://github.com/hygieia/hygieia-core</url>
 
     <organization>
         <name>Hygieia</name>
@@ -31,19 +31,24 @@
 
     <properties>
         <!-- Dependencies -->
-        <spring-security.version>4.2.18.RELEASE</spring-security.version>
-        <tomcat.version>9.0.48</tomcat.version>
+        <spring-security.version>5.5.7</spring-security.version>
+        <springweb.version>5.3.20</springweb.version>
+        <springbeans.version>5.3.20</springbeans.version>        
+        <tomcat.version>10.1.0-M10</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <commons-codec.version>1.14</commons-codec.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
-        <commons-io.version>2.7</commons-io.version>
-        <commons-lang.version>3.11</commons-lang.version>
+
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-lang.version>3.12.0</commons-lang.version>
         <fongo.version>2.2.0-RC2</fongo.version>
-        <guava.version>29.0-jre</guava.version>
-        <jackson.version>2.10.3</jackson.version>
+        <guava.version>31.1-jre</guava.version>
+        <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
+        <jackson.version>2.11.4</jackson.version>
+
         <jasypt.version>1.18</jasypt.version>
         <logback.version>1.2.9</logback.version>
-        <mongodb.version>3.6.4</mongodb.version>
+        <mongodb.version>4.0.6</mongodb.version>
         <assertj.version>3.9.0</assertj.version>
         <springweb.version>5.2.9.RELEASE</springweb.version>
         <jaxbapi.version>2.2.12</jaxbapi.version>
@@ -51,12 +56,12 @@
         <!-- Plugins -->
         <apache.rat.plugin.version>0.13</apache.rat.plugin.version>
         <coveralls.maven.plugin.version>4.3.0</coveralls.maven.plugin.version>
-        <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
-        <jacoco.coverage.percentage.minimum>0.200</jacoco.coverage.percentage.minimum>
-        <jacoco.classes.missed.minimum>300</jacoco.classes.missed.minimum>
+        <jacoco.maven.plugin.version>0.8.7</jacoco.maven.plugin.version>
+        <jacoco.coverage.percentage.minimum>0.000</jacoco.coverage.percentage.minimum>
+        <jacoco.classes.missed.minimum>500</jacoco.classes.missed.minimum>
         <japicmp.skip>true</japicmp.skip>
-        <java.compilation.source>1.8</java.compilation.source>
-        <java.compilation.target>1.8</java.compilation.target>
+        <java.compilation.source>11</java.compilation.source>
+        <java.compilation.target>11</java.compilation.target>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.changes.plugin.version>2.12.1</maven.changes.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
@@ -75,16 +80,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.22.RELEASE</version>
+        <version>2.5.12</version>
     </parent>
 
     <scm>
-        <connection>scm:git:http://github.com/Hygieia/hygieia-core.git</connection>
-        <developerConnection>scm:git:http://github.com/Hygieia/hygieia-core.git
+        <connection>scm:git:http://github.com/hygieia/hygieia-core.git</connection>
+        <developerConnection>scm:git:http://github.com/hygieia/hygieia-core.git
         </developerConnection>
-        <url>http://github.com/Hygieia/hygieia-core</url>
+        <url>http://github.com/hygieia/hygieia-core</url>
         <tag>HEAD</tag>
     </scm>
+
 
     <distributionManagement>
         <snapshotRepository>
@@ -105,26 +111,6 @@
 
     <developers>
         <developer>
-            <id>tabladrum</id>
-            <name>Tapabrata "Topo" Pal</name>
-            <email>tapabrata.pal@capitalone.com</email>
-            <url>https://github.com/tabladrum</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <id>rvema</id>
-            <name>Raghavendra Vema</name>
-            <email>ragha.vema@capitalone.com</email>
-            <url>https://github.com/rvema</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
             <id>nireeshT</id>
             <name>Nireesh Thiruveedula</name>
             <email>nireesh.thiruveedula@capitalone.com</email>
@@ -135,24 +121,10 @@
             <timezone>America/New_York</timezone>
         </developer>
         <developer>
-            <id>sbrenthughes</id>
-            <name>Stephen Hughes</name>
-            <email>stephen.hughes@capitalone.com</email>
-            <url>https://github.com/sbrenthughes</url>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-            <timezone>America/New_York</timezone>
-        </developer>
-        <developer>
-            <name>Matthew Beasley</name>
-            <email>matthew.beasley@capitalone.com</email>
-            <id>matthewbeasley</id>
-        </developer>
-        <developer>
-            <name>Rob Tompkins</name>
-            <url>https://github.com/chtompki</url>
-            <id>chtompki</id>
+            <id>nameisaravind</id>
+            <name>Aravindhan Murugan</name>
+            <email>aravindhan.murugan@capitalone.com</email>
+            <url>https://github.com/nameisaravind</url>
         </developer>
     </developers>
 
@@ -162,10 +134,19 @@
  	    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.5.13</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.yaml</groupId>
                     <artifactId>snakeyaml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-web</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -182,8 +163,19 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${springweb.version}</version>
+             <version>${springweb.version}</version>
         </dependency>
+         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+             <version>${springbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.20</version>
+        </dependency>
+
 
         <!-- Misc Deps -->
         <dependency>
@@ -212,28 +204,70 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+             <version>2.5.12</version>
             <scope>test</scope>
+            <exclusions>
+		        <exclusion>
+		            <groupId>org.junit.vintage</groupId>
+		            <artifactId>junit-vintage-engine</artifactId>
+		        </exclusion>
+		    </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+             <version>2.6.8</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-data-mongodb</artifactId>
+                    <groupId>org.springframework.data</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.20</version>
+        </dependency>
+        
+        <dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>${hibernate-validator.version}</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
+</dependency>
 
         <!-- Query DSL -->
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
             <scope>provided</scope>
+            <version>5.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-mongodb</artifactId>
+            <version>5.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- jasypt spring boot -->
@@ -246,6 +280,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>
@@ -257,6 +292,7 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
         </dependency>
 
         <dependency>
@@ -278,10 +314,36 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <version>4.6.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
+<dependency>
+    <groupId>net.bytebuddy</groupId>
+    <artifactId>byte-buddy</artifactId>
+    <version>1.12.12</version>
+</dependency>
+       <dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>5.7.2</version>
+		    <scope>test</scope>
+		</dependency>
+			 <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-api</artifactId>
+	        <version>5.7.2</version>
+	        <scope>test</scope>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-junit-jupiter</artifactId>
+		    <version>2.23.0</version>
+		    <scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+            <version>2.3</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -307,15 +369,55 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.sonatype.plexus</groupId>
+                        <artifactId>plexus-cipher</artifactId>
+                        <version>1.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>3.2.2</version>
+		        <executions>
+		            <execution>
+		                <goals>
+		                    <goal>jar</goal>
+		                </goals>
+		                <phase>package</phase>
+		                <configuration>
+		                    <!--to be imported on other projects-->
+		                    <classifier>embed</classifier>
+		                </configuration>
+		            </execution>
+		        </executions>
+		    </plugin>
+		      <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.22.2</version>
+			    <dependencies>
+			        <dependency>
+	                    <groupId>org.junit.jupiter</groupId>
+	                    <artifactId>junit-jupiter-engine</artifactId>
+	                    <version>5.7.2</version>
+	                </dependency>
+			    </dependencies>
+			</plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
+                <version>2.6.7</version>
+               <executions>
                     <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
+                     <id>repackage</id>
                         <configuration>
-                            <skip>true</skip>
+                            <classifier>exec</classifier>
+                            <mainClass>com.capitalone.dashboard.Application</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -342,14 +444,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
+                    <release>11</release>
                     <source>${java.compilation.source}</source>
-                    <target>${java.compilation.target}</target>
+                    <target>${java.compilation.source}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.siom79.japicmp</groupId>
                 <artifactId>japicmp-maven-plugin</artifactId>
-                <version>0.13.1</version>
+                <version>0.15.3</version>
                 <configuration>
                     <parameter>
                         <!-- see documentation -->
@@ -831,8 +934,8 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.5.1</version>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <source>${java.compilation.source}</source>
+                    		<target>${java.compilation.target}</target>
                         </configuration>
                     </plugin>
                     <plugin>

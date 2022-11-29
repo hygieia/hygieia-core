@@ -28,7 +28,7 @@ public class TestCollectorTaskWithGenericItem extends CollectorTaskWithGenericIt
     }
 
     @Override
-    public Map<String, Object> getGenericCollectorItemOptions(String serverUrl, GenericCollectorItem genericCollectorItem) {
+    public Map<String, Object> getGenericCollectorItemOptions(String serverUrl, GenericCollectorItem genericCollectorItem) { 
         Map<String, Object> options = new HashMap<>();
         options.put("projectName", "C1 Custom Env Var Inject");
         options.put("instanceUrl", "http://localhost:9000");

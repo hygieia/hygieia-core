@@ -1,7 +1,7 @@
 package com.capitalone.dashboard.util;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class HygieiaUtilsTest {
     @Test

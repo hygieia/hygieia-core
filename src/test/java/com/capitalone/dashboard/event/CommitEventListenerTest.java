@@ -1,5 +1,30 @@
 package com.capitalone.dashboard.event;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
+
 import com.capitalone.dashboard.model.Application;
 import com.capitalone.dashboard.model.AuthType;
 import com.capitalone.dashboard.model.BaseModel;
@@ -22,52 +47,35 @@ import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.PipelineRepository;
-import org.bson.types.ObjectId;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CommitEventListenerTest {
 
-    @Mock
-    private ComponentRepository componentRepository;
+    
+    private ComponentRepository componentRepository = Mockito.mock(ComponentRepository.class);
+
+    private DashboardRepository dashboardRepository = Mockito.mock(DashboardRepository.class);
+
+    private CollectorRepository collectorRepository = Mockito.mock(CollectorRepository.class);
+
+    private CollectorItemRepository collectorItemRepository = Mockito.mock(CollectorItemRepository.class);
+
+    private PipelineRepository pipelineRepository = Mockito.mock(PipelineRepository.class);
 
     @Mock
-    private DashboardRepository dashboardRepository;
-
-    @Mock
-    private CollectorRepository collectorRepository;
-
-    @Mock
-    private CollectorItemRepository collectorItemRepository;
-
-    @Mock
-    private PipelineRepository pipelineRepository;
-
-    @InjectMocks
     private CommitEventListener eventListener;
 
     private static final boolean HAS_BUILD_COLLECTOR = true;
     private static final boolean NO_BUILD_COLLECTOR = false;
 
+    
+    @Test
+    public void onAfterSaveTest() {
+    	Commit commit = createCommit("myCommit");
+    	eventListener.onAfterSave(new AfterSaveEvent<>(commit, null, ""));
+    }
+    
     @Test
     public void commitSaved_addedToPipeline() {
         // Arrange
@@ -207,7 +215,7 @@ public class CommitEventListenerTest {
         List<Component> components = Collections.singletonList(dashboard.getApplication().getComponents().get(0));
         List<ObjectId> componentIds = components.stream().map(BaseModel::getId).collect(Collectors.toList());
         commitCollectorItem.setId(commit.getCollectorItemId());
-        when(collectorItemRepository.findOne(commit.getCollectorItemId())).thenReturn(commitCollectorItem);
+        when(collectorItemRepository.findById(commit.getCollectorItemId())).thenReturn(Optional.of(commitCollectorItem));
         when(componentRepository.findBySCMCollectorItemId(commitCollectorItem.getId())).thenReturn(components);
         when(dashboardRepository.findByApplicationComponentIdsIn(componentIds)).thenReturn(Collections.singletonList(dashboard));
     }

@@ -1,43 +1,65 @@
 
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.model.*;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
-public class DashboardCreateTests extends FongoBaseRepositoryTest {
+import com.capitalone.dashboard.model.Application;
+import com.capitalone.dashboard.model.AuthType;
+import com.capitalone.dashboard.model.Cmdb;
+import com.capitalone.dashboard.model.Component;
+import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.DashboardType;
+import com.capitalone.dashboard.model.Owner;
+import com.capitalone.dashboard.model.ScoreDisplayType;
+import com.capitalone.dashboard.model.Widget;
 
-    @Autowired
+@ExtendWith(MockitoExtension.class)
+public class DashboardCreateTests {
+
+    @Mock
     private DashboardRepository dashboardRepository;
 
-    @Autowired
+    @Mock
     private ComponentRepository componentRepository;
 
-    @Autowired
+    @Mock
     private CmdbRepository cmdbRepository;
 
     @Test
     public void createTeamDashboardTest() {
+
         Component component = new Component("Jay's component");
         component.setOwner("Jay");
 
+        when(componentRepository.save(component)).thenReturn(component);
         component = componentRepository.save(component);
-        System.out.println(component.getId());
+        verify(componentRepository).save(component);
 
         Cmdb configItemApp = new Cmdb();
         configItemApp.setConfigurationItem("ASVTEST");
-        configItemApp = cmdbRepository.save(configItemApp);
 
+        when(cmdbRepository.save(configItemApp)).thenReturn(configItemApp);
+        configItemApp = cmdbRepository.save(configItemApp);
+        verify(cmdbRepository).save(configItemApp);
 
         Cmdb configItemComp = new Cmdb();
         configItemComp.setConfigurationItem("BAPTEST");
+
+        when(cmdbRepository.save(configItemComp)).thenReturn(configItemComp);
         configItemComp = cmdbRepository.save(configItemComp);
+        verify(cmdbRepository).save(configItemComp);
 
 
         Application application = new Application("Jay's App", component);
@@ -59,13 +81,13 @@ public class DashboardCreateTests extends FongoBaseRepositoryTest {
         scm.getOptions().put("foo", "bar");
         scm.getOptions().put("threshold", 10);
         dashboard.getWidgets().add(scm);
+        when(dashboardRepository.save(dashboard)).thenReturn(dashboard);
 
 
         dashboardRepository.save(dashboard);
+        verify(dashboardRepository).save(dashboard);
 
-
-
-        for (Dashboard d : dashboardRepository.findAll(new Sort(Sort.Direction.ASC, "title"))) {
+        for (Dashboard d : dashboardRepository.findAll(Sort.by(Sort.Direction.ASC, "title"))) {
             System.out.println(d.getTitle());
             assertEquals(d.getTitle(), "Jays's Dashboard");
         }

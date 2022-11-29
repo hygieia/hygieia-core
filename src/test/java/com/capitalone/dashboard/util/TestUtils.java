@@ -13,8 +13,6 @@ import com.capitalone.dashboard.model.RepoBranch;
 import com.capitalone.dashboard.model.SCM;
 import org.bson.types.ObjectId;
 import org.junit.Ignore;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +24,7 @@ import java.util.Set;
 /**
  * Created by syq410 on 2/23/17.
  */
-@Ignore
-public class TestUtils {
+public class TestUtils { 
 
     private static final ObjectId DASHBOARD_ID = new ObjectId();
 

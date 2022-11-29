@@ -30,3 +30,4 @@ pom.xml.next
 
 # Specific project files
 jir-client.properties
+/bin/
