@@ -16,77 +16,77 @@ public class LoadTestData {
     public static void loadDashBoard(DashboardRepository dashboardRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./dashboard/dashboard.json"));
-        List<Dashboard> dashboards = gson.fromJson(json, new TypeToken<List<Dashboard>>(){}.getType());
-        dashboardRepository.save(dashboards);
+        List<Dashboard> dashboards = gson.fromJson(json, new TypeToken<List<Dashboard>>(){}.getType()); 
+        dashboardRepository.saveAll(dashboards);
     }
 
     public static void loadCollector (CollectorRepository collectorRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./collectors/coll.json"));
-        List<Collector> collector = gson.fromJson(json, new TypeToken<List<Collector>>(){}.getType());
-        collectorRepository.save(collector);
+        List<Collector> collector = gson.fromJson(json, new TypeToken<List<Collector>>(){}.getType()); 
+        collectorRepository.saveAll(collector);
     }
 
     public static void loadComponent(ComponentRepository componentRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./component/component.json"));
         List<Component> components = gson.fromJson(json, new TypeToken<List<Component>>(){}.getType());
-        componentRepository.save(components);
+        componentRepository.saveAll(components);
     }
 
     public static void loadCollectorItems(CollectorItemRepository collectorItemRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./collector_items/items.json"));
         List<CollectorItem> collectorItem = gson.fromJson(json, new TypeToken<List<CollectorItem>>(){}.getType());
-        collectorItemRepository.save(collectorItem);
+        collectorItemRepository.saveAll(collectorItem);
     }
 
     public static void loadAuditReports(AuditReportRepository auditReportRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./audit_reports/audit_reports.json"));
         List<AuditReport> auditReports = gson.fromJson(json, new TypeToken<List<AuditReport>>(){}.getType());
-        auditReportRepository.save(auditReports);
+        auditReportRepository.saveAll(auditReports);
     }
 
     public static void loadSSCRequests(CodeQualityRepository codeQualityRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./securityscan/securityscan.json"));
         List<CodeQuality> ssa = gson.fromJson(json, new TypeToken<List<CodeQuality>>(){}.getType());
-        codeQualityRepository.save(ssa);
+        codeQualityRepository.saveAll(ssa);
     }
 
     public static void loadLibraryPolicy(LibraryPolicyResultsRepository libraryPolicyResultsRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./librarypolicy/librarypolicy.json"));
         List<LibraryPolicyResult> ssa = gson.fromJson(json, new TypeToken<List<LibraryPolicyResult>>() {}.getType());
-        libraryPolicyResultsRepository.save(ssa);
+        libraryPolicyResultsRepository.saveAll(ssa);
     }
     public static void loadTestResults(TestResultRepository testResultRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./test_results/test_results.json"));
         List<TestResult> testResults = gson.fromJson(json, new TypeToken<List<TestResult>>(){}.getType());
-        testResultRepository.save(testResults);
+        testResultRepository.saveAll(testResults);
     }
 
     public static void loadCodeQuality(CodeQualityRepository codeQualityRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./codequality/codequality.json"));
         List<CodeQuality> codeQuality = gson.fromJson(json, new TypeToken<List<CodeQuality>>(){}.getType());
-        codeQualityRepository.save(codeQuality);
+        codeQualityRepository.saveAll(codeQuality);
     }
 
     public static void loadBuilds(BuildRepository buildRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./builds/builds.json"));
         List<Build> builds = gson.fromJson(json, new TypeToken<List<Build>>(){}.getType());
-        buildRepository.save(builds);
+        buildRepository.saveAll(builds);
     }
 
     public static void loadFeatureFlags(FeatureFlagRepository featureFlagRepository) throws IOException {
         Gson gson = GsonUtil.getGson();
         String json = IOUtils.toString(Resources.getResource("./feature_flags/feature_flags.json"));
         List<FeatureFlag> featureFlags = gson.fromJson(json, new TypeToken<List<FeatureFlag>>(){}.getType());
-        featureFlagRepository.save(featureFlags);
+        featureFlagRepository.saveAll(featureFlags);
     }
 
 }

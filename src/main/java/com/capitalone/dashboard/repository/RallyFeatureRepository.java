@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import com.capitalone.dashboard.model.CodeQuality;
@@ -13,7 +13,7 @@ import com.capitalone.dashboard.model.RallyFeature;
 /**
  * Repository for {@link CodeQuality} data.
  */
-public interface RallyFeatureRepository extends CrudRepository<RallyFeature, ObjectId>, QueryDslPredicateExecutor<RallyFeature> {
+public interface RallyFeatureRepository extends CrudRepository<RallyFeature, ObjectId>, QuerydslPredicateExecutor<RallyFeature> {
 
     /**
      * Finds the {@link Rallyfeature} data point at the given timestamp for a specific
@@ -29,7 +29,7 @@ public interface RallyFeatureRepository extends CrudRepository<RallyFeature, Obj
     @Query(value="{'projectId' : ?0}")
     List<RallyFeature> findByIterationLists(String projectId);
   
-    @Query(value="{'projectId' : ?0, options.iterationId : ?1}")
+    @Query(value="{'projectId' : ?0, 'options.iterationId' : ?1}")
     RallyFeature findByRallyWidgetDetails(String projectId,String iterationId);
     
     @Query(value="{'collectorItemId' :?0}")

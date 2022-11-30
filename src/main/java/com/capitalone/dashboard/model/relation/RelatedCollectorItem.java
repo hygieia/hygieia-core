@@ -4,20 +4,20 @@ import com.capitalone.dashboard.model.BaseModel;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotNull;
+import javax.annotation.Nonnull;
 
 @Document(collection = "related_items")
 public class RelatedCollectorItem extends BaseModel{
-    @NotNull
+	@Nonnull
     private ObjectId left;
-    @NotNull
+	@Nonnull
     private ObjectId right;
-    @NotNull
+	@Nonnull
     private String source;
-    @NotNull
+	@Nonnull
     private String reason;
-    @NotNull
-    private long creationTime;
+    @Nonnull
+    private Long creationTime;
 
     public ObjectId getLeft() {
         return left;

@@ -5,13 +5,13 @@ import com.capitalone.dashboard.model.TestResult;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  * Repository for {@link TestResult} data.
  */
-public interface TestResultRepository extends CrudRepository<TestResult, ObjectId>, QueryDslPredicateExecutor<TestResult> {
+public interface TestResultRepository extends CrudRepository<TestResult, ObjectId>, QuerydslPredicateExecutor<TestResult> {
 
     /**
      * Finds the {@link TestResult} with the given execution ID for a specific
@@ -24,6 +24,8 @@ public interface TestResultRepository extends CrudRepository<TestResult, ObjectI
     TestResult findByCollectorItemIdAndExecutionId(ObjectId collectorItemId, String executionId);
 
     TestResult findByCollectorItemId(ObjectId collectorItemId);
+
+    TestResult findTopByCollectorItemId(ObjectId collectorItemId);
 
     TestResult findTop1ByCollectorItemIdOrderByTimestampDesc(ObjectId collectorItemId);
 

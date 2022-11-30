@@ -3,9 +3,12 @@ package com.capitalone.dashboard.model;
 import com.capitalone.dashboard.misc.HygieiaException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
+//import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.annotation.Nonnull;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +16,7 @@ import java.util.Map;
  * Entry class to hold the Auto Discovered entries: Jira project, github project, build job etc.
  */
 public class AutoDiscoveredEntry {
-    @NotNull
+	@Nonnull
     private AutoDiscoveryStatusType status;
 
     @NotNull
@@ -27,6 +30,8 @@ public class AutoDiscoveredEntry {
     private boolean pushed = false;
 
     private boolean enabled = false;
+
+    private String altIdentifier;
 
     @NotEmpty
     private Map<String, Object> options = new HashMap<>();
@@ -89,6 +94,14 @@ public class AutoDiscoveredEntry {
         this.status = status;
     }
 
+    public String getAltIdentifier() {
+        return altIdentifier;
+    }
+
+    public void setAltIdentifier(String altIdentifier) {
+        this.altIdentifier = altIdentifier;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,6 +140,7 @@ public class AutoDiscoveredEntry {
                 }
             }
             collectorItem.setAutoDiscoverStatus(status);
+            collectorItem.setAltIdentifier(altIdentifier);
             return collectorItem;
         } else {
             throw new HygieiaException("Missing required fields. " + toolName + " collector required fields are: " + String.join(", ", collector.getUniqueFields().keySet()), HygieiaException.COLLECTOR_ITEM_CREATE_ERROR);

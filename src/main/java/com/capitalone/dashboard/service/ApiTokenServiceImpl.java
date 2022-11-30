@@ -11,7 +11,8 @@ import com.capitalone.dashboard.util.EncryptionException;
 import com.capitalone.dashboard.util.UnsafeDeleteException;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,11 +28,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ApiTokenServiceImpl implements ApiTokenService {
-
-    private static final Logger LOGGER = Logger.getLogger(ApiTokenServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiTokenServiceImpl.class);
 
     private ApiTokenRepository apiTokenRepository;
 
@@ -97,21 +98,23 @@ public class ApiTokenServiceImpl implements ApiTokenService {
 
     @Override
     public void deleteToken(ObjectId id) {
-        ApiToken apiToken = apiTokenRepository.findOne(id);
-
-        if(apiToken == null) {
+        Optional<ApiToken> optApiToken = apiTokenRepository.findById(id);
+        ApiToken apiToken = null;
+        if(optApiToken == null) {
             throw new UnsafeDeleteException("Cannot delete token ");
         }else{
-            apiTokenRepository .delete(apiToken);
+        	apiToken = optApiToken.get();
+            apiTokenRepository.delete(apiToken);
         }
     }
     @Override
     public String updateToken(Long expirationDt, ObjectId id) throws HygieiaException{
-        ApiToken apiToken = apiTokenRepository.findOne(id);
-        if(apiToken == null) {
+    	 Optional<ApiToken> optApiToken = apiTokenRepository.findById(id);
+         ApiToken apiToken = null;
+         if(optApiToken == null) {
             throw new HygieiaException("Cannot find token ", HygieiaException.BAD_DATA);
         }else{
-
+        	apiToken = optApiToken.get();
             apiToken.setExpirationDt(expirationDt);
             apiTokenRepository.save(apiToken);
         }

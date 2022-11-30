@@ -39,7 +39,7 @@ public class Build extends BaseModel {
     private List<SCM> sourceChangeSet = new ArrayList<>();
     private List<BuildStage> stages = new LinkedList<>();
     private Map<String, String> deployMetadata = new HashMap<>();
-    private Map<String, String> additionalData = new HashMap<>();
+    private Map<String, Object> additionalData = new HashMap<>();
 
     public ObjectId getCollectorItemId() {
         return collectorItemId;
@@ -153,11 +153,11 @@ public class Build extends BaseModel {
 
     public void setDeployMetadata(Map<String, String> deployMetadata) { this.deployMetadata = deployMetadata; }
 
-    public Map<String, String> getAdditionalData() {
+    public Map<String, Object> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(Map<String, String> additionalData) {
+    public void setAdditionalData(Map<String, Object> additionalData) {
         this.additionalData = additionalData;
     }
 }

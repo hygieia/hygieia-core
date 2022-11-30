@@ -1,7 +1,8 @@
 package com.capitalone.dashboard.model;
 
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
+//import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 

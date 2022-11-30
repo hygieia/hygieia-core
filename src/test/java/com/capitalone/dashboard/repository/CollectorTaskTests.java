@@ -1,35 +1,37 @@
 package com.capitalone.dashboard.repository;
 
-import com.capitalone.dashboard.collector.CollectorTask;
-import com.capitalone.dashboard.model.Collector;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.support.CronTrigger;
-
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
+
+import com.capitalone.dashboard.collector.CollectorTask;
+import com.capitalone.dashboard.model.Collector;
+
+@ExtendWith(MockitoExtension.class)
 public class CollectorTaskTests {
 
     @Mock private TaskScheduler taskScheduler;
     @Mock private BaseCollectorRepository<Collector> baseCollectorRepository;
 
     private CollectorTask<Collector> task;
-
+ 
     private static final String COLLECTOR_NAME = "Test Collector";
 
-    @Before
+    @BeforeEach
     public void init() {
         task = new TestCollectorTask();
     }

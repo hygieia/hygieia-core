@@ -1,9 +1,10 @@
 package com.capitalone.dashboard.repository;
 
 import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.GitRequest;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Repository for {@link Commit} data.
  */
-public interface CommitRepository extends CrudRepository<Commit, ObjectId>, QueryDslPredicateExecutor<Commit> {
+public interface CommitRepository extends CrudRepository<Commit, ObjectId>, QuerydslPredicateExecutor<Commit> {
 
     /**
      * Finds the {@link Commit} with the given revision number for a specific
@@ -22,6 +23,8 @@ public interface CommitRepository extends CrudRepository<Commit, ObjectId>, Quer
      * @return a {@link Commit}
      */
     Commit findByCollectorItemIdAndScmRevisionNumber(ObjectId collectorItemId, String revisionNumber);
+
+    List<Commit> findAllByCollectorItemIdAndScmRevisionNumberOrderByTimestampDesc(ObjectId collectorItemId, String revisionNumber);
 
     Long countCommitsByCollectorItemId(ObjectId collectorItemId);
 

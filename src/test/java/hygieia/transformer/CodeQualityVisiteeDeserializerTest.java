@@ -7,11 +7,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by stevegal on 2019-03-25.
@@ -20,7 +21,7 @@ public class CodeQualityVisiteeDeserializerTest {
 
     private ObjectMapper mapper;
 
-    @Before
+    @BeforeEach
     public void setup() {
 
         mapper = new ObjectMapper();

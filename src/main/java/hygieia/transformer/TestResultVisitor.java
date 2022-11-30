@@ -3,15 +3,7 @@ package hygieia.transformer;
 import com.capitalone.dashboard.model.TestCapability;
 import com.capitalone.dashboard.model.TestResult;
 import com.capitalone.dashboard.model.TestSuiteType;
-import com.capitalone.dashboard.model.quality.CheckstyleReport;
-import com.capitalone.dashboard.model.quality.CucumberJsonReport;
-import com.capitalone.dashboard.model.quality.FindBugsXmlReport;
-import com.capitalone.dashboard.model.quality.JacocoXmlReport;
-import com.capitalone.dashboard.model.quality.JunitXmlReport;
-import com.capitalone.dashboard.model.quality.JunitXmlReportV2;
-import com.capitalone.dashboard.model.quality.MochaJsSpecReport;
-import com.capitalone.dashboard.model.quality.PmdReport;
-import com.capitalone.dashboard.model.quality.QualityVisitor;
+import com.capitalone.dashboard.model.quality.*;
 import com.capitalone.dashboard.request.BuildDataCreateRequest;
 
 import java.util.ArrayList;
@@ -80,6 +72,11 @@ public class TestResultVisitor implements QualityVisitor<TestResult> {
         CucumberJsonToTestCapabilityTransformer transformer = new CucumberJsonToTestCapabilityTransformer(this.buildDataCreateRequest, this.capabilityDescription);
         TestCapability capability = transformer.convert(cucumberJsonReport);
         this.capabilities.add(capability);
+    }
+
+    @Override
+    public void visit(CustomFeatureTestReport customFeatureTestReport) {
+
     }
 
     private TestResult buildTestResultObject(List<TestCapability> capabilities, BuildDataCreateRequest buildDataCreateRequest, String testType) {

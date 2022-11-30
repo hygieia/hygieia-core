@@ -135,5 +135,4 @@ public interface CollectorService {
      * Get cmdb of static analysis project
      */
      Set<Cmdb> getCmdbByStaticAnalysis(String collectorName, String projectName) throws HygieiaException;
-
 }
