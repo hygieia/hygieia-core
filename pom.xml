@@ -19,7 +19,7 @@
     <groupId>com.capitalone.dashboard</groupId>
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Core package shared by API layer and Microservices</description>
     <url>https://github.com/hygieia/hygieia-core</url>
@@ -34,7 +34,7 @@
         <spring-security.version>5.5.7</spring-security.version>
         <springweb.version>5.3.20</springweb.version>
         <springbeans.version>5.3.20</springbeans.version>        
-        <tomcat.version>10.1.1</tomcat.version>
+        <tomcat.version>10.1.2</tomcat.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-collections4.version>4.1</commons-collections4.version>
